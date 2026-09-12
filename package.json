@@ -1,0 +1,25 @@
+{
+  "name": "agentise-mega-crm",
+  "version": "2.0.0",
+  "description": "Mega CRM AI-First desenvolvido no padrao do Desafio Claude Code da Agentise com deploy 24/7 na nuvem, PIX EMV oficial e conformidade LGPD",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node tests/run_all.js",
+    "test:live": "node tests/test_cloud_live.js",
+    "pack": "node scripts/pack_desktop.js"
+  },
+  "keywords": [
+    "crm",
+    "claude-code",
+    "agentise",
+    "ai-first",
+    "pix-emv",
+    "kanban",
+    "saas"
+  ],
+  "author": "Luciano",
+  "license": "MIT"
+}

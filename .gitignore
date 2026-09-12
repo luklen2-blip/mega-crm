@@ -1,0 +1,10 @@
+node_modules/
+.git/
+*.log
+.system_generated/
+scratch/
+database/data/*.tmp*
+database/data/test_collection.json
+.DS_Store
+Thumbs.db
+*.zip
