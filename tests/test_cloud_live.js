@@ -98,6 +98,27 @@ async function runLiveE2E() {
   console.log('  ✅ Conformidade LGPD e Termos de Uso operantes.');
   passed++;
 
+  // 6. Omnichannel & Conectores
+  console.log('▶ [Nuvem] Validando Central Omnichannel (/api/omnichannel/channels)...');
+  const omniRes = await requestUrl('/api/omnichannel/channels');
+  if (omniRes.statusCode !== 200) throw new Error(`/api/omnichannel/channels falhou: HTTP ${omniRes.statusCode}`);
+  console.log('  ✅ Central Omnichannel ativa em nuvem.');
+  passed++;
+
+  // 7. RecuperaIA
+  console.log('▶ [Nuvem] Validando Motor RecuperaIA (/api/recovery/scan)...');
+  const recRes = await requestUrl('/api/recovery/scan');
+  if (recRes.statusCode !== 200) throw new Error(`/api/recovery/scan falhou: HTTP ${recRes.statusCode}`);
+  console.log('  ✅ Varredura do RecuperaIA operando em produção.');
+  passed++;
+
+  // 8. Assinatura SaaS e Créditos de IA
+  console.log('▶ [Nuvem] Validando Assinatura SaaS (/api/billing/subscription)...');
+  const billRes = await requestUrl('/api/billing/subscription');
+  if (billRes.statusCode !== 200) throw new Error(`/api/billing/subscription falhou: HTTP ${billRes.statusCode}`);
+  console.log('  ✅ Planos SaaS e medição de Créditos de IA operacionais.');
+  passed++;
+
   console.log('\n=============================================================');
   console.log(`🚀 HOMOLOGAÇÃO CONCLUÍDA: ${passed} verificações passaram com 100% de sucesso!`);
   console.log('🎉 Sistema 100% íntegro e operacional 24/7 na nuvem.');

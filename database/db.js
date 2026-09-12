@@ -38,8 +38,20 @@ class JsonDB {
     return predicate ? this.cache.filter(predicate) : [...this.cache];
   }
 
+  findByTenant(tenantId, predicate) {
+    if (!tenantId) return this.findAll(predicate);
+    return this.cache.filter(item => {
+      const matchesTenant = !item.tenantId || item.tenantId === tenantId;
+      return matchesTenant && (predicate ? predicate(item) : true);
+    });
+  }
+
   findById(id) {
     return this.cache.find(item => item.id === id) || null;
+  }
+
+  findOne(predicate) {
+    return this.cache.find(predicate) || null;
   }
 
   insert(record) {
@@ -77,25 +89,55 @@ class JsonDB {
     return true;
   }
 
-  count() {
-    return this.cache.length;
+  count(predicate) {
+    return predicate ? this.cache.filter(predicate).length : this.cache.length;
+  }
+
+  countByTenant(tenantId, predicate) {
+    return this.findByTenant(tenantId, predicate).length;
   }
 }
 
-// Inicializa e exporta as coleções principais
+// Inicializa e exporta todas as coleções do SaaS Multi-Tenant
+const tenantsDB = new JsonDB('tenants');
+const usersDB = new JsonDB('users');
+const contactsDB = new JsonDB('contacts');
+const companiesDB = new JsonDB('companies');
 const leadsDB = new JsonDB('leads');
 const dealsDB = new JsonDB('deals');
 const activitiesDB = new JsonDB('activities');
 const tasksDB = new JsonDB('tasks');
 const proposalsDB = new JsonDB('proposals');
+const productsDB = new JsonDB('products');
+const conversationsDB = new JsonDB('conversations');
+const messagesDB = new JsonDB('messages');
+const campaignsDB = new JsonDB('campaigns');
+const automationsDB = new JsonDB('automations');
+const knowledgeBaseDB = new JsonDB('knowledge_base');
+const vehiclesDB = new JsonDB('vehicles');
+const aiUsageDB = new JsonDB('ai_usage');
+const auditLogsDB = new JsonDB('audit_logs');
 const settingsDB = new JsonDB('settings');
 
 module.exports = {
   JsonDB,
+  tenantsDB,
+  usersDB,
+  contactsDB,
+  companiesDB,
   leadsDB,
   dealsDB,
   activitiesDB,
   tasksDB,
   proposalsDB,
+  productsDB,
+  conversationsDB,
+  messagesDB,
+  campaignsDB,
+  automationsDB,
+  knowledgeBaseDB,
+  vehiclesDB,
+  aiUsageDB,
+  auditLogsDB,
   settingsDB
 };

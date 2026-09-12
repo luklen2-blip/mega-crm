@@ -1,0 +1,38 @@
+[
+  {
+    "tenantId": "ten_demo_agentise",
+    "category": "Produtos & Serviços",
+    "title": "Mega CRM SaaS Enterprise com Agentes de IA",
+    "content": "Plataforma comercial com pipeline kanban, copiloto Claude AI, emissão de cobrança PIX EMV oficial e recuperação de vendas com IA. Planos a partir de R$ 197/mês.",
+    "id": "kno_1789245789537_yvhz",
+    "createdAt": "2026-09-12T20:43:09.537Z",
+    "updatedAt": "2026-09-12T20:43:09.537Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "category": "Diferenciais Competitivos",
+    "title": "Por que o Agentise Mega CRM é diferente?",
+    "content": "Não é um banco de dados passivo. Nossa IA qualifica ativamente o lead com BANT, gera mensagens personalizadas para WhatsApp e reativa oportunidades abandonadas sem intervenção humana manual.",
+    "id": "kno_1789245789542_6iak",
+    "createdAt": "2026-09-12T20:43:09.542Z",
+    "updatedAt": "2026-09-12T20:43:09.542Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "category": "Políticas Comerciais & Pagamento",
+    "title": "Formas de Pagamento e Condições",
+    "content": "Aceitamos PIX instantâneo com geração de payload EMV e QR Code oficial do Banco Central, além de cartão de crédito em até 12x. Desconto de 15% no faturamento anual.",
+    "id": "kno_1789245789545_mvga",
+    "createdAt": "2026-09-12T20:43:09.545Z",
+    "updatedAt": "2026-09-12T20:43:09.545Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "category": "Scripts de Contorno de Objeções",
+    "title": "Contorno para objeção de preço alto",
+    "content": "Demonstrar que o valor de 1 único cliente recuperado pelo módulo RecuperaIA cobre a anuidade inteira do sistema.",
+    "id": "kno_1789245789547_ziqp",
+    "createdAt": "2026-09-12T20:43:09.547Z",
+    "updatedAt": "2026-09-12T20:43:09.547Z"
+  }
+]

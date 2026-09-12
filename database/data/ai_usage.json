@@ -1,0 +1,56 @@
+[
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-12T20:43:27.602Z",
+    "id": "ai__1789245807602_02mk",
+    "createdAt": "2026-09-12T20:43:27.602Z",
+    "updatedAt": "2026-09-12T20:43:27.602Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-12T20:43:27.702Z",
+    "id": "ai__1789245807702_58f1",
+    "createdAt": "2026-09-12T20:43:27.702Z",
+    "updatedAt": "2026-09-12T20:43:27.702Z"
+  },
+  {
+    "tenantId": "ten_1789245807468_qc7g",
+    "feature": "teste_ia",
+    "credits": 50,
+    "timestamp": "2026-09-12T20:43:27.731Z",
+    "id": "ai__1789245807731_cbd8",
+    "createdAt": "2026-09-12T20:43:27.731Z",
+    "updatedAt": "2026-09-12T20:43:27.731Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-12T20:45:32.245Z",
+    "id": "ai__1789245932245_vho2",
+    "createdAt": "2026-09-12T20:45:32.245Z",
+    "updatedAt": "2026-09-12T20:45:32.245Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-12T20:45:32.299Z",
+    "id": "ai__1789245932299_lz07",
+    "createdAt": "2026-09-12T20:45:32.299Z",
+    "updatedAt": "2026-09-12T20:45:32.299Z"
+  },
+  {
+    "tenantId": "ten_1789245932125_e9jf",
+    "feature": "teste_ia",
+    "credits": 50,
+    "timestamp": "2026-09-12T20:45:32.315Z",
+    "id": "ai__1789245932315_lb3q",
+    "createdAt": "2026-09-12T20:45:32.315Z",
+    "updatedAt": "2026-09-12T20:45:32.315Z"
+  }
+]

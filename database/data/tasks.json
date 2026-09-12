@@ -55,5 +55,68 @@
     "id": "tas_1789243957235_b70i",
     "createdAt": "2026-09-12T20:12:37.235Z",
     "updatedAt": "2026-09-12T20:12:37.235Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789245789565_0q4v",
+    "leadId": "lea_1789245789550_pk1k",
+    "title": "Reunião de alinhamento de contrato com Carlos Eduardo",
+    "deadline": "2026-09-14T14:00:00.000Z",
+    "completed": false,
+    "priority": "alta",
+    "id": "tas_1789245789582_4232",
+    "createdAt": "2026-09-12T20:43:09.582Z",
+    "updatedAt": "2026-09-12T20:43:09.582Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789245789567_as7a",
+    "leadId": "lea_1789245789552_z8in",
+    "title": "Follow-up da proposta enviada para Dra. Marina via WhatsApp",
+    "deadline": "2026-09-13T10:00:00.000Z",
+    "completed": false,
+    "priority": "alta",
+    "id": "tas_1789245789584_hj8v",
+    "createdAt": "2026-09-12T20:43:09.584Z",
+    "updatedAt": "2026-09-12T20:43:09.584Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789245789573_3y30",
+    "leadId": "lea_1789245789554_44xj",
+    "title": "Mapear requisitos de integração com ERP da Rossi Construtora",
+    "deadline": "2026-09-18T16:00:00.000Z",
+    "completed": false,
+    "priority": "media",
+    "id": "tas_1789245789586_cg0u",
+    "createdAt": "2026-09-12T20:43:09.586Z",
+    "updatedAt": "2026-09-12T20:43:09.586Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789245789827_38xq",
+    "createdAt": "2026-09-12T20:43:09.827Z",
+    "updatedAt": "2026-09-12T20:43:09.827Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789245807378_4pzx",
+    "createdAt": "2026-09-12T20:43:27.378Z",
+    "updatedAt": "2026-09-12T20:43:27.378Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789245932000_drr0",
+    "createdAt": "2026-09-12T20:45:32.000Z",
+    "updatedAt": "2026-09-12T20:45:32.000Z"
   }
 ]

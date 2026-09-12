@@ -1,0 +1,71 @@
+[
+  {
+    "tenantId": "ten_demo_agentise",
+    "brand": "Toyota",
+    "model": "Corolla Cross XRE 2.0 Flex",
+    "year": 2024,
+    "color": "Branco Pérola",
+    "km": 14200,
+    "price": 158900,
+    "plate": "R**-4B21",
+    "fuel": "Flex",
+    "transmission": "Automático CVT",
+    "bodyType": "SUV",
+    "status": "disponivel",
+    "features": [
+      "Teto Solar",
+      "Bancos em Couro",
+      "Controle de Cruzeiro Adaptativo",
+      "Multimídia 10\""
+    ],
+    "id": "veh_1789245789608_2wga",
+    "createdAt": "2026-09-12T20:43:09.608Z",
+    "updatedAt": "2026-09-12T20:43:09.608Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "brand": "Jeep",
+    "model": "Compass Longitude T270 Turbo",
+    "year": 2023,
+    "color": "Cinza Granite",
+    "km": 26500,
+    "price": 149900,
+    "plate": "S**-7F89",
+    "fuel": "Flex",
+    "transmission": "Automático 6 marchas",
+    "bodyType": "SUV",
+    "status": "disponivel",
+    "features": [
+      "Painel Full Digital 10.25\"",
+      "Carregador por Indução",
+      "Faróis Full LED",
+      "Park Assist"
+    ],
+    "id": "veh_1789245789611_zlx8",
+    "createdAt": "2026-09-12T20:43:09.611Z",
+    "updatedAt": "2026-09-12T20:43:09.611Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "brand": "BMW",
+    "model": "320i M Sport 2.0 Turbo",
+    "year": 2023,
+    "color": "Azul Portimao",
+    "km": 19800,
+    "price": 289000,
+    "plate": "B**-9A10",
+    "fuel": "Gasolina",
+    "transmission": "Automático 8 marchas",
+    "bodyType": "Sedan",
+    "status": "reservado",
+    "features": [
+      "Pacote M Sport",
+      "Som Harman Kardon",
+      "Head-up Display",
+      "GPS com Realidade Aumentada"
+    ],
+    "id": "veh_1789245789613_r3mr",
+    "createdAt": "2026-09-12T20:43:09.613Z",
+    "updatedAt": "2026-09-12T20:43:09.613Z"
+  }
+]

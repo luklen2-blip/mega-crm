@@ -1,0 +1,62 @@
+[
+  {
+    "id": "usr_demo_luciano",
+    "tenantId": "ten_demo_agentise",
+    "name": "Luciano",
+    "email": "luciano@recuperaia.local",
+    "passwordHash": "5edf5812bf557a52a6139a6ce5720bbc:c90bbee025df63245946cb275006cf9cdba8ce87c489684de1441773223bbfd234389bd1b0d448f774a21af287007160a4c5742b85ed4902218247d289cf6c8c",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Luciano",
+    "createdAt": "2026-09-12T20:43:09.492Z",
+    "updatedAt": "2026-09-12T20:43:09.492Z"
+  },
+  {
+    "id": "usr_demo_rodrigo",
+    "tenantId": "ten_demo_agentise",
+    "name": "Rodrigo Martins",
+    "email": "rodrigo@agentise.ia.br",
+    "passwordHash": "fbd41e77270b68ef9e0fee5ad2fdb54e:6323a20e7bb3dc4e464a521e90e0113ce34c4a9bbebfae6c6077c405adf99bc30432119e237d44902b08d35edfd5429d1c50a3bc5b44f152b50a17c8e139ea2b",
+    "role": "GERENTE",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Rodrigo",
+    "createdAt": "2026-09-12T20:43:09.512Z",
+    "updatedAt": "2026-09-12T20:43:09.512Z"
+  },
+  {
+    "id": "usr_demo_camila",
+    "tenantId": "ten_demo_agentise",
+    "name": "Camila Mendes",
+    "email": "camila@agentise.ia.br",
+    "passwordHash": "b9e66ff6710258cd950fec807f2eb5e7:54937a982536637f417877b6e7bf2904cd7b5d27f5c137b968138c07d38813f9427327ce625365c1ef64e84051d6982b63f3e327da87a4d8618352393b255dc0",
+    "role": "VENDEDOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Camila",
+    "createdAt": "2026-09-12T20:43:09.532Z",
+    "updatedAt": "2026-09-12T20:43:09.532Z"
+  },
+  {
+    "tenantId": "ten_1789245807468_qc7g",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789245807467@teste.com",
+    "passwordHash": "22bf8125558432b7c6ac6aba6fa51a22:7afce442cd991c60dac226ce649f1892f9d6c08952ff08dfc7fb78f306a038862d910f308fcc78f3af273aeb968103d59eb0c8de9f5003cf9e44111f9a433437",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789245807495_7pr9",
+    "createdAt": "2026-09-12T20:43:27.495Z",
+    "updatedAt": "2026-09-12T20:43:27.495Z"
+  },
+  {
+    "tenantId": "ten_1789245932125_e9jf",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789245932124@teste.com",
+    "passwordHash": "77669a6b9df01024be48268b85ccd1d4:95dc9c0e6d1144f64e1b90582cdef603744bbcf682e99abca0cda7a462f06095d98f69830edd8b347319ca5dec39d9b48fc2fab4151a4cd6a9bb5c94dd7c0eda",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789245932156_gbxm",
+    "createdAt": "2026-09-12T20:45:32.156Z",
+    "updatedAt": "2026-09-12T20:45:32.156Z"
+  }
+]

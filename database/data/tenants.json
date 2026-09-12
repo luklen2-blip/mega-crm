@@ -1,0 +1,71 @@
+[
+  {
+    "id": "ten_demo_agentise",
+    "name": "Agentise Soluções Comerciais",
+    "segment": "Serviços & Tecnologia B2B",
+    "teamSize": "6-15",
+    "plan": "business",
+    "status": "active",
+    "trialEndsAt": "2026-10-12T20:43:09.426Z",
+    "aiCredits": 20000,
+    "aiCreditsUsed": 1520,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "createdAt": "2026-09-12T20:43:09.426Z",
+    "updatedAt": "2026-09-12T20:45:32.275Z"
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-19T20:43:27.468Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 50,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789245807468_qc7g",
+    "createdAt": "2026-09-12T20:43:27.468Z",
+    "updatedAt": "2026-09-12T20:43:27.727Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-19T20:45:32.125Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 50,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789245932125_e9jf",
+    "createdAt": "2026-09-12T20:45:32.125Z",
+    "updatedAt": "2026-09-12T20:45:32.308Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  }
+]

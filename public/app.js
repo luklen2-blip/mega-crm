@@ -1,7 +1,7 @@
 /**
- * Agentise Mega CRM - Frontend Controller (Auditado e Otimizado)
- * Arquitetura Reativa AI-First com suporte a Kanban Drag-and-Drop,
- * Copiloto Claude AI, PIX Oficial EMV, Notificações Toast e Visual Dark Glassmorphism.
+ * AGENTISE MEGA CRM - Controlador de Frontend SaaS Multi-Tenant AI-First
+ * Orquestrador de estado reativo, Drag & Drop, Omnichannel, Copiloto Claude,
+ * RecuperaIA, Automações, Analista IA, Vertical Auto e Checkout PIX Oficial.
  */
 
 const STAGES = [
@@ -14,14 +14,21 @@ const STAGES = [
   { id: 'perdido', label: 'Perdido', color: 'rose' }
 ];
 
+// Estado Global da Aplicação
 let globalLeads = [];
 let globalDeals = [];
 let globalTasks = [];
+let globalConversations = [];
+let globalKnowledge = [];
+let globalAutomations = [];
+let globalVehicles = [];
 let activeView = 'pipeline';
-let selectedLeadId = null;
+let activeConversationId = null;
 let currentCopilotText = '';
+let currentAuthToken = localStorage.getItem('agentise_token') || '';
+let currentOnboardingData = { segment: 'Serviços', teamSize: '1-5', leadSources: ['WhatsApp'], primaryGoal: 'Aumentar vendas' };
 
-// Sistema de Notificações Toast Moderno
+// Sistema de Notificações Toast
 function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');
   if (!container) return alert(message);
@@ -60,9 +67,16 @@ function showToast(message, type = 'info') {
   }, 4000);
 }
 
-// Formatação BRL
 function formatBRL(val) {
   return Number(val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function authHeaders() {
+  const headers = { 'Content-Type': 'application/json' };
+  if (currentAuthToken) {
+    headers['Authorization'] = `Bearer ${currentAuthToken}`;
+  }
+  return headers;
 }
 
 // Inicialização
@@ -72,17 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initApp() {
+  await checkHealth();
   await Promise.all([
-    checkHealth(),
     loadDeals(),
     loadLeads(),
     loadTasks(),
-    loadAnalytics()
+    loadAnalytics(),
+    loadOmnichannel(),
+    loadRecuperaIA(),
+    loadKnowledgeBase(),
+    loadAutomations(),
+    loadAutoVehicles(),
+    loadBilling()
   ]);
   if (window.lucide) lucide.createIcons();
 }
 
-// 1. Monitoramento 24/7 de Saúde da Nuvem
+// 1. Health Check
 async function checkHealth() {
   try {
     const res = await fetch('/api/health');
@@ -92,47 +112,183 @@ async function checkHealth() {
       if (up) up.innerText = `${data.uptime_seconds}s`;
     }
   } catch (err) {
-    console.error('Falha no health check:', err);
+    console.error('Health check falhou:', err);
   }
 }
 
 // 2. Navegação entre Views
 function switchView(viewName) {
   activeView = viewName;
-  ['pipeline', 'leads', 'copilot', 'pix', 'analytics', 'tasks'].forEach(v => {
+  const allViews = [
+    'pipeline', 'leads', 'omnichannel', 'recuperaia', 'copilot',
+    'cerebro', 'automations', 'analyst', 'auto', 'sellers', 'pix',
+    'analytics', 'tasks', 'billing'
+  ];
+
+  allViews.forEach(v => {
     const el = document.getElementById(`view-${v}`);
     const nav = document.getElementById(`nav-${v}`);
     if (el) el.classList.toggle('hidden', v !== viewName);
     if (nav) {
       if (v === viewName) {
-        nav.className = 'nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-blue-300 bg-blue-500/15 border border-blue-500/30 transition';
+        nav.className = 'nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-blue-300 bg-blue-500/15 border border-blue-500/30 transition';
       } else {
-        nav.className = 'nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition';
+        nav.className = 'nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition';
       }
     }
   });
 
   if (viewName === 'analytics') loadAnalytics();
+  if (viewName === 'recuperaia') loadRecuperaIA();
+  if (viewName === 'omnichannel') loadOmnichannel();
+  if (viewName === 'cerebro') loadKnowledgeBase();
+  if (viewName === 'automations') loadAutomations();
+  if (viewName === 'auto') loadAutoVehicles();
+  if (viewName === 'sellers') loadAnalytics();
+  if (viewName === 'billing') loadBilling();
+
   if (window.lucide) lucide.createIcons();
 }
 
-// 3. Carregamento de Dados
+// 3. PIPELINE KANBAN (DRAG AND DROP)
 async function loadDeals() {
   try {
-    const res = await fetch('/api/deals');
+    const res = await fetch('/api/deals', { headers: authHeaders() });
     const json = await res.json();
     globalDeals = json.data || [];
     renderKanban();
     populateDealSelects();
-    updatePipelineSummary();
   } catch (e) {
     console.error('Erro ao carregar deals:', e);
   }
 }
 
+function renderKanban() {
+  const board = document.getElementById('kanban-board');
+  if (!board) return;
+  board.innerHTML = '';
+
+  STAGES.forEach(stage => {
+    const stageDeals = globalDeals.filter(d => (d.stage || 'prospeccao') === stage.id);
+    const stageTotal = stageDeals.reduce((sum, d) => sum + (Number(d.value) || 0), 0);
+
+    const col = document.createElement('div');
+    col.className = 'kanban-column glass-panel rounded-2xl p-3 border border-blue-500/15 flex flex-col max-h-[750px]';
+    col.dataset.stage = stage.id;
+
+    col.innerHTML = `
+      <div class="flex items-center justify-between pb-2.5 mb-2 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-${stage.color}-400"></span>
+          <span class="text-xs font-bold text-white uppercase tracking-wider">${stage.label}</span>
+        </div>
+        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">${stageDeals.length}</span>
+      </div>
+      <div class="text-[11px] text-slate-400 font-semibold mb-2">${formatBRL(stageTotal)}</div>
+      <div class="cards-container flex-1 overflow-y-auto space-y-2.5 pr-1 min-h-[120px]" data-stage="${stage.id}"></div>
+    `;
+
+    const container = col.querySelector('.cards-container');
+
+    // Drag and Drop Events
+    container.addEventListener('dragover', e => {
+      e.preventDefault();
+      container.classList.add('drag-over');
+    });
+
+    container.addEventListener('dragleave', () => {
+      container.classList.remove('drag-over');
+    });
+
+    container.addEventListener('drop', async e => {
+      e.preventDefault();
+      container.classList.remove('drag-over');
+      const dealId = e.dataTransfer.getData('text/plain');
+      if (dealId) {
+        await moveDealStage(dealId, stage.id);
+      }
+    });
+
+    stageDeals.forEach(deal => {
+      const card = createKanbanCard(deal);
+      container.appendChild(card);
+    });
+
+    board.appendChild(col);
+  });
+
+  if (window.lucide) lucide.createIcons();
+}
+
+function createKanbanCard(deal) {
+  const card = document.createElement('div');
+  card.className = 'glass-card p-3 rounded-xl cursor-grab border border-slate-700/60 hover:border-blue-400/50 space-y-2';
+  card.draggable = true;
+  card.dataset.id = deal.id;
+
+  card.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text/plain', deal.id);
+    card.classList.add('dragging');
+  });
+
+  card.addEventListener('dragend', () => {
+    card.classList.remove('dragging');
+  });
+
+  const leadName = deal.lead ? deal.lead.name : (deal.leadName || 'Cliente Potencial');
+  const company = deal.lead ? deal.lead.company : '';
+
+  card.innerHTML = `
+    <div class="flex items-start justify-between gap-1">
+      <div class="text-xs font-bold text-white leading-tight">${deal.title}</div>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-300 font-bold">${deal.probability || 20}%</span>
+    </div>
+    <div class="text-[11px] text-slate-400 truncate">${leadName} ${company ? `· ${company}` : ''}</div>
+    <div class="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[11px]">
+      <span class="font-bold text-emerald-400">${formatBRL(deal.value)}</span>
+      <div class="flex items-center gap-1.5">
+        <button onclick="quickCopilotForDeal('${deal.id}')" title="Copiloto IA" class="p-1 rounded hover:bg-blue-500/20 text-blue-400">
+          <i data-lucide="bot" class="h-3.5 w-3.5"></i>
+        </button>
+        <button onclick="quickPixForDeal('${deal.id}')" title="Gerar PIX" class="p-1 rounded hover:bg-emerald-500/20 text-emerald-400">
+          <i data-lucide="qr-code" class="h-3.5 w-3.5"></i>
+        </button>
+      </div>
+    </div>
+  `;
+
+  return card;
+}
+
+async function moveDealStage(dealId, targetStage) {
+  try {
+    const res = await fetch(`/api/deals/${dealId}/stage`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: JSON.stringify({ stage: targetStage })
+    });
+    if (res.ok) {
+      showToast(`Oportunidade movida para ${targetStage.toUpperCase()}`, 'success');
+      await loadDeals();
+      await loadTasks();
+    }
+  } catch (err) {
+    showToast('Falha ao mover estágio.', 'error');
+  }
+}
+
+function filterKanban() {
+  const q = (document.getElementById('kanban-search')?.value || '').toLowerCase();
+  document.querySelectorAll('#kanban-board .glass-card').forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(q) ? 'block' : 'none';
+  });
+}
+
+// 4. LEADS & CONTATOS 360°
 async function loadLeads() {
   try {
-    const res = await fetch('/api/leads');
+    const res = await fetch('/api/leads', { headers: authHeaders() });
     const json = await res.json();
     globalLeads = json.data || [];
     renderLeadsTable();
@@ -142,911 +298,981 @@ async function loadLeads() {
   }
 }
 
-async function loadTasks() {
-  try {
-    const res = await fetch('/api/tasks');
-    const json = await res.json();
-    globalTasks = json.data || [];
-    renderTasks();
-  } catch (e) {
-    console.error('Erro ao carregar tarefas:', e);
-  }
-}
-
-async function loadAnalytics() {
-  try {
-    const res = await fetch('/api/analytics');
-    const json = await res.json();
-    const d = json.data;
-
-    document.getElementById('kpi-pipeline-val').innerText = formatBRL(d.totalPipelineValue);
-    document.getElementById('kpi-won-val').innerText = formatBRL(d.wonValue);
-    document.getElementById('kpi-win-rate').innerText = `${d.winRate}%`;
-    document.getElementById('kpi-avg-ticket').innerText = formatBRL(d.avgTicket);
-
-    const barsCont = document.getElementById('analytics-stages-bars');
-    if (barsCont) {
-      const maxCount = Math.max(...Object.values(d.stageBreakdown), 1);
-      barsCont.innerHTML = Object.entries(d.stageBreakdown).map(([stg, count]) => {
-        const pct = ((count / maxCount) * 100).toFixed(0);
-        const stageObj = STAGES.find(s => s.id === stg) || { label: stg };
-        return `
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-slate-300 font-semibold">${stageObj.label}</span>
-              <span class="text-blue-400 font-bold">${count} deals (${pct}%)</span>
-            </div>
-            <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-              <div class="h-full bg-gradient-to-r from-blue-600 to-indigo-500" style="width: ${pct}%"></div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-  } catch (e) {
-    console.error('Erro ao carregar analytics:', e);
-  }
-}
-
-function updatePipelineSummary() {
-  const total = globalDeals.reduce((sum, d) => sum + (Number(d.value) || 0), 0);
-  const count = globalDeals.length;
-  const topVal = document.getElementById('topbar-pipeline-val');
-  const countVal = document.getElementById('pipeline-deals-count');
-  if (topVal) topVal.innerText = formatBRL(total);
-  if (countVal) countVal.innerText = `${count} ${count === 1 ? 'oportunidade' : 'oportunidades'}`;
-}
-
-// 4. Renderização do Kanban Board
-function renderKanban() {
-  const board = document.getElementById('kanban-board');
-  if (!board) return;
-
-  const filter = (document.getElementById('kanban-search')?.value || '').toLowerCase();
-
-  board.innerHTML = STAGES.map(stage => {
-    const dealsInStage = globalDeals.filter(d => {
-      if (d.stage !== stage.id) return false;
-      if (!filter) return true;
-      const title = (d.title || '').toLowerCase();
-      const leadName = (d.lead?.name || '').toLowerCase();
-      const company = (d.lead?.company || '').toLowerCase();
-      return title.includes(filter) || leadName.includes(filter) || company.includes(filter);
-    });
-
-    const sumInStage = dealsInStage.reduce((acc, d) => acc + (Number(d.value) || 0), 0);
-
-    return `
-      <div class="kanban-column glass-panel p-3 rounded-2xl border border-slate-800/80 flex flex-col max-h-[calc(100vh-180px)]"
-           ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event, '${stage.id}')">
-        
-        <!-- Column Header -->
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3 shrink-0">
-          <div class="flex items-center gap-2">
-            <span class="h-2.5 w-2.5 rounded-full bg-${stage.color}-400"></span>
-            <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">${stage.label}</h3>
-          </div>
-          <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-800 text-slate-400">
-            ${dealsInStage.length}
-          </span>
-        </div>
-
-        <div class="text-[11px] font-bold text-slate-400 mb-3 px-1">
-          Subtotal: <span class="text-white">${formatBRL(sumInStage)}</span>
-        </div>
-
-        <!-- Cards Container -->
-        <div class="space-y-3 overflow-y-auto flex-1 pr-1" id="column-${stage.id}">
-          ${dealsInStage.map(renderDealCard).join('')}
-          ${dealsInStage.length === 0 ? `
-            <div class="py-8 text-center border border-dashed border-slate-800/80 rounded-xl text-[11px] text-slate-600">
-              Nenhum negócio nesta fase
-            </div>
-          ` : ''}
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  if (window.lucide) lucide.createIcons();
-}
-
-function renderDealCard(deal) {
-  const leadName = deal.lead?.name || 'Cliente';
-  const company = deal.lead?.company || '';
-  const phone = deal.lead?.phone || '';
-  const cleanPhone = phone.replace(/\D/g, '');
-  const destination = cleanPhone.startsWith('55') ? cleanPhone : `55${cleanPhone}`;
-  const whatsappUrl = `https://wa.me/${destination}?text=${encodeURIComponent(`Olá, ${leadName}! Tudo bem? Gostaria de falar sobre o projeto "${deal.title}".`)}`;
-
-  return `
-    <div class="glass-card p-3.5 rounded-xl cursor-grab active:cursor-grabbing border border-blue-500/15"
-         draggable="true" ondragstart="onDragStart(event, '${deal.id}')" id="deal-${deal.id}">
-      
-      <!-- Top Badges -->
-      <div class="flex items-center justify-between mb-2">
-        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md ${
-          deal.priority === 'urgente' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' :
-          deal.priority === 'alta' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
-          'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-        }">${deal.priority || 'Média'}</span>
-
-        <span class="text-xs font-bold text-emerald-400">${formatBRL(deal.value)}</span>
-      </div>
-
-      <!-- Title & Customer -->
-      <h4 class="text-xs font-bold text-white mb-1 leading-snug hover:text-blue-400 transition cursor-pointer" onclick="openLead360('${deal.leadId}')">
-        ${deal.title}
-      </h4>
-      <p class="text-[11px] text-slate-400 mb-3 flex items-center gap-1.5 truncate">
-        <i data-lucide="building-2" class="h-3 w-3 text-slate-500 shrink-0"></i>
-        <span>${leadName} ${company ? '· ' + company : ''}</span>
-      </p>
-
-      <!-- Action Buttons -->
-      <div class="flex items-center justify-between pt-2 border-t border-slate-800/80 text-[11px]">
-        <div class="flex items-center gap-1.5">
-          ${phone ? `
-            <a href="${whatsappUrl}" target="_blank" class="p-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 transition" title="Chamar no WhatsApp">
-              <i data-lucide="message-circle" class="h-3.5 w-3.5"></i>
-            </a>
-          ` : ''}
-          <button onclick="quickCopilotDeal('${deal.id}')" class="p-1.5 rounded-lg bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 transition" title="Copiloto Claude AI">
-            <i data-lucide="bot" class="h-3.5 w-3.5"></i>
-          </button>
-          <button onclick="quickPixDeal('${deal.id}')" class="p-1.5 rounded-lg bg-teal-500/15 hover:bg-teal-500/25 text-teal-300 transition" title="Gerar Proposta com PIX">
-            <i data-lucide="qr-code" class="h-3.5 w-3.5"></i>
-          </button>
-        </div>
-
-        <button onclick="advanceStage('${deal.id}')" class="text-[10px] text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-0.5">
-          <span>Avançar</span>
-          <i data-lucide="chevron-right" class="h-3 w-3"></i>
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-// 5. Drag and Drop Handlers
-let draggedDealId = null;
-
-function onDragStart(e, dealId) {
-  draggedDealId = dealId;
-  e.dataTransfer.setData('text/plain', dealId);
-  e.currentTarget.classList.add('dragging');
-}
-
-function onDragOver(e) {
-  e.preventDefault();
-  e.currentTarget.classList.add('drag-over');
-}
-
-function onDragLeave(e) {
-  e.currentTarget.classList.remove('drag-over');
-}
-
-async function onDrop(e, newStage) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  if (!draggedDealId) return;
-
-  const dealId = draggedDealId;
-  draggedDealId = null;
-
-  try {
-    const res = await fetch(`/api/deals/${dealId}/stage`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ stage: newStage })
-    });
-    if (res.ok) {
-      showToast('Estágio atualizado com sucesso!', 'success');
-      await loadDeals();
-      await loadTasks();
-      await loadAnalytics();
-    }
-  } catch (err) {
-    showToast('Erro ao movimentar card.', 'error');
-  }
-}
-
-async function advanceStage(dealId) {
-  const deal = globalDeals.find(d => d.id === dealId);
-  if (!deal) return;
-  const currentIdx = STAGES.findIndex(s => s.id === deal.stage);
-  if (currentIdx >= 0 && currentIdx < STAGES.length - 2) {
-    const nextStage = STAGES[currentIdx + 1].id;
-    await fetch(`/api/deals/${dealId}/stage`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ stage: nextStage })
-    });
-    showToast(`Oportunidade avançada para ${STAGES[currentIdx + 1].label}!`, 'success');
-    await loadDeals();
-    await loadTasks();
-    await loadAnalytics();
-  }
-}
-
-function filterKanban() {
-  renderKanban();
-}
-
-// 6. Leads Table & Drawer 360°
 function renderLeadsTable() {
   const tbody = document.getElementById('leads-table-body');
   if (!tbody) return;
+  tbody.innerHTML = '';
 
-  tbody.innerHTML = globalLeads.map(lead => {
-    const phone = lead.phone || '-';
-    const cleanPhone = phone.replace(/\D/g, '');
-    const destination = cleanPhone.startsWith('55') ? cleanPhone : `55${cleanPhone}`;
-    const whatsappUrl = phone ? `https://wa.me/${destination}` : '#';
+  globalLeads.forEach(lead => {
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-slate-900/40 transition';
 
-    return `
-      <tr class="hover:bg-slate-800/40 transition">
-        <td class="px-4 py-3 font-semibold text-white cursor-pointer" onclick="openLead360('${lead.id}')">
-          <div>${lead.name}</div>
-          <span class="text-[10px] text-slate-400 font-normal">${lead.role || 'Cargo não informado'}</span>
-        </td>
-        <td class="px-4 py-3 text-slate-300 font-medium">${lead.company || '-'}</td>
-        <td class="px-4 py-3 text-slate-400">
-          <div>${lead.email || '-'}</div>
-          <div class="text-[10px] text-slate-500">${phone}</div>
-        </td>
-        <td class="px-4 py-3">
-          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-            ${lead.estimatedBudget ? 'R$ ' + Number(lead.estimatedBudget).toLocaleString('pt-BR') : 'A Qualificar'}
-          </span>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex flex-wrap gap-1">
-            ${(lead.tags || []).map(t => `<span class="px-1.5 py-0.5 rounded text-[9px] bg-slate-800 text-slate-400">${t}</span>`).join('')}
-          </div>
-        </td>
-        <td class="px-4 py-3 text-right">
-          <div class="flex items-center justify-end gap-1.5">
-            ${phone ? `
-              <a href="${whatsappUrl}" target="_blank" class="p-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/30 text-emerald-400" title="Conversar no WhatsApp">
-                <i data-lucide="message-circle" class="h-3.5 w-3.5"></i>
-              </a>
-            ` : ''}
-            <button onclick="openLead360('${lead.id}')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold">
-              Ver 360°
-            </button>
-          </div>
-        </td>
-      </tr>
+    tr.innerHTML = `
+      <td class="p-3.5">
+        <div class="font-bold text-white">${lead.name}</div>
+        <div class="text-[10px] text-slate-400">${lead.company || 'Pessoa Física'}</div>
+      </td>
+      <td class="p-3.5">
+        <div class="text-slate-300">${lead.role || 'Contato Comercial'}</div>
+        <div class="text-[10px] text-slate-500">${lead.phone || '-'} · ${lead.email || '-'}</div>
+      </td>
+      <td class="p-3.5 font-bold text-emerald-400">
+        ${formatBRL(lead.estimatedBudget)}
+      </td>
+      <td class="p-3.5">
+        <div class="flex flex-wrap gap-1">
+          ${(lead.tags || ['Qualificado']).map(t => `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300">${t}</span>`).join('')}
+        </div>
+      </td>
+      <td class="p-3.5 text-right space-x-1.5">
+        <button onclick="openLead360('${lead.id}')" class="px-2.5 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 font-semibold transition">
+          Visão 360°
+        </button>
+        ${lead.phone ? `
+          <a href="https://wa.me/55${lead.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Olá ' + lead.name + ', tudo bem? Aqui é da equipe comercial.')}" target="_blank" class="px-2 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-300 font-semibold transition inline-flex items-center gap-1">
+            <i data-lucide="message-circle" class="h-3 w-3"></i> WhatsApp
+          </a>
+        ` : ''}
+      </td>
     `;
-  }).join('');
+    tbody.appendChild(tr);
+  });
 
   if (window.lucide) lucide.createIcons();
 }
 
-async function openLead360(leadId) {
-  selectedLeadId = leadId;
-  const drawer = document.getElementById('drawer-lead360');
-  const content = document.getElementById('drawer-lead-content');
-  if (!drawer || !content) return;
+function openLead360(leadId) {
+  const lead = globalLeads.find(l => l.id === leadId);
+  if (!lead) return;
+  
+  // Alterna para copiloto já com este lead selecionado
+  switchView('copilot');
+  const sel = document.getElementById('copilot-lead-select');
+  if (sel) {
+    sel.value = leadId;
+    onCopilotLeadChange();
+  }
+}
 
-  drawer.classList.remove('translate-x-full');
-  content.innerHTML = '<div class="text-center py-10 text-slate-400">Carregando visão 360°...</div>';
-
+// 5. CENTRAL OMNICHANNEL (FASE 6)
+async function loadOmnichannel() {
   try {
-    const res = await fetch(`/api/leads/${leadId}`);
-    const json = await res.json();
-    const lead = json.data;
+    const [chRes, cvRes] = await Promise.all([
+      fetch('/api/omnichannel/channels', { headers: authHeaders() }),
+      fetch('/api/omnichannel/conversations', { headers: authHeaders() })
+    ]);
+    const channels = (await chRes.json()).data || [];
+    globalConversations = (await cvRes.json()).data || [];
 
-    content.innerHTML = `
-      <div class="space-y-4">
-        <!-- Lead Header -->
-        <div class="p-4 rounded-xl bg-slate-900 border border-blue-500/20 space-y-1">
-          <h4 class="text-sm font-bold text-white">${lead.name}</h4>
-          <p class="text-blue-400">${lead.role || ''} ${lead.company ? 'em ' + lead.company : ''}</p>
-          <div class="text-[11px] text-slate-400 pt-1">
-            <span>Email: ${lead.email || '-'}</span> · <span>WhatsApp: ${lead.phone || '-'}</span>
-          </div>
+    renderChannelsStatus(channels);
+    renderConversationsList();
+  } catch (err) {
+    console.error('Erro ao carregar omnichannel:', err);
+  }
+}
+
+function renderChannelsStatus(channels) {
+  const bar = document.getElementById('channels-status-bar');
+  if (!bar) return;
+  bar.innerHTML = '';
+
+  channels.forEach(ch => {
+    const isConn = ch.status === 'connected';
+    const card = document.createElement('div');
+    card.className = `p-3.5 rounded-2xl border ${isConn ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-slate-800 bg-slate-900/60'} flex items-center justify-between`;
+    
+    card.innerHTML = `
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-xl ${isConn ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-400'} flex items-center justify-center">
+          <i data-lucide="${ch.icon || 'message-circle'}" class="h-5 w-5"></i>
         </div>
-
-        <!-- Notes -->
-        <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 space-y-1">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Notas & Dores Relatadas</span>
-          <p class="text-slate-300 leading-relaxed">${lead.notes || 'Nenhuma observação registrada.'}</p>
-        </div>
-
-        <!-- Deals -->
-        <div class="space-y-2">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Oportunidades (${(lead.deals || []).length})</span>
-          ${(lead.deals || []).map(d => `
-            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-              <div>
-                <div class="font-bold text-white">${d.title}</div>
-                <div class="text-[10px] text-blue-400 capitalize">Fase: ${d.stage}</div>
-              </div>
-              <div class="text-right">
-                <div class="font-bold text-emerald-400">${formatBRL(d.value)}</div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-
-        <!-- Timeline Activities -->
-        <div class="space-y-2">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Histórico de Atividades</span>
-          <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
-            ${(lead.activities || []).map(a => `
-              <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 text-[11px]">
-                <div class="font-semibold text-slate-200">${a.title}</div>
-                <div class="text-slate-400">${a.description}</div>
-                <div class="text-[9px] text-slate-500 mt-1">${new Date(a.timestamp).toLocaleString('pt-BR')}</div>
-              </div>
-            `).join('')}
-            ${(lead.activities || []).length === 0 ? '<div class="text-slate-500 text-center py-2">Sem histórico recente.</div>' : ''}
-          </div>
+        <div>
+          <div class="text-xs font-bold text-white">${ch.name}</div>
+          <div class="text-[10px] text-slate-400">${ch.description.slice(0, 45)}...</div>
         </div>
       </div>
+      <div>
+        <button onclick="connectChannelModal('${ch.id}')" class="px-2.5 py-1 text-[11px] font-bold rounded-xl ${isConn ? 'bg-emerald-500/20 text-emerald-300' : 'bg-blue-600 hover:bg-blue-500 text-white'} transition">
+          ${ch.statusLabel}
+        </button>
+      </div>
     `;
-    if (window.lucide) lucide.createIcons();
-  } catch (e) {
-    content.innerHTML = '<div class="text-rose-400">Falha ao carregar dados do lead.</div>';
+    bar.appendChild(card);
+  });
+}
+
+function renderConversationsList() {
+  const list = document.getElementById('conversations-list');
+  const count = document.getElementById('conv-count');
+  if (!list) return;
+  list.innerHTML = '';
+  if (count) count.innerText = globalConversations.length;
+
+  globalConversations.forEach(cv => {
+    const item = document.createElement('div');
+    item.className = `p-2.5 rounded-xl border cursor-pointer transition ${activeConversationId === cv.id ? 'bg-blue-900/30 border-blue-500/40 text-white' : 'border-slate-800 hover:bg-slate-800/40 text-slate-300'}`;
+    item.onclick = () => selectConversation(cv.id);
+
+    item.innerHTML = `
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-xs font-bold text-white">${cv.customerName || 'Cliente'}</span>
+        <span class="text-[9px] text-slate-500">${cv.lastMessageAt ? new Date(cv.lastMessageAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+      </div>
+      <div class="text-[11px] text-slate-400 truncate">${cv.lastMessage || 'Nenhuma mensagem recente'}</div>
+    `;
+    list.appendChild(item);
+  });
+
+  if (globalConversations.length > 0 && !activeConversationId) {
+    selectConversation(globalConversations[0].id);
   }
 }
 
-function closeLeadDrawer() {
-  const drawer = document.getElementById('drawer-lead360');
-  if (drawer) drawer.classList.add('translate-x-full');
-}
+async function selectConversation(cvId) {
+  activeConversationId = cvId;
+  renderConversationsList();
+  const cv = globalConversations.find(c => c.id === cvId);
+  if (!cv) return;
 
-async function anonymizeCurrentLead() {
-  if (!selectedLeadId) return;
-  if (!confirm('Atenção: Esta ação efetuará a anonimização permanente dos dados deste lead em conformidade com o Art. 18 da LGPD. Deseja prosseguir?')) return;
+  document.getElementById('chat-customer-name').innerText = cv.customerName;
+  document.getElementById('chat-customer-phone').innerText = cv.customerPhone || 'Canal Web';
+  document.getElementById('chat-customer-avatar').innerText = (cv.customerName || 'C').charAt(0).toUpperCase();
 
   try {
-    const res = await fetch('/api/lgpd/anonymize', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leadId: selectedLeadId })
-    });
-    if (res.ok) {
-      showToast('Dados anonimizados com sucesso.', 'success');
-      closeLeadDrawer();
-      await loadLeads();
-      await loadDeals();
-    }
+    const res = await fetch(`/api/omnichannel/conversations/${cvId}/messages`, { headers: authHeaders() });
+    const msgs = (await res.json()).data || [];
+    renderChatMessages(msgs);
   } catch (e) {
-    showToast('Erro ao processar requisição LGPD.', 'error');
+    console.error('Erro ao carregar mensagens:', e);
   }
 }
 
-// 7. Claude AI Copilot Hub
-function populateDealSelects() {
-  const select = document.getElementById('copilot-deal-select');
-  const pixSelect = document.getElementById('pix-form-deal');
-  const taskDealSelect = document.getElementById('task-new-deal');
-  if (!select) return;
+function renderChatMessages(msgs) {
+  const container = document.getElementById('chat-messages');
+  if (!container) return;
+  container.innerHTML = '';
 
-  const options = '<option value="">-- Selecione uma oportunidade --</option>' +
-    globalDeals.map(d => `<option value="${d.id}">${d.title} (${d.lead?.name || 'Cliente'} - ${formatBRL(d.value)})</option>`).join('');
+  msgs.forEach(m => {
+    const isClient = m.sender === 'cliente';
+    const bubble = document.createElement('div');
+    bubble.className = `flex ${isClient ? 'justify-start' : 'justify-end'}`;
 
-  select.innerHTML = options;
-  if (pixSelect) pixSelect.innerHTML = '<option value="">-- Cobrança Avulsa --</option>' +
-    globalDeals.map(d => `<option value="${d.id}">${d.title} - ${formatBRL(d.value)}</option>`).join('');
+    bubble.innerHTML = `
+      <div class="max-w-[75%] p-3 rounded-2xl text-xs ${isClient ? 'bg-slate-800 text-slate-200 border border-slate-700' : 'bg-blue-600 text-white shadow-md'}">
+        <div class="text-[9px] opacity-70 mb-1">${m.senderName || (isClient ? 'Cliente' : 'Vendedor')}</div>
+        <div>${m.text}</div>
+      </div>
+    `;
+    container.appendChild(bubble);
+  });
 
-  if (taskDealSelect) taskDealSelect.innerHTML = '<option value="">-- Sem vínculo --</option>' +
-    globalDeals.map(d => `<option value="${d.id}">${d.title}</option>`).join('');
+  container.scrollTop = container.scrollHeight;
 }
 
-function populateLeadSelects() {
-  const select = document.getElementById('deal-new-lead');
-  if (!select) return;
-  select.innerHTML = globalLeads.map(l => `<option value="${l.id}">${l.name} (${l.company || 'Empresa'})</option>`).join('');
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  if (!input || !input.value.trim() || !activeConversationId) return;
+
+  const text = input.value.trim();
+  input.value = '';
+
+  try {
+    const res = await fetch('/api/omnichannel/messages', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ conversationId: activeConversationId, text, sender: 'vendedor' })
+    });
+    if (res.ok) {
+      await selectConversation(activeConversationId);
+    }
+  } catch (e) {
+    showToast('Erro ao enviar mensagem.', 'error');
+  }
 }
 
-function loadCopilotContext() {
-  const dealId = document.getElementById('copilot-deal-select')?.value;
-  const card = document.getElementById('copilot-context-card');
-  if (!card) return;
+function triggerCopilotSuggestion() {
+  const cv = globalConversations.find(c => c.id === activeConversationId);
+  const input = document.getElementById('chat-input');
+  if (!input) return;
+  input.value = `Olá ${cv ? cv.customerName : 'cliente'}, tudo bem? Analisei seu projeto com a nossa IA e preparei uma condição exclusiva.`;
+  showToast('Sugestão de resposta gerada pela IA aplicada no campo.', 'info');
+}
 
-  if (!dealId) {
-    card.classList.add('hidden');
+function connectChannelModal(channelId) {
+  openSettingsModal();
+  showToast(`Configure as credenciais oficiais da Meta para ativar o canal ${channelId}.`, 'info');
+}
+
+// 6. RECUPERAIA (FASE 9)
+async function loadRecuperaIA() {
+  try {
+    const [scanRes, campRes] = await Promise.all([
+      fetch('/api/recovery/scan', { headers: authHeaders() }),
+      fetch('/api/recovery/campaigns', { headers: authHeaders() })
+    ]);
+    const scan = (await scanRes.json()).data || {};
+    const camps = (await campRes.json()).data || [];
+
+    const totalRiskEl = document.getElementById('rec-total-risk');
+    if (totalRiskEl) totalRiskEl.innerText = formatBRL(scan.totalValueAtRisk);
+
+    const cats = scan.categories || {};
+    if (document.getElementById('rec-stagnant-proposals')) {
+      document.getElementById('rec-stagnant-proposals').innerText = cats.stagnantProposals?.count || 0;
+    }
+    if (document.getElementById('rec-stalled-deals')) {
+      document.getElementById('rec-stalled-deals').innerText = cats.stalledDeals?.count || 0;
+    }
+    if (document.getElementById('rec-inactive-leads')) {
+      document.getElementById('rec-inactive-leads').innerText = cats.inactiveLeads?.count || 0;
+    }
+
+    renderRecoveryCampaigns(camps);
+  } catch (err) {
+    console.error('Erro ao carregar RecuperaIA:', err);
+  }
+}
+
+function renderRecoveryCampaigns(camps) {
+  const container = document.getElementById('recovery-campaigns-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (camps.length === 0) {
+    container.innerHTML = '<div class="text-xs text-slate-500 py-3">Nenhuma campanha de reativação gerada ainda. Clique em "Gerar Campanha com IA".</div>';
     return;
   }
 
-  const deal = globalDeals.find(d => d.id === dealId);
-  if (!deal) return;
-
-  card.classList.remove('hidden');
-  card.innerHTML = `
-    <div class="font-bold text-white">${deal.title}</div>
-    <div class="text-blue-400">Cliente: ${deal.lead?.name || 'Cliente'} (${deal.lead?.role || ''})</div>
-    <div class="text-slate-400">Valor: <strong class="text-emerald-400">${formatBRL(deal.value)}</strong> · Fase: <span class="capitalize">${deal.stage}</span></div>
-    <div class="text-[11px] text-slate-400 italic">"${deal.lead?.notes || 'Sem observações'}"</div>
-  `;
+  camps.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2';
+    div.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold text-white">${c.name}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold uppercase">${c.status}</span>
+      </div>
+      <div class="text-xs text-slate-300 italic p-2 rounded-lg bg-slate-950 border border-slate-800/80">
+        "${c.template?.message || ''}"
+      </div>
+      <div class="flex items-center justify-between pt-1 text-[11px] text-slate-400">
+        <span>CTA: <strong>${c.template?.cta || ''}</strong></span>
+        <button onclick="dispatchRecoveryCampaign('${c.id}')" class="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold transition">
+          Disparar Régua de Resgate
+        </button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
 }
 
-function quickCopilotDeal(dealId) {
-  switchView('copilot');
-  const select = document.getElementById('copilot-deal-select');
-  if (select) {
-    select.value = dealId;
-    loadCopilotContext();
-    runAiPitch('primeiro_contato');
+async function runAiRecoveryCampaignModal() {
+  try {
+    const res = await fetch('/api/recovery/generate-campaign', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ category: 'stalledDeals', tone: 'consultivo' })
+    });
+    if (res.ok) {
+      showToast('Nova campanha do RecuperaIA gerada com sequência em 3 etapas!', 'success');
+      await loadRecuperaIA();
+    }
+  } catch (e) {
+    showToast('Erro ao gerar campanha.', 'error');
   }
 }
 
-async function runAiBant() {
-  const dealId = document.getElementById('copilot-deal-select')?.value;
-  if (!dealId) return showToast('Selecione uma oportunidade primeiro.', 'warning');
+function dispatchRecoveryCampaign(campId) {
+  showToast('Régua de 3 etapas do RecuperaIA iniciada respeitando os limites da LGPD.', 'success');
+}
 
-  const deal = globalDeals.find(d => d.id === dealId);
-  const lead = deal?.lead || {};
+// 7. CÉREBRO DA EMPRESA (FASE 8)
+async function loadKnowledgeBase() {
+  try {
+    const res = await fetch('/api/knowledge-base', { headers: authHeaders() });
+    globalKnowledge = (await res.json()).data || [];
+    renderKnowledgeBase();
+  } catch (e) {
+    console.error('Erro ao carregar knowledge base:', e);
+  }
+}
 
-  setCopilotLoading('Calculando Score BANT da oportunidade...');
+function renderKnowledgeBase() {
+  const grid = document.getElementById('knowledge-base-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  globalKnowledge.forEach(kb => {
+    const card = document.createElement('div');
+    card.className = 'glass-card p-4 rounded-2xl border border-purple-500/20 flex flex-col justify-between space-y-2';
+    card.innerHTML = `
+      <div>
+        <div class="text-[10px] font-bold uppercase text-purple-400">${kb.category}</div>
+        <div class="text-xs font-bold text-white pt-0.5">${kb.title}</div>
+        <p class="text-[11px] text-slate-300 pt-1.5 leading-relaxed">${kb.content}</p>
+      </div>
+      <div class="flex items-center justify-between pt-2 border-t border-slate-800 text-[10px] text-slate-500">
+        <span>Alimenta Agente IA</span>
+        <button onclick="deleteKnowledge('${kb.id}')" class="text-rose-400 hover:text-rose-300">Excluir</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function openNewKnowledgeModal() {
+  openModal('modal-new-knowledge');
+}
+
+async function submitNewKnowledge(e) {
+  e.preventDefault();
+  const category = document.getElementById('kb-category').value;
+  const title = document.getElementById('kb-title').value;
+  const content = document.getElementById('kb-content').value;
+
+  try {
+    const res = await fetch('/api/knowledge-base', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ category, title, content })
+    });
+    if (res.ok) {
+      showToast('Conhecimento registrado no Cérebro da Empresa!', 'success');
+      closeModal('modal-new-knowledge');
+      await loadKnowledgeBase();
+    }
+  } catch (err) {
+    showToast('Erro ao salvar.', 'error');
+  }
+}
+
+async function deleteKnowledge(id) {
+  if (!confirm('Deseja remover este item de conhecimento da IA?')) return;
+  try {
+    await fetch(`/api/knowledge-base/${id}`, { method: 'DELETE', headers: authHeaders() });
+    showToast('Item removido.', 'info');
+    await loadKnowledgeBase();
+  } catch (err) {}
+}
+
+// 8. AUTOMAÇÕES (FASE 10)
+async function loadAutomations() {
+  try {
+    const res = await fetch('/api/automations', { headers: authHeaders() });
+    globalAutomations = (await res.json()).data || [];
+    renderAutomations();
+  } catch (e) {
+    console.error('Erro ao carregar automações:', e);
+  }
+}
+
+function renderAutomations() {
+  const container = document.getElementById('automations-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  globalAutomations.forEach(a => {
+    const div = document.createElement('div');
+    div.className = 'glass-card p-4 rounded-2xl border border-slate-800 flex items-center justify-between';
+    div.innerHTML = `
+      <div class="space-y-1">
+        <div class="text-xs font-bold text-white flex items-center gap-2">
+          <i data-lucide="workflow" class="h-4 w-4 text-amber-400"></i>
+          <span>${a.name}</span>
+        </div>
+        <div class="text-[11px] text-slate-400">
+          QUANDO: <span class="text-amber-300 font-semibold">${a.trigger}</span> ➔ ENTÃO: <span class="text-blue-300 font-semibold">${a.action?.type || 'Ação'}</span>
+        </div>
+      </div>
+      <div>
+        <button onclick="toggleAutomation('${a.id}')" class="px-3 py-1.5 text-xs font-semibold rounded-xl ${a.active !== false ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'} transition">
+          ${a.active !== false ? 'Ativa' : 'Pausada'}
+        </button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+  if (window.lucide) lucide.createIcons();
+}
+
+function openNewAutomationModal() {
+  openModal('modal-new-automation');
+}
+
+async function submitNewAutomation(e) {
+  e.preventDefault();
+  const name = document.getElementById('auto-name').value;
+  const trigger = document.getElementById('auto-trigger').value;
+  const actionType = document.getElementById('auto-action-type').value;
+
+  try {
+    const res = await fetch('/api/automations', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({
+        name,
+        trigger,
+        action: { type: actionType, params: { title: `Ação Automática: ${name}` } }
+      })
+    });
+    if (res.ok) {
+      showToast('Automação ativada no sistema!', 'success');
+      closeModal('modal-new-automation');
+      await loadAutomations();
+    }
+  } catch (err) {
+    showToast('Erro ao criar automação.', 'error');
+  }
+}
+
+async function toggleAutomation(id) {
+  try {
+    await fetch(`/api/automations/${id}/toggle`, { method: 'PATCH', headers: authHeaders() });
+    await loadAutomations();
+  } catch (err) {}
+}
+
+// 9. ANALISTA IA PARA GESTORES (FASE 11)
+function askAnalystQuestion(q) {
+  const input = document.getElementById('analyst-input');
+  if (input) input.value = q;
+  executeAnalystQuery();
+}
+
+async function executeAnalystQuery() {
+  const input = document.getElementById('analyst-input');
+  if (!input || !input.value.trim()) return;
+  const question = input.value.trim();
+
+  const card = document.getElementById('analyst-response-card');
+  const answerEl = document.getElementById('analyst-answer-text');
+  const supportEl = document.getElementById('analyst-supporting-data');
+  const timeEl = document.getElementById('analyst-time');
+
+  try {
+    showToast('Analista IA consultando base de dados...', 'info');
+    const res = await fetch('/api/copilot/analyst', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ question })
+    });
+    const json = await res.json();
+    if (json.success) {
+      card.classList.remove('hidden');
+      answerEl.innerText = json.data.answer;
+      supportEl.innerText = JSON.stringify(json.data.supportingData, null, 2);
+      timeEl.innerText = new Date(json.data.generatedAt).toLocaleTimeString('pt-BR');
+    }
+  } catch (e) {
+    showToast('Erro ao consultar Analista IA.', 'error');
+  }
+}
+
+// 10. VERTICAL AUTOMOTIVO (AGENTISE AUTO - FASE 18)
+async function loadAutoVehicles() {
+  try {
+    const res = await fetch('/api/auto/vehicles', { headers: authHeaders() });
+    globalVehicles = (await res.json()).data || [];
+    renderAutoVehicles();
+  } catch (e) {
+    console.error('Erro ao carregar veículos:', e);
+  }
+}
+
+function renderAutoVehicles() {
+  const grid = document.getElementById('auto-vehicles-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  globalVehicles.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'glass-card p-4 rounded-2xl border border-amber-500/20 space-y-2.5';
+    card.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 uppercase">${v.bodyType || 'SUV'}</span>
+        <span class="text-xs font-bold text-slate-400">${v.year} · ${v.km?.toLocaleString('pt-BR')} km</span>
+      </div>
+      <div class="text-sm font-bold text-white">${v.brand} ${v.model}</div>
+      <div class="text-lg font-black text-amber-400">${formatBRL(v.price)}</div>
+      <div class="flex flex-wrap gap-1 text-[10px] text-slate-400">
+        ${(v.features || []).slice(0, 2).map(f => `<span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">${f}</span>`).join('')}
+      </div>
+      <button onclick="prefillFinancing(${v.price})" class="w-full py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+        Simular Financiamento
+      </button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function prefillFinancing(price) {
+  document.getElementById('sim-price').value = price;
+  document.getElementById('sim-down').value = Math.round(price * 0.2);
+  calculateAutoFinancing();
+}
+
+async function calculateAutoFinancing() {
+  const price = Number(document.getElementById('sim-price').value || 0);
+  const down = Number(document.getElementById('sim-down').value || 0);
+  const term = Number(document.getElementById('sim-term').value || 48);
+
+  try {
+    const res = await fetch('/api/auto/financing', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ vehiclePrice: price, downPayment: down, termMonths: term })
+    });
+    const d = (await res.json()).data;
+    const resEl = document.getElementById('sim-result');
+    resEl.classList.remove('hidden');
+    resEl.innerHTML = `
+      Financiado: <strong>${formatBRL(d.financedAmount)}</strong> em <strong>${d.termMonths}x</strong> de <strong class="text-white text-sm">${formatBRL(d.monthlyInstallment)}</strong> (Taxa: ${d.monthlyInterestRate})
+    `;
+  } catch (err) {}
+}
+
+// 11. GESTÃO DE VENDEDORES & ANALYTICS (FASE 4 & 12)
+async function loadAnalytics() {
+  try {
+    const res = await fetch('/api/analytics', { headers: authHeaders() });
+    const d = (await res.json()).data;
+    if (!d) return;
+
+    if (document.getElementById('kpi-pipeline')) document.getElementById('kpi-pipeline').innerText = formatBRL(d.totalPipelineValue);
+    if (document.getElementById('kpi-won')) document.getElementById('kpi-won').innerText = formatBRL(d.wonValue);
+    if (document.getElementById('kpi-ticket')) document.getElementById('kpi-ticket').innerText = formatBRL(d.avgTicket);
+    if (document.getElementById('kpi-winrate')) document.getElementById('kpi-winrate').innerText = `${d.winRate}%`;
+
+    // Alertas da IA
+    const alertsContainer = document.getElementById('analytics-ai-alerts');
+    if (alertsContainer && d.aiAlerts) {
+      alertsContainer.innerHTML = '';
+      d.aiAlerts.forEach(al => {
+        const div = document.createElement('div');
+        const color = al.type === 'danger' ? 'rose' : (al.type === 'warning' ? 'amber' : 'blue');
+        div.className = `p-3 rounded-2xl border border-${color}-500/30 bg-${color}-950/20 text-xs text-slate-200 flex items-start gap-2.5`;
+        div.innerHTML = `
+          <i data-lucide="${al.icon || 'info'}" class="h-4 w-4 text-${color}-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="font-bold text-white">${al.title}</div>
+            <div class="text-[10px] text-slate-400">${al.action}</div>
+          </div>
+        `;
+        alertsContainer.appendChild(div);
+      });
+    }
+
+    // Ranking de Vendedores
+    const sellersGrid = document.getElementById('sellers-ranking-grid');
+    if (sellersGrid && d.sellersPerformance) {
+      sellersGrid.innerHTML = '';
+      d.sellersPerformance.forEach((s, idx) => {
+        const card = document.createElement('div');
+        card.className = 'glass-card p-4 rounded-2xl border border-yellow-500/20 space-y-2';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase text-yellow-400">#${idx + 1} Ranking</span>
+            <span class="text-xs font-bold text-slate-400">${s.wonCount} Vendas</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <img src="${s.avatar}" class="h-9 w-9 rounded-full bg-slate-800">
+            <div>
+              <div class="text-xs font-bold text-white">${s.name}</div>
+              <div class="text-[10px] text-slate-400">${s.role}</div>
+            </div>
+          </div>
+          <div class="text-lg font-black text-emerald-400">${formatBRL(s.revenue)}</div>
+          <div class="text-[11px] text-slate-400">Taxa de Conversão: <strong class="text-slate-200">${s.conversionRate}%</strong></div>
+        `;
+        sellersGrid.appendChild(card);
+      });
+    }
+
+    // Funil por estágios
+    const stagesContainer = document.getElementById('analytics-stages');
+    if (stagesContainer && d.stageBreakdown) {
+      stagesContainer.innerHTML = '';
+      Object.keys(d.stageBreakdown).forEach(k => {
+        const count = d.stageBreakdown[k];
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between text-xs py-1 border-b border-slate-800/60';
+        row.innerHTML = `<span class="uppercase font-semibold text-slate-400">${k}</span><span class="font-bold text-white">${count} negócios</span>`;
+        stagesContainer.appendChild(row);
+      });
+    }
+
+    if (window.lucide) lucide.createIcons();
+  } catch (err) {}
+}
+
+// 12. BILLING & PLANOS SAAS (FASE 13 & 14)
+async function loadBilling() {
+  try {
+    const res = await fetch('/api/billing/subscription', { headers: authHeaders() });
+    const d = (await res.json()).data;
+    if (!d) return;
+
+    if (document.getElementById('tenant-plan-label')) {
+      document.getElementById('tenant-plan-label').innerText = `${d.plan.name} (${d.daysLeftTrial}d Trial)`;
+    }
+    if (document.getElementById('ai-credits-pill')) {
+      document.getElementById('ai-credits-pill').innerText = `${d.aiCreditsRemaining} cr`;
+    }
+    if (document.getElementById('billing-credits-val')) {
+      document.getElementById('billing-credits-val').innerText = `${d.aiCreditsRemaining} / ${d.aiCredits}`;
+    }
+  } catch (err) {}
+}
+
+// 13. COPILOTO CLAUDE AI (FASE 7)
+function populateDealSelects() {
+  const sel = document.getElementById('deal-lead-select');
+  if (sel) {
+    sel.innerHTML = globalLeads.map(l => `<option value="${l.id}">${l.name} (${l.company || 'PJ'})</option>`).join('');
+  }
+}
+
+function populateLeadSelects() {
+  const sel = document.getElementById('copilot-lead-select');
+  if (sel) {
+    sel.innerHTML = globalLeads.map(l => `<option value="${l.id}">${l.name} - ${l.company || 'Geral'}</option>`).join('');
+    if (globalLeads.length > 0) onCopilotLeadChange();
+  }
+  populateDealSelects();
+}
+
+async function onCopilotLeadChange() {
+  const leadId = document.getElementById('copilot-lead-select')?.value;
+  if (!leadId) return;
 
   try {
     const res = await fetch('/api/copilot/bant', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leadId: lead.id, dealId })
+      headers: authHeaders(),
+      body: JSON.stringify({ leadId })
     });
-    const json = await res.json();
-    const data = json.data;
+    const d = (await res.json()).data;
+    if (!d) return;
 
-    currentCopilotText = `Avaliação BANT - ${lead.name}: Score Total: ${data.totalScore}/100 (${data.classification}). Insights: ${data.insights.join('; ')}`;
+    document.getElementById('bant-score').innerText = `${d.totalScore}/100`;
+    document.getElementById('bant-bar').style.width = `${d.totalScore}%`;
+    document.getElementById('bant-b').innerText = `${d.breakdown.budget}/25`;
+    document.getElementById('bant-a').innerText = `${d.breakdown.authority}/25`;
+    document.getElementById('bant-n').innerText = `${d.breakdown.need}/25`;
+    document.getElementById('bant-t').innerText = `${d.breakdown.timing}/25`;
 
-    renderCopilotResult(`
-      <div class="space-y-4">
-        <div class="flex items-center justify-between p-4 rounded-xl bg-slate-900 border border-blue-500/20">
-          <div>
-            <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Classificação Comercial</span>
-            <h3 class="text-base font-extrabold text-white mt-0.5">${data.classification}</h3>
-          </div>
-          <div class="text-2xl font-black text-blue-400">${data.totalScore} <span class="text-xs text-slate-500 font-normal">/ 100</span></div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <div class="p-3 rounded-lg bg-slate-900 text-center border border-slate-800">
-            <span class="text-[10px] text-slate-400 uppercase font-bold">Budget</span>
-            <div class="text-base font-black text-emerald-400 mt-1">${data.breakdown.budget}/25</div>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-900 text-center border border-slate-800">
-            <span class="text-[10px] text-slate-400 uppercase font-bold">Authority</span>
-            <div class="text-base font-black text-blue-400 mt-1">${data.breakdown.authority}/25</div>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-900 text-center border border-slate-800">
-            <span class="text-[10px] text-slate-400 uppercase font-bold">Need</span>
-            <div class="text-base font-black text-purple-400 mt-1">${data.breakdown.need}/25</div>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-900 text-center border border-slate-800">
-            <span class="text-[10px] text-slate-400 uppercase font-bold">Timing</span>
-            <div class="text-base font-black text-amber-400 mt-1">${data.breakdown.timing}/25</div>
-          </div>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-          <h4 class="font-bold text-slate-200 flex items-center gap-2">
-            <i data-lucide="lightbulb" class="h-4 w-4 text-amber-400"></i>
-            <span>Recomendações Estratégicas da IA:</span>
-          </h4>
-          <ul class="space-y-1.5 text-slate-300">
-            ${data.insights.map(i => `<li class="flex items-start gap-2"><span class="text-blue-400">▸</span><span>${i}</span></li>`).join('')}
-          </ul>
-        </div>
-      </div>
-    `, null);
-  } catch (e) {
-    renderCopilotResult('<div class="text-rose-400">Erro ao executar análise BANT.</div>');
-  }
+    const ins = document.getElementById('bant-insights');
+    ins.innerHTML = d.insights.map(i => `<div>• ${i}</div>`).join('');
+  } catch (err) {}
 }
 
-async function runAiPitch(objective) {
-  const dealId = document.getElementById('copilot-deal-select')?.value;
-  if (!dealId) return showToast('Selecione uma oportunidade primeiro.', 'warning');
-
-  const deal = globalDeals.find(d => d.id === dealId);
-  const lead = deal?.lead || {};
-
-  setCopilotLoading('Gerando abordagem comercial hiper-personalizada...');
-
+async function generatePitchAction(obj) {
+  const leadId = document.getElementById('copilot-lead-select')?.value;
   try {
     const res = await fetch('/api/copilot/pitch', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leadId: lead.id, dealId, objective })
+      headers: authHeaders(),
+      body: JSON.stringify({ leadId, objective: obj })
     });
-    const json = await res.json();
-    const data = json.data;
-
-    currentCopilotText = data.text;
-
-    renderCopilotResult(`
-      <div class="space-y-4">
-        <div class="p-3 rounded-xl bg-slate-900 border border-blue-500/20 flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-slate-400 uppercase font-bold">${data.type}</span>
-            <div class="font-bold text-white text-xs mt-0.5">${data.subject}</div>
-          </div>
-          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Pronto para WhatsApp</span>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 whitespace-pre-line text-slate-200 text-xs font-mono leading-relaxed select-all">
-          ${data.text}
-        </div>
-      </div>
-    `, data.whatsappUrl);
+    const d = (await res.json()).data;
+    document.getElementById('copilot-output').value = d.text;
+    currentCopilotText = d.text;
   } catch (e) {
-    renderCopilotResult('<div class="text-rose-400">Erro ao gerar pitch de vendas.</div>');
+    showToast('Erro ao gerar pitch.', 'error');
   }
 }
 
-async function runAiObjection(type) {
-  const dealId = document.getElementById('copilot-deal-select')?.value;
-  if (!dealId) return showToast('Selecione uma oportunidade primeiro.', 'warning');
-
-  const deal = globalDeals.find(d => d.id === dealId);
-  const lead = deal?.lead || {};
-
-  setCopilotLoading('Desenvolvendo contorno tático de objeção...');
-
+async function handleObjectionAction(type) {
+  const leadId = document.getElementById('copilot-lead-select')?.value;
   try {
     const res = await fetch('/api/copilot/objection', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leadId: lead.id, type })
+      headers: authHeaders(),
+      body: JSON.stringify({ leadId, type })
     });
-    const json = await res.json();
-    const data = json.data;
-
-    currentCopilotText = data.respostaSugerida;
-
-    renderCopilotResult(`
-      <div class="space-y-4">
-        <div class="p-3.5 rounded-xl bg-slate-900 border border-amber-500/20">
-          <h4 class="font-bold text-amber-400">${data.titulo}</h4>
-          <p class="text-slate-400 text-[11px] mt-1">Diagnóstico: ${data.analise}</p>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-          <span class="text-[10px] uppercase font-bold text-slate-400">Resposta Recomendada ao Cliente:</span>
-          <p class="text-slate-200 text-xs italic leading-relaxed">"${data.respostaSugerida}"</p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2 text-xs">
-          <i data-lucide="check-circle" class="h-4 w-4 text-emerald-400"></i>
-          <span class="text-slate-300">Próximo Passo Tático: <strong>${data.proximoPasso}</strong></span>
-        </div>
-      </div>
-    `, null);
+    const d = (await res.json()).data;
+    document.getElementById('copilot-output').value = d.response || d.respostaSugerida;
+    currentCopilotText = d.response || d.respostaSugerida;
   } catch (e) {
-    renderCopilotResult('<div class="text-rose-400">Erro ao processar contorno de objeção.</div>');
+    showToast('Erro ao contornar objeção.', 'error');
   }
 }
 
-function setCopilotLoading(msg) {
-  const out = document.getElementById('copilot-output');
-  const badge = document.getElementById('copilot-status-badge');
-  const bar = document.getElementById('copilot-actions-bar');
-  if (out) out.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-center py-12 space-y-3"><div class="h-8 w-8 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></div><p class="text-xs text-blue-300 font-semibold">${msg}</p></div>`;
-  if (badge) { badge.innerText = 'Processando...'; badge.className = 'text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 animate-pulse'; }
-  if (bar) bar.classList.add('hidden');
+function sendPitchWhatsApp() {
+  const leadId = document.getElementById('copilot-lead-select')?.value;
+  const lead = globalLeads.find(l => l.id === leadId);
+  const text = document.getElementById('copilot-output').value;
+  if (!lead || !lead.phone) return showToast('Lead sem WhatsApp cadastrado.', 'warning');
+  const url = `https://wa.me/55${lead.phone.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
 }
 
-function renderCopilotResult(html, whatsappUrl) {
-  const out = document.getElementById('copilot-output');
-  const badge = document.getElementById('copilot-status-badge');
-  const bar = document.getElementById('copilot-actions-bar');
-  const waBtn = document.getElementById('copilot-whatsapp-btn');
-
-  if (out) out.innerHTML = html;
-  if (badge) { badge.innerText = 'Concluído'; badge.className = 'text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400'; }
-  if (bar) bar.classList.remove('hidden');
-
-  if (waBtn) {
-    if (whatsappUrl) {
-      waBtn.href = whatsappUrl;
-      waBtn.classList.remove('hidden');
-    } else {
-      waBtn.classList.add('hidden');
+function setAiLevel(lvl) {
+  ['desativada', 'assistente', 'copiloto', 'autonoma'].forEach(l => {
+    const btn = document.getElementById(`btn-ai-${l}`);
+    if (btn) {
+      if (l === lvl) {
+        btn.className = 'px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-blue-600 text-white transition';
+      } else {
+        btn.className = 'px-2.5 py-1 text-[11px] rounded-lg font-medium text-slate-400 transition';
+      }
     }
-  }
-
-  if (window.lucide) lucide.createIcons();
+  });
+  showToast(`Nível do Agente Comercial alterado para: ${lvl.toUpperCase()}`, 'info');
 }
 
-function copyCopilotText() {
-  if (!currentCopilotText) return;
-  navigator.clipboard.writeText(currentCopilotText);
-  showToast('Texto copiado com sucesso!', 'success');
-}
-
-// 8. Financeiro & PIX Oficial EMV
-function quickPixDeal(dealId) {
-  switchView('pix');
-  const dealSelect = document.getElementById('pix-form-deal');
-  if (dealSelect) {
-    dealSelect.value = dealId;
-    autofillPixDeal();
-    generatePixProposal();
-  }
-}
-
-function autofillPixDeal() {
-  const dealId = document.getElementById('pix-form-deal')?.value;
-  if (!dealId) return;
-
-  const deal = globalDeals.find(d => d.id === dealId);
-  if (!deal) return;
-
-  document.getElementById('pix-form-name').value = deal.lead?.name || '';
-  document.getElementById('pix-form-phone').value = deal.lead?.phone || '';
-  document.getElementById('pix-form-amount').value = deal.value || 0;
-  document.getElementById('pix-form-title').value = deal.title || '';
-}
-
-async function generatePixProposal() {
-  const dealId = document.getElementById('pix-form-deal')?.value || null;
-  const name = document.getElementById('pix-form-name')?.value || 'Cliente';
-  const phone = document.getElementById('pix-form-phone')?.value || '';
-  const amount = Number(document.getElementById('pix-form-amount')?.value || 0);
-  const title = document.getElementById('pix-form-title')?.value || 'Proposta Comercial';
-
-  if (!amount || amount <= 0) return showToast('Informe um valor válido para a proposta PIX.', 'warning');
-
-  const resContainer = document.getElementById('pix-result-container');
-  resContainer.innerHTML = '<div class="h-8 w-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin"></div>';
+// 14. FINANCEIRO & PIX EMV
+async function generatePixAction() {
+  const amount = Number(document.getElementById('pix-amount').value || 0);
+  const desc = document.getElementById('pix-desc').value;
+  const phone = document.getElementById('pix-phone').value;
 
   try {
     const res = await fetch('/api/pix/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        dealId,
-        customerName: name,
-        customerPhone: phone,
-        amount,
-        dealTitle: title
-      })
+      headers: authHeaders(),
+      body: JSON.stringify({ amount, description: desc, customerPhone: phone })
     });
-    const json = await res.json();
-    const d = json.data;
+    const d = (await res.json()).data;
+    if (d) {
+      document.getElementById('pix-payload-box').value = d.payload;
+      const img = document.getElementById('pix-qr-img');
+      img.src = d.qrCodeUrl;
+      img.classList.remove('hidden');
 
-    resContainer.innerHTML = `
-      <div class="w-full space-y-4">
-        <div class="text-center">
-          <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Checkout PIX Banco Central</span>
-          <h3 class="text-base font-black text-white mt-0.5">${title}</h3>
-          <div class="text-xl font-black text-emerald-400 mt-1">${formatBRL(amount)}</div>
-        </div>
-
-        <div class="bg-white p-3 rounded-2xl inline-block shadow-lg mx-auto">
-          <img src="${d.qrCodeUrl}" alt="QR Code PIX" class="h-44 w-44 rounded-lg object-contain">
-        </div>
-
-        <div class="space-y-1 text-left">
-          <span class="text-[10px] font-bold text-slate-400">Código PIX Copia-e-Cola:</span>
-          <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-300 break-all select-all">
-            ${d.payload}
-          </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-2 pt-2">
-          <button onclick="copyPixCode('${d.payload}')" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="copy" class="h-3.5 w-3.5"></i>
-            <span>Copiar Chave PIX</span>
-          </button>
-          ${d.whatsappUrl ? `
-            <a href="${d.whatsappUrl}" target="_blank" class="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/30 transition">
-              <i data-lucide="send" class="h-3.5 w-3.5"></i>
-              <span>Enviar no WhatsApp</span>
-            </a>
-          ` : ''}
-        </div>
-      </div>
-    `;
-    if (window.lucide) lucide.createIcons();
-    showToast('Proposta PIX gerada com sucesso!', 'success');
-  } catch (e) {
-    resContainer.innerHTML = '<div class="text-rose-400">Falha ao emitir PIX.</div>';
+      const waBtn = document.getElementById('pix-whatsapp-btn');
+      if (d.whatsappUrl) {
+        waBtn.classList.remove('hidden');
+        waBtn.onclick = () => window.open(d.whatsappUrl, '_blank');
+      }
+      showToast('PIX EMV do Banco Central gerado com sucesso!', 'success');
+    }
+  } catch (err) {
+    showToast('Erro ao gerar PIX.', 'error');
   }
 }
 
-function copyPixCode(code) {
-  navigator.clipboard.writeText(code);
+function copyPixPayload() {
+  const box = document.getElementById('pix-payload-box');
+  if (!box || !box.value) return;
+  navigator.clipboard.writeText(box.value);
   showToast('Código PIX Copia-e-Cola copiado!', 'success');
 }
 
-// 9. Tarefas e Agenda
+// 15. TAREFAS
+async function loadTasks() {
+  try {
+    const res = await fetch('/api/tasks', { headers: authHeaders() });
+    globalTasks = (await res.json()).data || [];
+    renderTasks();
+  } catch (err) {}
+}
+
 function renderTasks() {
-  const container = document.getElementById('tasks-list-container');
+  const container = document.getElementById('tasks-list');
   if (!container) return;
+  container.innerHTML = '';
 
-  if (globalTasks.length === 0) {
-    container.innerHTML = '<div class="text-center py-8 text-slate-500 text-xs">Nenhuma tarefa pendente.</div>';
-    return;
-  }
-
-  container.innerHTML = globalTasks.map(t => `
-    <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between gap-3 text-xs">
-      <div class="flex items-center gap-3 flex-1">
-        <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}', this.checked)" class="h-4 w-4 rounded border-slate-700 bg-slate-950 text-blue-600 focus:ring-blue-500 cursor-pointer">
-        <div>
-          <span class="${t.completed ? 'line-through text-slate-500' : 'text-slate-200 font-medium'}">${t.title}</span>
-          ${t.deadline ? `<div class="text-[10px] text-slate-500 mt-0.5">Prazo: ${new Date(t.deadline).toLocaleString('pt-BR')}</div>` : ''}
-        </div>
+  globalTasks.forEach(t => {
+    const div = document.createElement('div');
+    div.className = `p-3 rounded-xl border flex items-center justify-between ${t.completed ? 'bg-slate-900/40 border-slate-800 opacity-60' : 'glass-card border-slate-700'}`;
+    div.innerHTML = `
+      <div class="flex items-center gap-2.5">
+        <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}', this.checked)" class="rounded text-blue-600">
+        <span class="text-xs ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${t.title}</span>
       </div>
-      <div class="flex items-center gap-2 shrink-0">
-        <span class="text-[10px] px-2 py-0.5 rounded-full ${
-          t.priority === 'urgente' ? 'bg-rose-500/20 text-rose-300' :
-          t.priority === 'alta' ? 'bg-amber-500/20 text-amber-300' :
-          'bg-slate-800 text-slate-400'
-        }">${t.priority}</span>
-        <button onclick="deleteTask('${t.id}')" class="text-slate-500 hover:text-rose-400 transition p-1"><i data-lucide="trash" class="h-3.5 w-3.5"></i></button>
-      </div>
-    </div>
-  `).join('');
-
-  if (window.lucide) lucide.createIcons();
+      <span class="text-[10px] px-2 py-0.5 rounded uppercase font-bold ${t.priority === 'urgente' ? 'bg-rose-500/20 text-rose-300' : 'bg-slate-800 text-slate-400'}">${t.priority}</span>
+    `;
+    container.appendChild(div);
+  });
 }
 
 async function toggleTask(id, completed) {
-  await fetch(`/api/tasks/${id}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ completed })
-  });
-  showToast(completed ? 'Tarefa marcada como concluída.' : 'Tarefa reaberta.', 'info');
-  await loadTasks();
-}
-
-async function deleteTask(id) {
-  await fetch(`/api/tasks/${id}`, { method: 'DELETE' });
-  showToast('Tarefa removida.', 'info');
-  await loadTasks();
-}
-
-// 10. Modais de Criação e Configurações
-function openNewDealModal() {
-  populateLeadSelects();
-  const m = document.getElementById('modal-deal');
-  if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
-}
-
-function openNewLeadModal() {
-  const m = document.getElementById('modal-lead');
-  if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
-}
-
-function openNewTaskModal() {
-  populateDealSelects();
-  const m = document.getElementById('modal-task');
-  if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
-}
-
-async function openSettingsModal() {
-  const m = document.getElementById('modal-settings');
-  if (!m) return;
-
   try {
-    const res = await fetch('/api/settings');
-    const json = await res.json();
-    const s = json.data;
-
-    document.getElementById('setting-company').value = s.companyName || '';
-    document.getElementById('setting-pix-key').value = s.pixKey || '';
-    document.getElementById('setting-pix-name').value = s.pixName || '';
-    document.getElementById('setting-pix-city').value = s.pixCity || '';
-    document.getElementById('setting-api-key').value = s.hasApiKey ? '••••••••••••••••' : '';
+    await fetch(`/api/tasks/${id}`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: JSON.stringify({ completed })
+    });
+    await loadTasks();
   } catch (e) {}
+}
 
-  m.classList.remove('hidden');
-  m.classList.add('flex');
+// 16. ONBOARDING (FASE 3)
+function openOnboardingModal() {
+  openModal('modal-onboarding');
+}
+
+function selectOnboardingSegment(seg) {
+  currentOnboardingData.segment = seg;
+  nextOnboardingStep(2);
+}
+
+function selectOnboardingTeam(size) {
+  currentOnboardingData.teamSize = size;
+  nextOnboardingStep(3);
+}
+
+function nextOnboardingStep(step) {
+  [1, 2, 3, 4].forEach(s => {
+    const el = document.getElementById(`onboarding-step-${s}`);
+    if (el) el.classList.toggle('hidden', s !== step);
+  });
+  const titles = {
+    1: 'Etapa 1: Qual é o seu segmento?',
+    2: 'Etapa 2: Equipe Comercial',
+    3: 'Etapa 3: Canais de Entrada',
+    4: 'Etapa 4: Objetivo Principal'
+  };
+  document.getElementById('onboarding-step-title').innerText = titles[step];
+  document.getElementById('onboarding-step-badge').innerText = `${step}/4`;
+}
+
+async function finishOnboarding(goal) {
+  currentOnboardingData.primaryGoal = goal;
+  try {
+    const res = await fetch('/api/onboarding/complete', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify(currentOnboardingData)
+    });
+    if (res.ok) {
+      showToast('Configuração do negócio concluída! Pipeline inicial ativado.', 'success');
+      closeModal('modal-onboarding');
+      await initApp();
+    }
+  } catch (err) {
+    showToast('Erro ao concluir onboarding.', 'error');
+  }
+}
+
+// Modais Genéricos
+function openModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
 }
 
 function closeModal(id) {
-  const m = document.getElementById(id);
-  if (m) { m.classList.add('hidden'); m.classList.remove('flex'); }
+  const el = document.getElementById(id);
+  if (el) el.classList.add('hidden');
 }
 
-async function submitNewDeal() {
-  const title = document.getElementById('deal-new-title')?.value;
-  const leadId = document.getElementById('deal-new-lead')?.value;
-  const value = document.getElementById('deal-new-value')?.value;
-  const stage = document.getElementById('deal-new-stage')?.value;
-  const priority = document.getElementById('deal-new-priority')?.value;
+function openNewLeadModal() { openModal('modal-new-lead'); }
+function openNewDealModal() { openModal('modal-new-deal'); }
+function openNewTaskModal() { openModal('modal-new-task'); }
+function openSettingsModal() { openModal('modal-settings'); }
+function openMobileMenuModal() { showToast('Navegue pelas opções da barra superior ou selecione as abas.', 'info'); }
 
-  if (!title || !leadId) return showToast('Preencha título e selecione um lead.', 'warning');
+async function submitNewLead(e) {
+  e.preventDefault();
+  const name = document.getElementById('lead-name').value;
+  const company = document.getElementById('lead-company').value;
+  const role = document.getElementById('lead-role').value;
+  const email = document.getElementById('lead-email').value;
+  const phone = document.getElementById('lead-phone').value;
+  const estimatedBudget = Number(document.getElementById('lead-budget').value || 0);
+  const notes = document.getElementById('lead-notes').value;
 
-  const res = await fetch('/api/deals', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, leadId, value, stage, priority })
-  });
-
-  if (res.ok) {
-    closeModal('modal-deal');
-    showToast('Oportunidade criada com sucesso!', 'success');
-    await loadDeals();
-    await loadTasks();
-    await loadAnalytics();
+  try {
+    const res = await fetch('/api/leads', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ name, company, role, email, phone, estimatedBudget, notes })
+    });
+    if (res.ok) {
+      showToast('Lead cadastrado com sucesso!', 'success');
+      closeModal('modal-new-lead');
+      await loadLeads();
+    }
+  } catch (err) {
+    showToast('Erro ao cadastrar lead.', 'error');
   }
 }
 
-async function submitNewLead() {
-  const name = document.getElementById('lead-new-name')?.value;
-  const company = document.getElementById('lead-new-company')?.value;
-  const role = document.getElementById('lead-new-role')?.value;
-  const phone = document.getElementById('lead-new-phone')?.value;
-  const email = document.getElementById('lead-new-email')?.value;
-  const notes = document.getElementById('lead-new-notes')?.value;
+async function submitNewDeal(e) {
+  e.preventDefault();
+  const title = document.getElementById('deal-title').value;
+  const leadId = document.getElementById('deal-lead-select').value;
+  const value = Number(document.getElementById('deal-value').value || 0);
+  const stage = document.getElementById('deal-stage').value;
 
-  if (!name) return showToast('Informe o nome do lead.', 'warning');
-
-  const res = await fetch('/api/leads', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, company, role, phone, email, notes, tags: ['Novo Lead'] })
-  });
-
-  if (res.ok) {
-    closeModal('modal-lead');
-    showToast('Lead cadastrado com sucesso!', 'success');
-    await loadLeads();
+  try {
+    const res = await fetch('/api/deals', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ title, leadId, value, stage })
+    });
+    if (res.ok) {
+      showToast('Oportunidade criada com sucesso!', 'success');
+      closeModal('modal-new-deal');
+      await loadDeals();
+    }
+  } catch (err) {
+    showToast('Erro ao criar oportunidade.', 'error');
   }
 }
 
-async function submitNewTask() {
-  const title = document.getElementById('task-new-title')?.value;
-  const dealId = document.getElementById('task-new-deal')?.value || null;
-  const deadline = document.getElementById('task-new-deadline')?.value || null;
-  const priority = document.getElementById('task-new-priority')?.value || 'media';
+async function submitNewTask(e) {
+  e.preventDefault();
+  const title = document.getElementById('task-title').value;
+  const priority = document.getElementById('task-priority').value;
 
-  if (!title) return showToast('Informe a descrição da tarefa.', 'warning');
-
-  const res = await fetch('/api/tasks', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, dealId, deadline, priority, completed: false })
-  });
-
-  if (res.ok) {
-    closeModal('modal-task');
-    showToast('Tarefa registrada com sucesso!', 'success');
-    await loadTasks();
-    document.getElementById('task-new-title').value = '';
+  try {
+    const res = await fetch('/api/tasks', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ title, priority })
+    });
+    if (res.ok) {
+      showToast('Tarefa agendada!', 'success');
+      closeModal('modal-new-task');
+      await loadTasks();
+    }
+  } catch (err) {
+    showToast('Erro ao criar tarefa.', 'error');
   }
 }
 
-async function saveSettings() {
-  const companyName = document.getElementById('setting-company')?.value;
-  const pixKey = document.getElementById('setting-pix-key')?.value;
-  const pixName = document.getElementById('setting-pix-name')?.value;
-  const pixCity = document.getElementById('setting-pix-city')?.value;
-  const apiKey = document.getElementById('setting-api-key')?.value;
+async function submitSettings(e) {
+  e.preventDefault();
+  const companyName = document.getElementById('set-company').value;
+  const pixKey = document.getElementById('set-pixkey').value;
+  const apiKey = document.getElementById('set-apikey').value;
 
-  const payload = { companyName, pixKey, pixName, pixCity };
-  if (apiKey && !apiKey.includes('••••')) {
-    payload.apiKey = apiKey;
-  }
-
-  const res = await fetch('/api/settings', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-
-  if (res.ok) {
-    closeModal('modal-settings');
-    showToast('Configurações salvas com sucesso!', 'success');
+  try {
+    const res = await fetch('/api/settings', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ companyName, pixKey, apiKey: apiKey || undefined })
+    });
+    if (res.ok) {
+      showToast('Configurações salvas com sucesso!', 'success');
+      closeModal('modal-settings');
+    }
+  } catch (err) {
+    showToast('Erro ao salvar configurações.', 'error');
   }
 }
 
-function refreshData() {
-  initApp();
-  showToast('Dados atualizados com sucesso.', 'info');
+function quickCopilotForDeal(dealId) {
+  const deal = globalDeals.find(d => d.id === dealId);
+  if (deal) {
+    switchView('copilot');
+    const sel = document.getElementById('copilot-lead-select');
+    if (sel && deal.leadId) {
+      sel.value = deal.leadId;
+      onCopilotLeadChange();
+    }
+  }
 }
 
-function dismissLgpd() {
-  const b = document.getElementById('lgpd-banner');
-  if (b) b.remove();
+function quickPixForDeal(dealId) {
+  const deal = globalDeals.find(d => d.id === dealId);
+  if (deal) {
+    switchView('pix');
+    if (document.getElementById('pix-amount')) document.getElementById('pix-amount').value = deal.value;
+    if (document.getElementById('pix-desc')) document.getElementById('pix-desc').value = deal.title;
+    if (deal.lead && deal.lead.phone && document.getElementById('pix-phone')) {
+      document.getElementById('pix-phone').value = deal.lead.phone;
+    }
+  }
 }

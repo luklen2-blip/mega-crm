@@ -1,0 +1,15 @@
+[
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789245789550_pk1k",
+    "customerName": "Carlos Eduardo Silveira",
+    "customerPhone": "11987654321",
+    "channel": "whatsapp",
+    "status": "em_atendimento",
+    "lastMessage": "Gostei muito da proposta, podemos agendar para segunda-feira?",
+    "lastMessageAt": "2026-09-12T19:43:09.588Z",
+    "id": "con_1789245789588_cv7f",
+    "createdAt": "2026-09-12T20:43:09.588Z",
+    "updatedAt": "2026-09-12T20:43:09.588Z"
+  }
+]

@@ -82,5 +82,95 @@
     "id": "lea_1789241666597_pc0n",
     "createdAt": "2026-09-12T19:34:26.597Z",
     "updatedAt": "2026-09-12T19:34:26.597Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Carlos Eduardo Silveira",
+    "company": "Silveira Logística Integrada",
+    "role": "Diretor de Operações",
+    "email": "carlos@silveiralog.com.br",
+    "phone": "11987654321",
+    "estimatedBudget": 28000,
+    "tags": [
+      "Logística",
+      "B2B",
+      "Decisor Direto"
+    ],
+    "notes": "Empresa com 45 caminhões e perda de 15% em roteirização manual. Busca automação urgente com agentes de IA.",
+    "id": "lea_1789245789550_pk1k",
+    "createdAt": "2026-09-12T20:43:09.550Z",
+    "updatedAt": "2026-09-12T20:43:09.550Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Dra. Marina Albuquerque",
+    "company": "Albuquerque Clínicas Médicas",
+    "role": "Sócia-Proprietária",
+    "email": "marina@albuquerqueclinicas.com.br",
+    "phone": "21976543210",
+    "estimatedBudget": 15500,
+    "tags": [
+      "Saúde",
+      "High-Ticket",
+      "WhatsApp"
+    ],
+    "notes": "Rede com 3 unidades no Rio. Secretárias sobrecarregadas com agendamentos no WhatsApp. Deseja qualificação automática de pacientes.",
+    "id": "lea_1789245789552_z8in",
+    "createdAt": "2026-09-12T20:43:09.552Z",
+    "updatedAt": "2026-09-12T20:43:09.552Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Fernando Rossi",
+    "company": "Rossi Engenharia & Construtora",
+    "role": "CEO & Fundador",
+    "email": "fernando@rossieng.com.br",
+    "phone": "31988776655",
+    "estimatedBudget": 45000,
+    "tags": [
+      "Construção Civil",
+      "Enterprise",
+      "Pipeline Longo"
+    ],
+    "notes": "Negociando esteira comercial para lançamentos imobiliários. Ticket médio alto, ciclo de fechamento em 60 dias.",
+    "id": "lea_1789245789554_44xj",
+    "createdAt": "2026-09-12T20:43:09.554Z",
+    "updatedAt": "2026-09-12T20:43:09.554Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Patrícia Prado",
+    "company": "Prado Advocacia Previdenciária",
+    "role": "Sócia Administradora",
+    "email": "patricia@pradoadv.com.br",
+    "phone": "41977889900",
+    "estimatedBudget": 8900,
+    "tags": [
+      "Jurídico",
+      "Qualificação Rápida",
+      "Atendimento"
+    ],
+    "notes": "Recebe mais de 80 mensagens/dia de consultas previdenciárias. Necessita de triagem e agendamento automático com PIX de consulta.",
+    "id": "lea_1789245789560_m1vu",
+    "createdAt": "2026-09-12T20:43:09.560Z",
+    "updatedAt": "2026-09-12T20:43:09.560Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Lucas Brandão",
+    "company": "Brandão Autopeças Distribuidora",
+    "role": "Gerente Comercial",
+    "email": "lucas@brandaodistribuidora.com.br",
+    "phone": "19966554433",
+    "estimatedBudget": 19000,
+    "tags": [
+      "Distribuição",
+      "Varejo B2B",
+      "Recorrência"
+    ],
+    "notes": "Distribuidor para 120 oficinas na região de Campinas. Vendedores gastam 3h/dia montando orçamentos manuais.",
+    "id": "lea_1789245789563_g707",
+    "createdAt": "2026-09-12T20:43:09.563Z",
+    "updatedAt": "2026-09-12T20:43:09.563Z"
   }
 ]

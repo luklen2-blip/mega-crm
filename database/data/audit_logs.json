@@ -1,0 +1,56 @@
+[
+  {
+    "tenantId": "ten_1789245807468_qc7g",
+    "userId": "use_1789245807495_7pr9",
+    "action": "TENANT_REGISTERED",
+    "resource": "tenants",
+    "details": {
+      "companyName": "Tech Sul Soluções",
+      "segment": "Serviços"
+    },
+    "timestamp": "2026-09-12T20:43:27.499Z",
+    "id": "aud_1789245807499_ueh5",
+    "createdAt": "2026-09-12T20:43:27.499Z",
+    "updatedAt": "2026-09-12T20:43:27.499Z"
+  },
+  {
+    "tenantId": "ten_1789245807468_qc7g",
+    "userId": "use_1789245807495_7pr9",
+    "action": "USER_LOGIN",
+    "resource": "users",
+    "details": {
+      "email": "empresa_1789245807467@teste.com"
+    },
+    "timestamp": "2026-09-12T20:43:27.563Z",
+    "id": "aud_1789245807563_wm6u",
+    "createdAt": "2026-09-12T20:43:27.563Z",
+    "updatedAt": "2026-09-12T20:43:27.563Z"
+  },
+  {
+    "tenantId": "ten_1789245932125_e9jf",
+    "userId": "use_1789245932156_gbxm",
+    "action": "TENANT_REGISTERED",
+    "resource": "tenants",
+    "details": {
+      "companyName": "Tech Sul Soluções",
+      "segment": "Serviços"
+    },
+    "timestamp": "2026-09-12T20:45:32.163Z",
+    "id": "aud_1789245932163_rv4s",
+    "createdAt": "2026-09-12T20:45:32.163Z",
+    "updatedAt": "2026-09-12T20:45:32.163Z"
+  },
+  {
+    "tenantId": "ten_1789245932125_e9jf",
+    "userId": "use_1789245932156_gbxm",
+    "action": "USER_LOGIN",
+    "resource": "users",
+    "details": {
+      "email": "empresa_1789245932124@teste.com"
+    },
+    "timestamp": "2026-09-12T20:45:32.205Z",
+    "id": "aud_1789245932205_4gqh",
+    "createdAt": "2026-09-12T20:45:32.205Z",
+    "updatedAt": "2026-09-12T20:45:32.205Z"
+  }
+]

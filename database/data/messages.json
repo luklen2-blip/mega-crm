@@ -1,0 +1,32 @@
+[
+  {
+    "tenantId": "ten_demo_agentise",
+    "conversationId": "con_1789245789588_cv7f",
+    "sender": "cliente",
+    "senderName": "Carlos Eduardo",
+    "text": "Olá! Vi a demonstração do Mega CRM e gostaria de entender como ele integra na nossa frota.",
+    "createdAt": "2026-09-12T18:43:09.592Z",
+    "id": "mes_1789245789592_1eq2",
+    "updatedAt": "2026-09-12T20:43:09.592Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "conversationId": "con_1789245789588_cv7f",
+    "sender": "vendedor",
+    "senderName": "Luciano",
+    "text": "Olá Carlos! Perfeito, temos um módulo com agentes de IA que automatiza roteirização e orçamentos.",
+    "createdAt": "2026-09-12T19:13:09.595Z",
+    "id": "mes_1789245789595_0doh",
+    "updatedAt": "2026-09-12T20:43:09.595Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "conversationId": "con_1789245789588_cv7f",
+    "sender": "cliente",
+    "senderName": "Carlos Eduardo",
+    "text": "Gostei muito da proposta, podemos agendar para segunda-feira?",
+    "createdAt": "2026-09-12T19:43:09.597Z",
+    "id": "mes_1789245789597_g2ja",
+    "updatedAt": "2026-09-12T20:43:09.597Z"
+  }
+]

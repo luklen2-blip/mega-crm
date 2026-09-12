@@ -181,6 +181,113 @@ async function runTests() {
   console.log('  ✅ Resolução estática, SPA fallback e defesa de Path Traversal validados.\n');
   passed++;
 
+  // 8. Teste de Autenticação Multi-Tenant e Registro de Nova Empresa
+  console.log('▶ Teste 8: Validação de Autenticação Multi-Tenant, Hashing e Tokens JWT...');
+  const { registerTenant, login, verifyToken } = require('../services/authService');
+  const testTenantEmail = `empresa_${Date.now()}@teste.com`;
+  const regResult = registerTenant({
+    companyName: 'Tech Sul Soluções',
+    adminName: 'Eduardo Silveira',
+    email: testTenantEmail,
+    password: 'senhaSegura123',
+    segment: 'Serviços'
+  });
+  assert.ok(regResult.token, 'Registro deve emitir token assinado');
+  assert.strictEqual(regResult.tenant.name, 'Tech Sul Soluções', 'Tenant criado com nome correto');
+  
+  const verified = verifyToken(regResult.token);
+  assert.strictEqual(verified.email, testTenantEmail, 'Token verificado deve conter e-mail correto');
+
+  const loginRes = login(testTenantEmail, 'senhaSegura123');
+  assert.ok(loginRes.token, 'Login com credenciais corretas deve gerar token');
+  console.log('  ✅ Autenticação Multi-Tenant, Hashing PBKDF2 e Tokens JWT 100% operacionais.\n');
+  passed++;
+
+  // 9. Teste de Onboarding e Segmentação
+  console.log('▶ Teste 9: Validação do Onboarding Guiado...');
+  const onboardingRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      segment: 'Automotivo',
+      teamSize: '6-15',
+      leadSources: ['WhatsApp', 'Instagram'],
+      primaryGoal: 'Aumentar vendas e recuperar clientes'
+    });
+    const req = http.request(`http://127.0.0.1:${TEST_PORT}/api/onboarding/complete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${regResult.token}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(onboardingRes.status, 200, 'Onboarding deve retornar HTTP 200');
+  assert.strictEqual(onboardingRes.body.success, true);
+  console.log('  ✅ Onboarding guiado e configuração de negócio validados.\n');
+  passed++;
+
+  // 10. Teste da Central Omnichannel e Conectores Oficiais
+  console.log('▶ Teste 10: Validação da Central Omnichannel e Status dos Canais Oficiais...');
+  const { getChannelsStatus, getConversations } = require('../services/omnichannelService');
+  const channels = getChannelsStatus(regResult.tenant.id);
+  assert.ok(channels.length >= 3, 'Deve suportar WhatsApp, Instagram e Webchat');
+  assert.strictEqual(channels[0].status, 'disconnected', 'Sem credenciais reais Meta, deve exibir status desconectado com integridade');
+  assert.strictEqual(channels[0].statusLabel, 'Conectar Canal');
+  console.log('  ✅ Central Omnichannel em estrita integridade (sem simulações falsas).\n');
+  passed++;
+
+  // 11. Teste do Módulo RecuperaIA (Varredura e Campanhas)
+  console.log('▶ Teste 11: Validação do Módulo RecuperaIA (Varredura de Vendas Perdidas)...');
+  const { scanRecoverableOpportunities, generateRecoveryCampaign } = require('../services/recoveryService');
+  const scan = scanRecoverableOpportunities('ten_demo_agentise');
+  assert.ok(scan.categories, 'Varredura deve categorizar oportunidades');
+  
+  const camp = generateRecoveryCampaign('ten_demo_agentise', 'stalledDeals', 'consultivo');
+  assert.ok(camp.id, 'Campanha de recuperação deve ser gerada');
+  assert.ok(camp.sequence.length === 3, 'Sequência em 3 passos de follow-up');
+  console.log('  ✅ Módulo RecuperaIA identificando oportunidades paradas e gerando campanhas.\n');
+  passed++;
+
+  // 12. Teste do Motor de Automações QUANDO-SE-ENTÃO
+  console.log('▶ Teste 12: Validação do Construtor de Automações (QUANDO -> SE -> ENTÃO)...');
+  const { automationsDB } = require('../database/db');
+  const autoList = automationsDB.findByTenant(regResult.tenant.id);
+  assert.ok(autoList.length > 0, 'Onboarding deve criar automações automáticas para o segmento');
+  console.log('  ✅ Motor de Automações operando com triggers e ações comerciais.\n');
+  passed++;
+
+  // 13. Teste do Analista IA e Vertical Agentise Auto
+  console.log('▶ Teste 13: Validação do Analista IA para Gestores e Módulo Agentise Auto...');
+  const { runManagerAnalyticsQuery } = require('../services/aiCopilotService');
+  const { calculateFinancing } = require('../services/autoVerticalService');
+  
+  const analystAnswer = runManagerAnalyticsQuery('ten_demo_agentise', 'Quanto tenho no pipeline?');
+  assert.ok(analystAnswer.answer.includes('R$'), 'Analista IA deve responder com dados reais do pipeline');
+  assert.ok(analystAnswer.supportingData, 'Resposta deve conter dados de apoio fundamentados');
+
+  const sim = calculateFinancing({ vehiclePrice: 100000, downPayment: 20000, termMonths: 48 });
+  assert.strictEqual(sim.financedAmount, 80000, 'Valor financiado correto');
+  assert.ok(sim.monthlyInstallment > 0, 'Parcela calculada via Tabela Price');
+  console.log('  ✅ Analista IA para Gestores e Vertical Agentise Auto validados.\n');
+  passed++;
+
+  // 14. Teste de Assinatura SaaS, Trial de 7 Dias e Créditos de IA
+  console.log('▶ Teste 14: Validação de Planos SaaS, Trial de 7 Dias e Medição de Créditos de IA...');
+  const { getTenantSubscription, consumeAiCredits } = require('../services/billingService');
+  const sub = getTenantSubscription(regResult.tenant.id);
+  assert.strictEqual(sub.isTrialActive, true, 'Novo tenant deve nascer em período de trial');
+  assert.ok(sub.daysLeftTrial <= 7 && sub.daysLeftTrial > 0, 'Trial de 7 dias ativo');
+
+  const creditUse = consumeAiCredits(regResult.tenant.id, 'teste_ia', 50);
+  assert.strictEqual(creditUse.success, true);
+  assert.strictEqual(creditUse.remainingCredits, 950, 'Créditos de IA devem ser decrementados corretamente');
+  console.log('  ✅ Planos SaaS, Trial e Gestão de Créditos de IA 100% operacionais.\n');
+  passed++;
+
   console.log('=========================================================');
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');

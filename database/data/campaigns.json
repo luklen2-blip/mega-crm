@@ -1,0 +1,78 @@
+[
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "RecuperaIA: Oportunidades Estagnadas no Funil (+5d) (12/09/2026)",
+    "category": "stalledDeals",
+    "targetCount": 0,
+    "tone": "consultivo",
+    "template": {
+      "subject": "Atualização sobre o seu projeto e novas condições especiais",
+      "message": "Olá {{nome}}! Estava revisando nosso planejamento aqui na {{empresa}} e lembrei do seu projeto. Conseguimos liberar uma condição exclusiva nesta semana para você avançar sem travar seu fluxo de caixa.",
+      "argument": "Foco em destravar gargalos operacionais e garantir ROI rápido sem atrito.",
+      "cta": "Tem 5 minutos amanhã às 10h para vermos isso juntos?"
+    },
+    "sequence": [
+      {
+        "step": 1,
+        "delayHours": 0,
+        "channel": "WhatsApp / E-mail",
+        "action": "Primeiro toque de reativação de valor"
+      },
+      {
+        "step": 2,
+        "delayHours": 48,
+        "channel": "WhatsApp",
+        "action": "Envio de case de sucesso do mesmo nicho"
+      },
+      {
+        "step": 3,
+        "delayHours": 120,
+        "channel": "WhatsApp / Ligação",
+        "action": "Último contato e oferta de consultoria rápida"
+      }
+    ],
+    "status": "pronta",
+    "complianceNotes": "Disparo com respeito à LGPD e link de opt-out/descadastro automático.",
+    "id": "cam_1789245807692_x6pd",
+    "createdAt": "2026-09-12T20:43:27.692Z",
+    "updatedAt": "2026-09-12T20:43:27.692Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "RecuperaIA: Oportunidades Estagnadas no Funil (+5d) (12/09/2026)",
+    "category": "stalledDeals",
+    "targetCount": 0,
+    "tone": "consultivo",
+    "template": {
+      "subject": "Atualização sobre o seu projeto e novas condições especiais",
+      "message": "Olá {{nome}}! Estava revisando nosso planejamento aqui na {{empresa}} e lembrei do seu projeto. Conseguimos liberar uma condição exclusiva nesta semana para você avançar sem travar seu fluxo de caixa.",
+      "argument": "Foco em destravar gargalos operacionais e garantir ROI rápido sem atrito.",
+      "cta": "Tem 5 minutos amanhã às 10h para vermos isso juntos?"
+    },
+    "sequence": [
+      {
+        "step": 1,
+        "delayHours": 0,
+        "channel": "WhatsApp / E-mail",
+        "action": "Primeiro toque de reativação de valor"
+      },
+      {
+        "step": 2,
+        "delayHours": 48,
+        "channel": "WhatsApp",
+        "action": "Envio de case de sucesso do mesmo nicho"
+      },
+      {
+        "step": 3,
+        "delayHours": 120,
+        "channel": "WhatsApp / Ligação",
+        "action": "Último contato e oferta de consultoria rápida"
+      }
+    ],
+    "status": "pronta",
+    "complianceNotes": "Disparo com respeito à LGPD e link de opt-out/descadastro automático.",
+    "id": "cam_1789245932269_9zzd",
+    "createdAt": "2026-09-12T20:45:32.269Z",
+    "updatedAt": "2026-09-12T20:45:32.269Z"
+  }
+]

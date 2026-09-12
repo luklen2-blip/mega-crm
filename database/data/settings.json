@@ -10,5 +10,18 @@
     "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
     "createdAt": "2026-09-12T19:34:26.591Z",
     "updatedAt": "2026-09-12T19:34:26.591Z"
+  },
+  {
+    "id": "general_settings",
+    "tenantId": "ten_demo_agentise",
+    "companyName": "Agentise Soluções Comerciais",
+    "pixKey": "luciano.contato@crm.ia.br",
+    "pixName": "MEGA CRM AGENTISE",
+    "pixCity": "SAO PAULO",
+    "currency": "BRL",
+    "language": "pt-BR",
+    "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
+    "createdAt": "2026-09-12T20:43:09.534Z",
+    "updatedAt": "2026-09-12T20:43:09.534Z"
   }
 ]
