@@ -41,7 +41,7 @@ class JsonDB {
   findByTenant(tenantId, predicate) {
     if (!tenantId) return this.findAll(predicate);
     return this.cache.filter(item => {
-      const matchesTenant = !item.tenantId || item.tenantId === tenantId;
+      const matchesTenant = item.tenantId === tenantId;
       return matchesTenant && (predicate ? predicate(item) : true);
     });
   }

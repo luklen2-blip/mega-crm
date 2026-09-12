@@ -70,6 +70,15 @@
         <span>Nuvem 24/7 Ativa (<span id="health-uptime">0s</span>)</span>
       </div>
 
+      <!-- Seletor de Empresa / Tenant Switcher -->
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-slate-300">
+        <i data-lucide="building-2" class="h-3.5 w-3.5 text-blue-400 shrink-0"></i>
+        <select id="header-tenant-selector" onchange="switchDemoTenant(this.value)" class="bg-transparent text-xs text-white font-semibold focus:outline-none cursor-pointer pr-1">
+          <option value="ten_demo_agentise" class="bg-slate-900 text-slate-200">🏢 Agentise Soluções (B2B)</option>
+          <option value="ten_autoprime_veiculos" class="bg-slate-900 text-slate-200">🚗 Auto Prime Veículos (Concessionária)</option>
+        </select>
+      </div>
+
       <!-- Trial / Plan Badge -->
       <div id="topbar-plan-badge" onclick="switchView('billing')" class="cursor-pointer hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-xs text-indigo-300 hover:bg-indigo-500/25 transition">
         <i data-lucide="sparkles" class="h-3.5 w-3.5 text-indigo-400"></i>
@@ -844,12 +853,18 @@
       <!-- VIEW 13: DASHBOARD EXECUTIVO & ANALYTICS -->
       <!-- ============================================== -->
       <section id="view-analytics" class="hidden space-y-6">
-        <div>
-          <h1 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
-            <i data-lucide="bar-chart-3" class="h-6 w-6 text-blue-400"></i>
-            <span>Dashboard Executivo Comercial</span>
-          </h1>
-          <p class="text-xs text-slate-400">Métricas financeiras consolidadas e alertas proativos da IA baseados em dados reais.</p>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h1 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              <i data-lucide="bar-chart-3" class="h-6 w-6 text-blue-400"></i>
+              <span>Dashboard Executivo Comercial</span>
+            </h1>
+            <p class="text-xs text-slate-400">Métricas financeiras consolidadas e alertas proativos da IA baseados em dados reais.</p>
+          </div>
+          <button onclick="runAutoPrimeSalesFlow()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:brightness-110 text-white shadow-md shadow-emerald-600/30 transition self-start sm:self-auto">
+            <i data-lucide="zap" class="h-3.5 w-3.5"></i>
+            <span>Executar Fluxo Real de Venda (Teste 16)</span>
+          </button>
         </div>
 
         <!-- Seção de Alertas da IA -->

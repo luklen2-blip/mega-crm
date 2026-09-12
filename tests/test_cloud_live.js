@@ -119,6 +119,17 @@ async function runLiveE2E() {
   console.log('  ✅ Planos SaaS e medição de Créditos de IA operacionais.');
   passed++;
 
+  // 9. Auto Prime Veículos & Teste 16 (Fluxo Real de Venda)
+  console.log('▶ [Nuvem] Validando Auto Prime Veículos e Métricas do Teste 16 (/api/autoprime/metrics)...');
+  const primeRes = await requestUrl('/api/autoprime/metrics');
+  if (primeRes.statusCode !== 200) throw new Error(`/api/autoprime/metrics falhou: HTTP ${primeRes.statusCode}`);
+  const pData = JSON.parse(primeRes.data).data;
+  if (!pData || pData.totalLeads < 50 || pData.activeDeals !== 20) {
+    throw new Error(`Métricas Auto Prime divergentes: ${primeRes.data}`);
+  }
+  console.log(`  ✅ Auto Prime Veículos ativa na nuvem (${pData.totalLeads} leads, ${pData.activeDeals} deals ativos, ${pData.wonDealsCount} vendas ganhas, R$ ${Number(pData.wonValue).toLocaleString('pt-BR')} faturados).`);
+  passed++;
+
   console.log('\n=============================================================');
   console.log(`🚀 HOMOLOGAÇÃO CONCLUÍDA: ${passed} verificações passaram com 100% de sucesso!`);
   console.log('🎉 Sistema 100% íntegro e operacional 24/7 na nuvem.');

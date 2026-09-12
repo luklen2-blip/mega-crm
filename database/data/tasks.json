@@ -8,7 +8,8 @@
     "priority": "urgente",
     "id": "tas_1789241666612_v129",
     "createdAt": "2026-09-12T19:34:26.612Z",
-    "updatedAt": "2026-09-12T19:34:26.612Z"
+    "updatedAt": "2026-09-12T21:12:18.839Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "dealId": "dea_1789241666601_v8ma",
@@ -19,7 +20,8 @@
     "priority": "alta",
     "id": "tas_1789241666614_01k4",
     "createdAt": "2026-09-12T19:34:26.614Z",
-    "updatedAt": "2026-09-12T19:34:26.614Z"
+    "updatedAt": "2026-09-12T21:12:18.841Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "dealId": "dea_1789241666604_d65d",
@@ -30,7 +32,8 @@
     "priority": "media",
     "id": "tas_1789241666615_sa46",
     "createdAt": "2026-09-12T19:34:26.615Z",
-    "updatedAt": "2026-09-12T19:34:26.615Z"
+    "updatedAt": "2026-09-12T21:12:18.843Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "completed": false,
@@ -38,7 +41,8 @@
     "title": "Tarefa de Teste Automatizado",
     "id": "tas_1789242589551_2vwo",
     "createdAt": "2026-09-12T19:49:49.551Z",
-    "updatedAt": "2026-09-12T19:49:49.551Z"
+    "updatedAt": "2026-09-12T21:12:18.846Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "completed": false,
@@ -46,7 +50,8 @@
     "title": "Tarefa de Teste Automatizado",
     "id": "tas_1789242626622_uphh",
     "createdAt": "2026-09-12T19:50:26.622Z",
-    "updatedAt": "2026-09-12T19:50:26.622Z"
+    "updatedAt": "2026-09-12T21:12:18.848Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "completed": false,
@@ -54,7 +59,8 @@
     "title": "Tarefa de Teste Automatizado",
     "id": "tas_1789243957235_b70i",
     "createdAt": "2026-09-12T20:12:37.235Z",
-    "updatedAt": "2026-09-12T20:12:37.235Z"
+    "updatedAt": "2026-09-12T21:12:18.850Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "tenantId": "ten_demo_agentise",
@@ -118,5 +124,85 @@
     "id": "tas_1789245932000_drr0",
     "createdAt": "2026-09-12T20:45:32.000Z",
     "updatedAt": "2026-09-12T20:45:32.000Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789247548983_oqaz",
+    "createdAt": "2026-09-12T21:12:28.983Z",
+    "updatedAt": "2026-09-12T21:12:28.983Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789247691864",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-12T21:14:51.864Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-12T21:14:51.864Z",
+    "updatedAt": "2026-09-12T21:14:51.881Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789247786078_p2b5",
+    "createdAt": "2026-09-12T21:16:26.078Z",
+    "updatedAt": "2026-09-12T21:16:26.078Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789247786466",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-12T21:16:26.466Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-12T21:16:26.466Z",
+    "updatedAt": "2026-09-12T21:16:26.494Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789247816414_avv3",
+    "createdAt": "2026-09-12T21:16:56.414Z",
+    "updatedAt": "2026-09-12T21:16:56.414Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789247816924",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-12T21:16:56.924Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-12T21:16:56.924Z",
+    "updatedAt": "2026-09-12T21:16:57.014Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789247842756_ea2s",
+    "createdAt": "2026-09-12T21:17:22.756Z",
+    "updatedAt": "2026-09-12T21:17:22.756Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789247843320",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-12T21:17:23.320Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-12T21:17:23.320Z",
+    "updatedAt": "2026-09-12T21:17:23.348Z"
   }
 ]

@@ -14,7 +14,8 @@
     "notes": "Empresa com 45 caminhões e perda de 15% em roteirização manual. Busca automação urgente com agentes de IA.",
     "id": "lea_1789241666592_snnu",
     "createdAt": "2026-09-12T19:34:26.592Z",
-    "updatedAt": "2026-09-12T19:34:26.592Z"
+    "updatedAt": "2026-09-12T21:12:18.811Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "name": "Dra. Marina Albuquerque",
@@ -31,7 +32,8 @@
     "notes": "Rede com 3 unidades no Rio. Secretárias sobrecarregadas com agendamentos no WhatsApp. Deseja qualificação automática de pacientes.",
     "id": "lea_1789241666594_pdcr",
     "createdAt": "2026-09-12T19:34:26.594Z",
-    "updatedAt": "2026-09-12T19:34:26.594Z"
+    "updatedAt": "2026-09-12T21:12:18.816Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "name": "Rodrigo Vasconcelos",
@@ -48,7 +50,8 @@
     "notes": "Plataforma de cursos online com 12 mil alunos. Quer implementar CRM automatizado com funil de vendas integrado ao PIX nativo.",
     "id": "lea_1789241666595_lnyp",
     "createdAt": "2026-09-12T19:34:26.595Z",
-    "updatedAt": "2026-09-12T19:34:26.595Z"
+    "updatedAt": "2026-09-12T21:12:18.819Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "name": "Beatriz Fagundes",
@@ -64,7 +67,8 @@
     "notes": "Escritório de arquitetura em expansão. Perde prazos de follow-up de orçamentos por falta de funil centralizado.",
     "id": "lea_1789241666596_b2od",
     "createdAt": "2026-09-12T19:34:26.596Z",
-    "updatedAt": "2026-09-12T19:34:26.596Z"
+    "updatedAt": "2026-09-12T21:12:18.821Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "name": "Felipe Fontana",
@@ -81,7 +85,8 @@
     "notes": "Equipe externa de 12 representantes comerciais. Precisam de aplicativo ágil com pipeline e geração de propostas PIX na hora.",
     "id": "lea_1789241666597_pc0n",
     "createdAt": "2026-09-12T19:34:26.597Z",
-    "updatedAt": "2026-09-12T19:34:26.597Z"
+    "updatedAt": "2026-09-12T21:12:18.824Z",
+    "tenantId": "ten_demo_agentise"
   },
   {
     "tenantId": "ten_demo_agentise",
@@ -172,5 +177,1026 @@
     "id": "lea_1789245789563_g707",
     "createdAt": "2026-09-12T20:43:09.563Z",
     "updatedAt": "2026-09-12T20:43:09.563Z"
+  },
+  {
+    "id": "lead_autoprime_01",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Marcelo Silveira",
+    "company": "Grupo M Logística",
+    "role": "Cliente Comprador",
+    "email": "marcelo.silveira@grupom.com.br",
+    "phone": "11987110001",
+    "estimatedBudget": 135000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Corolla XEi 2023",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Corolla XEi 2023. Orçamento previsto de R$ 135.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.753Z",
+    "updatedAt": "2026-09-12T21:14:42.753Z"
+  },
+  {
+    "id": "lead_autoprime_02",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Dra. Vanessa Guimarães",
+    "company": "Clínica Odonto Prime",
+    "role": "Cliente Comprador",
+    "email": "vanessa@guimaraesodonto.com.br",
+    "phone": "11987110002",
+    "estimatedBudget": 115000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Tracker Premier 1.2 Turbo",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: Tracker Premier 1.2 Turbo. Orçamento previsto de R$ 115.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.757Z",
+    "updatedAt": "2026-09-12T21:14:42.757Z"
+  },
+  {
+    "id": "lead_autoprime_03",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Bruno Albuquerque",
+    "company": "Albuquerque Serviços",
+    "role": "Cliente Comprador",
+    "email": "bruno@albuquerqueserv.com.br",
+    "phone": "21987110003",
+    "estimatedBudget": 245000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Hilux SRV 4x4 Diesel",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Hilux SRV 4x4 Diesel. Orçamento previsto de R$ 245.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.760Z",
+    "updatedAt": "2026-09-12T21:14:42.760Z"
+  },
+  {
+    "id": "lead_autoprime_04",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Patrícia Castro",
+    "company": "Castro Consultoria",
+    "role": "Cliente Comprador",
+    "email": "patricia@castroconsultoria.com.br",
+    "phone": "31987110004",
+    "estimatedBudget": 138000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Honda Civic G10 Touring",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Honda Civic G10 Touring. Orçamento previsto de R$ 138.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.762Z",
+    "updatedAt": "2026-09-12T21:14:42.762Z"
+  },
+  {
+    "id": "lead_autoprime_05",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Ricardo Vasconcelos",
+    "company": "Vasconcelos Engenharia",
+    "role": "Cliente Comprador",
+    "email": "ricardo@vasconceloseng.com.br",
+    "phone": "41987110005",
+    "estimatedBudget": 112000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Nivus Highline 2023",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Nivus Highline 2023. Orçamento previsto de R$ 112.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.765Z",
+    "updatedAt": "2026-09-12T21:14:42.765Z"
+  },
+  {
+    "id": "lead_autoprime_06",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Larissa Fontes",
+    "company": "Studio Fontes Interiores",
+    "role": "Cliente Comprador",
+    "email": "larissa@fontesdesign.com.br",
+    "phone": "19987110006",
+    "estimatedBudget": 125000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Fiat Fastback Limited",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: Fiat Fastback Limited. Orçamento previsto de R$ 125.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.767Z",
+    "updatedAt": "2026-09-12T21:14:42.767Z"
+  },
+  {
+    "id": "lead_autoprime_07",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Eduardo Fagundes",
+    "company": "Fagundes Agropecuária",
+    "role": "Cliente Comprador",
+    "email": "eduardo@fagundesagri.com.br",
+    "phone": "51987110007",
+    "estimatedBudget": 135000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Pulse Abarth Turbo 270",
+      "Indicação"
+    ],
+    "notes": "Interesse focado no veículo: Pulse Abarth Turbo 270. Orçamento previsto de R$ 135.000. Origem: Indicação.",
+    "createdAt": "2026-09-12T21:14:42.771Z",
+    "updatedAt": "2026-09-12T21:14:42.771Z"
+  },
+  {
+    "id": "lead_autoprime_08",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Camila Antunes",
+    "company": "Antunes & Associados",
+    "role": "Cliente Comprador",
+    "email": "camila@antunesadv.com.br",
+    "phone": "71987110008",
+    "estimatedBudget": 148000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Hyundai Creta Ultimate",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Hyundai Creta Ultimate. Orçamento previsto de R$ 148.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.775Z",
+    "updatedAt": "2026-09-12T21:14:42.775Z"
+  },
+  {
+    "id": "lead_autoprime_09",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Gustavo Nogueira",
+    "company": "Nogueira Imóveis Prime",
+    "role": "Cliente Comprador",
+    "email": "gustavo@nogueiraimoveis.com.br",
+    "phone": "81987110009",
+    "estimatedBudget": 119000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Nissan Kicks Exclusive",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Nissan Kicks Exclusive. Orçamento previsto de R$ 119.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.779Z",
+    "updatedAt": "2026-09-12T21:14:42.779Z"
+  },
+  {
+    "id": "lead_autoprime_10",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Mariana Peixoto",
+    "company": "Hospital Santa Rita",
+    "role": "Cliente Comprador",
+    "email": "mariana@peixotomed.com.br",
+    "phone": "11987110010",
+    "estimatedBudget": 185000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Corolla Cross XRX Hybrid",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Corolla Cross XRX Hybrid. Orçamento previsto de R$ 185.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.782Z",
+    "updatedAt": "2026-09-12T21:14:42.782Z"
+  },
+  {
+    "id": "lead_autoprime_11",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Renato Figueiredo",
+    "company": "Rede Drogarias Figueiredo",
+    "role": "Cliente Comprador",
+    "email": "renato@figueiredofarm.com.br",
+    "phone": "11987110011",
+    "estimatedBudget": 172000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "VW Taos Highline 2023",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: VW Taos Highline 2023. Orçamento previsto de R$ 172.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.784Z",
+    "updatedAt": "2026-09-12T21:14:42.784Z"
+  },
+  {
+    "id": "lead_autoprime_12",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Tatiana Meireles",
+    "company": "Meireles Arquitetura",
+    "role": "Cliente Comprador",
+    "email": "tatiana@meirelesarq.com.br",
+    "phone": "21987110012",
+    "estimatedBudget": 118000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "T-Cross Comfortline",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: T-Cross Comfortline. Orçamento previsto de R$ 118.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.788Z",
+    "updatedAt": "2026-09-12T21:14:42.788Z"
+  },
+  {
+    "id": "lead_autoprime_13",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "André Siqueira",
+    "company": "Siqueira Mineração",
+    "role": "Cliente Comprador",
+    "email": "andre@siqueiramineracao.com.br",
+    "phone": "31987110013",
+    "estimatedBudget": 228000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Ford Ranger XLS 4x4",
+      "Indicação"
+    ],
+    "notes": "Interesse focado no veículo: Ford Ranger XLS 4x4. Orçamento previsto de R$ 228.000. Origem: Indicação.",
+    "createdAt": "2026-09-12T21:14:42.795Z",
+    "updatedAt": "2026-09-12T21:14:42.795Z"
+  },
+  {
+    "id": "lead_autoprime_14",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Juliana Barreto",
+    "company": "Barreto Moda & Luxo",
+    "role": "Cliente Comprador",
+    "email": "juliana@barretoboutique.com.br",
+    "phone": "41987110014",
+    "estimatedBudget": 215000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Jeep Commander Limited",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Jeep Commander Limited. Orçamento previsto de R$ 215.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.798Z",
+    "updatedAt": "2026-09-12T21:14:42.798Z"
+  },
+  {
+    "id": "lead_autoprime_15",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Felipe Dornelles",
+    "company": "Dornelles Automação",
+    "role": "Cliente Comprador",
+    "email": "felipe@dornellestec.com.br",
+    "phone": "51987110015",
+    "estimatedBudget": 159000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Caoa Chery Tiggo 7 Pro",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Caoa Chery Tiggo 7 Pro. Orçamento previsto de R$ 159.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.802Z",
+    "updatedAt": "2026-09-12T21:14:42.802Z"
+  },
+  {
+    "id": "lead_autoprime_16",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Aline Valente",
+    "company": "Valente Gastronomia",
+    "role": "Cliente Comprador",
+    "email": "aline@valentegourmet.com.br",
+    "phone": "19987110016",
+    "estimatedBudget": 108000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Renault Duster Iconic",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Renault Duster Iconic. Orçamento previsto de R$ 108.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.808Z",
+    "updatedAt": "2026-09-12T21:14:42.808Z"
+  },
+  {
+    "id": "lead_autoprime_17",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Gabriel Medeiros",
+    "company": "Medeiros Locações",
+    "role": "Cliente Comprador",
+    "email": "gabriel@medeirosfrotas.com.br",
+    "phone": "11987110017",
+    "estimatedBudget": 258000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Audi Q3 Prestige Plus",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Audi Q3 Prestige Plus. Orçamento previsto de R$ 258.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.811Z",
+    "updatedAt": "2026-09-12T21:14:42.811Z"
+  },
+  {
+    "id": "lead_autoprime_18",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Priscila Rocha",
+    "company": "Rocha Comércio Exterior",
+    "role": "Cliente Comprador",
+    "email": "priscila@rochacomex.com.br",
+    "phone": "21987110018",
+    "estimatedBudget": 188000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Honda HR-V Touring",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: Honda HR-V Touring. Orçamento previsto de R$ 188.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.815Z",
+    "updatedAt": "2026-09-12T21:14:42.815Z"
+  },
+  {
+    "id": "lead_autoprime_19",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Leonardo Toledo",
+    "company": "Toledo Corretora de Seguros",
+    "role": "Cliente Comprador",
+    "email": "leonardo@toledoseguros.com.br",
+    "phone": "31987110019",
+    "estimatedBudget": 105000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Toyota Yaris XLS Sedã",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Toyota Yaris XLS Sedã. Orçamento previsto de R$ 105.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.819Z",
+    "updatedAt": "2026-09-12T21:14:42.819Z"
+  },
+  {
+    "id": "lead_autoprime_20",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Bianca Esteves",
+    "company": "Clínica Dermatológica Esteves",
+    "role": "Cliente Comprador",
+    "email": "bianca@estevesestetica.com.br",
+    "phone": "41987110020",
+    "estimatedBudget": 122000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Chevrolet Montana Premier",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Chevrolet Montana Premier. Orçamento previsto de R$ 122.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.823Z",
+    "updatedAt": "2026-09-12T21:14:42.823Z"
+  },
+  {
+    "id": "lead_autoprime_21",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Lucas Pimentel",
+    "company": "Holding Pimentel & Cia",
+    "role": "Cliente Comprador",
+    "email": "lucas@pimentelholding.com.br",
+    "phone": "11987110021",
+    "estimatedBudget": 158000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Fiat Toro Volcano Diesel",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Fiat Toro Volcano Diesel. Orçamento previsto de R$ 158.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.826Z",
+    "updatedAt": "2026-09-12T21:14:42.826Z"
+  },
+  {
+    "id": "lead_autoprime_22",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Carla Brandão",
+    "company": "Consultório Carla Brandão",
+    "role": "Cliente Comprador",
+    "email": "carla@brandaopsico.com.br",
+    "phone": "11987110022",
+    "estimatedBudget": 98000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Peugeot 208 Griffe Turbo",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: Peugeot 208 Griffe Turbo. Orçamento previsto de R$ 98.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.829Z",
+    "updatedAt": "2026-09-12T21:14:42.829Z"
+  },
+  {
+    "id": "lead_autoprime_23",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Diego Faria",
+    "company": "Faria & Silva Advocacia",
+    "role": "Cliente Comprador",
+    "email": "diego@fariadvogados.com.br",
+    "phone": "21987110023",
+    "estimatedBudget": 275000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "BMW 320i Sport GP",
+      "Indicação"
+    ],
+    "notes": "Interesse focado no veículo: BMW 320i Sport GP. Orçamento previsto de R$ 275.000. Origem: Indicação.",
+    "createdAt": "2026-09-12T21:14:42.832Z",
+    "updatedAt": "2026-09-12T21:14:42.832Z"
+  },
+  {
+    "id": "lead_autoprime_24",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Monique Lemos",
+    "company": "Lemos Dermocosméticos",
+    "role": "Cliente Comprador",
+    "email": "monique@lemoscosmeticos.com.br",
+    "phone": "31987110024",
+    "estimatedBudget": 310000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "Mercedes-Benz C 200 AMG",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Mercedes-Benz C 200 AMG. Orçamento previsto de R$ 310.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.834Z",
+    "updatedAt": "2026-09-12T21:14:42.834Z"
+  },
+  {
+    "id": "lead_autoprime_25",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Danilo Rezende",
+    "company": "Rezende Transportes Rápidos",
+    "role": "Cliente Comprador",
+    "email": "danilo@rezendefrete.com.br",
+    "phone": "41987110025",
+    "estimatedBudget": 235000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "RAM Rampage Laramie",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: RAM Rampage Laramie. Orçamento previsto de R$ 235.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.856Z",
+    "updatedAt": "2026-09-12T21:14:42.856Z"
+  },
+  {
+    "id": "lead_autoprime_26",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Beatriz Sampaio",
+    "company": "Hospital Veterinário Sampaio",
+    "role": "Cliente Comprador",
+    "email": "beatriz@sampaiovet.com.br",
+    "phone": "19987110026",
+    "estimatedBudget": 320000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Volvo XC40 Recharge",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Volvo XC40 Recharge. Orçamento previsto de R$ 320.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.859Z",
+    "updatedAt": "2026-09-12T21:14:42.859Z"
+  },
+  {
+    "id": "lead_autoprime_27",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Rodrigo Caetano",
+    "company": "Caetano Distribuição",
+    "role": "Cliente Comprador",
+    "email": "rodrigo@caetanobikes.com.br",
+    "phone": "51987110027",
+    "estimatedBudget": 175000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Mitsubishi Eclipse Cross",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Mitsubishi Eclipse Cross. Orçamento previsto de R$ 175.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.862Z",
+    "updatedAt": "2026-09-12T21:14:42.862Z"
+  },
+  {
+    "id": "lead_autoprime_28",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Fernanda Dantas",
+    "company": "Dantas Soluções em RH",
+    "role": "Cliente Comprador",
+    "email": "fernanda@dantasrh.com.br",
+    "phone": "71987110028",
+    "estimatedBudget": 169000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "BYD Dolphin Plus Elétrico",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: BYD Dolphin Plus Elétrico. Orçamento previsto de R$ 169.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.865Z",
+    "updatedAt": "2026-09-12T21:14:42.865Z"
+  },
+  {
+    "id": "lead_autoprime_29",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Alexandre Borges",
+    "company": "Borges Edificações",
+    "role": "Cliente Comprador",
+    "email": "alexandre@borgesconstrutora.com.br",
+    "phone": "81987110029",
+    "estimatedBudget": 380000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Toyota SW4 Diamond 4x4",
+      "Indicação"
+    ],
+    "notes": "Interesse focado no veículo: Toyota SW4 Diamond 4x4. Orçamento previsto de R$ 380.000. Origem: Indicação.",
+    "createdAt": "2026-09-12T21:14:42.867Z",
+    "updatedAt": "2026-09-12T21:14:42.867Z"
+  },
+  {
+    "id": "lead_autoprime_30",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Carolina Freitas",
+    "company": "Freitas Agência Digital",
+    "role": "Cliente Comprador",
+    "email": "carolina@freitascomunicacao.com.br",
+    "phone": "11987110030",
+    "estimatedBudget": 214000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "GWM Haval H6 HEV",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: GWM Haval H6 HEV. Orçamento previsto de R$ 214.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.874Z",
+    "updatedAt": "2026-09-12T21:14:42.874Z"
+  },
+  {
+    "id": "lead_autoprime_31",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Maurício Vianna",
+    "company": "Vianna Contabilidade",
+    "role": "Cliente Comprador",
+    "email": "mauricio@viannaassessoria.com.br",
+    "phone": "21987110031",
+    "estimatedBudget": 118000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Honda City Hatchback Touring",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Honda City Hatchback Touring. Orçamento previsto de R$ 118.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.876Z",
+    "updatedAt": "2026-09-12T21:14:42.876Z"
+  },
+  {
+    "id": "lead_autoprime_32",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Débora Neves",
+    "company": "Clínica Neves Reabilitação",
+    "role": "Cliente Comprador",
+    "email": "debora@nevesfisioterapia.com.br",
+    "phone": "31987110032",
+    "estimatedBudget": 95000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Hyundai HB20 Platinum Plus",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Hyundai HB20 Platinum Plus. Orçamento previsto de R$ 95.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.879Z",
+    "updatedAt": "2026-09-12T21:14:42.879Z"
+  },
+  {
+    "id": "lead_autoprime_33",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Vinícius Aguiar",
+    "company": "Gráfica Express Aguiar",
+    "role": "Cliente Comprador",
+    "email": "vinicius@aguiargrafica.com.br",
+    "phone": "41987110033",
+    "estimatedBudget": 124000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Fiat Strada Ranch CVT",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Fiat Strada Ranch CVT. Orçamento previsto de R$ 124.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.881Z",
+    "updatedAt": "2026-09-12T21:14:42.881Z"
+  },
+  {
+    "id": "lead_autoprime_34",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Letícia Muniz",
+    "company": "Muniz Design de Interiores",
+    "role": "Cliente Comprador",
+    "email": "leticia@munizdecor.com.br",
+    "phone": "11987110034",
+    "estimatedBudget": 152000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Jeep Renegade Serie S",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: Jeep Renegade Serie S. Orçamento previsto de R$ 152.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.884Z",
+    "updatedAt": "2026-09-12T21:14:42.884Z"
+  },
+  {
+    "id": "lead_autoprime_35",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Cristiano Paiva",
+    "company": "Paiva Softwares Cloud",
+    "role": "Cliente Comprador",
+    "email": "cristiano@paivatecnologia.com.br",
+    "phone": "19987110035",
+    "estimatedBudget": 139000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "VW Polo GTS 1.4 TSI",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: VW Polo GTS 1.4 TSI. Orçamento previsto de R$ 139.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.891Z",
+    "updatedAt": "2026-09-12T21:14:42.891Z"
+  },
+  {
+    "id": "lead_autoprime_36",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Sabrina Gouveia",
+    "company": "Gouveia Eventos Corporativos",
+    "role": "Cliente Comprador",
+    "email": "sabrina@gouveiaproducoes.com.br",
+    "phone": "51987110036",
+    "estimatedBudget": 165000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Nissan Sentra Exclusive",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Nissan Sentra Exclusive. Orçamento previsto de R$ 165.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.894Z",
+    "updatedAt": "2026-09-12T21:14:42.894Z"
+  },
+  {
+    "id": "lead_autoprime_37",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Caio Pinheiro",
+    "company": "Pinheiro Cargas Nordeste",
+    "role": "Cliente Comprador",
+    "email": "caio@pinheirolog.com.br",
+    "phone": "71987110037",
+    "estimatedBudget": 285000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Chevrolet S10 High Country",
+      "Indicação"
+    ],
+    "notes": "Interesse focado no veículo: Chevrolet S10 High Country. Orçamento previsto de R$ 285.000. Origem: Indicação.",
+    "createdAt": "2026-09-12T21:14:42.897Z",
+    "updatedAt": "2026-09-12T21:14:42.897Z"
+  },
+  {
+    "id": "lead_autoprime_38",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Rafaela Simões",
+    "company": "Instituto Simões de Vacinas",
+    "role": "Cliente Comprador",
+    "email": "rafaela@simoesimunologia.com.br",
+    "phone": "81987110038",
+    "estimatedBudget": 129000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Kia Stonic Hybrid",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Kia Stonic Hybrid. Orçamento previsto de R$ 129.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.900Z",
+    "updatedAt": "2026-09-12T21:14:42.900Z"
+  },
+  {
+    "id": "lead_autoprime_39",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Tiago Bueno",
+    "company": "Bueno & Bueno Projetos",
+    "role": "Cliente Comprador",
+    "email": "tiago@buenoengenharia.com.br",
+    "phone": "11987110039",
+    "estimatedBudget": 230000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Subaru Forester e-Boxer",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Subaru Forester e-Boxer. Orçamento previsto de R$ 230.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.903Z",
+    "updatedAt": "2026-09-12T21:14:42.903Z"
+  },
+  {
+    "id": "lead_autoprime_40",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Lorena Maciel",
+    "company": "Maciel Harmonização Facial",
+    "role": "Cliente Comprador",
+    "email": "lorena@macielodonto.com.br",
+    "phone": "21987110040",
+    "estimatedBudget": 290000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Mini Cooper S Countryman",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: Mini Cooper S Countryman. Orçamento previsto de R$ 290.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.909Z",
+    "updatedAt": "2026-09-12T21:14:42.909Z"
+  },
+  {
+    "id": "lead_autoprime_41",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Fábio Camargo",
+    "company": "Camargo Metalúrgica",
+    "role": "Cliente Comprador",
+    "email": "fabio@camargometal.com.br",
+    "phone": "31987110041",
+    "estimatedBudget": 198000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Ford Territory Titanium",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Ford Territory Titanium. Orçamento previsto de R$ 198.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.913Z",
+    "updatedAt": "2026-09-12T21:14:42.913Z"
+  },
+  {
+    "id": "lead_autoprime_42",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Natália Ramos",
+    "company": "Ramos Direito Tributário",
+    "role": "Cliente Comprador",
+    "email": "natalia@ramosadvocacia.com.br",
+    "phone": "41987110042",
+    "estimatedBudget": 249000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Audi A3 Sedan S line",
+      "Indicação"
+    ],
+    "notes": "Interesse focado no veículo: Audi A3 Sedan S line. Orçamento previsto de R$ 249.000. Origem: Indicação.",
+    "createdAt": "2026-09-12T21:14:42.916Z",
+    "updatedAt": "2026-09-12T21:14:42.916Z"
+  },
+  {
+    "id": "lead_autoprime_43",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Igor Vasques",
+    "company": "Vasques Representações",
+    "role": "Cliente Comprador",
+    "email": "igor@vasquescomercio.com.br",
+    "phone": "11987110043",
+    "estimatedBudget": 229000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "BYD Song Plus DM-i",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: BYD Song Plus DM-i. Orçamento previsto de R$ 229.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.920Z",
+    "updatedAt": "2026-09-12T21:14:42.920Z"
+  },
+  {
+    "id": "lead_autoprime_44",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Cláudia Zanin",
+    "company": "Zanin Atacado Têxtil",
+    "role": "Cliente Comprador",
+    "email": "claudia@zaninmodas.com.br",
+    "phone": "19987110044",
+    "estimatedBudget": 122000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Toyota Corolla GLi 2023",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Toyota Corolla GLi 2023. Orçamento previsto de R$ 122.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.924Z",
+    "updatedAt": "2026-09-12T21:14:42.924Z"
+  },
+  {
+    "id": "lead_autoprime_45",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Murilo Pacheco",
+    "company": "Pacheco Grãos & Cereais",
+    "role": "Cliente Comprador",
+    "email": "murilo@pachecocereais.com.br",
+    "phone": "51987110045",
+    "estimatedBudget": 315000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "VW Amarok V6 Extreme",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: VW Amarok V6 Extreme. Orçamento previsto de R$ 315.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.927Z",
+    "updatedAt": "2026-09-12T21:14:42.927Z"
+  },
+  {
+    "id": "lead_autoprime_46",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Kelly Morais",
+    "company": "Morais Viagens e Receptivo",
+    "role": "Cliente Comprador",
+    "email": "kelly@moraisturismo.com.br",
+    "phone": "71987110046",
+    "estimatedBudget": 129000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Citroën C3 Aircross 7 Lugares",
+      "Instagram"
+    ],
+    "notes": "Interesse focado no veículo: Citroën C3 Aircross 7 Lugares. Orçamento previsto de R$ 129.000. Origem: Instagram.",
+    "createdAt": "2026-09-12T21:14:42.930Z",
+    "updatedAt": "2026-09-12T21:14:42.930Z"
+  },
+  {
+    "id": "lead_autoprime_47",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Arthur Bernardes",
+    "company": "Centro Cirúrgico Bernardes",
+    "role": "Cliente Comprador",
+    "email": "arthur@bernardesclinica.com.br",
+    "phone": "81987110047",
+    "estimatedBudget": 375000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Lexus NX 350h F-Sport",
+      "Indicação"
+    ],
+    "notes": "Interesse focado no veículo: Lexus NX 350h F-Sport. Orçamento previsto de R$ 375.000. Origem: Indicação.",
+    "createdAt": "2026-09-12T21:14:42.932Z",
+    "updatedAt": "2026-09-12T21:14:42.932Z"
+  },
+  {
+    "id": "lead_autoprime_48",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Flávia Coimbra",
+    "company": "Coimbra Investimentos",
+    "role": "Cliente Comprador",
+    "email": "flavia@coimbrabrokers.com.br",
+    "phone": "11987110048",
+    "estimatedBudget": 410000,
+    "assignedTo": "Thiago Oliveira",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Porsche Macan 2.0 Turbo",
+      "Showroom"
+    ],
+    "notes": "Interesse focado no veículo: Porsche Macan 2.0 Turbo. Orçamento previsto de R$ 410.000. Origem: Showroom.",
+    "createdAt": "2026-09-12T21:14:42.936Z",
+    "updatedAt": "2026-09-12T21:14:42.936Z"
+  },
+  {
+    "id": "lead_autoprime_49",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Samuel Linhares",
+    "company": "Linhares Segurança Privada",
+    "role": "Cliente Comprador",
+    "email": "samuel@linharesseguranca.com.br",
+    "phone": "21987110049",
+    "estimatedBudget": 124000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Chevrolet Spin Premier 7L",
+      "WhatsApp"
+    ],
+    "notes": "Interesse focado no veículo: Chevrolet Spin Premier 7L. Orçamento previsto de R$ 124.000. Origem: WhatsApp.",
+    "createdAt": "2026-09-12T21:14:42.942Z",
+    "updatedAt": "2026-09-12T21:14:42.942Z"
+  },
+  {
+    "id": "lead_autoprime_50",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Helena Portela",
+    "company": "Portela Diagnósticos por Imagem",
+    "role": "Cliente Comprador",
+    "email": "helena@portelamedicina.com.br",
+    "phone": "31987110050",
+    "estimatedBudget": 395000,
+    "assignedTo": "Rodrigo Martins",
+    "stage": "novo",
+    "tags": [
+      "Automotivo",
+      "Volvo XC60 T8 Recharge",
+      "Web"
+    ],
+    "notes": "Interesse focado no veículo: Volvo XC60 T8 Recharge. Orçamento previsto de R$ 395.000. Origem: Web.",
+    "createdAt": "2026-09-12T21:14:42.946Z",
+    "updatedAt": "2026-09-12T21:14:42.946Z"
+  },
+  {
+    "id": "lead_autoprime_51_villasboas",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Dr. André Villas-Bôas",
+    "company": "Villas-Bôas Sociedade de Advogados",
+    "role": "Sócio-Diretor",
+    "email": "andre.villas@advocacia.com.br",
+    "phone": "11987654321",
+    "estimatedBudget": 340000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "High-Ticket",
+      "BMW 320i M Sport 2024",
+      "WhatsApp"
+    ],
+    "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
+    "createdAt": "2026-09-12T21:17:23.313Z",
+    "updatedAt": "2026-09-12T21:17:23.324Z"
   }
 ]

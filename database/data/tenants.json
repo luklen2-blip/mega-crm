@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 1520,
+    "aiCreditsUsed": 1660,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,56 +16,25 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-12T20:45:32.275Z"
+    "updatedAt": "2026-09-12T21:17:23.266Z"
   },
   {
-    "name": "Tech Sul Soluções",
-    "segment": "Automotivo",
+    "id": "ten_autoprime_veiculos",
+    "name": "Auto Prime Veículos",
+    "segment": "Concessionária e Revenda de Veículos",
     "teamSize": "6-15",
-    "plan": "starter",
-    "trialEndsAt": "2026-09-19T20:43:27.468Z",
+    "plan": "business",
     "status": "active",
-    "aiCredits": 1000,
-    "aiCreditsUsed": 50,
+    "trialEndsAt": "2026-10-12T21:14:42.549Z",
+    "aiCredits": 25000,
+    "aiCreditsUsed": 2340,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
       "aiLevel": "copiloto",
       "autoRecoveryEnabled": true
     },
-    "id": "ten_1789245807468_qc7g",
-    "createdAt": "2026-09-12T20:43:27.468Z",
-    "updatedAt": "2026-09-12T20:43:27.727Z",
-    "leadSources": [
-      "WhatsApp",
-      "Instagram"
-    ],
-    "primaryGoal": "Aumentar vendas e recuperar clientes",
-    "onboardingCompleted": true
-  },
-  {
-    "name": "Tech Sul Soluções",
-    "segment": "Automotivo",
-    "teamSize": "6-15",
-    "plan": "starter",
-    "trialEndsAt": "2026-09-19T20:45:32.125Z",
-    "status": "active",
-    "aiCredits": 1000,
-    "aiCreditsUsed": 50,
-    "settings": {
-      "currency": "BRL",
-      "timezone": "America/Sao_Paulo",
-      "aiLevel": "copiloto",
-      "autoRecoveryEnabled": true
-    },
-    "id": "ten_1789245932125_e9jf",
-    "createdAt": "2026-09-12T20:45:32.125Z",
-    "updatedAt": "2026-09-12T20:45:32.308Z",
-    "leadSources": [
-      "WhatsApp",
-      "Instagram"
-    ],
-    "primaryGoal": "Aumentar vendas e recuperar clientes",
-    "onboardingCompleted": true
+    "createdAt": "2026-09-12T21:14:42.553Z",
+    "updatedAt": "2026-09-12T21:14:42.553Z"
   }
 ]

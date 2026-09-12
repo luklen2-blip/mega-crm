@@ -52,5 +52,77 @@
     "id": "ai__1789245932315_lb3q",
     "createdAt": "2026-09-12T20:45:32.315Z",
     "updatedAt": "2026-09-12T20:45:32.315Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-12T21:12:29.328Z",
+    "id": "ai__1789247549328_94uo",
+    "createdAt": "2026-09-12T21:12:29.329Z",
+    "updatedAt": "2026-09-12T21:12:29.329Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-12T21:12:29.362Z",
+    "id": "ai__1789247549362_h2nw",
+    "createdAt": "2026-09-12T21:12:29.362Z",
+    "updatedAt": "2026-09-12T21:12:29.362Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-12T21:16:26.382Z",
+    "id": "ai__1789247786382_zpxk",
+    "createdAt": "2026-09-12T21:16:26.382Z",
+    "updatedAt": "2026-09-12T21:16:26.382Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-12T21:16:26.416Z",
+    "id": "ai__1789247786417_zbvb",
+    "createdAt": "2026-09-12T21:16:26.417Z",
+    "updatedAt": "2026-09-12T21:16:26.417Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-12T21:16:56.724Z",
+    "id": "ai__1789247816724_cie6",
+    "createdAt": "2026-09-12T21:16:56.724Z",
+    "updatedAt": "2026-09-12T21:16:56.724Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-12T21:16:56.775Z",
+    "id": "ai__1789247816776_06or",
+    "createdAt": "2026-09-12T21:16:56.776Z",
+    "updatedAt": "2026-09-12T21:16:56.776Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-12T21:17:23.211Z",
+    "id": "ai__1789247843211_9v1q",
+    "createdAt": "2026-09-12T21:17:23.211Z",
+    "updatedAt": "2026-09-12T21:17:23.211Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-12T21:17:23.269Z",
+    "id": "ai__1789247843269_c47c",
+    "createdAt": "2026-09-12T21:17:23.269Z",
+    "updatedAt": "2026-09-12T21:17:23.269Z"
   }
 ]

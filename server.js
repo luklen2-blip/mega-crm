@@ -29,6 +29,8 @@ const { runSeeds } = require('./database/seeds');
 const { 
   registerTenant, 
   login, 
+  generateToken,
+  sanitizeUser,
   getRequestContext, 
   logAudit 
 } = require('./services/authService');
@@ -247,6 +249,72 @@ const server = http.createServer(async (req, res) => {
       return safe;
     });
     return sendJson(res, 200, { success: true, count: users.length, data: users });
+  }
+
+  // Listagem de empresas multi-tenant disponíveis
+  if (pathname === '/api/auth/tenants' && method === 'GET') {
+    const list = tenantsDB.findAll().map(t => ({
+      id: t.id,
+      name: t.name,
+      segment: t.segment,
+      plan: t.plan
+    }));
+    return sendJson(res, 200, { success: true, count: list.length, data: list });
+  }
+
+  // Alternar empresa ativa (troca rápida de tenant)
+  if (pathname === '/api/auth/switch-tenant' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    const targetId = body.tenantId || 'ten_demo_agentise';
+    const targetTenant = tenantsDB.findById(targetId);
+    if (!targetTenant) return sendJson(res, 404, { error: 'Empresa não encontrada.' });
+    
+    const targetUser = usersDB.findOne(u => u.tenantId === targetId && u.role === 'ADMINISTRADOR') || 
+                       usersDB.findOne(u => u.tenantId === targetId) || {
+                         id: `usr_${targetId}_admin`,
+                         tenantId: targetId,
+                         name: targetTenant.name,
+                         email: `contato@${targetId}.com`,
+                         role: 'ADMINISTRADOR',
+                         status: 'active'
+                       };
+
+    const token = generateToken({
+      userId: targetUser.id,
+      tenantId: targetTenant.id,
+      role: targetUser.role,
+      name: targetUser.name,
+      email: targetUser.email
+    });
+
+    return sendJson(res, 200, {
+      success: true,
+      data: {
+        token,
+        user: sanitizeUser(targetUser),
+        tenant: targetTenant
+      }
+    });
+  }
+
+  // Endpoints específicos para o Teste 16 (Fluxo Real de Venda - Auto Prime Veículos)
+  if (pathname === '/api/autoprime/execute-flow' && method === 'POST') {
+    const { executeFullSalesFlow, getAutoPrimeAuditMetrics } = require('./services/autoPrimeService');
+    const flow = executeFullSalesFlow();
+    const metrics = getAutoPrimeAuditMetrics();
+    return sendJson(res, 200, {
+      success: true,
+      data: {
+        flow,
+        metrics
+      }
+    });
+  }
+
+  if (pathname === '/api/autoprime/metrics' && method === 'GET') {
+    const { getAutoPrimeAuditMetrics } = require('./services/autoPrimeService');
+    const metrics = getAutoPrimeAuditMetrics();
+    return sendJson(res, 200, { success: true, data: metrics });
   }
 
   // 3. ONBOARDING GUIADO (FASE 3)

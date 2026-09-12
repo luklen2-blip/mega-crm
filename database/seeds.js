@@ -15,9 +15,15 @@ const {
 const { hashPassword } = require('../services/authService');
 const { seedSegmentAutomations } = require('../services/workflowEngine');
 const { seedAutoDemoData } = require('../services/autoVerticalService');
+const { seedAutoPrimeVeiculos } = require('../services/autoPrimeService');
 
 function runSeeds(force = false) {
-  if (!force && tenantsDB.count() > 0) {
+  // Garante que o Tenant Auto Prime Veículos exista
+  if (!tenantsDB.findById('ten_autoprime_veiculos')) {
+    seedAutoPrimeVeiculos();
+  }
+
+  if (!force && tenantsDB.count() > 1) {
     console.log('⚡ [Seeds] Base de dados multi-tenant já populada. Pulando sementes.');
     return;
   }

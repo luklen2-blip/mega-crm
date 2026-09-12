@@ -313,6 +313,66 @@ async function runTests() {
   console.log('  ✅ Blindagem contra IDOR Multi-Tenant 100% validada (dados de outros tenants inacessíveis).\n');
   passed++;
 
+  // 16. Teste 16 — Fluxo real de venda (Auto Prime Veículos)
+  console.log('▶ Teste 16: Validação do Fluxo Real de Venda de Ponta a Ponta (Auto Prime Veículos)...');
+  const { 
+    AUTOPRIME_TENANT_ID, 
+    seedAutoPrimeVeiculos, 
+    executeFullSalesFlow, 
+    getAutoPrimeAuditMetrics 
+  } = require('../services/autoPrimeService');
+
+  // Garante sementes da Auto Prime (3 vendedores, 50 leads, 20 oportunidades, 10 propostas, 5 vendas)
+  seedAutoPrimeVeiculos();
+  const initialMetrics = getAutoPrimeAuditMetrics();
+  assert.strictEqual(initialMetrics.totalLeads >= 50, true, 'Deve possuir no mínimo 50 leads cadastrados');
+  assert.strictEqual(initialMetrics.activeDeals, 20, 'Deve possuir exatamente 20 oportunidades ativas no funil');
+  assert.strictEqual(initialMetrics.proposalsCount >= 10, true, 'Deve possuir no mínimo 10 propostas com PIX EMV oficial');
+  assert.strictEqual(initialMetrics.wonDealsCount >= 5, true, 'Deve possuir no mínimo 5 vendas concluídas');
+  assert.strictEqual(initialMetrics.wonValue >= 738000, true, 'Faturamento inicial de vendas deve ser no mínimo R$ 738.000,00');
+
+  // Executa o fluxo: Lead -> Atendimento -> Qualificação -> Oportunidade -> Proposta -> Venda
+  const flowResult = executeFullSalesFlow();
+  assert.strictEqual(flowResult.success, true);
+  assert.strictEqual(flowResult.stepsAudit.length, 6, 'Fluxo deve conter 6 etapas auditadas');
+
+  // Validação via API REST do Dashboard (/api/analytics) com token da Auto Prime
+  const { generateToken: genToken } = require('../services/authService');
+  const autoPrimeToken = genToken({
+    userId: 'usr_autoprime_admin',
+    tenantId: AUTOPRIME_TENANT_ID,
+    role: 'ADMINISTRADOR',
+    name: 'Carlos Eduardo (Diretor)',
+    email: 'admin@autoprime.com.br'
+  });
+
+  const analyticsRes = await new Promise((resolve) => {
+    const req = http.request(`http://127.0.0.1:${TEST_PORT}/api/analytics`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${autoPrimeToken}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+
+  assert.strictEqual(analyticsRes.status, 200);
+  const dash = analyticsRes.body.data;
+  assert.strictEqual(dash.totalLeads, 51, 'Total de leads no dashboard deve ser 51');
+  assert.strictEqual(dash.activeDeals, 20, 'Oportunidades em aberto continuam 20');
+  assert.strictEqual(dash.wonValue, 1078000, 'Faturamento total ganho deve ser exatamente R$ 1.078.000,00');
+  assert.strictEqual(dash.winRate, '100.0', 'Taxa de conversão deve ser 100%');
+  assert.strictEqual(dash.stageBreakdown.ganho, 6, 'Total de negócios ganhos no breakdown deve ser 6');
+  assert.strictEqual(dash.sellersPerformance.length >= 3, true, 'Ranking deve exibir os 3 vendedores');
+  assert.strictEqual(dash.sellersPerformance[0].name, 'Fernanda Lima', '1º lugar do ranking deve ser Fernanda Lima');
+  assert.strictEqual(dash.sellersPerformance[0].wonCount, 3, 'Fernanda Lima deve ter 3 vendas');
+  assert.strictEqual(dash.sellersPerformance[0].revenue, 650000, 'Receita de Fernanda Lima deve ser R$ 650.000,00');
+  console.log('  ✅ Teste 16 Aprovado: Fluxo real (Lead -> Atendimento -> Qualificação -> Oportunidade -> Proposta -> Venda) e Dashboard 100% íntegros.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initApp() {
   await checkHealth();
+  await loadCurrentContext();
   await Promise.all([
     loadDeals(),
     loadLeads(),
@@ -100,6 +101,67 @@ async function initApp() {
     loadBilling()
   ]);
   if (window.lucide) lucide.createIcons();
+}
+
+async function loadCurrentContext() {
+  try {
+    const res = await fetch('/api/auth/me', { headers: authHeaders() });
+    const json = await res.json();
+    if (json.success && json.data) {
+      const { user, tenant } = json.data;
+      if (document.getElementById('user-name') && user) document.getElementById('user-name').innerText = user.name;
+      if (document.getElementById('user-role') && user) document.getElementById('user-role').innerText = user.role;
+      if (document.getElementById('user-avatar') && user && user.avatar) document.getElementById('user-avatar').src = user.avatar;
+      
+      const sel = document.getElementById('header-tenant-selector');
+      if (sel && tenant) {
+        sel.value = tenant.id;
+      }
+    }
+  } catch (e) {}
+}
+
+async function switchDemoTenant(tenantId) {
+  try {
+    const res = await fetch('/api/auth/switch-tenant', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tenantId })
+    });
+    const json = await res.json();
+    if (json.success && json.data.token) {
+      currentAuthToken = json.data.token;
+      localStorage.setItem('agentise_token', currentAuthToken);
+      showToast(`Alternado para: ${json.data.tenant.name}`, 'success');
+      await initApp();
+    }
+  } catch (err) {
+    showToast('Erro ao alternar empresa.', 'error');
+  }
+}
+
+async function runAutoPrimeSalesFlow() {
+  try {
+    if (document.getElementById('header-tenant-selector')?.value !== 'ten_autoprime_veiculos') {
+      await switchDemoTenant('ten_autoprime_veiculos');
+    }
+
+    showToast('Iniciando execução do Fluxo Real de Venda (Teste 16)...', 'info');
+    const res = await fetch('/api/autoprime/execute-flow', {
+      method: 'POST',
+      headers: authHeaders()
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast('🎉 Venda Concluída! BMW 320i M Sport faturada via PIX (R$ 340.000,00). Dashboard atualizado!', 'success');
+      await initApp();
+      switchView('analytics');
+    } else {
+      showToast('Erro ao executar fluxo: ' + (json.error || 'Falha'), 'error');
+    }
+  } catch (err) {
+    showToast('Erro de comunicação ao executar fluxo.', 'error');
+  }
 }
 
 // 1. Health Check
