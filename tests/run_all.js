@@ -288,9 +288,49 @@ async function runTests() {
   console.log('  ✅ Planos SaaS, Trial e Gestão de Créditos de IA 100% operacionais.\n');
   passed++;
 
-  console.log('=========================================================');
+  // 15. Teste de Blindagem contra IDOR Multi-Tenant
+  console.log('▶ Teste 15: Validação de Blindagem contra Ataque IDOR (Tentativa de Exclusão Cross-Tenant)...');
+  // Tenant A cria um lead
+  const { leadsDB } = require('../database/db');
+  const leadA = leadsDB.insert({ tenantId: 'tenant_A_seguro', name: 'Lead Confidencial A' });
+
+  // Tenant B tenta deletar o lead de Tenant A via API
+  const idorRes = await new Promise((resolve) => {
+    const req = http.request(`http://127.0.0.1:${TEST_PORT}/api/leads/${leadA.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${regResult.token}` // regResult.token é do tenant Tech Sul Soluções (Tenant B)
+      }
+    }, res => {
+      resolve({ status: res.statusCode });
+    });
+    req.end();
+  });
+
+  assert.strictEqual(idorRes.status, 404, 'Tentativa de exclusão de lead de outro tenant DEVE retornar 404 Not Found');
+  // Verifica se o lead continua intacto no banco
+  assert.ok(leadsDB.findById(leadA.id), 'Lead confidencial deve permanecer intacto após tentativa de ataque');
+  console.log('  ✅ Blindagem contra IDOR Multi-Tenant 100% validada (dados de outros tenants inacessíveis).\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
+  // Limpeza de entidades temporárias de teste
+  leadsDB.delete(leadA.id);
+  const db = require('../database/db');
+  if (typeof camp !== 'undefined' && camp && camp.id) {
+    db.campaignsDB.delete(camp.id);
+  }
+  if (regResult && regResult.tenant) {
+    db.tenantsDB.delete(regResult.tenant.id);
+    db.usersDB.deleteWhere(u => u.tenantId === regResult.tenant.id);
+    db.leadsDB.deleteWhere(l => l.tenantId === regResult.tenant.id);
+    db.tasksDB.deleteWhere(t => t.tenantId === regResult.tenant.id);
+    db.automationsDB.deleteWhere(a => a.tenantId === regResult.tenant.id);
+    db.campaignsDB.deleteWhere(c => c.tenantId === regResult.tenant.id);
+    if (db.aiUsageDB) db.aiUsageDB.deleteWhere(a => a.tenantId === regResult.tenant.id);
+    if (db.auditLogsDB) db.auditLogsDB.deleteWhere(al => al.tenantId === regResult.tenant.id);
+  }
 
   if (server.closeAllConnections) {
     server.closeAllConnections();

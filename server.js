@@ -295,16 +295,23 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname.startsWith('/api/leads/') && method === 'PUT') {
     const id = pathname.split('/')[3];
+    const existing = leadsDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Lead não encontrado.' });
+    }
     const body = await parseRequestBody(req);
-    const updated = leadsDB.update(id, body);
-    if (!updated) return sendJson(res, 404, { error: 'Lead não encontrado.' });
+    const updated = leadsDB.update(id, { ...body, tenantId });
     return sendJson(res, 200, { success: true, data: updated });
   }
 
   if (pathname.startsWith('/api/leads/') && method === 'DELETE') {
     const id = pathname.split('/')[3];
+    const existing = leadsDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Lead não encontrado.' });
+    }
     const deleted = leadsDB.delete(id);
-    return sendJson(res, deleted ? 200 : 404, { success: deleted });
+    return sendJson(res, 200, { success: deleted });
   }
 
   // 5. DEALS (OPORTUNIDADES DO PIPELINE)
@@ -347,9 +354,11 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname.startsWith('/api/deals/') && pathname.endsWith('/stage') && (method === 'PATCH' || method === 'PUT')) {
     const id = pathname.split('/')[3];
-    const body = await parseRequestBody(req);
     const deal = dealsDB.findById(id);
-    if (!deal) return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    }
+    const body = await parseRequestBody(req);
     
     const oldStage = deal.stage;
     const newStage = body.stage;
@@ -379,16 +388,23 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname.startsWith('/api/deals/') && method === 'PUT') {
     const id = pathname.split('/')[3];
+    const deal = dealsDB.findById(id);
+    if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    }
     const body = await parseRequestBody(req);
-    const updated = dealsDB.update(id, body);
-    if (!updated) return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    const updated = dealsDB.update(id, { ...body, tenantId });
     return sendJson(res, 200, { success: true, data: updated });
   }
 
   if (pathname.startsWith('/api/deals/') && method === 'DELETE') {
     const id = pathname.split('/')[3];
+    const deal = dealsDB.findById(id);
+    if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    }
     const deleted = dealsDB.delete(id);
-    return sendJson(res, deleted ? 200 : 404, { success: deleted });
+    return sendJson(res, 200, { success: deleted });
   }
 
   // 6. TAREFAS
@@ -406,16 +422,23 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname.startsWith('/api/tasks/') && method === 'PATCH') {
     const id = pathname.split('/')[3];
+    const existing = tasksDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Tarefa não encontrada.' });
+    }
     const body = await parseRequestBody(req);
     const updated = tasksDB.update(id, body);
-    if (!updated) return sendJson(res, 404, { error: 'Tarefa não encontrada.' });
     return sendJson(res, 200, { success: true, data: updated });
   }
 
   if (pathname.startsWith('/api/tasks/') && method === 'DELETE') {
     const id = pathname.split('/')[3];
+    const existing = tasksDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Tarefa não encontrada.' });
+    }
     const deleted = tasksDB.delete(id);
-    return sendJson(res, deleted ? 200 : 404, { success: deleted });
+    return sendJson(res, 200, { success: deleted });
   }
 
   // 7. CENTRAL DE ATENDIMENTO OMNICHANNEL (FASE 6)
@@ -472,8 +495,12 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname.startsWith('/api/knowledge-base/') && method === 'DELETE') {
     const id = pathname.split('/')[3];
+    const existing = knowledgeBaseDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Item não encontrado.' });
+    }
     const deleted = knowledgeBaseDB.delete(id);
-    return sendJson(res, deleted ? 200 : 404, { success: deleted });
+    return sendJson(res, 200, { success: deleted });
   }
 
   // 9. RECUPERAIA (RECUPERAÇÃO DE VENDAS - FASE 9)
@@ -527,7 +554,9 @@ const server = http.createServer(async (req, res) => {
   if (pathname.startsWith('/api/automations/') && pathname.endsWith('/toggle') && method === 'PATCH') {
     const id = pathname.split('/')[3];
     const existing = automationsDB.findById(id);
-    if (!existing) return sendJson(res, 404, { error: 'Automação não encontrada.' });
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Automação não encontrada.' });
+    }
     const updated = automationsDB.update(id, { active: !existing.active });
     return sendJson(res, 200, { success: true, data: updated });
   }

@@ -89,6 +89,17 @@ class JsonDB {
     return true;
   }
 
+  deleteWhere(predicate) {
+    if (!predicate) return 0;
+    const initialLen = this.cache.length;
+    const filtered = this.cache.filter(item => !predicate(item));
+    const deletedCount = initialLen - filtered.length;
+    if (deletedCount > 0) {
+      this._persist(filtered);
+    }
+    return deletedCount;
+  }
+
   count(predicate) {
     return predicate ? this.cache.filter(predicate).length : this.cache.length;
   }

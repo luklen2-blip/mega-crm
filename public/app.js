@@ -1276,3 +1276,15 @@ function quickPixForDeal(dealId) {
     }
   }
 }
+
+function sendPixWhatsApp() {
+  const phone = document.getElementById('pix-phone')?.value;
+  const desc = document.getElementById('pix-desc')?.value;
+  const amount = document.getElementById('pix-amount')?.value;
+  const payload = document.getElementById('pix-payload-box')?.value;
+  
+  if (!phone) return showToast('Informe o WhatsApp do cliente.', 'warning');
+  const msg = `Olá! Segue sua proposta de ${desc} no valor de ${formatBRL(amount)}.\n\nCódigo PIX Copia-e-Cola:\n${payload}`;
+  const url = `https://wa.me/55${phone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
