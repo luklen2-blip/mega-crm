@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "build": "node tests/run_all.js",
     "test": "node tests/run_all.js",
     "test:live": "node tests/test_cloud_live.js",
     "pack": "node scripts/pack_desktop.js"

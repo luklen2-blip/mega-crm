@@ -8,3 +8,6 @@ database/data/test_collection.json
 .DS_Store
 Thumbs.db
 *.zip
+*.exe
+*.crt
+tunnel_url.txt

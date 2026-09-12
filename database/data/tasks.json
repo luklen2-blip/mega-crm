@@ -1,0 +1,59 @@
+[
+  {
+    "dealId": "dea_1789241666598_4tux",
+    "leadId": "lea_1789241666592_snnu",
+    "title": "Alinhamento final de contrato com Diretor Carlos",
+    "deadline": "2026-09-13T13:34:26.612Z",
+    "completed": false,
+    "priority": "urgente",
+    "id": "tas_1789241666612_v129",
+    "createdAt": "2026-09-12T19:34:26.612Z",
+    "updatedAt": "2026-09-12T19:34:26.612Z"
+  },
+  {
+    "dealId": "dea_1789241666601_v8ma",
+    "leadId": "lea_1789241666594_pdcr",
+    "title": "Follow-up de proposta enviada para Dra. Marina",
+    "deadline": "2026-09-13T19:34:26.614Z",
+    "completed": false,
+    "priority": "alta",
+    "id": "tas_1789241666614_01k4",
+    "createdAt": "2026-09-12T19:34:26.614Z",
+    "updatedAt": "2026-09-12T19:34:26.614Z"
+  },
+  {
+    "dealId": "dea_1789241666604_d65d",
+    "leadId": "lea_1789241666595_lnyp",
+    "title": "Apresentação ao vivo da demo do Mega CRM",
+    "deadline": "2026-09-14T19:34:26.615Z",
+    "completed": false,
+    "priority": "media",
+    "id": "tas_1789241666615_sa46",
+    "createdAt": "2026-09-12T19:34:26.615Z",
+    "updatedAt": "2026-09-12T19:34:26.615Z"
+  },
+  {
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789242589551_2vwo",
+    "createdAt": "2026-09-12T19:49:49.551Z",
+    "updatedAt": "2026-09-12T19:49:49.551Z"
+  },
+  {
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789242626622_uphh",
+    "createdAt": "2026-09-12T19:50:26.622Z",
+    "updatedAt": "2026-09-12T19:50:26.622Z"
+  },
+  {
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789243957235_b70i",
+    "createdAt": "2026-09-12T20:12:37.235Z",
+    "updatedAt": "2026-09-12T20:12:37.235Z"
+  }
+]

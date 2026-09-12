@@ -1,0 +1,67 @@
+[
+  {
+    "leadId": "lea_1789241666592_snnu",
+    "title": "Implantação Agentes IA & Roteirização",
+    "value": 28000,
+    "stage": "negociacao",
+    "priority": "alta",
+    "probability": 80,
+    "assignedTo": "Luciano",
+    "expectedCloseDate": "2026-09-30",
+    "id": "dea_1789241666598_4tux",
+    "createdAt": "2026-09-12T19:34:26.598Z",
+    "updatedAt": "2026-09-12T19:34:26.598Z"
+  },
+  {
+    "leadId": "lea_1789241666594_pdcr",
+    "title": "Automação Atendimento Clínicas WhatsApp",
+    "value": 15500,
+    "stage": "proposta",
+    "priority": "alta",
+    "probability": 70,
+    "assignedTo": "Luciano",
+    "expectedCloseDate": "2026-09-25",
+    "id": "dea_1789241666601_v8ma",
+    "createdAt": "2026-09-12T19:34:26.601Z",
+    "updatedAt": "2026-09-12T19:34:26.601Z"
+  },
+  {
+    "leadId": "lea_1789241666595_lnyp",
+    "title": "Mega CRM Integrado & Checkout PIX",
+    "value": 45000,
+    "stage": "apresentacao",
+    "priority": "urgente",
+    "probability": 60,
+    "assignedTo": "Luciano",
+    "expectedCloseDate": "2026-10-15",
+    "id": "dea_1789241666604_d65d",
+    "createdAt": "2026-09-12T19:34:26.604Z",
+    "updatedAt": "2026-09-12T19:34:26.604Z"
+  },
+  {
+    "leadId": "lea_1789241666596_b2od",
+    "title": "Funil Comercial & Acompanhamento",
+    "value": 8500,
+    "stage": "qualificacao",
+    "priority": "media",
+    "probability": 40,
+    "assignedTo": "Luciano",
+    "expectedCloseDate": "2026-10-05",
+    "id": "dea_1789241666605_zmiv",
+    "createdAt": "2026-09-12T19:34:26.605Z",
+    "updatedAt": "2026-09-12T19:34:26.605Z"
+  },
+  {
+    "leadId": "lea_1789241666597_pc0n",
+    "title": "Ecossistema de Vendas Externas",
+    "value": 35000,
+    "stage": "ganho",
+    "priority": "alta",
+    "probability": 100,
+    "assignedTo": "Luciano",
+    "expectedCloseDate": "2026-09-10",
+    "id": "dea_1789241666607_2z5x",
+    "createdAt": "2026-09-12T19:34:26.607Z",
+    "updatedAt": "2026-09-12T19:34:26.607Z"
+  }
+]

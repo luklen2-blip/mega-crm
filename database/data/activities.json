@@ -1,0 +1,24 @@
+[
+  {
+    "dealId": "dea_1789241666598_4tux",
+    "leadId": "lea_1789241666592_snnu",
+    "type": "meeting",
+    "title": "Reunião de Diagnóstico Realizada",
+    "description": "Apresentada a arquitetura dos agentes autônomos. Cliente solicitou modelo de contrato com marcos via PIX.",
+    "timestamp": "2026-09-11T07:34:26.609Z",
+    "id": "act_1789241666609_k2x1",
+    "createdAt": "2026-09-12T19:34:26.609Z",
+    "updatedAt": "2026-09-12T19:34:26.609Z"
+  },
+  {
+    "dealId": "dea_1789241666601_v8ma",
+    "leadId": "lea_1789241666594_pdcr",
+    "type": "proposal_sent",
+    "title": "Proposta Comercial Enviada no WhatsApp",
+    "description": "Enviada proposta de R$ 15.500 com QR Code PIX e condições especiais para fechamento nesta semana.",
+    "timestamp": "2026-09-12T07:34:26.610Z",
+    "id": "act_1789241666610_02sx",
+    "createdAt": "2026-09-12T19:34:26.610Z",
+    "updatedAt": "2026-09-12T19:34:26.610Z"
+  }
+]

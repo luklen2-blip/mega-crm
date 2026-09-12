@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentise Mega CRM | AI-First Claude Code</title>
+  <meta name="description" content="Mega CRM AI-First desenvolvido no modelo do Desafio Claude Code da Agentise com deploy 24/7 na nuvem, PIX EMV oficial e conformidade LGPD.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 2L2 22h20L12 2z'/></svg>">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            },
+            dark: {
+              main: '#07090e',
+              surface: '#0e131f',
+              card: '#141b2d',
+              border: 'rgba(59, 130, 246, 0.15)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col">
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
+
+  <!-- TOPBAR -->
+  <header class="glass-panel border-b border-blue-500/15 sticky top-0 z-40 px-4 lg:px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <!-- Logo Agentise Styled -->
+      <div class="flex items-center gap-2.5">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
+          <i data-lucide="zap" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base tracking-tight text-white">AGENTISE <span class="text-blue-400">MEGA CRM</span></span>
+            <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300">Claude AI 3.7</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Modelo Desafio Claude Code · Arquitetura 24/7</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Central Cloud Live Status -->
+    <div class="hidden md:flex items-center gap-6">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400">
+        <span class="h-2 w-2 rounded-full bg-emerald-400 status-dot"></span>
+        <span>Cloud Nuvem: <strong>24/7 Ativa</strong> (<span id="health-uptime">0s</span>)</span>
+      </div>
+      <div class="text-xs text-slate-400">
+        Pipeline Total: <strong class="text-white text-sm" id="topbar-pipeline-val">R$ 0,00</strong>
+      </div>
+    </div>
+
+    <!-- Quick Action Buttons -->
+    <div class="flex items-center gap-2.5">
+      <button onclick="openNewLeadModal()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+        <i data-lucide="user-plus" class="h-3.5 w-3.5"></i>
+        <span>Novo Lead</span>
+      </button>
+      <button onclick="openNewDealModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110 text-white shadow-md shadow-blue-600/30 transition">
+        <i data-lucide="plus-circle" class="h-3.5 w-3.5"></i>
+        <span>Nova Oportunidade</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- BODY CONTENT (SIDEBAR + MAIN) -->
+  <div class="flex-1 flex overflow-hidden">
+    
+    <!-- SIDEBAR -->
+    <aside class="w-16 lg:w-64 glass-panel border-r border-blue-500/15 flex flex-col justify-between p-3 shrink-0">
+      <nav class="space-y-1.5">
+        <button onclick="switchView('pipeline')" id="nav-pipeline" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-blue-300 bg-blue-500/15 border border-blue-500/30 transition">
+          <i data-lucide="kanban" class="h-4 w-4 shrink-0"></i>
+          <span class="hidden lg:inline">Funil de Vendas (Kanban)</span>
+        </button>
+
+        <button onclick="switchView('leads')" id="nav-leads" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+          <i data-lucide="users" class="h-4 w-4 shrink-0"></i>
+          <span class="hidden lg:inline">Leads & Contatos 360°</span>
+        </button>
+
+        <button onclick="switchView('copilot')" id="nav-copilot" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+          <i data-lucide="bot" class="h-4 w-4 shrink-0 text-blue-400"></i>
+          <span class="hidden lg:inline">Copiloto Claude AI</span>
+        </button>
+
+        <button onclick="switchView('pix')" id="nav-pix" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+          <i data-lucide="qr-code" class="h-4 w-4 shrink-0 text-emerald-400"></i>
+          <span class="hidden lg:inline">Financeiro & PIX Oficial</span>
+        </button>
+
+        <button onclick="switchView('analytics')" id="nav-analytics" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+          <i data-lucide="bar-chart-3" class="h-4 w-4 shrink-0"></i>
+          <span class="hidden lg:inline">Métricas & KPIs</span>
+        </button>
+
+        <button onclick="switchView('tasks')" id="nav-tasks" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+          <i data-lucide="check-square" class="h-4 w-4 shrink-0"></i>
+          <span class="hidden lg:inline">Tarefas & Agenda</span>
+        </button>
+
+        <button onclick="openSettingsModal()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+          <i data-lucide="settings" class="h-4 w-4 shrink-0"></i>
+          <span class="hidden lg:inline">Configurações & Chave IA</span>
+        </button>
+      </nav>
+
+      <!-- Bottom Compliance Links & Info -->
+      <div class="pt-4 border-t border-slate-800/80 space-y-2 text-[11px] text-slate-500">
+        <div class="hidden lg:block px-2">
+          <div class="flex items-center gap-1.5 text-slate-400 font-semibold mb-1">
+            <i data-lucide="shield-check" class="h-3.5 w-3.5 text-blue-400"></i>
+            <span>Conformidade Legal</span>
+          </div>
+          <p class="text-[10px] text-slate-500 leading-tight">Software B2B empresarial. Não substitui assessoria contábil ou jurídica oficial.</p>
+        </div>
+        <div class="flex lg:flex-col gap-2 px-2 text-[10px]">
+          <a href="/termos" target="_blank" class="hover:text-blue-400 transition">Termos de Uso</a>
+          <a href="/privacidade" target="_blank" class="hover:text-blue-400 transition">Privacidade (LGPD)</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN VIEW AREA -->
+    <main class="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+
+      <!-- ============================================== -->
+      <!-- VIEW 1: PIPELINE KANBAN (FUNIL DE VENDAS) -->
+      <!-- ============================================== -->
+      <section id="view-pipeline" class="space-y-4">
+        <!-- Pipeline Header Controls -->
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-xl lg:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+              <span>Pipeline Comercial</span>
+              <span id="pipeline-deals-count" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300">0 oportunidades</span>
+            </h1>
+            <p class="text-xs text-slate-400">Arraste os cards entre as fases ou use o copiloto de IA para acelerar o fechamento.</p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <i data-lucide="search" class="h-3.5 w-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
+              <input type="text" id="kanban-search" oninput="filterKanban()" placeholder="Buscar cliente ou negócio..." class="pl-9 pr-3 py-1.5 text-xs rounded-xl bg-slate-900/80 border border-slate-800 text-slate-200 focus:outline-none focus:border-blue-500 w-48 sm:w-64 transition">
+            </div>
+            <button onclick="refreshData()" class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition" title="Atualizar dados">
+              <i data-lucide="refresh-cw" class="h-4 w-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Kanban Board Container -->
+        <div class="overflow-x-auto pb-6">
+          <div class="flex items-start gap-4 min-w-max" id="kanban-board">
+            <!-- Columns rendered via app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 2: LEADS & CONTATOS 360° -->
+      <!-- ============================================== -->
+      <section id="view-leads" class="hidden space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl lg:text-2xl font-extrabold tracking-tight text-white">Leads e Contatos 360°</h1>
+            <p class="text-xs text-slate-400">Gestão centralizada de decisores, histórico de conversas e perfil BANT.</p>
+          </div>
+          <button onclick="openNewLeadModal()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition">
+            <i data-lucide="user-plus" class="h-3.5 w-3.5"></i>
+            <span>Cadastrar Lead</span>
+          </button>
+        </div>
+
+        <div class="glass-panel rounded-2xl overflow-hidden border border-blue-500/15">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/90 text-slate-400 uppercase tracking-wider text-[10px] border-b border-slate-800">
+                <tr>
+                  <th class="px-4 py-3">Nome / Cargo</th>
+                  <th class="px-4 py-3">Empresa</th>
+                  <th class="px-4 py-3">Contato</th>
+                  <th class="px-4 py-3">Score BANT</th>
+                  <th class="px-4 py-3">Tags</th>
+                  <th class="px-4 py-3 text-right">Ações Rápidas</th>
+                </tr>
+              </thead>
+              <tbody id="leads-table-body" class="divide-y divide-slate-800/60">
+                <!-- Leads populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 3: CLAUDE AI COPILOT HUB -->
+      <!-- ============================================== -->
+      <section id="view-copilot" class="hidden space-y-6">
+        <div>
+          <h1 class="text-xl lg:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+            <i data-lucide="bot" class="h-6 w-6 text-blue-400"></i>
+            <span>Copiloto de Vendas Claude AI</span>
+          </h1>
+          <p class="text-xs text-slate-400">Assistente autônomo baseado no modelo Agentise para prospecção, qualificação BANT e contorno de objeções.</p>
+        </div>
+
+        <!-- Copilot Selector & Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Lead Selection Panel -->
+          <div class="glass-panel p-5 rounded-2xl border border-blue-500/20 space-y-4">
+            <h2 class="text-sm font-bold text-white flex items-center gap-2">
+              <i data-lucide="target" class="h-4 w-4 text-blue-400"></i>
+              <span>1. Selecionar Oportunidade</span>
+            </h2>
+            <p class="text-xs text-slate-400">Escolha o lead para que a inteligência artificial carregue o contexto do negócio:</p>
+
+            <select id="copilot-deal-select" onchange="loadCopilotContext()" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200 focus:outline-none focus:border-blue-500">
+              <option value="">-- Selecione uma oportunidade --</option>
+            </select>
+
+            <div id="copilot-context-card" class="hidden p-3.5 rounded-xl bg-slate-900/90 border border-blue-500/20 space-y-2 text-xs">
+              <!-- Loaded context -->
+            </div>
+
+            <div class="space-y-2 pt-2">
+              <h3 class="text-xs font-semibold text-slate-300">Ações Rápidas de IA:</h3>
+              <div class="space-y-1.5">
+                <button onclick="runAiBant()" class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs transition">
+                  <span class="flex items-center gap-2"><i data-lucide="award" class="h-3.5 w-3.5 text-amber-400"></i> Avaliação BANT</span>
+                  <i data-lucide="chevron-right" class="h-3.5 w-3.5 text-slate-500"></i>
+                </button>
+                <button onclick="runAiPitch('primeiro_contato')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs transition">
+                  <span class="flex items-center gap-2"><i data-lucide="message-square" class="h-3.5 w-3.5 text-emerald-400"></i> Gerar Pitch WhatsApp</span>
+                  <i data-lucide="chevron-right" class="h-3.5 w-3.5 text-slate-500"></i>
+                </button>
+                <button onclick="runAiPitch('followup_proposta')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs transition">
+                  <span class="flex items-center gap-2"><i data-lucide="clock" class="h-3.5 w-3.5 text-blue-400"></i> Follow-up de Proposta</span>
+                  <i data-lucide="chevron-right" class="h-3.5 w-3.5 text-slate-500"></i>
+                </button>
+                <button onclick="runAiObjection('caro')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs transition">
+                  <span class="flex items-center gap-2"><i data-lucide="shield-alert" class="h-3.5 w-3.5 text-rose-400"></i> Contornar "Tá Caro"</span>
+                  <i data-lucide="chevron-right" class="h-3.5 w-3.5 text-slate-500"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Output & Interactive Workspace -->
+          <div class="lg:col-span-2 glass-panel p-5 rounded-2xl border border-blue-500/20 flex flex-col space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="sparkles" class="h-4 w-4 text-blue-400"></i>
+                <span>Resultado & Resposta da Inteligência Artificial</span>
+              </h2>
+              <span id="copilot-status-badge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">Pronto</span>
+            </div>
+
+            <!-- Output Box -->
+            <div id="copilot-output" class="flex-1 min-h-[300px] p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 leading-relaxed overflow-y-auto">
+              <div class="h-full flex flex-col items-center justify-center text-center text-slate-500 py-12 space-y-2">
+                <i data-lucide="bot" class="h-10 w-10 text-slate-600 stroke-[1.5]"></i>
+                <p class="text-sm font-semibold text-slate-400">Nenhuma análise solicitada ainda</p>
+                <p class="max-w-xs text-xs">Selecione uma oportunidade ao lado e clique em uma das ações rápidas para gerar abordagens de vendas personalizadas.</p>
+              </div>
+            </div>
+
+            <!-- Action Toolbar for Output -->
+            <div id="copilot-actions-bar" class="hidden flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800">
+              <button onclick="copyCopilotText()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                <i data-lucide="copy" class="h-3.5 w-3.5"></i>
+                <span>Copiar Texto</span>
+              </button>
+              <a id="copilot-whatsapp-btn" href="#" target="_blank" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md shadow-emerald-600/30 transition">
+                <i data-lucide="send" class="h-3.5 w-3.5"></i>
+                <span>Enviar no WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 4: FINANCEIRO & CHECKOUT PIX OFICIAL -->
+      <!-- ============================================== -->
+      <section id="view-pix" class="hidden space-y-6">
+        <div>
+          <h1 class="text-xl lg:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+            <i data-lucide="qr-code" class="h-6 w-6 text-emerald-400"></i>
+            <span>Financeiro & Checkout PIX Oficial (Bacen EMV)</span>
+          </h1>
+          <p class="text-xs text-slate-400">Emissão de QR Code e Copia-e-Cola direto segundo os padrões do Banco Central sem taxa de intermediários.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- PIX Generation Form -->
+          <div class="glass-panel p-5 rounded-2xl border border-blue-500/20 space-y-4">
+            <h2 class="text-sm font-bold text-white flex items-center gap-2">
+              <i data-lucide="file-text" class="h-4 w-4 text-emerald-400"></i>
+              <span>Gerar Nova Cobrança / Proposta PIX</span>
+            </h2>
+
+            <div class="space-y-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Vincular a uma Oportunidade:</label>
+                <select id="pix-form-deal" onchange="autofillPixDeal()" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+                  <option value="">-- Cobrança Avulsa --</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Nome do Cliente / Empresa:</label>
+                <input type="text" id="pix-form-name" placeholder="Ex: Carlos Eduardo Silveira" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">WhatsApp do Cliente (DDD + Número):</label>
+                <input type="text" id="pix-form-phone" placeholder="Ex: 11987654321" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-400 mb-1">Valor da Proposta (R$):</label>
+                  <input type="number" id="pix-form-amount" placeholder="Ex: 5000" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200 font-bold text-emerald-400">
+                </div>
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-400 mb-1">Título do Projeto:</label>
+                  <input type="text" id="pix-form-title" placeholder="Ex: Implantação Agentes IA" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+                </div>
+              </div>
+
+              <button onclick="generatePixProposal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:brightness-110 text-white text-xs font-bold shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2">
+                <i data-lucide="zap" class="h-4 w-4"></i>
+                <span>Emitir Proposta com PIX Oficial</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic PIX Ticket Preview -->
+          <div class="glass-panel p-5 rounded-2xl border border-emerald-500/25 flex flex-col items-center justify-center text-center space-y-4" id="pix-result-container">
+            <div class="h-16 w-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <i data-lucide="qr-code" class="h-8 w-8"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Nenhum PIX gerado nesta sessão</h3>
+              <p class="text-xs text-slate-400 max-w-xs mt-1">Preencha os dados ao lado para renderizar o QR Code dinâmico e o código Copia-e-Cola oficial.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 5: MÉTRICAS & KPIS -->
+      <!-- ============================================== -->
+      <section id="view-analytics" class="hidden space-y-6">
+        <div>
+          <h1 class="text-xl lg:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+            <i data-lucide="bar-chart-3" class="h-6 w-6 text-blue-400"></i>
+            <span>Métricas & Performance Comercial</span>
+          </h1>
+          <p class="text-xs text-slate-400">Visão analítica de faturamento, velocidade de fechamento e conversão de funil.</p>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="analytics-kpi-grid">
+          <div class="glass-card p-4 rounded-2xl">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Pipeline em Aberto</span>
+            <div class="text-xl lg:text-2xl font-black text-blue-400 mt-1" id="kpi-pipeline-val">R$ 0,00</div>
+            <span class="text-[10px] text-slate-500">Total em negociação ativa</span>
+          </div>
+          <div class="glass-card p-4 rounded-2xl">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Fechado no Mês</span>
+            <div class="text-xl lg:text-2xl font-black text-emerald-400 mt-1" id="kpi-won-val">R$ 0,00</div>
+            <span class="text-[10px] text-slate-500">Deals marcados como Ganho</span>
+          </div>
+          <div class="glass-card p-4 rounded-2xl">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Taxa de Conversão</span>
+            <div class="text-xl lg:text-2xl font-black text-purple-400 mt-1" id="kpi-win-rate">0.0%</div>
+            <span class="text-[10px] text-slate-500">Proporção Ganho / Perdido</span>
+          </div>
+          <div class="glass-card p-4 rounded-2xl">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Ticket Médio</span>
+            <div class="text-xl lg:text-2xl font-black text-amber-400 mt-1" id="kpi-avg-ticket">R$ 0,00</div>
+            <span class="text-[10px] text-slate-500">Valor médio por oportunidade</span>
+          </div>
+        </div>
+
+        <!-- Funnel Distribution Visualization -->
+        <div class="glass-panel p-5 rounded-2xl border border-blue-500/15 space-y-4">
+          <h2 class="text-sm font-bold text-white flex items-center gap-2">
+            <i data-lucide="filter" class="h-4 w-4 text-blue-400"></i>
+            <span>Distribuição de Oportunidades por Estágio</span>
+          </h2>
+          <div class="space-y-3" id="analytics-stages-bars">
+            <!-- Stage bars dynamically generated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 6: TAREFAS & AGENDA -->
+      <!-- ============================================== -->
+      <section id="view-tasks" class="hidden space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl lg:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+              <i data-lucide="check-square" class="h-6 w-6 text-blue-400"></i>
+              <span>Tarefas e Próximos Passos</span>
+            </h1>
+            <p class="text-xs text-slate-400">Acompanhamento de follow-ups gerados automaticamente pelo pipeline e pela IA.</p>
+          </div>
+          <button onclick="openNewTaskModal()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition">
+            <i data-lucide="plus" class="h-3.5 w-3.5"></i>
+            <span>Nova Tarefa</span>
+          </button>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl border border-blue-500/15">
+          <div class="space-y-2.5" id="tasks-list-container">
+            <!-- Tasks populated dynamically -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: NOVA OPORTUNIDADE (DEAL) -->
+  <!-- ============================================== -->
+  <div id="modal-deal" class="fixed inset-0 modal-backdrop hidden items-center justify-center p-4 z-50">
+    <div class="glass-panel border border-blue-500/30 rounded-2xl max-w-md w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="plus-circle" class="h-4 w-4 text-blue-400"></i>
+          <span>Nova Oportunidade no Funil</span>
+        </h3>
+        <button onclick="closeModal('modal-deal')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Título do Negócio *</label>
+          <input type="text" id="deal-new-title" placeholder="Ex: Implantação Agente Comercial" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Lead Responsável *</label>
+          <select id="deal-new-lead" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+            <!-- Leads dynamically populated -->
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Valor Estimado (R$)</label>
+            <input type="number" id="deal-new-value" placeholder="15000" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Estágio Inicial</label>
+            <select id="deal-new-stage" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+              <option value="prospeccao">Prospecção</option>
+              <option value="qualificacao">Qualificação (BANT)</option>
+              <option value="apresentacao">Apresentação / Demo</option>
+              <option value="proposta">Proposta Enviada</option>
+              <option value="negociacao">Negociação</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Prioridade</label>
+          <select id="deal-new-priority" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+            <option value="urgente">Urgente</option>
+            <option value="baixa">Baixa</option>
+          </select>
+        </div>
+
+        <button onclick="submitNewDeal()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">Salvar Oportunidade</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: NOVO LEAD -->
+  <!-- ============================================== -->
+  <div id="modal-lead" class="fixed inset-0 modal-backdrop hidden items-center justify-center p-4 z-50">
+    <div class="glass-panel border border-blue-500/30 rounded-2xl max-w-md w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="user-plus" class="h-4 w-4 text-blue-400"></i>
+          <span>Cadastrar Novo Lead</span>
+        </h3>
+        <button onclick="closeModal('modal-lead')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Nome Completo *</label>
+          <input type="text" id="lead-new-name" placeholder="Ex: Roberto Mendes" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Empresa</label>
+            <input type="text" id="lead-new-company" placeholder="Ex: Mendes Tech" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Cargo / Função</label>
+            <input type="text" id="lead-new-role" placeholder="Ex: Diretor de TI" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">WhatsApp / Telefone</label>
+            <input type="text" id="lead-new-phone" placeholder="11999999999" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">E-mail</label>
+            <input type="email" id="lead-new-email" placeholder="roberto@mendes.com" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Notas Iniciais / Dores do Lead</label>
+          <textarea id="lead-new-notes" rows="2" placeholder="Descreva os principais desafios relatados pelo cliente..." class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200"></textarea>
+        </div>
+
+        <button onclick="submitNewLead()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">Cadastrar Lead</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: NOVA TAREFA (TASK) -->
+  <!-- ============================================== -->
+  <div id="modal-task" class="fixed inset-0 modal-backdrop hidden items-center justify-center p-4 z-50">
+    <div class="glass-panel border border-blue-500/30 rounded-2xl max-w-md w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="check-square" class="h-4 w-4 text-blue-400"></i>
+          <span>Nova Tarefa / Follow-up</span>
+        </h3>
+        <button onclick="closeModal('modal-task')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Descrição da Tarefa *</label>
+          <input type="text" id="task-new-title" placeholder="Ex: Ligar para confirmar recebimento da proposta PIX" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Vincular a uma Oportunidade (Opcional):</label>
+          <select id="task-new-deal" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+            <option value="">-- Sem vínculo --</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Prazo / Horário</label>
+            <input type="datetime-local" id="task-new-deadline" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Prioridade</label>
+            <select id="task-new-priority" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+              <option value="alta">Alta</option>
+              <option value="urgente">Urgente</option>
+              <option value="media" selected>Média</option>
+              <option value="baixa">Baixa</option>
+            </select>
+          </div>
+        </div>
+
+        <button onclick="submitNewTask()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">Cadastrar Tarefa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CONFIGURAÇÕES & CHAVE IA -->
+  <!-- ============================================== -->
+  <div id="modal-settings" class="fixed inset-0 modal-backdrop hidden items-center justify-center p-4 z-50">
+    <div class="glass-panel border border-blue-500/30 rounded-2xl max-w-lg w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="settings" class="h-4 w-4 text-blue-400"></i>
+          <span>Configurações do Mega CRM</span>
+        </h3>
+        <button onclick="closeModal('modal-settings')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Nome da Empresa / Empreendimento:</label>
+          <input type="text" id="setting-company" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Chave PIX Padrão:</label>
+            <input type="text" id="setting-pix-key" placeholder="luciano.contato@crm.ia.br" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Nome do Titular PIX:</label>
+            <input type="text" id="setting-pix-name" placeholder="MEGA CRM AGENTISE" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Cidade do Titular PIX:</label>
+          <input type="text" id="setting-pix-city" placeholder="SAO PAULO" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+        </div>
+
+        <div class="pt-2 border-t border-slate-800">
+          <label class="block text-[11px] font-semibold text-blue-400 mb-1 flex items-center gap-1.5">
+            <i data-lucide="key" class="h-3.5 w-3.5"></i>
+            <span>Chave Anthropic Claude API (Opcional para IA Live):</span>
+          </label>
+          <input type="password" id="setting-api-key" placeholder="sk-ant-api03-..." class="w-full px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200">
+          <p class="text-[10px] text-slate-500 mt-1">Se não preenchida, o Mega CRM utiliza seu potente motor de inteligência heurística nativo sem custos.</p>
+        </div>
+
+        <button onclick="saveSettings()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">Salvar Configurações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- DRAWER: VISÃO 360° DO LEAD -->
+  <!-- ============================================== -->
+  <div id="drawer-lead360" class="fixed inset-y-0 right-0 w-full max-w-md glass-panel border-l border-blue-500/30 p-6 z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col justify-between overflow-y-auto">
+    <div class="space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i data-lucide="user-check" class="h-5 w-5 text-blue-400"></i>
+          <span>Visão 360° do Cliente</span>
+        </h3>
+        <button onclick="closeLeadDrawer()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="h-5 w-5"></i></button>
+      </div>
+
+      <div id="drawer-lead-content" class="space-y-4 text-xs">
+        <!-- Injected via app.js -->
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+      <button onclick="anonymizeCurrentLead()" class="text-[11px] text-rose-400 hover:underline flex items-center gap-1">
+        <i data-lucide="trash-2" class="h-3 w-3"></i> Expurgo LGPD (Art. 18)
+      </button>
+      <button onclick="closeLeadDrawer()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200">Fechar</button>
+    </div>
+  </div>
+
+  <!-- LGPD Consent Banner -->
+  <div id="lgpd-banner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 max-w-md glass-panel p-4 rounded-2xl border border-blue-500/30 z-50 flex items-start gap-3 shadow-2xl">
+    <i data-lucide="shield-alert" class="h-5 w-5 text-blue-400 shrink-0 mt-0.5"></i>
+    <div class="text-xs space-y-2">
+      <p class="text-slate-300 leading-snug">Este sistema processa dados comerciais em conformidade com a <strong>LGPD (Lei nº 13.709/2018)</strong> e boas práticas de segurança cibernética.</p>
+      <div class="flex items-center gap-3">
+        <button onclick="dismissLgpd()" class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-bold transition">Concordar e Fechar</button>
+        <a href="/privacidade" target="_blank" class="text-[11px] text-blue-400 hover:underline">Ver Termos</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Carlos Eduardo Silveira",
+    "company": "Silveira Logística Integrada",
+    "role": "Diretor de Operações",
+    "email": "carlos@silveiralog.com.br",
+    "phone": "11987654321",
+    "estimatedBudget": 28000,
+    "tags": [
+      "Logística",
+      "B2B",
+      "Decisor Direto"
+    ],
+    "notes": "Empresa com 45 caminhões e perda de 15% em roteirização manual. Busca automação urgente com agentes de IA.",
+    "id": "lea_1789241666592_snnu",
+    "createdAt": "2026-09-12T19:34:26.592Z",
+    "updatedAt": "2026-09-12T19:34:26.592Z"
+  },
+  {
+    "name": "Dra. Marina Albuquerque",
+    "company": "Albuquerque Clínicas Médicas",
+    "role": "Sócia-Proprietária",
+    "email": "marina@albuquerqueclinicas.com.br",
+    "phone": "21976543210",
+    "estimatedBudget": 15500,
+    "tags": [
+      "Saúde",
+      "High-Ticket",
+      "WhatsApp"
+    ],
+    "notes": "Rede com 3 unidades no Rio. Secretárias sobrecarregadas com agendamentos no WhatsApp. Deseja qualificação automática de pacientes.",
+    "id": "lea_1789241666594_pdcr",
+    "createdAt": "2026-09-12T19:34:26.594Z",
+    "updatedAt": "2026-09-12T19:34:26.594Z"
+  },
+  {
+    "name": "Rodrigo Vasconcelos",
+    "company": "Nexus Tech Educação",
+    "role": "CEO & Fundador",
+    "email": "rodrigo@nexustech.io",
+    "phone": "31965432109",
+    "estimatedBudget": 45000,
+    "tags": [
+      "EdTech",
+      "SaaS",
+      "Escala"
+    ],
+    "notes": "Plataforma de cursos online com 12 mil alunos. Quer implementar CRM automatizado com funil de vendas integrado ao PIX nativo.",
+    "id": "lea_1789241666595_lnyp",
+    "createdAt": "2026-09-12T19:34:26.595Z",
+    "updatedAt": "2026-09-12T19:34:26.595Z"
+  },
+  {
+    "name": "Beatriz Fagundes",
+    "company": "Studio Fagundes Arquitetura",
+    "role": "Arquiteta Titular",
+    "email": "beatriz@fagundesarq.com.br",
+    "phone": "41954321098",
+    "estimatedBudget": 8500,
+    "tags": [
+      "Design",
+      "PME"
+    ],
+    "notes": "Escritório de arquitetura em expansão. Perde prazos de follow-up de orçamentos por falta de funil centralizado.",
+    "id": "lea_1789241666596_b2od",
+    "createdAt": "2026-09-12T19:34:26.596Z",
+    "updatedAt": "2026-09-12T19:34:26.596Z"
+  },
+  {
+    "name": "Felipe Fontana",
+    "company": "Fontana Distribuidora de Alimentos",
+    "role": "Gerente Comercial",
+    "email": "felipe@fontanaalimentos.com.br",
+    "phone": "19943210987",
+    "estimatedBudget": 35000,
+    "tags": [
+      "Atacado",
+      "Varejo",
+      "B2B"
+    ],
+    "notes": "Equipe externa de 12 representantes comerciais. Precisam de aplicativo ágil com pipeline e geração de propostas PIX na hora.",
+    "id": "lea_1789241666597_pc0n",
+    "createdAt": "2026-09-12T19:34:26.597Z",
+    "updatedAt": "2026-09-12T19:34:26.597Z"
+  }
+]
