@@ -112,5 +112,74 @@
     "id": "act_1789247843351_i0t2",
     "createdAt": "2026-09-12T21:17:23.351Z",
     "updatedAt": "2026-09-12T21:17:23.351Z"
+  },
+  {
+    "id": "act_autoprime_1789392547084",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-14T13:29:07.084Z",
+    "updatedAt": "2026-09-14T13:29:07.084Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789392547101_d3m8",
+    "createdAt": "2026-09-14T13:29:07.101Z",
+    "updatedAt": "2026-09-14T13:29:07.101Z"
+  },
+  {
+    "id": "act_autoprime_1789407360104",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-14T17:36:00.104Z",
+    "updatedAt": "2026-09-14T17:36:00.104Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789407360124_dcze",
+    "createdAt": "2026-09-14T17:36:00.124Z",
+    "updatedAt": "2026-09-14T17:36:00.124Z"
+  },
+  {
+    "id": "act_autoprime_1789407479042",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-14T17:37:59.042Z",
+    "updatedAt": "2026-09-14T17:37:59.042Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789407479060_lnmt",
+    "createdAt": "2026-09-14T17:37:59.060Z",
+    "updatedAt": "2026-09-14T17:37:59.060Z"
   }
 ]

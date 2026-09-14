@@ -71,6 +71,16 @@ function formatBRL(val) {
   return Number(val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function authHeaders() {
   const headers = { 'Content-Type': 'application/json' };
   if (currentAuthToken) {
@@ -297,12 +307,12 @@ function createKanbanCard(deal) {
     card.classList.remove('dragging');
   });
 
-  const leadName = deal.lead ? deal.lead.name : (deal.leadName || 'Cliente Potencial');
-  const company = deal.lead ? deal.lead.company : '';
+  const leadName = escapeHtml(deal.lead ? deal.lead.name : (deal.leadName || 'Cliente Potencial'));
+  const company = escapeHtml(deal.lead ? deal.lead.company : '');
 
   card.innerHTML = `
     <div class="flex items-start justify-between gap-1">
-      <div class="text-xs font-bold text-white leading-tight">${deal.title}</div>
+      <div class="text-xs font-bold text-white leading-tight">${escapeHtml(deal.title)}</div>
       <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-300 font-bold">${deal.probability || 20}%</span>
     </div>
     <div class="text-[11px] text-slate-400 truncate">${leadName} ${company ? `· ${company}` : ''}</div>
@@ -371,19 +381,19 @@ function renderLeadsTable() {
 
     tr.innerHTML = `
       <td class="p-3.5">
-        <div class="font-bold text-white">${lead.name}</div>
-        <div class="text-[10px] text-slate-400">${lead.company || 'Pessoa Física'}</div>
+        <div class="font-bold text-white">${escapeHtml(lead.name)}</div>
+        <div class="text-[10px] text-slate-400">${escapeHtml(lead.company || 'Pessoa Física')}</div>
       </td>
       <td class="p-3.5">
-        <div class="text-slate-300">${lead.role || 'Contato Comercial'}</div>
-        <div class="text-[10px] text-slate-500">${lead.phone || '-'} · ${lead.email || '-'}</div>
+        <div class="text-slate-300">${escapeHtml(lead.role || 'Contato Comercial')}</div>
+        <div class="text-[10px] text-slate-500">${escapeHtml(lead.phone || '-')} · ${escapeHtml(lead.email || '-')}</div>
       </td>
       <td class="p-3.5 font-bold text-emerald-400">
         ${formatBRL(lead.estimatedBudget)}
       </td>
       <td class="p-3.5">
         <div class="flex flex-wrap gap-1">
-          ${(lead.tags || ['Qualificado']).map(t => `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300">${t}</span>`).join('')}
+          ${(lead.tags || ['Qualificado']).map(t => `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300">${escapeHtml(t)}</span>`).join('')}
         </div>
       </td>
       <td class="p-3.5 text-right space-x-1.5">
@@ -477,10 +487,10 @@ function renderConversationsList() {
 
     item.innerHTML = `
       <div class="flex items-center justify-between mb-1">
-        <span class="text-xs font-bold text-white">${cv.customerName || 'Cliente'}</span>
+        <span class="text-xs font-bold text-white">${escapeHtml(cv.customerName || 'Cliente')}</span>
         <span class="text-[9px] text-slate-500">${cv.lastMessageAt ? new Date(cv.lastMessageAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
       </div>
-      <div class="text-[11px] text-slate-400 truncate">${cv.lastMessage || 'Nenhuma mensagem recente'}</div>
+      <div class="text-[11px] text-slate-400 truncate">${escapeHtml(cv.lastMessage || 'Nenhuma mensagem recente')}</div>
     `;
     list.appendChild(item);
   });
@@ -496,7 +506,7 @@ async function selectConversation(cvId) {
   const cv = globalConversations.find(c => c.id === cvId);
   if (!cv) return;
 
-  document.getElementById('chat-customer-name').innerText = cv.customerName;
+  document.getElementById('chat-customer-name').innerText = cv.customerName || 'Cliente';
   document.getElementById('chat-customer-phone').innerText = cv.customerPhone || 'Canal Web';
   document.getElementById('chat-customer-avatar').innerText = (cv.customerName || 'C').charAt(0).toUpperCase();
 
@@ -521,8 +531,8 @@ function renderChatMessages(msgs) {
 
     bubble.innerHTML = `
       <div class="max-w-[75%] p-3 rounded-2xl text-xs ${isClient ? 'bg-slate-800 text-slate-200 border border-slate-700' : 'bg-blue-600 text-white shadow-md'}">
-        <div class="text-[9px] opacity-70 mb-1">${m.senderName || (isClient ? 'Cliente' : 'Vendedor')}</div>
-        <div>${m.text}</div>
+        <div class="text-[9px] opacity-70 mb-1">${escapeHtml(m.senderName || (isClient ? 'Cliente' : 'Vendedor'))}</div>
+        <div>${escapeHtml(m.text)}</div>
       </div>
     `;
     container.appendChild(bubble);
@@ -610,15 +620,15 @@ function renderRecoveryCampaigns(camps) {
     div.className = 'p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2';
     div.innerHTML = `
       <div class="flex items-center justify-between">
-        <span class="text-xs font-bold text-white">${c.name}</span>
-        <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold uppercase">${c.status}</span>
+        <span class="text-xs font-bold text-white">${escapeHtml(c.name)}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold uppercase">${escapeHtml(c.status)}</span>
       </div>
       <div class="text-xs text-slate-300 italic p-2 rounded-lg bg-slate-950 border border-slate-800/80">
-        "${c.template?.message || ''}"
+        "${escapeHtml(c.template?.message || '')}"
       </div>
       <div class="flex items-center justify-between pt-1 text-[11px] text-slate-400">
-        <span>CTA: <strong>${c.template?.cta || ''}</strong></span>
-        <button onclick="dispatchRecoveryCampaign('${c.id}')" class="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold transition">
+        <span>CTA: <strong>${escapeHtml(c.template?.cta || '')}</strong></span>
+        <button onclick="dispatchRecoveryCampaign('${escapeHtml(c.id)}')" class="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold transition">
           Disparar Régua de Resgate
         </button>
       </div>
@@ -668,13 +678,13 @@ function renderKnowledgeBase() {
     card.className = 'glass-card p-4 rounded-2xl border border-purple-500/20 flex flex-col justify-between space-y-2';
     card.innerHTML = `
       <div>
-        <div class="text-[10px] font-bold uppercase text-purple-400">${kb.category}</div>
-        <div class="text-xs font-bold text-white pt-0.5">${kb.title}</div>
-        <p class="text-[11px] text-slate-300 pt-1.5 leading-relaxed">${kb.content}</p>
+        <div class="text-[10px] font-bold uppercase text-purple-400">${escapeHtml(kb.category)}</div>
+        <div class="text-xs font-bold text-white pt-0.5">${escapeHtml(kb.title)}</div>
+        <p class="text-[11px] text-slate-300 pt-1.5 leading-relaxed">${escapeHtml(kb.content)}</p>
       </div>
       <div class="flex items-center justify-between pt-2 border-t border-slate-800 text-[10px] text-slate-500">
         <span>Alimenta Agente IA</span>
-        <button onclick="deleteKnowledge('${kb.id}')" class="text-rose-400 hover:text-rose-300">Excluir</button>
+        <button onclick="deleteKnowledge('${escapeHtml(kb.id)}')" class="text-rose-400 hover:text-rose-300">Excluir</button>
       </div>
     `;
     grid.appendChild(card);
@@ -739,14 +749,14 @@ function renderAutomations() {
       <div class="space-y-1">
         <div class="text-xs font-bold text-white flex items-center gap-2">
           <i data-lucide="workflow" class="h-4 w-4 text-amber-400"></i>
-          <span>${a.name}</span>
+          <span>${escapeHtml(a.name)}</span>
         </div>
         <div class="text-[11px] text-slate-400">
-          QUANDO: <span class="text-amber-300 font-semibold">${a.trigger}</span> ➔ ENTÃO: <span class="text-blue-300 font-semibold">${a.action?.type || 'Ação'}</span>
+          QUANDO: <span class="text-amber-300 font-semibold">${escapeHtml(a.trigger)}</span> ➔ ENTÃO: <span class="text-blue-300 font-semibold">${escapeHtml(a.action?.type || 'Ação')}</span>
         </div>
       </div>
       <div>
-        <button onclick="toggleAutomation('${a.id}')" class="px-3 py-1.5 text-xs font-semibold rounded-xl ${a.active !== false ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'} transition">
+        <button onclick="toggleAutomation('${escapeHtml(a.id)}')" class="px-3 py-1.5 text-xs font-semibold rounded-xl ${a.active !== false ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'} transition">
           ${a.active !== false ? 'Ativa' : 'Pausada'}
         </button>
       </div>
@@ -850,15 +860,15 @@ function renderAutoVehicles() {
     card.className = 'glass-card p-4 rounded-2xl border border-amber-500/20 space-y-2.5';
     card.innerHTML = `
       <div class="flex items-center justify-between">
-        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 uppercase">${v.bodyType || 'SUV'}</span>
-        <span class="text-xs font-bold text-slate-400">${v.year} · ${v.km?.toLocaleString('pt-BR')} km</span>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 uppercase">${escapeHtml(v.bodyType || 'SUV')}</span>
+        <span class="text-xs font-bold text-slate-400">${escapeHtml(v.year)} · ${Number(v.km || 0).toLocaleString('pt-BR')} km</span>
       </div>
-      <div class="text-sm font-bold text-white">${v.brand} ${v.model}</div>
+      <div class="text-sm font-bold text-white">${escapeHtml(v.brand)} ${escapeHtml(v.model)}</div>
       <div class="text-lg font-black text-amber-400">${formatBRL(v.price)}</div>
       <div class="flex flex-wrap gap-1 text-[10px] text-slate-400">
-        ${(v.features || []).slice(0, 2).map(f => `<span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">${f}</span>`).join('')}
+        ${(v.features || []).slice(0, 2).map(f => `<span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">${escapeHtml(f)}</span>`).join('')}
       </div>
-      <button onclick="prefillFinancing(${v.price})" class="w-full py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+      <button onclick="prefillFinancing(${Number(v.price) || 0})" class="w-full py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
         Simular Financiamento
       </button>
     `;
@@ -913,10 +923,10 @@ async function loadAnalytics() {
         const color = al.type === 'danger' ? 'rose' : (al.type === 'warning' ? 'amber' : 'blue');
         div.className = `p-3 rounded-2xl border border-${color}-500/30 bg-${color}-950/20 text-xs text-slate-200 flex items-start gap-2.5`;
         div.innerHTML = `
-          <i data-lucide="${al.icon || 'info'}" class="h-4 w-4 text-${color}-400 shrink-0 mt-0.5"></i>
+          <i data-lucide="${escapeHtml(al.icon || 'info')}" class="h-4 w-4 text-${color}-400 shrink-0 mt-0.5"></i>
           <div>
-            <div class="font-bold text-white">${al.title}</div>
-            <div class="text-[10px] text-slate-400">${al.action}</div>
+            <div class="font-bold text-white">${escapeHtml(al.title)}</div>
+            <div class="text-[10px] text-slate-400">${escapeHtml(al.action)}</div>
           </div>
         `;
         alertsContainer.appendChild(div);
@@ -936,10 +946,10 @@ async function loadAnalytics() {
             <span class="text-xs font-bold text-slate-400">${s.wonCount} Vendas</span>
           </div>
           <div class="flex items-center gap-2.5">
-            <img src="${s.avatar}" class="h-9 w-9 rounded-full bg-slate-800">
+            <img src="${escapeHtml(s.avatar)}" class="h-9 w-9 rounded-full bg-slate-800" alt="Avatar">
             <div>
-              <div class="text-xs font-bold text-white">${s.name}</div>
-              <div class="text-[10px] text-slate-400">${s.role}</div>
+              <div class="text-xs font-bold text-white">${escapeHtml(s.name)}</div>
+              <div class="text-[10px] text-slate-400">${escapeHtml(s.role)}</div>
             </div>
           </div>
           <div class="text-lg font-black text-emerald-400">${formatBRL(s.revenue)}</div>
@@ -1023,7 +1033,7 @@ async function onCopilotLeadChange() {
     document.getElementById('bant-t').innerText = `${d.breakdown.timing}/25`;
 
     const ins = document.getElementById('bant-insights');
-    ins.innerHTML = d.insights.map(i => `<div>• ${i}</div>`).join('');
+    ins.innerHTML = d.insights.map(i => `<div>• ${escapeHtml(i)}</div>`).join('');
   } catch (err) {}
 }
 
@@ -1139,10 +1149,10 @@ function renderTasks() {
     div.className = `p-3 rounded-xl border flex items-center justify-between ${t.completed ? 'bg-slate-900/40 border-slate-800 opacity-60' : 'glass-card border-slate-700'}`;
     div.innerHTML = `
       <div class="flex items-center gap-2.5">
-        <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}', this.checked)" class="rounded text-blue-600">
-        <span class="text-xs ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${t.title}</span>
+        <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${escapeHtml(t.id)}', this.checked)" class="rounded text-blue-600">
+        <span class="text-xs ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${escapeHtml(t.title)}</span>
       </div>
-      <span class="text-[10px] px-2 py-0.5 rounded uppercase font-bold ${t.priority === 'urgente' ? 'bg-rose-500/20 text-rose-300' : 'bg-slate-800 text-slate-400'}">${t.priority}</span>
+      <span class="text-[10px] px-2 py-0.5 rounded uppercase font-bold ${t.priority === 'urgente' ? 'bg-rose-500/20 text-rose-300' : 'bg-slate-800 text-slate-400'}">${escapeHtml(t.priority)}</span>
     `;
     container.appendChild(div);
   });

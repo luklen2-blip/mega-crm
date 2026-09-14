@@ -8,12 +8,11 @@ console.log('🔄 ========================================================\n');
 const appData = process.env.APPDATA || 'C:\\Users\\luciano\\AppData\\Roaming';
 const startupDir = path.join(appData, 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
 const projectRoot = path.resolve(__dirname, '..');
-const serverScript = path.join(projectRoot, 'server.js');
 
 const vbsContent = `' Script AutoStart em segundo plano para Agentise Mega CRM
 Set WshShell = CreateObject("WScript.Shell")
-WshShell.CurrentDirectory = "${projectRoot.replace(/\\/g, '\\\\')}"
-WshShell.Run "node \"${serverScript.replace(/\\/g, '\\\\')}\"", 0, False
+WshShell.CurrentDirectory = "${projectRoot}"
+WshShell.Run "node server.js", 0, False
 `;
 
 const vbsPath = path.join(startupDir, 'AgentiseMegaCRM_AutoStart.vbs');

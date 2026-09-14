@@ -130,6 +130,28 @@ async function runLiveE2E() {
   console.log(`  ✅ Auto Prime Veículos ativa na nuvem (${pData.totalLeads} leads, ${pData.activeDeals} deals ativos, ${pData.wonDealsCount} vendas ganhas, R$ ${Number(pData.wonValue).toLocaleString('pt-BR')} faturados).`);
   passed++;
 
+  // 10. Blindagem e Hardening de Segurança (OWASP, Sandbox e Proteção de Dados)
+  console.log('▶ [Nuvem] Validando Blindagem de Segurança (Sandbox de Arquivos e Headers OWASP)...');
+  const leakRes = await requestUrl('/database/data/users.json');
+  if (leakRes.statusCode !== 404) {
+    throw new Error(`Acesso direto ao banco de dados não foi bloqueado: HTTP ${leakRes.statusCode}`);
+  }
+  if (leakRes.data.includes('passwordHash')) {
+    throw new Error('Vazamento crítico de credenciais detectado!');
+  }
+
+  const serverJsRes = await requestUrl('/server.js');
+  if (serverJsRes.statusCode !== 404) {
+    throw new Error(`Acesso a código-fonte não foi bloqueado: HTTP ${serverJsRes.statusCode}`);
+  }
+
+  if (healthRes.headers['x-content-type-options'] !== 'nosniff') {
+    throw new Error('Header OWASP X-Content-Type-Options ausente na resposta de saúde.');
+  }
+
+  console.log('  ✅ Hardening de segurança 100% verificado em nuvem (Sandbox isolado, Headers OWASP ativos).');
+  passed++;
+
   console.log('\n=============================================================');
   console.log(`🚀 HOMOLOGAÇÃO CONCLUÍDA: ${passed} verificações passaram com 100% de sucesso!`);
   console.log('🎉 Sistema 100% íntegro e operacional 24/7 na nuvem.');

@@ -124,5 +124,59 @@
     "id": "ai__1789247843269_c47c",
     "createdAt": "2026-09-12T21:17:23.269Z",
     "updatedAt": "2026-09-12T21:17:23.269Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-14T13:29:06.868Z",
+    "id": "ai__1789392546868_0dog",
+    "createdAt": "2026-09-14T13:29:06.868Z",
+    "updatedAt": "2026-09-14T13:29:06.868Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-14T13:29:07.060Z",
+    "id": "ai__1789392547060_qd1h",
+    "createdAt": "2026-09-14T13:29:07.060Z",
+    "updatedAt": "2026-09-14T13:29:07.060Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-14T17:36:00.063Z",
+    "id": "ai__1789407360063_ipdg",
+    "createdAt": "2026-09-14T17:36:00.063Z",
+    "updatedAt": "2026-09-14T17:36:00.063Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-14T17:36:00.079Z",
+    "id": "ai__1789407360079_f4p3",
+    "createdAt": "2026-09-14T17:36:00.079Z",
+    "updatedAt": "2026-09-14T17:36:00.079Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-14T17:37:59.000Z",
+    "id": "ai__1789407479000_d2iq",
+    "createdAt": "2026-09-14T17:37:59.000Z",
+    "updatedAt": "2026-09-14T17:37:59.000Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-14T17:37:59.016Z",
+    "id": "ai__1789407479016_071i",
+    "createdAt": "2026-09-14T17:37:59.016Z",
+    "updatedAt": "2026-09-14T17:37:59.016Z"
   }
 ]

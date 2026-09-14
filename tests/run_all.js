@@ -167,8 +167,9 @@ async function runTests() {
       res.on('end', () => resolve({ status: res.statusCode, body: d }));
     });
   });
-  // O servidor sanitiza para package.json ou cai no fallback index.html seguro
-  assert.strictEqual(traversalRes.status, 200, 'Requisição com path traversal tratada com segurança');
+  // O servidor bloqueia o arquivo sensível com 404 ou cai no fallback index.html seguro sem vazar código
+  assert.ok([404, 200].includes(traversalRes.status), 'Requisição com path traversal tratada com segurança');
+  assert.strictEqual(traversalRes.body.includes('"dependencies"'), false, 'Não deve expor o package.json');
 
   const fallbackRes = await new Promise((resolve) => {
     http.get(`http://127.0.0.1:${TEST_PORT}/rota-inexistente-spa`, (res) => {
@@ -371,6 +372,140 @@ async function runTests() {
   assert.strictEqual(dash.sellersPerformance[0].wonCount, 3, 'Fernanda Lima deve ter 3 vendas');
   assert.strictEqual(dash.sellersPerformance[0].revenue, 650000, 'Receita de Fernanda Lima deve ser R$ 650.000,00');
   console.log('  ✅ Teste 16 Aprovado: Fluxo real (Lead -> Atendimento -> Qualificação -> Oportunidade -> Proposta -> Venda) e Dashboard 100% íntegros.\n');
+  passed++;
+
+  // 17. Teste de Blindagem e Auditoria de Segurança
+  console.log('▶ Teste 17: Validação de Blindagem e Hardening de Segurança (OWASP, RBAC, Anti-IDOR, Rate Limit)...');
+
+  // 17.1 Isolamento de Arquivos Estáticos / Anti Directory Traversal
+  const blockedEndpoints = [
+    '/database/data/users.json',
+    '/server.js',
+    '/package.json',
+    '/tests/run_all.js'
+  ];
+
+  for (const ep of blockedEndpoints) {
+    const resBlocked = await new Promise((resolve) => {
+      http.get(`http://127.0.0.1:${TEST_PORT}${ep}`, (res) => {
+        let d = ''; res.on('data', c => d += c);
+        res.on('end', () => resolve({ status: res.statusCode, body: d }));
+      });
+    });
+    assert.strictEqual(resBlocked.status, 404, `Acesso a ${ep} deve ser categoricamente bloqueado com HTTP 404`);
+    assert.strictEqual(resBlocked.body.includes('passwordHash'), false, `Arquivo ${ep} não pode vazar credenciais ou código`);
+  }
+
+  // 17.2 Headers de Segurança OWASP
+  const healthHeadersCheck = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/api/health`, (res) => {
+      resolve(res.headers);
+    });
+  });
+  assert.strictEqual(healthHeadersCheck['x-content-type-options'], 'nosniff');
+  assert.strictEqual(healthHeadersCheck['x-frame-options'], 'SAMEORIGIN');
+  assert.strictEqual(healthHeadersCheck['x-xss-protection'], '1; mode=block');
+  assert.strictEqual(healthHeadersCheck['referrer-policy'], 'strict-origin-when-cross-origin');
+
+  // 17.3 Timing-Safe JWT Validation
+  const { verifyToken: vToken } = require('../services/authService');
+  const validT = genToken({ userId: 'u_sec_1', tenantId: 'ten_sec_1', role: 'ADMINISTRADOR' });
+  assert.ok(vToken(validT), 'Token íntegro deve ser validado com sucesso');
+  assert.strictEqual(vToken(validT + 'tampered'), null, 'Token adulterado deve ser rejeitado com timingSafeEqual');
+
+  // 17.4 Proteção Anti-IDOR no endpoint de LGPD
+  const testLeadSec = leadsDB.insert({
+    tenantId: 'ten_sec_owner',
+    name: 'Lead Protegido LGPD',
+    email: 'protegido@lgpd.com.br'
+  });
+  const hackerToken = genToken({
+    userId: 'u_attacker',
+    tenantId: 'ten_sec_attacker',
+    role: 'ADMINISTRADOR',
+    email: 'attacker@bad.com'
+  });
+
+  const idorSecRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({ leadId: testLeadSec.id });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/lgpd/anonymize',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${hackerToken}`,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(idorSecRes.status, 404, 'Tentativa de anonimização cross-tenant deve retornar 404');
+  leadsDB.delete(testLeadSec.id);
+
+  // 17.5 RBAC: Apenas ADMINISTRADOR pode salvar configurações
+  const vendedorToken = genToken({
+    userId: 'u_vend_sec',
+    tenantId: 'ten_sec_owner',
+    role: 'VENDEDOR',
+    email: 'vendedor@sec.com'
+  });
+  const rbacRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({ companyName: 'Tentativa Vendedor' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/settings',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${vendedorToken}`,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(rbacRes.status, 403, 'Vendedor não pode alterar configurações do sistema (deve retornar 403)');
+
+  // 17.6 Rate Limiter Defensivo contra Força Bruta
+  const testIp = '198.51.100.188';
+  let rateBlocked = false;
+  for (let i = 1; i <= 32; i++) {
+    const rStatus = await new Promise((resolve) => {
+      const req = http.request({
+        hostname: '127.0.0.1',
+        port: TEST_PORT,
+        path: '/api/auth/login',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Forwarded-For': testIp
+        }
+      }, res => {
+        resolve(res.statusCode);
+      });
+      req.write(JSON.stringify({ email: 'fake@brute.com', password: 'bad' }));
+      req.end();
+    });
+    if (i <= 30) {
+      assert.strictEqual(rStatus, 401, `Tentativa ${i} deve processar normalmente (retornar 401 para credencial inválida)`);
+    } else {
+      assert.strictEqual(rStatus, 429, `Tentativa ${i} deve ser barrada pelo Rate Limiter com HTTP 429`);
+      rateBlocked = true;
+    }
+  }
+  assert.strictEqual(rateBlocked, true, 'Rate limit deve ter bloqueado a 31ª e 32ª requisição');
+
+  console.log('  ✅ Teste 17 Aprovado: Sandbox estático, OWASP Headers, JWT seguro, Anti-IDOR, RBAC e Rate Limiting 100% blindados.\n');
   passed++;
 
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);

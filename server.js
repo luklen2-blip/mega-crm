@@ -125,13 +125,50 @@ function parseRequestBody(req) {
   });
 }
 
-// Helper para envio de JSON com cabeçalhos OWASP
+// In-Memory Rate Limiter nativo e de alta performance (sem dependências externas)
+const rateLimitMap = new Map();
+
+function checkRateLimit(ip, bucketName, maxRequests, windowMs) {
+  const now = Date.now();
+  const key = `${bucketName}:${ip}`;
+  let record = rateLimitMap.get(key);
+
+  if (!record || (now - record.resetTime > windowMs)) {
+    record = { count: 1, resetTime: now };
+    rateLimitMap.set(key, record);
+    return { allowed: true, remaining: maxRequests - 1 };
+  }
+
+  if (record.count >= maxRequests) {
+    return { 
+      allowed: false, 
+      retryAfterSeconds: Math.ceil((record.resetTime + windowMs - now) / 1000) 
+    };
+  }
+
+  record.count++;
+  return { allowed: true, remaining: maxRequests - record.count };
+}
+
+// Limpeza automática de registros expirados no rate limit a cada 10 minutos
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, record] of rateLimitMap.entries()) {
+    if (now - record.resetTime > 15 * 60 * 1000) {
+      rateLimitMap.delete(key);
+    }
+  }
+}, 10 * 60 * 1000).unref();
+
+// Helper para envio de JSON com cabeçalhos OWASP rigorosos
 function sendJson(res, statusCode, data) {
   res.writeHead(statusCode, {
     'Content-Type': 'application/json; charset=utf-8',
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'SAMEORIGIN',
+    'X-XSS-Protection': '1; mode=block',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Auth-Token'
@@ -139,19 +176,51 @@ function sendJson(res, statusCode, data) {
   res.end(JSON.stringify(data));
 }
 
-// Resolução de arquivos estáticos com suporte a SPA fallback
+// Resolução segura de arquivos estáticos com isolamento e blindagem contra Directory Traversal
+const BLOCKED_STATIC_PREFIXES = ['database', 'services', 'tests', 'scripts', '.git', 'node_modules', '.gemini', 'config'];
+const BLOCKED_STATIC_FILES = ['server.js', 'package.json', 'package-lock.json', 'render.yaml', 'Dockerfile', '.gitignore', '.dockerignore', '.env'];
+
 function serveStatic(req, res, targetFile) {
+  const cleanTarget = (targetFile || '').replace(/\\/g, '/');
+  
+  // Rejeita explicitamente qualquer tentativa de path traversal
+  if (cleanTarget.includes('..') || cleanTarget.includes('\0')) {
+    return false;
+  }
+
   const sanitized = path.normalize(targetFile).replace(/^(\.\.[\/\\])+/, '');
+  const segments = sanitized.split(/[\\\/]/).filter(Boolean);
+  const firstSegment = segments[0] ? segments[0].toLowerCase() : '';
+  const baseName = path.basename(sanitized).toLowerCase();
+
+  // Bloqueio categórico de infraestrutura, código backend e dados privados
+  if (BLOCKED_STATIC_PREFIXES.includes(firstSegment) || BLOCKED_STATIC_FILES.includes(baseName) || baseName.startsWith('.')) {
+    return false;
+  }
+
+  const publicDir = path.resolve(__dirname, 'public');
   const candidatePaths = [
-    path.join(__dirname, 'public', sanitized),
-    path.join(__dirname, sanitized),
+    path.join(publicDir, sanitized),
+    path.join(publicDir, `${sanitized}.html`),
     path.join(process.cwd(), 'public', sanitized),
-    path.join(process.cwd(), sanitized)
+    path.join(process.cwd(), 'public', `${sanitized}.html`)
   ];
+
+  // Permite arquivos estáticos seguros se existirem na raiz
+  if (['index.html', 'favicon.ico', 'manifest.json', 'robots.txt'].includes(baseName)) {
+    candidatePaths.push(path.join(__dirname, sanitized));
+    candidatePaths.push(path.join(process.cwd(), sanitized));
+  }
 
   const filePath = candidatePaths.find(p => {
     try {
-      return fs.existsSync(p) && fs.statSync(p).isFile();
+      const resolved = path.resolve(p);
+      const isInsidePublic = resolved.startsWith(publicDir);
+      const isAllowedRoot = (resolved === path.resolve(__dirname, baseName) || resolved === path.resolve(process.cwd(), baseName)) && 
+                            ['index.html', 'favicon.ico', 'manifest.json', 'robots.txt'].includes(baseName);
+      
+      if (!isInsidePublic && !isAllowedRoot) return false;
+      return fs.existsSync(resolved) && fs.statSync(resolved).isFile();
     } catch (e) {
       return false;
     }
@@ -163,7 +232,10 @@ function serveStatic(req, res, targetFile) {
     res.writeHead(200, {
       'Content-Type': contentType,
       'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'SAMEORIGIN'
+      'X-Frame-Options': 'SAMEORIGIN',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
     });
     fs.createReadStream(filePath).pipe(res);
     return true;
@@ -199,6 +271,29 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
+  // Identificação do IP do cliente e aplicação de Rate Limiting defensivo
+  const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
+
+  // Rate limit para rotas de autenticação (mitigação contra força bruta)
+  if (pathname === '/api/auth/login' || pathname === '/api/auth/register') {
+    const authRate = checkRateLimit(clientIp, 'auth', 30, 15 * 60 * 1000);
+    if (!authRate.allowed) {
+      return sendJson(res, 429, { 
+        error: 'Muitas tentativas de autenticação a partir deste IP. Por favor, aguarde 15 minutos.' 
+      });
+    }
+  }
+
+  // Rate limit global para chamadas de API
+  if (pathname.startsWith('/api/')) {
+    const globalRate = checkRateLimit(clientIp, 'global', 600, 15 * 60 * 1000);
+    if (!globalRate.allowed) {
+      return sendJson(res, 429, { 
+        error: 'Limite de requisições por minuto atingido. Tente novamente mais tarde.' 
+      });
+    }
+  }
+
   // Identificação do Contexto da Requisição (Tenant + Usuário)
   const ctx = getRequestContext(req);
   const tenantId = ctx.tenantId;
@@ -206,8 +301,12 @@ const server = http.createServer(async (req, res) => {
   // 2. AUTENTICAÇÃO E GESTÃO DE USUÁRIOS
   if (pathname === '/api/auth/register' && method === 'POST') {
     const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
     if (!body.email || !body.password || !body.companyName) {
       return sendJson(res, 400, { error: 'Nome da empresa, e-mail e senha são obrigatórios.' });
+    }
+    if (body.password.length < 8) {
+      return sendJson(res, 400, { error: 'A senha deve conter no mínimo 8 caracteres para garantir a segurança da conta.' });
     }
     try {
       const result = registerTenant(body);
@@ -220,6 +319,7 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === '/api/auth/login' && method === 'POST') {
     const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
     if (!body.email || !body.password) {
       return sendJson(res, 400, { error: 'Informe e-mail e senha.' });
     }
@@ -855,7 +955,11 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/settings' && method === 'POST') {
+    if (ctx.role !== 'ADMINISTRADOR') {
+      return sendJson(res, 403, { error: 'Acesso negado. Apenas administradores podem alterar configurações do sistema.' });
+    }
     const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
     const existing = settingsDB.findById('general_settings') || {};
     const updated = settingsDB.update('general_settings', {
       ...existing,
@@ -879,9 +983,12 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === '/api/lgpd/anonymize' && method === 'POST') {
     const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
     if (!body.leadId) return sendJson(res, 400, { error: 'LeadId é obrigatório' });
     const lead = leadsDB.findById(body.leadId);
-    if (!lead) return sendJson(res, 404, { error: 'Lead não encontrado' });
+    if (!lead || (lead.tenantId && lead.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Lead não encontrado.' });
+    }
 
     const anonymized = leadsDB.update(body.leadId, {
       name: `Anonimizado ${lead.id.slice(-4)}`,
@@ -899,11 +1006,23 @@ const server = http.createServer(async (req, res) => {
   const served = serveStatic(req, res, targetFile);
 
   if (!served) {
-    const fallbackServed = serveStatic(req, res, 'index.html');
-    if (!fallbackServed) {
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-      res.end('404 Not Found');
+    const ext = path.extname(pathname).toLowerCase();
+    const isHtmlNavigation = !ext || (req.headers.accept && req.headers.accept.includes('text/html'));
+    const isBlocked = BLOCKED_STATIC_PREFIXES.some(p => pathname.toLowerCase().startsWith(`/${p}`)) ||
+                      BLOCKED_STATIC_FILES.some(f => pathname.toLowerCase() === `/${f}`);
+
+    // SPA fallback exclusivamente para rotas navegacionais legítimas
+    if (isHtmlNavigation && !isBlocked) {
+      const fallbackServed = serveStatic(req, res, 'index.html');
+      if (fallbackServed) return;
     }
+
+    res.writeHead(404, { 
+      'Content-Type': 'application/json; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'SAMEORIGIN'
+    });
+    res.end(JSON.stringify({ error: 'Recurso não encontrado ou acesso restrito.', status: 404 }));
   }
 });
 
