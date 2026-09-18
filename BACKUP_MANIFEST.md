@@ -146,7 +146,8 @@ Caso seja necessário restaurar o ambiente original V1 a qualquer momento:
 3. **A partir do Git**:
    - No repositório, alternar para a tag de congelamento:
      ```powershell
-     git checkout v1-stable
+     git checkout v1.0.0-final
      ```
 4. **Validação da Restauração**:
-   - Executar `node tests/run_all.js` para certificar que todos os 18 testes continuam passando.
+   - Executar `node tests/run_all.js` para certificar que os testes continuam passando com 100% de sucesso.
+   - Conferir que o banco de dados original está intacto e independente.

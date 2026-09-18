@@ -51,7 +51,9 @@ function getChannelsStatus(tenantId) {
       icon: ch.icon,
       description: ch.description,
       status: isConfigured ? 'connected' : 'disconnected',
-      statusLabel: isConfigured ? 'Conectado (Oficial)' : 'Conectar Canal',
+      statusLabel: isConfigured ? 'Conectado (Oficial)' : 'Integração não configurada',
+      buttonLabel: isConfigured ? 'Gerenciar Canal' : 'Configurar Credenciais',
+      isConfigured: Boolean(isConfigured),
       isOfficial: true,
       lastSync: isConfigured ? (settings[`${ch.id}_lastSync`] || new Date().toISOString()) : null
     };

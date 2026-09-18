@@ -50,14 +50,37 @@ function evaluateCondition(condition, context) {
   }
 }
 
+const executionDedupMap = new Map();
+const DEDUP_WINDOW_MS = 60000;
+
 async function triggerWorkflows(triggerType, context = {}, tenantId) {
   const automations = automationsDB.findByTenant(tenantId, a => a.trigger === triggerType && a.active !== false);
   const executedActions = [];
+  const now = Date.now();
 
   for (const auto of automations) {
     // Avalia condição "SE"
     if (auto.condition && !evaluateCondition(auto.condition, context)) {
       continue;
+    }
+
+    // Mecanismo Anti-Loop e Idempotência (Janela de 60s por entidade/trigger, exceto force)
+    if (!context.force) {
+      const entityKey = context.dealId || context.leadId || context.proposalId || 'global';
+      const dedupKey = `${tenantId}:${auto.id}:${triggerType}:${entityKey}`;
+      if (executionDedupMap.has(dedupKey)) {
+        const lastRun = executionDedupMap.get(dedupKey);
+        if (now - lastRun < DEDUP_WINDOW_MS) {
+          continue;
+        }
+      }
+      executionDedupMap.set(dedupKey, now);
+
+      if (executionDedupMap.size > 2000) {
+        for (const [k, ts] of executionDedupMap.entries()) {
+          if (now - ts > DEDUP_WINDOW_MS) executionDedupMap.delete(k);
+        }
+      }
     }
 
     const autoExecuted = [];

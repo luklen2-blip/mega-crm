@@ -386,7 +386,7 @@ function buildClientTimeline(lead, tenantId) {
         stage: 'pix',
         stageLabel: 'PIX Gerado',
         icon: 'qr-code',
-        title: `QR Code PIX gerado (luklen2@gmail.com)`,
+        title: 'QR Code PIX oficial emitido',
         description: `Payload EMV Oficial Banco Central emitido no valor de R$ ${Number(p.amount).toLocaleString('pt-BR')}`,
         timestamp: p.createdAt,
         author: 'Sistema PIX'
@@ -494,6 +494,24 @@ const server = http.createServer(async (req, res) => {
       return res.end(`<!DOCTYPE html><html lang="pt-BR" class="dark"><head><meta charset="UTF-8"><title>Proposta Não Encontrada</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-slate-950 text-white min-h-screen flex items-center justify-center p-4"><div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center space-y-4"><div class="h-14 w-14 rounded-full bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center text-2xl font-bold">✕</div><h1 class="text-xl font-bold">Proposta não encontrada</h1><p class="text-xs text-slate-400">O link informado é inválido ou expirou.</p></div></body></html>`);
     }
 
+    if (proposal.status !== 'paga' && proposal.status !== 'visualizada') {
+      proposalsDB.update(proposal.id, {
+        status: 'visualizada',
+        viewedAt: new Date().toISOString()
+      });
+      if (activitiesDB) {
+        activitiesDB.insert({
+          tenantId: proposal.tenantId,
+          leadId: proposal.leadId,
+          dealId: proposal.dealId,
+          type: 'proposal_viewed',
+          title: '👀 Proposta Comercial Visualizada',
+          description: `O cliente abriu o link oficial da proposta no navegador.`,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+
     const tenant = tenantsDB.findById(proposal.tenantId) || { name: 'Agentise Mega CRM' };
     const deal = proposal.dealId ? dealsDB.findById(proposal.dealId) : null;
     const lead = proposal.leadId ? leadsDB.findById(proposal.leadId) : (deal && deal.leadId ? leadsDB.findById(deal.leadId) : null);
@@ -563,7 +581,7 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
         <div class="text-[11px] text-slate-500 pt-2">
-          Chave PIX: <b class="text-slate-400">${proposal.pixKey || 'luklen2@gmail.com'}</b> • Titular: <b class="text-slate-400">LUCIANO SANT ANNA</b>
+          Chave PIX: <b class="text-slate-400">${(proposal.pixKey || process.env.PIX_KEY || 'luklen2@gmail.com').replace(/(.{3})(.*)(@.*)/, '$1***$3')}</b> • Titular: <b class="text-slate-400">LUCIANO SANT ANNA</b>
         </div>
       </div>
     ` : `
@@ -581,6 +599,24 @@ const server = http.createServer(async (req, res) => {
     const token = pathname.split('/')[4];
     const proposal = proposalsDB.findOne(p => p.publicToken === token || p.id === token);
     if (!proposal) return sendJson(res, 404, { error: 'Proposta não encontrada.' });
+    if (proposal.status !== 'paga' && proposal.status !== 'visualizada') {
+      const updated = proposalsDB.update(proposal.id, {
+        status: 'visualizada',
+        viewedAt: new Date().toISOString()
+      });
+      if (activitiesDB) {
+        activitiesDB.insert({
+          tenantId: proposal.tenantId,
+          leadId: proposal.leadId,
+          dealId: proposal.dealId,
+          type: 'proposal_viewed',
+          title: '👀 Proposta Comercial Visualizada',
+          description: `O cliente abriu o link oficial da proposta via API pública.`,
+          timestamp: new Date().toISOString()
+        });
+      }
+      return sendJson(res, 200, { success: true, data: updated });
+    }
     return sendJson(res, 200, { success: true, data: proposal });
   }
 
@@ -725,7 +761,7 @@ const server = http.createServer(async (req, res) => {
       <p>Os dados são protegidos por hashing criptográfico PBKDF2 com salt, tokens JWT seguros, barreiras anti-IDOR, cabeçalhos de segurança OWASP e sandboxing de arquivos estáticos contra path traversal.</p>
 
       <h2 class="text-sm font-bold text-white uppercase tracking-wider">4. Encarregado de Proteção de Dados (DPO)</h2>
-      <p>Para exercer seus direitos sob a LGPD ou tirar dúvidas sobre o tratamento de dados pessoais, contate nosso time pelo e-mail: <code>luklen2@gmail.com</code>.</p>
+      <p>Para exercer seus direitos sob a LGPD ou tirar dúvidas sobre o tratamento de dados pessoais, contate nosso Encarregado pelo e-mail: <code>privacidade@agentise.com.br</code>.</p>
     </div>
 
     <div class="pt-6 border-t border-slate-800 text-center text-[11px] text-slate-500">
@@ -760,6 +796,9 @@ const server = http.createServer(async (req, res) => {
 
   // Identificação do Contexto da Requisição (Tenant + Usuário)
   const ctx = getRequestContext(req);
+  if (ctx.isInvalidToken) {
+    return sendJson(res, 401, { error: 'Token de autenticação inválido ou expirado.' });
+  }
   const tenantId = ctx.tenantId;
 
   // 2. AUTENTICAÇÃO E GESTÃO DE USUÁRIOS
@@ -990,6 +1029,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/leads' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'LEADS_CREATE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão LEADS_CREATE necessária.' });
+    }
     const body = await parseRequestBody(req);
     if (!body.name) return sendJson(res, 400, { error: 'O nome do lead é obrigatório.' });
 
@@ -1142,6 +1184,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/leads/') && method === 'PUT') {
+    if (!hasPermission(ctx.role, 'LEADS_EDIT')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão LEADS_EDIT necessária.' });
+    }
     const id = pathname.split('/')[3];
     const existing = leadsDB.findById(id);
     if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
@@ -1153,6 +1198,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/leads/') && method === 'DELETE') {
+    if (!hasPermission(ctx.role, 'LEADS_DELETE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão LEADS_DELETE necessária.' });
+    }
     const id = pathname.split('/')[3];
     const existing = leadsDB.findById(id);
     if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
@@ -1297,17 +1345,17 @@ const server = http.createServer(async (req, res) => {
     const initialScore = calculateAiDealScore({ ...body, stage: body.stage || 'prospeccao' }, lead, [], [], []);
 
     const deal = dealsDB.insert({
-      tenantId,
       stage: body.stage || 'prospeccao',
       value: Number(body.value || 0),
       probability: Number(body.probability || 20),
       priority: body.priority || 'media',
       assignedTo: body.assignedTo || ctx.name,
+      ...body,
+      tenantId,
       aiDealScore: initialScore.score,
       aiScoreClassification: initialScore.classification,
       aiScoreColor: initialScore.color,
-      aiScoreRationale: initialScore.rationale,
-      ...body
+      aiScoreRationale: initialScore.rationale
     });
 
     activitiesDB.insert({
@@ -1371,6 +1419,16 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, data: updated });
   }
 
+  if (pathname.startsWith('/api/deals/') && method === 'GET') {
+    const id = pathname.split('/')[3];
+    const deal = dealsDB.findById(id);
+    if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    }
+    const lead = leadsDB.findById(deal.leadId) || {};
+    return sendJson(res, 200, { success: true, data: { ...deal, lead } });
+  }
+
   if (pathname.startsWith('/api/deals/') && (method === 'PUT' || method === 'PATCH') && !pathname.endsWith('/stage')) {
     const id = pathname.split('/')[3];
     const deal = dealsDB.findById(id);
@@ -1416,6 +1474,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/deals/') && method === 'DELETE') {
+    if (!hasPermission(ctx.role, 'DEALS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão DEALS_MANAGE necessária.' });
+    }
     const id = pathname.split('/')[3];
     const deal = dealsDB.findById(id);
     if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
@@ -1617,9 +1678,42 @@ const server = http.createServer(async (req, res) => {
       tenantId,
       category: body.category || 'Geral',
       title: body.title,
-      content: body.content
+      content: body.content,
+      version: 1,
+      history: [{
+        version: 1,
+        title: body.title,
+        content: body.content,
+        updatedAt: new Date().toISOString()
+      }]
     });
     return sendJson(res, 201, { success: true, data: item });
+  }
+
+  if (pathname.startsWith('/api/knowledge-base/') && (method === 'PUT' || method === 'PATCH')) {
+    const id = pathname.split('/')[3];
+    const existing = knowledgeBaseDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Item não encontrado.' });
+    }
+    const body = await parseRequestBody(req);
+    const newVersion = (existing.version || 1) + 1;
+    const history = Array.isArray(existing.history) ? [...existing.history] : [];
+    history.push({
+      version: existing.version || 1,
+      title: existing.title,
+      content: existing.content,
+      updatedAt: existing.updatedAt || existing.createdAt || new Date().toISOString()
+    });
+    const updated = knowledgeBaseDB.update(id, {
+      ...(body.category && { category: body.category }),
+      ...(body.title && { title: body.title }),
+      ...(body.content && { content: body.content }),
+      version: newVersion,
+      history,
+      updatedAt: new Date().toISOString()
+    });
+    return sendJson(res, 200, { success: true, data: updated });
   }
 
   if (pathname.startsWith('/api/knowledge-base/') && method === 'DELETE') {
@@ -1647,6 +1741,34 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/recovery/campaigns' && method === 'GET') {
     const list = campaignsDB.findByTenant(tenantId);
     return sendJson(res, 200, { success: true, count: list.length, data: list });
+  }
+
+  if (pathname === '/api/recovery/recover-deal' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    const { dealId } = body;
+    if (!dealId) return sendJson(res, 400, { error: 'dealId é obrigatório.' });
+    const deal = dealsDB.findById(dealId);
+    if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    }
+    const updated = dealsDB.update(dealId, {
+      stage: 'ganho',
+      origin: 'RecuperaIA',
+      recoveredVia: 'RecuperaIA',
+      recoveredAt: new Date().toISOString()
+    });
+    if (activitiesDB) {
+      activitiesDB.insert({
+        tenantId,
+        dealId,
+        leadId: deal.leadId,
+        type: 'deal_recovered',
+        title: '🎯 Oportunidade Recuperada por IA!',
+        description: `Oportunidade de R$ ${Number(deal.value || 0).toLocaleString('pt-BR')} foi recuperada com sucesso pelo RecuperaIA.`,
+        timestamp: new Date().toISOString()
+      });
+    }
+    return sendJson(res, 200, { success: true, data: updated });
   }
 
   // 10. AUTOMAÇÕES COMERCIAIS VISUAL & MOTOR DE REGRAS (FASE 9)
@@ -1681,6 +1803,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/automations' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'AUTOMATIONS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão AUTOMATIONS_MANAGE necessária.' });
+    }
     const body = await parseRequestBody(req);
     if (!body.name || !body.trigger || !body.action) {
       return sendJson(res, 400, { error: 'Nome, gatilho e ação são obrigatórios.' });
@@ -1700,6 +1825,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/automations/') && pathname.endsWith('/toggle') && method === 'PATCH') {
+    if (!hasPermission(ctx.role, 'AUTOMATIONS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão AUTOMATIONS_MANAGE necessária.' });
+    }
     const id = pathname.split('/')[3];
     const existing = automationsDB.findById(id);
     if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
@@ -1710,6 +1838,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/automations/') && (method === 'PUT' || method === 'PATCH') && !pathname.endsWith('/toggle')) {
+    if (!hasPermission(ctx.role, 'AUTOMATIONS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão AUTOMATIONS_MANAGE necessária.' });
+    }
     const id = pathname.split('/')[3];
     const existing = automationsDB.findById(id);
     if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
@@ -1727,6 +1858,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/automations/') && method === 'DELETE') {
+    if (!hasPermission(ctx.role, 'AUTOMATIONS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão AUTOMATIONS_MANAGE necessária.' });
+    }
     const id = pathname.split('/')[3];
     const existing = automationsDB.findById(id);
     if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
@@ -2021,6 +2155,9 @@ const server = http.createServer(async (req, res) => {
 
   // 15. PIX OFICIAL EMV & PROPOSTAS COM ITENS & CHECKOUT (FASE 10)
   if ((pathname === '/api/pix/generate' || pathname === '/api/proposals') && method === 'POST') {
+    if (!hasPermission(ctx.role, 'PROPOSALS_CREATE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão PROPOSALS_CREATE necessária.' });
+    }
     const body = await parseRequestBody(req);
     const settings = settingsDB.findById('general_settings') || {};
 

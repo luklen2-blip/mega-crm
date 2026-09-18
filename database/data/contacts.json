@@ -207,5 +207,60 @@
     "id": "con_1789743517786_o9kp",
     "createdAt": "2026-09-18T14:58:37.786Z",
     "updatedAt": "2026-09-18T14:58:37.786Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1789746320616_47la",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1789746320640_iqlc",
+    "createdAt": "2026-09-18T15:45:20.640Z",
+    "updatedAt": "2026-09-18T15:45:20.640Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1789746469759_9fml",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1789746469780_jkn3",
+    "createdAt": "2026-09-18T15:47:49.780Z",
+    "updatedAt": "2026-09-18T15:47:49.780Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1789746525312_jt60",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1789746525334_ynu7",
+    "createdAt": "2026-09-18T15:48:45.334Z",
+    "updatedAt": "2026-09-18T15:48:45.334Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1789747164327_s6w3",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1789747164349_66u3",
+    "createdAt": "2026-09-18T15:59:24.349Z",
+    "updatedAt": "2026-09-18T15:59:24.349Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1789747229376_96ty",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1789747229402_gof9",
+    "createdAt": "2026-09-18T16:00:29.402Z",
+    "updatedAt": "2026-09-18T16:00:29.402Z"
   }
 ]

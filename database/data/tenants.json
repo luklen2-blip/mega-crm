@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 3525,
+    "aiCreditsUsed": 3885,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,7 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-18T14:58:37.962Z"
+    "updatedAt": "2026-09-18T16:00:29.712Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -297,5 +297,232 @@
     "aiCreditsUsed": 0,
     "createdAt": "2026-09-18T14:54:02.180Z",
     "updatedAt": "2026-09-18T14:54:02.242Z"
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:45:04.301Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789746304301_9twl",
+    "createdAt": "2026-09-18T15:45:04.302Z",
+    "updatedAt": "2026-09-18T15:45:04.407Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:47:48.680Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 50,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789746468680_7t7z",
+    "createdAt": "2026-09-18T15:47:48.680Z",
+    "updatedAt": "2026-09-18T15:47:48.825Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Tenant Alpha 1789746650466",
+    "segment": "consultoria",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:50:50.466Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789746650470_xy0f",
+    "createdAt": "2026-09-18T15:50:50.470Z",
+    "updatedAt": "2026-09-18T15:50:50.470Z"
+  },
+  {
+    "name": "Tenant Beta 1789746650466",
+    "segment": "varejo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:50:50.525Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789746650525_m6lw",
+    "createdAt": "2026-09-18T15:50:50.525Z",
+    "updatedAt": "2026-09-18T15:50:50.525Z"
+  },
+  {
+    "name": "Tenant Alpha 1789746807062",
+    "segment": "consultoria",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:53:27.063Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789746807067_d30l",
+    "createdAt": "2026-09-18T15:53:27.067Z",
+    "updatedAt": "2026-09-18T15:53:27.067Z"
+  },
+  {
+    "name": "Tenant Beta 1789746807062",
+    "segment": "varejo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:53:27.099Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789746807099_52pw",
+    "createdAt": "2026-09-18T15:53:27.099Z",
+    "updatedAt": "2026-09-18T15:53:27.099Z"
+  },
+  {
+    "name": "Tenant Alpha 1789747154901",
+    "segment": "consultoria",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:59:14.902Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789747154905_fpgs",
+    "createdAt": "2026-09-18T15:59:14.905Z",
+    "updatedAt": "2026-09-18T15:59:14.905Z"
+  },
+  {
+    "name": "Tenant Beta 1789747154901",
+    "segment": "varejo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:59:14.944Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789747154944_d1a0",
+    "createdAt": "2026-09-18T15:59:14.944Z",
+    "updatedAt": "2026-09-18T15:59:14.944Z"
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T15:59:23.257Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 50,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789747163257_cyzl",
+    "createdAt": "2026-09-18T15:59:23.257Z",
+    "updatedAt": "2026-09-18T15:59:23.410Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Tenant Alpha 1789747222944",
+    "segment": "consultoria",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T16:00:22.945Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789747222949_bvyk",
+    "createdAt": "2026-09-18T16:00:22.949Z",
+    "updatedAt": "2026-09-18T16:00:22.949Z"
+  },
+  {
+    "name": "Tenant Beta 1789747222944",
+    "segment": "varejo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T16:00:22.983Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789747222984_iper",
+    "createdAt": "2026-09-18T16:00:22.984Z",
+    "updatedAt": "2026-09-18T16:00:22.984Z"
   }
 ]

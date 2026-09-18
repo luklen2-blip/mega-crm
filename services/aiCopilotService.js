@@ -220,7 +220,85 @@ function runManagerAnalyticsQuery(tenantId, question) {
   let answer = '';
   let supportingData = {};
 
-  if (q.includes('vendedor') || q.includes('meta') || q.includes('quem vendeu')) {
+  if (q.includes('lead') && (q.includes('quente') || q.includes('quentes') || q.includes('qualificado'))) {
+    const hotLeads = leads.map(l => {
+      const deal = deals.find(d => d.leadId === l.id);
+      const bant = analyzeBant(l, deal || {});
+      return {
+        id: l.id,
+        nome: l.name,
+        empresa: l.company || '-',
+        telefone: l.phone,
+        bantScore: bant.totalScore,
+        classificacao: bant.classification,
+        valorEstimado: deal ? deal.value : l.estimatedBudget || 0
+      };
+    }).filter(l => l.bantScore >= 70 || l.valorEstimado >= 20000)
+      .sort((a, b) => b.bantScore - a.bantScore);
+
+    supportingData = { leadsQuentes: hotLeads, totalIdentificados: hotLeads.length };
+    answer = `Identificamos ${hotLeads.length} leads quentes de alta prioridade com AI Score/BANT elevado ou valor expressivo no tenant. O principal contato para follow-up imediato é ${hotLeads[0] ? hotLeads[0].nome + ' (Score: ' + hotLeads[0].bantScore + '/100)' : 'nenhum no momento'}.`;
+  } else if (q.includes('proposta') && (q.includes('parada') || q.includes('paradas') || q.includes('pendente') || q.includes('sem resposta'))) {
+    const nowMs = Date.now();
+    const stagnantProps = proposals.filter(p => {
+      const ageHours = (nowMs - new Date(p.createdAt).getTime()) / (1000 * 60 * 60);
+      return p.status === 'pendente' && ageHours >= 48;
+    });
+    const totalPropValue = stagnantProps.reduce((s, p) => s + Number(p.amount || 0), 0);
+
+    supportingData = {
+      propostasParadas: stagnantProps.map(p => ({
+        id: p.id,
+        valor: `R$ ${Number(p.amount).toLocaleString('pt-BR')}`,
+        emitidaEm: p.createdAt,
+        status: p.status
+      })),
+      totalPropostas: stagnantProps.length,
+      valorTotal: `R$ ${totalPropValue.toLocaleString('pt-BR')}`
+    };
+    answer = `Existem ${stagnantProps.length} propostas comerciais paradas há mais de 48 horas aguardando pagamento ou aprovação do cliente, totalizando R$ ${totalPropValue.toLocaleString('pt-BR')}.`;
+  } else if (q.includes('sem contato') || q.includes('clientes sem contato') || q.includes('inativo')) {
+    const nowMs = Date.now();
+    const uncontacted = leads.filter(l => {
+      const ageDays = (nowMs - new Date(l.updatedAt || l.createdAt).getTime()) / (1000 * 60 * 60 * 24);
+      return ageDays >= 7;
+    });
+
+    supportingData = {
+      clientesSemContato: uncontacted.slice(0, 10).map(l => ({ id: l.id, nome: l.name, empresa: l.company, telefone: l.phone, diasSemContato: Math.floor((nowMs - new Date(l.updatedAt || l.createdAt).getTime()) / 86400000) })),
+      totalSemContato: uncontacted.length
+    };
+    answer = `Foram identificados ${uncontacted.length} contatos/clientes sem qualquer interação registrada há mais de 7 dias. Recomendamos acionar campanha de reativação via RecuperaIA.`;
+  } else if ((q.includes('10.000') || q.includes('10000') || q.includes('dez mil') || q.includes('acima de')) && (q.includes('follow') || q.includes('sem tarefa') || q.includes('parada'))) {
+    const pendingTaskDealIds = new Set(tasks.filter(t => !t.completed && t.dealId).map(t => t.dealId));
+    const pendingTaskLeadIds = new Set(tasks.filter(t => !t.completed && t.leadId).map(t => t.leadId));
+    const highValNoFollowup = deals.filter(d => {
+      const val = Number(d.value || 0);
+      return val >= 10000 && d.stage !== 'ganho' && d.stage !== 'perdido' && !pendingTaskDealIds.has(d.id) && !pendingTaskLeadIds.has(d.leadId);
+    });
+
+    supportingData = {
+      oportunidadesSemFollowup: highValNoFollowup.map(d => ({ id: d.id, titulo: d.title, valor: `R$ ${Number(d.value).toLocaleString('pt-BR')}`, estagio: d.stage, responsavel: d.assignedTo })),
+      totalIdentificadas: highValNoFollowup.length
+    };
+    answer = `Encontramos ${highValNoFollowup.length} oportunidades acima de R$ 10.000 ativas no funil sem nenhuma tarefa de follow-up agendada.`;
+  } else if (q.includes('crie uma tarefa') || q.includes('criar tarefa') || q.includes('agenda tarefa')) {
+    const targetSeller = users.find(u => u.role === 'VENDEDOR') || users[0] || { name: 'Vendedor Responsável', id: 'usr_default' };
+    const firstDeal = deals.find(d => d.stage !== 'ganho' && d.stage !== 'perdido');
+    const createdTask = tasksDB.insert({
+      tenantId,
+      leadId: firstDeal ? firstDeal.leadId : null,
+      dealId: firstDeal ? firstDeal.id : null,
+      title: 'Follow-up prioritário gerado pelo Agente Comercial IA',
+      priority: 'alta',
+      assignedTo: targetSeller.name,
+      deadline: new Date(Date.now() + 24 * 3600000).toISOString(),
+      completed: false
+    });
+
+    supportingData = { tarefaCriada: createdTask };
+    answer = `Tarefa criada com sucesso para o vendedor ${targetSeller.name}: "${createdTask.title}", com prazo de entrega de 24h e prioridade Alta.`;
+  } else if (q.includes('vendedor') || q.includes('meta') || q.includes('quem vendeu')) {
     const sellerStats = users.map(u => {
       const uDeals = deals.filter(d => d.assignedTo === u.name || d.assignedTo === u.id);
       const uWon = uDeals.filter(d => d.stage === 'ganho');

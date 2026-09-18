@@ -262,6 +262,11 @@ function getRequestContext(req) {
         email: verified.email
       };
     }
+    return {
+      isAuthenticated: false,
+      isInvalidToken: true,
+      error: 'Token inválido ou expirado.'
+    };
   }
 
   // Fallback transparente para o Tenant Demonstração Oficial caso nenhuma credencial seja enviada

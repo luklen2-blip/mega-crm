@@ -1249,6 +1249,116 @@
     "updatedAt": "2026-09-18T14:54:01.156Z"
   },
   {
+    "tenantId": "tenant_A_seguro",
+    "name": "Lead Confidencial A",
+    "id": "lea_1789746468835_1uks",
+    "createdAt": "2026-09-18T15:47:48.835Z",
+    "updatedAt": "2026-09-18T15:47:48.835Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789746650470_xy0f",
+    "id": "lea_1789746650603_qnvd",
+    "createdAt": "2026-09-18T15:50:50.603Z",
+    "updatedAt": "2026-09-18T15:50:50.603Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789746650525_m6lw",
+    "id": "lea_1789746650792_5e8e",
+    "createdAt": "2026-09-18T15:50:50.792Z",
+    "updatedAt": "2026-09-18T15:50:50.792Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789746807067_d30l",
+    "id": "lea_1789746807195_lzt1",
+    "createdAt": "2026-09-18T15:53:27.195Z",
+    "updatedAt": "2026-09-18T15:53:27.195Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789746807099_52pw",
+    "id": "lea_1789746807353_88nk",
+    "createdAt": "2026-09-18T15:53:27.353Z",
+    "updatedAt": "2026-09-18T15:53:27.353Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789746807099_52pw",
+    "id": "lea_1789746807366_1qbl",
+    "createdAt": "2026-09-18T15:53:27.366Z",
+    "updatedAt": "2026-09-18T15:53:27.366Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789747154905_fpgs",
+    "id": "lea_1789747155035_fozq",
+    "createdAt": "2026-09-18T15:59:15.035Z",
+    "updatedAt": "2026-09-18T15:59:15.035Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789747154944_d1a0",
+    "id": "lea_1789747155219_ozdn",
+    "createdAt": "2026-09-18T15:59:15.219Z",
+    "updatedAt": "2026-09-18T15:59:15.219Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789747154944_d1a0",
+    "id": "lea_1789747155236_s5i4",
+    "createdAt": "2026-09-18T15:59:15.236Z",
+    "updatedAt": "2026-09-18T15:59:15.236Z"
+  },
+  {
+    "tenantId": "tenant_A_seguro",
+    "name": "Lead Confidencial A",
+    "id": "lea_1789747163434_tafu",
+    "createdAt": "2026-09-18T15:59:23.434Z",
+    "updatedAt": "2026-09-18T15:59:23.434Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789747222949_bvyk",
+    "id": "lea_1789747223071_n02e",
+    "createdAt": "2026-09-18T16:00:23.071Z",
+    "updatedAt": "2026-09-18T16:00:23.071Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789747222984_iper",
+    "id": "lea_1789747223256_3u7l",
+    "createdAt": "2026-09-18T16:00:23.256Z",
+    "updatedAt": "2026-09-18T16:00:23.256Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789747222984_iper",
+    "id": "lea_1789747223270_fczd",
+    "createdAt": "2026-09-18T16:00:23.270Z",
+    "updatedAt": "2026-09-18T16:00:23.270Z"
+  },
+  {
     "id": "lead_autoprime_51_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "name": "Dr. André Villas-Bôas",
@@ -1266,7 +1376,7 @@
       "WhatsApp"
     ],
     "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-09-18T14:58:37.341Z",
-    "updatedAt": "2026-09-18T14:58:37.351Z"
+    "createdAt": "2026-09-18T16:00:28.645Z",
+    "updatedAt": "2026-09-18T16:00:28.661Z"
   }
 ]

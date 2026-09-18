@@ -256,5 +256,129 @@
     "role": "VENDEDOR",
     "createdAt": "2026-09-18T14:54:02.186Z",
     "updatedAt": "2026-09-18T14:54:02.186Z"
+  },
+  {
+    "tenantId": "ten_1789746304301_9twl",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789746304300@teste.com",
+    "passwordHash": "d13010a1bf779fb610fbaab409eadb62:df884c6b42ebd1b7a458f4c0382fc0f57403f29acaface61033e2cb6697d8e7593b9c4fe71187cf619f4a07540ecdc55b0764fd873ca28a55ddfdce4c53b4ad6",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789746304361_7ttx",
+    "createdAt": "2026-09-18T15:45:04.361Z",
+    "updatedAt": "2026-09-18T15:45:04.361Z"
+  },
+  {
+    "tenantId": "ten_1789746468680_7t7z",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789746468679@teste.com",
+    "passwordHash": "64891c19bac057d745493eca618be391:90d72f9a5c66a219c4dab940ffe58c719e7db9667e70f7f14a00c4ac6bdddfb8f10651435aad83cfab8b658e5f9bb1a4dbf72d6e0551c19a12764786d913eba7",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789746468706_u9ow",
+    "createdAt": "2026-09-18T15:47:48.706Z",
+    "updatedAt": "2026-09-18T15:47:48.706Z"
+  },
+  {
+    "tenantId": "ten_1789746650470_xy0f",
+    "email": "alpha_1789746650466@corp.com",
+    "passwordHash": "c0e7e7cff61a7a506400644be93c1d64:58ef20dc38a143d3b4026875d3cbff52947619082bdc01f63db22ae8be1456447d7a9ba0f8c98ded7636bd29ccac94be5be0d90fbb7d3f12e421c20f7b007f97",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789746650514_ne6c",
+    "createdAt": "2026-09-18T15:50:50.514Z",
+    "updatedAt": "2026-09-18T15:50:50.514Z"
+  },
+  {
+    "tenantId": "ten_1789746650525_m6lw",
+    "email": "beta_1789746650466@corp.com",
+    "passwordHash": "42e82ffc4d664b6cf29175bddf6afe11:cc5a59e6769fe7fe52528dc2463a38a12f950a6f3a293f76c5597c5d32ecb09baab4791f3aa528c2bc51c23f28a6ce83367300de960ed50136defa9e0c78aaca",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789746650545_lkn0",
+    "createdAt": "2026-09-18T15:50:50.545Z",
+    "updatedAt": "2026-09-18T15:50:50.545Z"
+  },
+  {
+    "tenantId": "ten_1789746807067_d30l",
+    "email": "alpha_1789746807062@corp.com",
+    "passwordHash": "487ac76d312e05093249247bc49445d0:6893bb96a5f4ba0825be71b82535cb7a4c4a15f6111f1b46aea54f8379efa5c17b042a9ad0556485e5c3c0c039a5a0e5b654f27e51908d3a0dad26fe2b47d910",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789746807089_3t8l",
+    "createdAt": "2026-09-18T15:53:27.089Z",
+    "updatedAt": "2026-09-18T15:53:27.089Z"
+  },
+  {
+    "tenantId": "ten_1789746807099_52pw",
+    "email": "beta_1789746807062@corp.com",
+    "passwordHash": "d27bd3dbc425f23f12d69f6464faa5ac:0e3451715d6373643e9cc0152b50f044e8ff3ac41e05b5969e92b603e0c623ad256289194b9db0750a632125d754c6c225e17ea3021957886e5aa8af7ec81daf",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789746807118_cfrc",
+    "createdAt": "2026-09-18T15:53:27.118Z",
+    "updatedAt": "2026-09-18T15:53:27.118Z"
+  },
+  {
+    "tenantId": "ten_1789747154905_fpgs",
+    "email": "alpha_1789747154901@corp.com",
+    "passwordHash": "6de08acf910bbdbb18bd2b6fa7d1d00f:6f87222ce59f278b42165b9058044280a01226b253164a6e9b46b69ec0a9cef3ee90f0cbddc756f2d2e870110849cc74c8396d6c102485d0fd1227dffd0b6b35",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789747154933_l1o4",
+    "createdAt": "2026-09-18T15:59:14.933Z",
+    "updatedAt": "2026-09-18T15:59:14.933Z"
+  },
+  {
+    "tenantId": "ten_1789747154944_d1a0",
+    "email": "beta_1789747154901@corp.com",
+    "passwordHash": "dc370e9946b40fe92daeea0aa8d4c141:f02ba16c54b7a2f1808c77e370505b0585ddb0388ba174efd70aa78627d04fbe006f552a9cc3df381dc06b6cf18b286cb69bea61dc75c19ebe4241b6a685b1c0",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789747154971_c0kf",
+    "createdAt": "2026-09-18T15:59:14.971Z",
+    "updatedAt": "2026-09-18T15:59:14.971Z"
+  },
+  {
+    "tenantId": "ten_1789747163257_cyzl",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789747163256@teste.com",
+    "passwordHash": "72903734155f1200c9391b50f0218146:19e8936d9c79126f827b49ab6d9a13e7bb2bfd88fd898cce719690981d5f78d52512a2eae91e05457d044a91d4ab0a09edbe7b97a79c80dd472d58cd7f09c78f",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789747163282_cld0",
+    "createdAt": "2026-09-18T15:59:23.282Z",
+    "updatedAt": "2026-09-18T15:59:23.282Z"
+  },
+  {
+    "tenantId": "ten_1789747222949_bvyk",
+    "email": "alpha_1789747222944@corp.com",
+    "passwordHash": "f92eb30a9c9ce5cd17d2d9f0ef388b6e:1a0d46dc5720b43f496163c7ff5ea9e341be8ea06542d696fb59c5c7e8c3d99ee18170faae40afb6a91d6c21c48e18941a811ff65af71cb01833adcbe35d4c10",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789747222974_0eo2",
+    "createdAt": "2026-09-18T16:00:22.974Z",
+    "updatedAt": "2026-09-18T16:00:22.974Z"
+  },
+  {
+    "tenantId": "ten_1789747222984_iper",
+    "email": "beta_1789747222944@corp.com",
+    "passwordHash": "17f6cf712ab1a78916651e4baa6e53ed:820cbc6fea29d7ee076b3428766018add883b2adeda8bec52a52e56e84bd08ceec52e3fd41efb49e5daf590f7caefa0d504dbafbe4b655162a52ec6a33c78f91",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1789747223016_hue4",
+    "createdAt": "2026-09-18T16:00:23.016Z",
+    "updatedAt": "2026-09-18T16:00:23.016Z"
   }
 ]

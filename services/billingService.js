@@ -132,7 +132,7 @@ function checkResourceLimit(tenantId, resource) {
   return { allowed: true };
 }
 
-function consumeAiCredits(tenantId, featureName, cost = 10) {
+function consumeAiCredits(tenantId, featureName, cost = 10, metadata = {}) {
   const tenant = tenantsDB.findById(tenantId);
   if (!tenant) return { success: true };
 
@@ -150,8 +150,14 @@ function consumeAiCredits(tenantId, featureName, cost = 10) {
     aiCreditsUsed: currentUsed + cost
   });
 
-  aiUsageDB.insert({
+  const usageRecord = aiUsageDB.insert({
     tenantId,
+    userId: metadata.userId || null,
+    agent: metadata.agent || 'Claude Commercial Copilot',
+    model: metadata.model || 'claude-3-7-sonnet',
+    tokens: metadata.tokens || cost * 100,
+    cost: cost,
+    operation: featureName,
     feature: featureName,
     credits: cost,
     timestamp: new Date().toISOString()
@@ -160,8 +166,14 @@ function consumeAiCredits(tenantId, featureName, cost = 10) {
   return {
     success: true,
     creditsUsed: cost,
-    remainingCredits: maxCredits - (currentUsed + cost)
+    remainingCredits: maxCredits - (currentUsed + cost),
+    usageRecord
   };
+}
+
+function getAiUsage(tenantId, limit = 50) {
+  if (!aiUsageDB) return [];
+  return aiUsageDB.findByTenant(tenantId).slice(-limit).reverse();
 }
 
 module.exports = {
@@ -169,5 +181,6 @@ module.exports = {
   getTenantSubscription,
   checkResourceLimit,
   consumeAiCredits,
+  getAiUsage,
   upgradeTenantPlan
 };

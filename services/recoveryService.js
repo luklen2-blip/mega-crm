@@ -37,11 +37,19 @@ function scanRecoverableOpportunities(tenantId) {
     return sum + Number(item.amount || item.value || item.estimatedBudget || 0);
   }, 0);
 
+  // 5. Oportunidades efetivamente recuperadas via RecuperaIA
+  const recoveredDeals = deals.filter(d => d.stage === 'ganho' && (d.recoveredVia === 'RecuperaIA' || d.origin === 'RecuperaIA'));
+  const totalValueRecovered = recoveredDeals.reduce((sum, d) => sum + Number(d.value || 0), 0);
+
   const totalCount = stagnantProposals.length + stalledDeals.length + lostDeals.length + inactiveLeads.length;
 
   return {
     totalCount,
+    receitaEmRisco: totalValueAtRisk,
+    receitaRecuperada: totalValueRecovered,
     totalValueAtRisk,
+    totalValueRecovered,
+    recoveredDealsCount: recoveredDeals.length,
     categories: {
       stagnantProposals: {
         count: stagnantProposals.length,

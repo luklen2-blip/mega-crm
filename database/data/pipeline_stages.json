@@ -375,5 +375,70 @@
     "id": "pip_1789743517833_y3xs",
     "createdAt": "2026-09-18T14:58:37.833Z",
     "updatedAt": "2026-09-18T14:58:37.833Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1789746320726_1cfv",
+    "key": "stg_1789746320745",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1789746320745_2znh",
+    "createdAt": "2026-09-18T15:45:20.745Z",
+    "updatedAt": "2026-09-18T15:45:20.745Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1789746469839_t176",
+    "key": "stg_1789746469853",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1789746469854_4lap",
+    "createdAt": "2026-09-18T15:47:49.854Z",
+    "updatedAt": "2026-09-18T15:47:49.854Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1789746525396_htdb",
+    "key": "stg_1789746525411",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1789746525411_q7fq",
+    "createdAt": "2026-09-18T15:48:45.411Z",
+    "updatedAt": "2026-09-18T15:48:45.411Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1789747164411_m4xf",
+    "key": "stg_1789747164424",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1789747164424_g0ak",
+    "createdAt": "2026-09-18T15:59:24.424Z",
+    "updatedAt": "2026-09-18T15:59:24.424Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1789747229472_n9eg",
+    "key": "stg_1789747229488",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1789747229488_064z",
+    "createdAt": "2026-09-18T16:00:29.488Z",
+    "updatedAt": "2026-09-18T16:00:29.488Z"
   }
 ]

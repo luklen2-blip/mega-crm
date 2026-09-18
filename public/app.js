@@ -828,9 +828,12 @@ function renderChannelsStatus(channels) {
           <div class="text-[10px] text-slate-400">${ch.description.slice(0, 45)}...</div>
         </div>
       </div>
-      <div>
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${isConn ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">
+          ${isConn ? 'Conectado (Oficial)' : 'Integração não configurada'}
+        </span>
         <button onclick="connectChannelModal('${ch.id}')" class="px-2.5 py-1 text-[11px] font-bold rounded-xl ${isConn ? 'bg-emerald-500/20 text-emerald-300' : 'bg-blue-600 hover:bg-blue-500 text-white'} transition">
-          ${ch.statusLabel}
+          ${isConn ? 'Gerenciar Canal' : 'Configurar'}
         </button>
       </div>
     `;
