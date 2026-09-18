@@ -556,5 +556,77 @@
     "id": "wor_1789743297715_eswe",
     "createdAt": "2026-09-18T14:54:57.715Z",
     "updatedAt": "2026-09-18T14:54:57.715Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1789743517620_86zv",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1789743517626_nh7l"
+      }
+    ],
+    "executedAt": "2026-09-18T14:58:37.631Z",
+    "id": "wor_1789743517631_n6yf",
+    "createdAt": "2026-09-18T14:58:37.632Z",
+    "updatedAt": "2026-09-18T14:58:37.632Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": null,
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1789743517700_1pyl"
+      }
+    ],
+    "executedAt": "2026-09-18T14:58:37.706Z",
+    "id": "wor_1789743517706_882i",
+    "createdAt": "2026-09-18T14:58:37.706Z",
+    "updatedAt": "2026-09-18T14:58:37.706Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789743518007_ucd3",
+    "automationName": "Alerta Deal VIP Score Alto",
+    "triggerType": "deal_score_alto",
+    "contextId": "lea_1789743517328_jxmu",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "alert_created",
+        "taskId": "tas_1789743518016_lkzd"
+      }
+    ],
+    "executedAt": "2026-09-18T14:58:38.022Z",
+    "id": "wor_1789743518022_a5yq",
+    "createdAt": "2026-09-18T14:58:38.022Z",
+    "updatedAt": "2026-09-18T14:58:38.022Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1789743518050_6u02",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1789743518057_4zzg"
+      }
+    ],
+    "executedAt": "2026-09-18T14:58:38.069Z",
+    "id": "wor_1789743518069_tu84",
+    "createdAt": "2026-09-18T14:58:38.069Z",
+    "updatedAt": "2026-09-18T14:58:38.069Z"
   }
 ]

@@ -558,20 +558,6 @@
     "paidAt": "2026-09-18T14:54:01.582Z"
   },
   {
-    "id": "prop_autoprime_bmw_11",
-    "tenantId": "ten_autoprime_veiculos",
-    "dealId": "deal_autoprime_bmw_villasboas",
-    "leadId": "lead_autoprime_51_villasboas",
-    "amount": 340000,
-    "pixKey": "financeiro@autoprime.com.br",
-    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
-    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
-    "status": "enviada",
-    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
-    "createdAt": "2026-09-18T14:54:57.007Z",
-    "updatedAt": "2026-09-18T14:54:57.007Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "dealId": null,
     "leadId": null,
@@ -599,5 +585,48 @@
     "createdAt": "2026-09-18T14:54:57.305Z",
     "updatedAt": "2026-09-18T14:54:57.322Z",
     "paidAt": "2026-09-18T14:54:57.322Z"
+  },
+  {
+    "id": "prop_autoprime_bmw_11",
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "amount": 340000,
+    "pixKey": "financeiro@autoprime.com.br",
+    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
+    "status": "enviada",
+    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
+    "createdAt": "2026-09-18T14:58:37.361Z",
+    "updatedAt": "2026-09-18T14:58:37.361Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-09-25T14:58:37.699Z",
+    "publicToken": "80714097bf9ddee52e72d5376312819d",
+    "checkoutUrl": "/p/80714097bf9ddee52e72d5376312819d",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM51769863046FAD",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM51769863046FAD",
+    "status": "paga",
+    "txId": "CRM517698",
+    "id": "pro_1789743517699_hz8b",
+    "createdAt": "2026-09-18T14:58:37.699Z",
+    "updatedAt": "2026-09-18T14:58:37.715Z",
+    "paidAt": "2026-09-18T14:58:37.715Z"
   }
 ]

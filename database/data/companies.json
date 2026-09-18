@@ -178,5 +178,15 @@
     "id": "com_1789743297398_yc0p",
     "createdAt": "2026-09-18T14:54:57.398Z",
     "updatedAt": "2026-09-18T14:54:57.398Z"
+  },
+  {
+    "name": "Acme Corporativa S.A.",
+    "cnpj": "12.345.678/0001-90",
+    "industry": "Tecnologia",
+    "annualRevenue": 5000000,
+    "tenantId": "ten_demo_agentise",
+    "id": "com_1789743517767_667a",
+    "createdAt": "2026-09-18T14:58:37.767Z",
+    "updatedAt": "2026-09-18T14:58:37.767Z"
   }
 ]
