@@ -1979,6 +1979,143 @@ async function runTests() {
   console.log('  ✅ Teste 28 Aprovado: BI Avançado (CAC, LTV, LTV/CAC, Ciclo de Vendas, Previsibilidade Ponderada) e Anti-IDOR validados.\n');
   passed++;
 
+  // 29. Validação de Blindagem de Segurança, LGPD & Auditoria 360° (FASE 12)
+  console.log('▶ Teste 29: Validação de Blindagem de Segurança, LGPD & Auditoria 360° (FASE 12)...');
+  const { consentsDB: conDB29 } = require('../database/db');
+
+  // 29.1 Verificação da Rota Pública de Termos de Uso (/termos)
+  const termosRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/termos`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: d }));
+    });
+  });
+  assert.strictEqual(termosRes.status, 200, '/termos deve responder HTTP 200');
+  assert.ok(termosRes.body.includes('não substituem diagnósticos, consultas, aconselhamentos ou tratamentos médicos'), 'Aviso ético obrigatório Luciano deve estar presente');
+  assert.ok(termosRes.body.includes('16+ anos'), 'Indicação de faixa etária deve estar presente');
+  assert.ok(termosRes.body.includes('restritos a maiores de 18 anos'), 'Restrição de compras/assinaturas deve constar');
+
+  // 29.2 Verificação da Rota Pública de Política de Privacidade (/privacidade)
+  const privRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/privacidade`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: d }));
+    });
+  });
+  assert.strictEqual(privRes.status, 200, '/privacidade deve responder HTTP 200');
+  assert.ok(privRes.body.includes('Lei nº 13.709/2018'), 'Referência explícita à LGPD deve constar');
+  assert.ok(privRes.body.includes('Art. 14 da LGPD'), 'Proteção de crianças e adolescentes (Art. 14 e ECA) deve constar');
+  assert.ok(privRes.body.includes('Art. 18 da LGPD'), 'Direitos dos titulares (Art. 18) devem constar');
+
+  // 29.3 Registro de Consentimento LGPD (POST /api/lgpd/consent)
+  const consentRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      leadId: leadA.id,
+      purpose: 'comercial_ia_whatsapp',
+      accepted: true
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/lgpd/consent',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(consentRes.status, 201, 'POST /api/lgpd/consent deve responder 201');
+  assert.strictEqual(consentRes.body.data.accepted, true);
+  const consentId = consentRes.body.data.id;
+
+  // 29.4 Consulta de Consentimentos (GET /api/lgpd/consents)
+  const listConsentsRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/lgpd/consents',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(listConsentsRes.status, 200);
+  assert.ok(listConsentsRes.body.data.some(c => c.id === consentId), 'Consentimento registrado deve constar na listagem');
+
+  // 29.5 Anonimização de Dados do Titular (Art. 18 LGPD) com Auditoria de Delta
+  const leadToAnon = leadsDB.insert({
+    tenantId: 'ten_demo_agentise',
+    name: 'Carlos Eduardo Silveira',
+    email: 'carlos.silveira@cliente.com.br',
+    phone: '11988887777',
+    document: '123.456.789-00'
+  });
+
+  const anonRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/leads/${leadToAnon.id}/anonymize`,
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+  assert.strictEqual(anonRes.status, 200, 'POST /api/leads/:id/anonymize deve responder 200');
+  assert.ok(anonRes.body.data.name.includes('Titular Anonimizado Art. 18 LGPD'), 'Nome deve ser anonimizado');
+  assert.strictEqual(anonRes.body.data.phone, '11900000000', 'Telefone deve ser mascarado');
+  assert.strictEqual(anonRes.body.data.document, '***', 'Documento deve ser mascarado');
+
+  // Verifica se a Trilha de Auditoria registrou o delta exato
+  const auditLogsRes29 = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/audit-logs?resource=leads`,
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  const anonAuditLog = auditLogsRes29.body.data.find(l => l.entityId === leadToAnon.id && l.action === 'LGPD_ANONYMIZED');
+  assert.ok(anonAuditLog, 'Log de auditoria da anonimização LGPD deve existir');
+  assert.strictEqual(anonAuditLog.oldValues.name, 'Carlos Eduardo Silveira', 'Valor anterior deve preservar integridade do delta');
+  assert.ok(anonAuditLog.newValues.name.includes('Titular Anonimizado'), 'Novo valor deve constar no delta');
+
+  // 29.6 Isolamento Anti-IDOR (Outro tenant não pode anonimizar lead alheio)
+  const idorAnonRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/leads/${leadToAnon.id}/anonymize`,
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${otherTenantAdminToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+    req.end();
+  });
+  assert.strictEqual(idorAnonRes.status, 404, 'Tentativa de anonimizar lead de outro tenant deve retornar 404');
+
+  // Limpeza
+  leadsDB.delete(leadToAnon.id);
+  conDB29.delete(consentId);
+
+  console.log('  ✅ Teste 29 Aprovado: Segurança, /termos, /privacidade, LGPD Art. 18, Auditoria Delta e Anti-IDOR validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

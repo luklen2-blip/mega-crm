@@ -214,5 +214,17 @@
     "id": "use_1789742380879_f9w7",
     "createdAt": "2026-09-18T14:39:40.879Z",
     "updatedAt": "2026-09-18T14:39:40.879Z"
+  },
+  {
+    "tenantId": "ten_1789742746416_6a80",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789742746416@teste.com",
+    "passwordHash": "3fad95d9df53e894bcfcae9ea290e8e7:5d4114babd6ddc734adf3c605fcbba4cc0975147fce75805122abbce25594c85522672f4c9ccc3980e61b56dc6631fccb501ccaa3308881ce48920fd68f2ad39",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789742746431_11dt",
+    "createdAt": "2026-09-18T14:45:46.431Z",
+    "updatedAt": "2026-09-18T14:45:46.431Z"
   }
 ]

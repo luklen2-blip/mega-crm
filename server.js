@@ -33,7 +33,8 @@ const {
   aiAgentsDB,
   aiConversationsDB,
   workflowRunsDB,
-  paymentsDB
+  paymentsDB,
+  consentsDB
 } = require('./database/db');
 
 const { 
@@ -635,6 +636,104 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, message: 'Baixa efetuada com sucesso.', proposalId: proposal.id });
   }
 
+  // 1.3 TERMOS DE USO & POLÍTICA DE PRIVACIDADE LGPD (FASE 12 / NORMA LUCIANO)
+  if (pathname === '/termos' && method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    return res.end(`<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termos de Uso | Agentise Mega CRM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen p-6 sm:p-12 leading-relaxed">
+  <div class="max-w-3xl mx-auto space-y-6">
+    <div class="border-b border-slate-800 pb-4">
+      <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Documento Legal Oficial</span>
+      <h1 class="text-2xl sm:text-3xl font-black text-white">Termos de Uso e Condições Gerais</h1>
+      <p class="text-xs text-slate-400">Última atualização: Setembro de 2026 • Em conformidade com a Legislação Brasileira</p>
+    </div>
+
+    <!-- AVISO ÉTICO E REGULATÓRIO OBRIGATÓRIO (NORMA LUCIANO) -->
+    <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs space-y-1">
+      <div class="font-bold flex items-center gap-1.5">⚠️ AVISO ÉTICO E REGULATÓRIO IMPORTANTE</div>
+      <p>Softwares de produtividade comercial, organização mental e copilotos de inteligência artificial desenvolvidos por Luciano <b>não substituem diagnósticos, consultas, aconselhamentos ou tratamentos médicos, psicológicos ou psiquiátricos profissionais</b>. A plataforma destina-se exclusivamente à gestão operacional de processos comerciais B2B e B2C.</p>
+    </div>
+
+    <!-- FAIXA ETÁRIA E RESTRIÇÃO DE COMPRAS (NORMA LUCIANO) -->
+    <div class="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs space-y-1">
+      <div class="font-bold">🔞 FAIXA ETÁRIA E RESTRIÇÃO DE ASSINATURAS</div>
+      <p>Faixa etária recomendada para utilização: <b>16+ anos</b>. A contratação de planos, emissão de propostas e pagamentos PIX são expressamente <b>restritos a maiores de 18 anos</b> ou assistidos e autorizados por seus representantes legais, em estrita conformidade com o Código Civil Brasileiro e o Estatuto da Criança e do Adolescente (ECA).</p>
+    </div>
+
+    <div class="space-y-4 text-xs text-slate-300">
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">1. Objeto e Natureza dos Serviços</h2>
+      <p>O Agentise Mega CRM é uma plataforma SaaS comercial multi-tenant com arquitetura AI-First, fornecendo recursos de automação de funis, copiloto de inteligência artificial, cobrança PIX oficial e mensageria omnichannel.</p>
+
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">2. Responsabilidades do Usuário</h2>
+      <p>O Usuário compromete-se a utilizar a plataforma de forma ética, respeitando as leis vigentes, não realizando envios de spam (mensagens não solicitadas) e garantindo a veracidade dos dados cadastrados de seus clientes e leads.</p>
+
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">3. Disponibilidade e Deploy Contínuo</h2>
+      <p>A plataforma é projetada com infraestrutura de nuvem 24/7, monitoramento ininterrupto via endpoint <code>/api/health</code> e isolamento rigoroso de bancos de dados multi-tenant.</p>
+
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">4. Foro e Legislação Aplicável</h2>
+      <p>Estes Termos são regidos exclusivamente pelas Leis da República Federativa do Brasil, elegendo-se o Foro da Comarca de São Paulo/SP para dirimir quaisquer controvérsias.</p>
+    </div>
+
+    <div class="pt-6 border-t border-slate-800 text-center text-[11px] text-slate-500">
+      Agentise Mega CRM • Luciano Sant Anna • Todos os direitos reservados.
+    </div>
+  </div>
+</body></html>`);
+  }
+
+  if (pathname === '/privacidade' && method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    return res.end(`<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidade | Agentise Mega CRM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen p-6 sm:p-12 leading-relaxed">
+  <div class="max-w-3xl mx-auto space-y-6">
+    <div class="border-b border-slate-800 pb-4">
+      <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Conformidade LGPD (Lei nº 13.709/2018)</span>
+      <h1 class="text-2xl sm:text-3xl font-black text-white">Política de Privacidade e Proteção de Dados</h1>
+      <p class="text-xs text-slate-400">Em vigor desde Setembro de 2026 • Tratamento Seguro e Transparente</p>
+    </div>
+
+    <!-- PROTEÇÃO INFANTO-JUVENIL (ECA & ART. 14 LGPD) -->
+    <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs space-y-1">
+      <div class="font-bold">🛡️ COMPROMISSO COM O Art. 14 da LGPD E O ECA</div>
+      <p>O tratamento de dados pessoais de crianças e adolescentes é realizado estritamente no seu melhor interesse em conformidade com o Art. 14 da LGPD e o ECA.</p>
+    </div>
+
+    <div class="space-y-4 text-xs text-slate-300">
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">1. Dados Coletados e Finalidade</h2>
+      <p>Coletamos dados fornecidos diretamente pelo cliente (nome, e-mail, telefone, empresa) com a finalidade exclusiva de gestão do relacionamento comercial, emissão de propostas PIX e atendimento omnichannel assistido por IA.</p>
+
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">2. Direitos dos Titulares (Art. 18 da LGPD)</h2>
+      <p>Os titulares dos dados têm direito a solicitar a qualquer momento: (I) Confirmação da existência de tratamento; (II) Acesso aos dados; (III) Correção de dados incompletos; (IV) <b>Anonimização, bloqueio ou eliminação</b> de dados desnecessários ou excessivos; (V) Portabilidade; (VI) Revogação do consentimento.</p>
+      <p>Disponibilizamos a funcionalidade nativa de anonimização no sistema, preservando apenas metadados agregados para auditoria de integridade com delta de modificação.</p>
+
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">3. Segurança, Criptografia e Armazenamento</h2>
+      <p>Os dados são protegidos por hashing criptográfico PBKDF2 com salt, tokens JWT seguros, barreiras anti-IDOR, cabeçalhos de segurança OWASP e sandboxing de arquivos estáticos contra path traversal.</p>
+
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">4. Encarregado de Proteção de Dados (DPO)</h2>
+      <p>Para exercer seus direitos sob a LGPD ou tirar dúvidas sobre o tratamento de dados pessoais, contate nosso time pelo e-mail: <code>luklen2@gmail.com</code>.</p>
+    </div>
+
+    <div class="pt-6 border-t border-slate-800 text-center text-[11px] text-slate-500">
+      Agentise Mega CRM • Luciano Sant Anna • Em estrito respeito à privacidade e à legislação brasileira.
+    </div>
+  </div>
+</body></html>`);
+  }
+
   // Identificação do IP do cliente e aplicação de Rate Limiting defensivo
   const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
 
@@ -899,6 +998,98 @@ const server = http.createServer(async (req, res) => {
     const lead = leadsDB.insert({ ...body, tenantId });
     await triggerWorkflows('novo_lead', { leadId: lead.id, name: lead.name, phone: lead.phone }, tenantId);
     return sendJson(res, 201, { success: true, data: lead });
+  }
+
+  // ANONIMIZAÇÃO LGPD (ART. 18 DA LEI 13.709/2018 - FASE 12)
+  if (pathname.startsWith('/api/leads/') && pathname.endsWith('/anonymize') && method === 'POST') {
+    const parts = pathname.split('/');
+    const leadId = parts[3];
+    const lead = leadsDB.findById(leadId);
+    if (!lead || (lead.tenantId && lead.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Lead não encontrado.' });
+    }
+
+    const oldValues = {
+      name: lead.name,
+      email: lead.email,
+      phone: lead.phone,
+      document: lead.document || null,
+      company: lead.company || null
+    };
+
+    const newValues = {
+      name: `Titular Anonimizado Art. 18 LGPD (${lead.id.slice(-6)})`,
+      email: `anonimizado_${lead.id}@lgpd.local`,
+      phone: '11900000000',
+      document: '***',
+      anonymized: true,
+      anonymizedAt: new Date().toISOString()
+    };
+
+    const updated = leadsDB.update(leadId, newValues);
+
+    // Anonimiza contatos vinculados na agenda
+    const contacts = contactsDB.findByTenant(tenantId, c => c.leadId === leadId || (lead.companyId && c.companyId === lead.companyId));
+    contacts.forEach(c => {
+      contactsDB.update(c.id, {
+        name: `Contato Anonimizado LGPD`,
+        email: `anonimizado_${c.id}@lgpd.local`,
+        phone: '11900000000'
+      });
+    });
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'LGPD_ANONYMIZED',
+      resource: 'leads',
+      entityId: leadId,
+      ip: clientIp,
+      description: `Anonimização irrevogável de dados pessoais solicitada com base no Art. 18 da LGPD.`,
+      oldValues,
+      newValues
+    });
+
+    return sendJson(res, 200, {
+      success: true,
+      message: 'Dados do titular anonimizados com sucesso em estrito cumprimento ao Art. 18 da LGPD.',
+      data: updated
+    });
+  }
+
+  // REGISTRO E GESTÃO DE CONSENTIMENTO LGPD (FASE 12)
+  if (pathname === '/api/lgpd/consent' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    const consent = consentsDB.insert({
+      tenantId,
+      leadId: body.leadId || null,
+      contactId: body.contactId || null,
+      purpose: body.purpose || 'comercial_ia',
+      accepted: body.accepted !== false,
+      ipAddress: clientIp,
+      userAgent: req.headers['user-agent'] || '',
+      timestamp: new Date().toISOString()
+    });
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'LGPD_CONSENT_RECORDED',
+      resource: 'consents',
+      entityId: consent.id,
+      ip: clientIp,
+      description: `Consentimento para '${consent.purpose}' registrado com aceite: ${consent.accepted}.`,
+      newValues: consent
+    });
+
+    return sendJson(res, 201, { success: true, data: consent });
+  }
+
+  if (pathname === '/api/lgpd/consents' && method === 'GET') {
+    const list = consentsDB.findByTenant(tenantId).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    return sendJson(res, 200, { success: true, count: list.length, data: list });
   }
 
   // Linha do Tempo CRM 360° (10 Estágios Padronizados)

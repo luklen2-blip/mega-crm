@@ -378,5 +378,43 @@
     "id": "cam_1789742380924_95m5",
     "createdAt": "2026-09-18T14:39:40.924Z",
     "updatedAt": "2026-09-18T14:39:40.924Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "RecuperaIA: Oportunidades Estagnadas no Funil (+5d) (18/09/2026)",
+    "category": "stalledDeals",
+    "targetCount": 4,
+    "tone": "consultivo",
+    "template": {
+      "subject": "Atualização sobre o seu projeto e novas condições especiais",
+      "message": "Olá {{nome}}! Estava revisando nosso planejamento aqui na {{empresa}} e lembrei do seu projeto. Conseguimos liberar uma condição exclusiva nesta semana para você avançar sem travar seu fluxo de caixa.",
+      "argument": "Foco em destravar gargalos operacionais e garantir ROI rápido sem atrito.",
+      "cta": "Tem 5 minutos amanhã às 10h para vermos isso juntos?"
+    },
+    "sequence": [
+      {
+        "step": 1,
+        "delayHours": 0,
+        "channel": "WhatsApp / E-mail",
+        "action": "Primeiro toque de reativação de valor"
+      },
+      {
+        "step": 2,
+        "delayHours": 48,
+        "channel": "WhatsApp",
+        "action": "Envio de case de sucesso do mesmo nicho"
+      },
+      {
+        "step": 3,
+        "delayHours": 120,
+        "channel": "WhatsApp / Ligação",
+        "action": "Último contato e oferta de consultoria rápida"
+      }
+    ],
+    "status": "pronta",
+    "complianceNotes": "Disparo com respeito à LGPD e link de opt-out/descadastro automático.",
+    "id": "cam_1789742746474_iduj",
+    "createdAt": "2026-09-18T14:45:46.474Z",
+    "updatedAt": "2026-09-18T14:45:46.474Z"
   }
 ]

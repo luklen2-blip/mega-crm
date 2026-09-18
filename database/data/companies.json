@@ -138,5 +138,25 @@
     "id": "com_1789742545780_qwpg",
     "createdAt": "2026-09-18T14:42:25.780Z",
     "updatedAt": "2026-09-18T14:42:25.780Z"
+  },
+  {
+    "name": "Acme Corporativa S.A.",
+    "cnpj": "12.345.678/0001-90",
+    "industry": "Tecnologia",
+    "annualRevenue": 5000000,
+    "tenantId": "ten_demo_agentise",
+    "id": "com_1789742747019_o2n7",
+    "createdAt": "2026-09-18T14:45:47.019Z",
+    "updatedAt": "2026-09-18T14:45:47.019Z"
+  },
+  {
+    "name": "Acme Corporativa S.A.",
+    "cnpj": "12.345.678/0001-90",
+    "industry": "Tecnologia",
+    "annualRevenue": 5000000,
+    "tenantId": "ten_demo_agentise",
+    "id": "com_1789742768998_u3tw",
+    "createdAt": "2026-09-18T14:46:08.998Z",
+    "updatedAt": "2026-09-18T14:46:08.998Z"
   }
 ]

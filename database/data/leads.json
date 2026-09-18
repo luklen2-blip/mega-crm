@@ -1235,6 +1235,13 @@
     "updatedAt": "2026-09-18T14:39:40.945Z"
   },
   {
+    "tenantId": "tenant_A_seguro",
+    "name": "Lead Confidencial A",
+    "id": "lea_1789742746494_x0tg",
+    "createdAt": "2026-09-18T14:45:46.495Z",
+    "updatedAt": "2026-09-18T14:45:46.495Z"
+  },
+  {
     "id": "lead_autoprime_51_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "name": "Dr. André Villas-Bôas",
@@ -1252,7 +1259,7 @@
       "WhatsApp"
     ],
     "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-09-18T14:42:25.341Z",
-    "updatedAt": "2026-09-18T14:42:25.349Z"
+    "createdAt": "2026-09-18T14:46:08.572Z",
+    "updatedAt": "2026-09-18T14:46:08.581Z"
   }
 ]
