@@ -196,20 +196,6 @@
     "paidAt": "2026-09-18T14:15:27.054Z"
   },
   {
-    "id": "prop_autoprime_bmw_11",
-    "tenantId": "ten_autoprime_veiculos",
-    "dealId": "deal_autoprime_bmw_villasboas",
-    "leadId": "lead_autoprime_51_villasboas",
-    "amount": 340000,
-    "pixKey": "financeiro@autoprime.com.br",
-    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
-    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
-    "status": "enviada",
-    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
-    "createdAt": "2026-09-18T14:17:32.830Z",
-    "updatedAt": "2026-09-18T14:17:32.830Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "dealId": null,
     "leadId": null,
@@ -222,5 +208,61 @@
     "createdAt": "2026-09-18T14:17:33.151Z",
     "updatedAt": "2026-09-18T14:17:33.200Z",
     "paidAt": "2026-09-18T14:17:33.200Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "amount": 15000,
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM3233816304AA40",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM3233816304AA40",
+    "status": "paga",
+    "id": "pro_1789741323381_03gf",
+    "createdAt": "2026-09-18T14:22:03.381Z",
+    "updatedAt": "2026-09-18T14:22:03.394Z",
+    "paidAt": "2026-09-18T14:22:03.394Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "amount": 15000,
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM350030630462EF",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM350030630462EF",
+    "status": "paga",
+    "id": "pro_1789741350030_5b92",
+    "createdAt": "2026-09-18T14:22:30.030Z",
+    "updatedAt": "2026-09-18T14:22:30.045Z",
+    "paidAt": "2026-09-18T14:22:30.045Z"
+  },
+  {
+    "id": "prop_autoprime_bmw_11",
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "amount": 340000,
+    "pixKey": "financeiro@autoprime.com.br",
+    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
+    "status": "enviada",
+    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
+    "createdAt": "2026-09-18T14:23:15.571Z",
+    "updatedAt": "2026-09-18T14:23:15.571Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "amount": 15000,
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM3959946304BB89",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM3959946304BB89",
+    "status": "paga",
+    "id": "pro_1789741395994_ftdv",
+    "createdAt": "2026-09-18T14:23:15.994Z",
+    "updatedAt": "2026-09-18T14:23:16.029Z",
+    "paidAt": "2026-09-18T14:23:16.029Z"
   }
 ]

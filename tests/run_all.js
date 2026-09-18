@@ -1095,6 +1095,163 @@ async function runTests() {
   console.log('  ✅ Teste 21 Aprovado: CRM 360°, Empresas, Contatos, Linha do Tempo de 10 Estágios e Anti-IDOR 100% validados.\n');
   passed++;
 
+  // =========================================================================
+  // TESTE 22: VALIDAÇÃO DE MÚLTIPLOS PIPELINES, ESTÁGIOS E AI DEAL SCORE (FASE 5)
+  // =========================================================================
+  console.log('▶ Teste 22: Validação de Múltiplos Pipelines, Estágios e AI Deal Score BANT (FASE 5)...');
+  const { pipelinesDB } = require('../database/db');
+
+  // 22.1 Listagem de Pipelines e Estágios Padrão do Tenant
+  const listPipesRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pipelines?includeStages=true',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(listPipesRes.status, 200, 'GET /api/pipelines deve retornar HTTP 200');
+  assert.strictEqual(listPipesRes.body.success, true);
+  assert.ok(listPipesRes.body.data.length >= 2, 'Tenant deve possuir ao menos 2 pipelines padrão inicializados');
+  const defaultPipe = listPipesRes.body.data.find(p => p.isDefault);
+  assert.ok(defaultPipe, 'Pipeline padrão deve existir');
+  assert.ok(defaultPipe.stages && defaultPipe.stages.length >= 5, 'Pipeline padrão deve conter estágios comerciais');
+
+  // 22.2 Criação de Pipeline Customizado (POST /api/pipelines)
+  const createPipeRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      name: 'Parcerias Estratégicas & Canais',
+      description: 'Pipeline exclusivo para prospecção e onboarding de canais integradores.',
+      isDefault: false
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pipelines',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(createPipeRes.status, 201, 'POST /api/pipelines deve retornar HTTP 201');
+  const customPipeId = createPipeRes.body.data.id;
+
+  // 22.3 Adição de Estágio Customizado no Pipeline (POST /api/pipelines/:id/stages)
+  const createStageRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      name: 'Homologação Jurídica & Compliance',
+      probability: 60,
+      slaDays: 5,
+      color: '#6366f1'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/pipelines/${customPipeId}/stages`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(createStageRes.status, 201, 'POST /api/pipelines/:id/stages deve retornar HTTP 201');
+  assert.strictEqual(createStageRes.body.success, true);
+
+  // 22.4 Criação de Oportunidade com Cálculo Automático de AI Deal Score
+  const createDealRes22 = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      title: 'Contrato de Licenciamento Enterprise',
+      leadId: leadA.id,
+      value: 48000,
+      stage: 'proposta',
+      pipelineId: customPipeId
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/deals',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${vendedorToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(createDealRes22.status, 201, 'POST /api/deals deve responder HTTP 201');
+  const testDeal22 = createDealRes22.body.data;
+  assert.ok(typeof testDeal22.aiDealScore === 'number', 'Deal criado deve possuir aiDealScore numérico inicial');
+  assert.ok(testDeal22.aiDealScore >= 0 && testDeal22.aiDealScore <= 100, 'Score deve estar entre 0 e 100');
+
+  // 22.5 Recálculo de AI Deal Score com Explicabilidade Textual (POST /api/deals/:id/ai-score)
+  const recalcScoreRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/deals/${testDeal22.id}/ai-score`,
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${vendedorToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+  assert.strictEqual(recalcScoreRes.status, 200, 'POST /api/deals/:id/ai-score deve responder HTTP 200');
+  assert.strictEqual(recalcScoreRes.body.success, true);
+  assert.ok(typeof recalcScoreRes.body.aiDealScore === 'number', 'Score recalculado deve ser numérico');
+  assert.ok(typeof recalcScoreRes.body.rationale === 'string' && recalcScoreRes.body.rationale.length > 10, 'Deve retornar justificativa textual explicável');
+
+  // 22.6 Isolamento Anti-IDOR em Pipelines & Estágios
+  const idorStageRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({ name: 'Estágio Invasivo' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/pipelines/${customPipeId}/stages`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${otherTenantAdminToken}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(idorStageRes.status, 404, 'Tentativa de criar estágio em pipeline de outro tenant deve retornar HTTP 404');
+
+  // Limpeza de entidades temporárias do teste 22
+  dealsDB.delete(testDeal22.id);
+  pipelinesDB.delete(customPipeId);
+
+  console.log('  ✅ Teste 22 Aprovado: Múltiplos Pipelines, Estágios Customizados, AI Deal Score BANT e Anti-IDOR 100% validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

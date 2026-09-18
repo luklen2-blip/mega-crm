@@ -18,6 +18,8 @@ const {
   activitiesDB, 
   tasksDB, 
   proposalsDB, 
+  pipelinesDB,
+  pipelineStagesDB,
   settingsDB,
   knowledgeBaseDB,
   conversationsDB,
@@ -27,6 +29,12 @@ const {
   vehiclesDB,
   auditLogsDB
 } = require('./database/db');
+
+const { 
+  DEFAULT_SALES_STAGES, 
+  ensureTenantPipelines, 
+  calculateAiDealScore 
+} = require('./services/pipelineService');
 
 const { runSeeds } = require('./database/seeds');
 const { 
@@ -785,12 +793,123 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: deleted });
   }
 
-  // 5. DEALS (OPORTUNIDADES DO PIPELINE)
+  // 4.9 PIPELINES & ESTÁGIOS CUSTOMIZÁVEIS (FASE 5)
+  if (pathname === '/api/pipelines' && method === 'GET') {
+    const pipelines = ensureTenantPipelines(tenantId);
+    const includeStages = parsedUrl.searchParams.get('includeStages') === 'true';
+    const data = pipelines.map(p => {
+      if (!includeStages) return p;
+      const stages = pipelineStagesDB.findByTenant(tenantId, s => s.pipelineId === p.id)
+        .sort((a, b) => (a.order || 0) - (b.order || 0));
+      return { ...p, stages };
+    });
+    return sendJson(res, 200, { success: true, count: data.length, data });
+  }
+
+  if (pathname === '/api/pipelines' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    if (!body.name) return sendJson(res, 400, { error: 'Nome do funil/pipeline é obrigatório.' });
+    const pipeline = pipelinesDB.insert({
+      tenantId,
+      name: body.name,
+      description: body.description || '',
+      isDefault: Boolean(body.isDefault),
+      createdAt: new Date().toISOString()
+    });
+
+    if (Array.isArray(body.stages)) {
+      body.stages.forEach((s, idx) => {
+        pipelineStagesDB.insert({
+          tenantId,
+          pipelineId: pipeline.id,
+          key: s.key || s.id || `stg_${idx}`,
+          name: s.name,
+          probability: Number(s.probability || 20),
+          slaDays: Number(s.slaDays || 3),
+          color: s.color || '#3b82f6',
+          order: idx + 1
+        });
+      });
+    }
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'PIPELINE_CREATED',
+      resource: 'pipelines',
+      entityId: pipeline.id,
+      ip: clientIp,
+      description: `${ctx.name} criou o pipeline '${pipeline.name}'.`
+    });
+
+    return sendJson(res, 201, { success: true, data: pipeline });
+  }
+
+  if (pathname.startsWith('/api/pipelines/') && pathname.endsWith('/stages') && method === 'GET') {
+    const pipeId = pathname.split('/')[3];
+    const stages = pipelineStagesDB.findByTenant(tenantId, s => s.pipelineId === pipeId)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+    return sendJson(res, 200, { success: true, count: stages.length, data: stages });
+  }
+
+  if (pathname.startsWith('/api/pipelines/') && pathname.endsWith('/stages') && method === 'POST') {
+    const pipeId = pathname.split('/')[3];
+    const pipe = pipelinesDB.findById(pipeId);
+    if (!pipe || (pipe.tenantId && pipe.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Pipeline não encontrado.' });
+    }
+    const body = await parseRequestBody(req);
+    if (!body.name) return sendJson(res, 400, { error: 'Nome do estágio é obrigatório.' });
+    const existingStages = pipelineStagesDB.findByTenant(tenantId, s => s.pipelineId === pipeId);
+    const stage = pipelineStagesDB.insert({
+      tenantId,
+      pipelineId: pipe.id,
+      key: body.key || `stg_${Date.now()}`,
+      name: body.name,
+      probability: Number(body.probability || 50),
+      slaDays: Number(body.slaDays || 3),
+      color: body.color || '#3b82f6',
+      order: existingStages.length + 1
+    });
+    return sendJson(res, 201, { success: true, data: stage });
+  }
+
+  // 5. DEALS (OPORTUNIDADES DO PIPELINE COM AI DEAL SCORE ENRIQUECIDO)
   if (pathname === '/api/deals' && method === 'GET') {
     const deals = dealsDB.findByTenant(tenantId);
-    const enriched = deals.map(deal => {
+    const pipelineIdFilter = parsedUrl.searchParams.get('pipelineId');
+    const filteredDeals = pipelineIdFilter ? deals.filter(d => d.pipelineId === pipelineIdFilter) : deals;
+
+    const enriched = filteredDeals.map(deal => {
       const lead = leadsDB.findById(deal.leadId) || {};
-      return { ...deal, lead };
+      let scoreInfo = {
+        score: deal.aiDealScore,
+        classification: deal.aiScoreClassification,
+        color: deal.aiScoreColor,
+        rationale: deal.aiScoreRationale,
+        drivers: deal.aiScoreDrivers,
+        risks: deal.aiScoreRisks
+      };
+
+      if (scoreInfo.score === undefined || scoreInfo.score === null) {
+        const activities = activitiesDB.findByTenant(tenantId, a => a.leadId === deal.leadId || a.dealId === deal.id);
+        const tasks = tasksDB.findByTenant(tenantId, t => t.leadId === deal.leadId);
+        const proposals = proposalsDB.findByTenant(tenantId, p => p.leadId === deal.leadId || p.dealId === deal.id);
+        const calc = calculateAiDealScore(deal, lead, activities, tasks, proposals);
+        scoreInfo = calc;
+      }
+
+      return {
+        ...deal,
+        lead,
+        aiDealScore: scoreInfo.score,
+        aiScoreClassification: scoreInfo.classification,
+        aiScoreColor: scoreInfo.color,
+        aiScoreRationale: scoreInfo.rationale,
+        aiScoreDrivers: scoreInfo.drivers,
+        aiScoreRisks: scoreInfo.risks
+      };
     });
     return sendJson(res, 200, { success: true, count: enriched.length, data: enriched });
   }
@@ -800,6 +919,10 @@ const server = http.createServer(async (req, res) => {
     if (!body.title || !body.leadId) {
       return sendJson(res, 400, { error: 'Título e LeadId são obrigatórios.' });
     }
+
+    const lead = leadsDB.findById(body.leadId) || {};
+    const initialScore = calculateAiDealScore({ ...body, stage: body.stage || 'prospeccao' }, lead, [], [], []);
+
     const deal = dealsDB.insert({
       tenantId,
       stage: body.stage || 'prospeccao',
@@ -807,6 +930,10 @@ const server = http.createServer(async (req, res) => {
       probability: Number(body.probability || 20),
       priority: body.priority || 'media',
       assignedTo: body.assignedTo || ctx.name,
+      aiDealScore: initialScore.score,
+      aiScoreClassification: initialScore.classification,
+      aiScoreColor: initialScore.color,
+      aiScoreRationale: initialScore.rationale,
       ...body
     });
 
@@ -816,7 +943,7 @@ const server = http.createServer(async (req, res) => {
       leadId: deal.leadId,
       type: 'deal_created',
       title: `Oportunidade criada: ${deal.title}`,
-      description: `Valor inicial: R$ ${deal.value.toFixed(2)} - Responsável: ${deal.assignedTo}`,
+      description: `Valor inicial: R$ ${deal.value.toFixed(2)} - Responsável: ${deal.assignedTo} | AI Score: ${initialScore.score}/100`,
       timestamp: new Date().toISOString()
     });
 
@@ -934,6 +1061,49 @@ const server = http.createServer(async (req, res) => {
     });
     const deleted = dealsDB.delete(id);
     return sendJson(res, 200, { success: deleted });
+  }
+
+  // 5.1 AI DEAL SCORE (CÁLCULO E REAVALIAÇÃO PREDITIVA COM EXPLICABILIDADE BANT)
+  if (pathname.startsWith('/api/deals/') && pathname.endsWith('/ai-score') && method === 'POST') {
+    const id = pathname.split('/')[3];
+    const deal = dealsDB.findById(id);
+    if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
+    }
+    const lead = leadsDB.findById(deal.leadId) || {};
+    const activities = activitiesDB.findByTenant(tenantId, a => a.leadId === deal.leadId || a.dealId === deal.id);
+    const tasks = tasksDB.findByTenant(tenantId, t => t.leadId === deal.leadId);
+    const proposals = proposalsDB.findByTenant(tenantId, p => p.leadId === deal.leadId || p.dealId === deal.id);
+
+    const scoreResult = calculateAiDealScore(deal, lead, activities, tasks, proposals);
+    const updated = dealsDB.update(deal.id, {
+      aiDealScore: scoreResult.score,
+      aiScoreClassification: scoreResult.classification,
+      aiScoreColor: scoreResult.color,
+      aiScoreRationale: scoreResult.rationale,
+      aiScoreDrivers: scoreResult.drivers,
+      aiScoreRisks: scoreResult.risks,
+      aiScoreCalculatedAt: new Date().toISOString()
+    });
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'DEAL_AI_SCORE_CALCULATED',
+      resource: 'deals',
+      entityId: deal.id,
+      ip: clientIp,
+      description: `${ctx.name} calculou AI Deal Score (${scoreResult.score}/100) para oportunidade '${deal.title}'.`,
+      newValues: { aiDealScore: scoreResult.score, classification: scoreResult.classification }
+    });
+
+    return sendJson(res, 200, {
+      success: true,
+      aiDealScore: scoreResult.score,
+      rationale: scoreResult.rationale,
+      data: updated
+    });
   }
 
   // 6. TAREFAS

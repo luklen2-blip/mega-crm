@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initApp() {
   await checkHealth();
   await loadCurrentContext();
+  await loadPipelines();
   await Promise.all([
     loadDeals(),
     loadLeads(),
@@ -226,10 +227,53 @@ function switchView(viewName) {
   if (window.lucide) lucide.createIcons();
 }
 
-// 3. PIPELINE KANBAN (DRAG AND DROP)
+// 3. PIPELINES MULTI-FUNIL & KANBAN (DRAG AND DROP)
+let globalPipelines = [];
+let selectedPipelineId = '';
+
+async function loadPipelines() {
+  try {
+    const res = await fetch('/api/pipelines?includeStages=true', { headers: authHeaders() });
+    const json = await res.json();
+    globalPipelines = json.data || [];
+
+    const select = document.getElementById('kanban-pipeline-selector');
+    if (select) {
+      select.innerHTML = '';
+      globalPipelines.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = `${p.isDefault ? '⭐ ' : ''}${p.name}`;
+        if (p.isDefault && !selectedPipelineId) {
+          opt.selected = true;
+          selectedPipelineId = p.id;
+        }
+        select.appendChild(opt);
+      });
+    }
+  } catch (e) {
+    console.error('Erro ao carregar pipelines:', e);
+  }
+}
+
+async function onPipelineChange(pipeId) {
+  selectedPipelineId = pipeId;
+  const currentPipe = globalPipelines.find(p => p.id === pipeId);
+  if (currentPipe && currentPipe.stages && currentPipe.stages.length > 0) {
+    // Atualiza estágios dinâmicos do Kanban se houver customização
+    STAGES = currentPipe.stages.map(s => ({
+      id: s.key,
+      label: s.name,
+      color: s.color || 'blue'
+    }));
+  }
+  await loadDeals();
+}
+
 async function loadDeals() {
   try {
-    const res = await fetch('/api/deals', { headers: authHeaders() });
+    const url = selectedPipelineId ? `/api/deals?pipelineId=${selectedPipelineId}` : '/api/deals';
+    const res = await fetch(url, { headers: authHeaders() });
     const json = await res.json();
     globalDeals = json.data || [];
     renderKanban();
@@ -314,10 +358,19 @@ function createKanbanCard(deal) {
   const leadName = escapeHtml(deal.lead ? deal.lead.name : (deal.leadName || 'Cliente Potencial'));
   const company = escapeHtml(deal.lead ? deal.lead.company : '');
 
+  // Pontuação Preditiva AI Deal Score
+  const score = deal.aiDealScore !== undefined && deal.aiDealScore !== null ? deal.aiDealScore : (deal.probability || 50);
+  let scoreBadgeClass = 'bg-blue-500/15 text-blue-300 border-blue-500/30';
+  if (score >= 75) scoreBadgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30';
+  else if (score < 50) scoreBadgeClass = 'bg-rose-500/20 text-rose-300 border-rose-500/30';
+
   card.innerHTML = `
     <div class="flex items-start justify-between gap-1">
       <div class="text-xs font-bold text-white leading-tight">${escapeHtml(deal.title)}</div>
-      <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-300 font-bold">${deal.probability || 20}%</span>
+      <button onclick="openDealAiScoreModal('${deal.id}')" title="AI Deal Score: clique para ver análise" class="text-[10px] px-1.5 py-0.5 rounded-lg border font-black flex items-center gap-1 cursor-pointer hover:brightness-125 transition shrink-0 ${scoreBadgeClass}">
+        <i data-lucide="cpu" class="h-2.5 w-2.5"></i>
+        <span>${score}/100</span>
+      </button>
     </div>
     <div class="text-[11px] text-slate-400 truncate">${leadName} ${company ? `· ${company}` : ''}</div>
     <div class="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[11px]">
@@ -337,6 +390,89 @@ function createKanbanCard(deal) {
   `;
 
   return card;
+}
+
+let activeScoreDealId = null;
+
+function openDealAiScoreModal(dealId) {
+  const deal = globalDeals.find(d => d.id === dealId);
+  if (!deal) return;
+  activeScoreDealId = dealId;
+
+  const leadName = deal.lead ? deal.lead.name : (deal.leadName || 'Cliente');
+  const comp = deal.lead ? deal.lead.company : '';
+
+  const titleEl = document.getElementById('modal-score-deal-title');
+  const subEl = document.getElementById('modal-score-deal-sub');
+  if (titleEl) titleEl.textContent = deal.title;
+  if (subEl) subEl.textContent = `${leadName} ${comp ? `(${comp})` : ''} · Valor: ${formatBRL(deal.value)}`;
+  
+  const score = deal.aiDealScore !== undefined && deal.aiDealScore !== null ? deal.aiDealScore : (deal.probability || 50);
+  const scoreEl = document.getElementById('modal-score-number');
+  const classEl = document.getElementById('modal-score-classification');
+  const ratEl = document.getElementById('modal-score-rationale');
+  const driversUl = document.getElementById('modal-score-drivers');
+  const risksUl = document.getElementById('modal-score-risks');
+
+  if (scoreEl) scoreEl.textContent = `${score}/100`;
+  if (classEl) classEl.textContent = deal.aiScoreClassification || (score >= 75 ? 'Alta Propensão de Fechamento' : score >= 50 ? 'Média Propensão' : 'Risco de Perda / Atenção');
+  if (ratEl) ratEl.textContent = deal.aiScoreRationale || `Oportunidade calculada com score ${score}/100 com base em estágio, recência de interações e aderência do cliente.`;
+
+  if (driversUl) {
+    driversUl.innerHTML = '';
+    const drivers = deal.aiScoreDrivers || ['Oportunidade ativa na esteira de negociação'];
+    drivers.forEach(d => {
+      const li = document.createElement('li');
+      li.textContent = d;
+      driversUl.appendChild(li);
+    });
+  }
+
+  if (risksUl) {
+    risksUl.innerHTML = '';
+    const risks = deal.aiScoreRisks || [];
+    if (risks.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'Nenhum fator crítico de risco identificado.';
+      li.className = 'text-slate-500';
+      risksUl.appendChild(li);
+    } else {
+      risks.forEach(r => {
+        const li = document.createElement('li');
+        li.textContent = r;
+        risksUl.appendChild(li);
+      });
+    }
+  }
+
+  openModal('modal-deal-ai-score');
+  if (window.lucide) lucide.createIcons();
+}
+
+async function recalcDealAiScore() {
+  if (!activeScoreDealId) return;
+  const btn = document.getElementById('modal-score-recalc-btn');
+  if (btn) btn.innerHTML = '<i data-lucide="loader-2" class="h-3.5 w-3.5 animate-spin"></i> Calculando...';
+
+  try {
+    const res = await fetch(`/api/deals/${activeScoreDealId}/ai-score`, {
+      method: 'POST',
+      headers: authHeaders()
+    });
+    const json = await res.json();
+    if (res.ok) {
+      showToast(`AI Deal Score recalculado: ${json.aiDealScore}/100`, 'success');
+      await loadDeals();
+      openDealAiScoreModal(activeScoreDealId);
+    } else {
+      showToast(json.error || 'Erro ao recalcular score.', 'error');
+    }
+  } catch (e) {
+    showToast('Falha na comunicação ao recalcular score.', 'error');
+  } finally {
+    if (btn) btn.innerHTML = '<i data-lucide="refresh-cw" class="h-3.5 w-3.5"></i> Recalcular Score';
+    if (window.lucide) lucide.createIcons();
+  }
 }
 
 async function moveDealStage(dealId, targetStage) {

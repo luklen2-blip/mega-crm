@@ -642,5 +642,128 @@
     "id": "tas_1789741053153_hg0p",
     "createdAt": "2026-09-18T14:17:33.153Z",
     "updatedAt": "2026-09-18T14:17:33.153Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789741322834_fv8g",
+    "createdAt": "2026-09-18T14:22:02.834Z",
+    "updatedAt": "2026-09-18T14:22:02.834Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789741323002",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T14:22:03.002Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T14:22:03.002Z",
+    "updatedAt": "2026-09-18T14:22:03.018Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789741323285_em56",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:22:03.311Z",
+    "completed": false,
+    "id": "tas_1789741323311_5c39",
+    "createdAt": "2026-09-18T14:22:03.311Z",
+    "updatedAt": "2026-09-18T14:22:03.311Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:22:03.382Z",
+    "completed": false,
+    "id": "tas_1789741323382_6o7v",
+    "createdAt": "2026-09-18T14:22:03.382Z",
+    "updatedAt": "2026-09-18T14:22:03.382Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789741349589_j71e",
+    "createdAt": "2026-09-18T14:22:29.589Z",
+    "updatedAt": "2026-09-18T14:22:29.589Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789741349746",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T14:22:29.746Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T14:22:29.746Z",
+    "updatedAt": "2026-09-18T14:22:29.760Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789741349954_3wnt",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:22:29.960Z",
+    "completed": false,
+    "id": "tas_1789741349960_kmxg",
+    "createdAt": "2026-09-18T14:22:29.960Z",
+    "updatedAt": "2026-09-18T14:22:29.960Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:22:30.032Z",
+    "completed": false,
+    "id": "tas_1789741350032_4trq",
+    "createdAt": "2026-09-18T14:22:30.032Z",
+    "updatedAt": "2026-09-18T14:22:30.032Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789741395376_meq3",
+    "createdAt": "2026-09-18T14:23:15.376Z",
+    "updatedAt": "2026-09-18T14:23:15.376Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789741395549",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T14:23:15.549Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T14:23:15.549Z",
+    "updatedAt": "2026-09-18T14:23:15.578Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789741395903_xp27",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:23:15.911Z",
+    "completed": false,
+    "id": "tas_1789741395911_9cft",
+    "createdAt": "2026-09-18T14:23:15.911Z",
+    "updatedAt": "2026-09-18T14:23:15.911Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:23:16.018Z",
+    "completed": false,
+    "id": "tas_1789741396018_ukon",
+    "createdAt": "2026-09-18T14:23:16.018Z",
+    "updatedAt": "2026-09-18T14:23:16.018Z"
   }
 ]

@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": "pipe_ten_demo_agentise_default",
+    "tenantId": "ten_demo_agentise",
+    "name": "Funil Comercial Geral",
+    "description": "Esteira comercial padrão de aquisição, qualificação e fechamento B2B.",
+    "isDefault": true,
+    "createdAt": "2026-09-18T14:22:30.148Z",
+    "updatedAt": "2026-09-18T14:22:30.148Z"
+  },
+  {
+    "id": "pipe_ten_demo_agentise_expansion",
+    "tenantId": "ten_demo_agentise",
+    "name": "Pós-Venda & Expansão (Upsell)",
+    "description": "Gestão de onboarding, retenção e expansão de receita (LTV) com clientes ativos.",
+    "isDefault": false,
+    "createdAt": "2026-09-18T14:22:30.167Z",
+    "updatedAt": "2026-09-18T14:22:30.167Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Parcerias Estratégicas & Canais",
+    "description": "Pipeline exclusivo para prospecção e onboarding de canais integradores.",
+    "isDefault": false,
+    "createdAt": "2026-09-18T14:22:30.188Z",
+    "id": "pip_1789741350188_bolc",
+    "updatedAt": "2026-09-18T14:22:30.188Z"
+  }
+]
