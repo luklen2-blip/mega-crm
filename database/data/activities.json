@@ -929,5 +929,110 @@
     "id": "act_1789741639555_2ugv",
     "createdAt": "2026-09-18T14:27:19.555Z",
     "updatedAt": "2026-09-18T14:27:19.555Z"
+  },
+  {
+    "id": "act_autoprime_1789741766228",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-18T14:29:26.228Z",
+    "updatedAt": "2026-09-18T14:29:26.228Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789741766249_z4s3",
+    "createdAt": "2026-09-18T14:29:26.249Z",
+    "updatedAt": "2026-09-18T14:29:26.249Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789741766557_lbhh",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:29:26.565Z",
+    "id": "act_1789741766565_2141",
+    "createdAt": "2026-09-18T14:29:26.565Z",
+    "updatedAt": "2026-09-18T14:29:26.565Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:29:26.630Z",
+    "id": "act_1789741766630_jk5r",
+    "createdAt": "2026-09-18T14:29:26.630Z",
+    "updatedAt": "2026-09-18T14:29:26.630Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789741766707_x4b5",
+    "dealId": null,
+    "type": "call",
+    "title": "Ligação de Alinhamento Técnico",
+    "description": "Cliente confirmou interesse na proposta e solicitou emissão do PIX comercial.",
+    "author": "Camila Mendes",
+    "timestamp": "2026-09-18T14:29:26.710Z",
+    "id": "act_1789741766710_cb5t",
+    "createdAt": "2026-09-18T14:29:26.711Z",
+    "updatedAt": "2026-09-18T14:29:26.711Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789741766748_z11o",
+    "leadId": "lea_1789741766211_s0lx",
+    "type": "deal_created",
+    "title": "Oportunidade criada: Contrato de Licenciamento Enterprise",
+    "description": "Valor inicial: R$ 48000.00 - Responsável: Camila Mendes | AI Score: 85/100",
+    "timestamp": "2026-09-18T14:29:26.750Z",
+    "id": "act_1789741766750_ktl9",
+    "createdAt": "2026-09-18T14:29:26.750Z",
+    "updatedAt": "2026-09-18T14:29:26.750Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789741766211_s0lx",
+    "dealId": null,
+    "type": "ai_interaction",
+    "title": "Interação com Sofia - Closer Comercial IA",
+    "description": "Cliente: \"Quais são as condições de pagamento e faturamento no PIX?...\" | IA: \"Operamos com faturamento transparente via PIX oficial do Ban...\"",
+    "timestamp": "2026-09-18T14:29:26.829Z",
+    "id": "act_1789741766829_balv",
+    "createdAt": "2026-09-18T14:29:26.829Z",
+    "updatedAt": "2026-09-18T14:29:26.829Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789741766211_s0lx",
+    "dealId": null,
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Cliente solicitou transbordo humano explícito (termo identificado: \"humano\")",
+    "timestamp": "2026-09-18T14:29:26.838Z",
+    "id": "act_1789741766838_41st",
+    "createdAt": "2026-09-18T14:29:26.838Z",
+    "updatedAt": "2026-09-18T14:29:26.838Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789741766211_s0lx",
+    "dealId": "dea_1789741766844_gdl3",
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000)",
+    "timestamp": "2026-09-18T14:29:26.850Z",
+    "id": "act_1789741766850_yt9v",
+    "createdAt": "2026-09-18T14:29:26.850Z",
+    "updatedAt": "2026-09-18T14:29:26.850Z"
   }
 ]

@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "tenantId": "ten_demo_agentise",
+    "agentId": "agt_ten_demo_agentise_sofia",
+    "leadId": "lea_1789741766211_s0lx",
+    "dealId": null,
+    "channel": "whatsapp",
+    "customerMessage": "Quais são as condições de pagamento e faturamento no PIX?",
+    "agentReply": "Operamos com faturamento transparente via PIX oficial do Banco Central (payload EMV instantâneo com QR Code e Copia-e-Cola), além de cartão de crédito em até 12x. A confirmação é imediata e libera o acesso instantaneamente.",
+    "status": "handled_by_ai",
+    "modelUsed": "heuristic-core",
+    "latencyMs": 4,
+    "timestamp": "2026-09-18T14:29:26.826Z",
+    "id": "ai__1789741766827_00c8",
+    "createdAt": "2026-09-18T14:29:26.827Z",
+    "updatedAt": "2026-09-18T14:29:26.827Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "agentId": "agt_ten_demo_agentise_sofia",
+    "leadId": "lea_1789741766211_s0lx",
+    "dealId": null,
+    "channel": "whatsapp",
+    "customerMessage": "Quero falar com um atendente humano urgente, não quero falar com robô.",
+    "agentReply": "Transferindo seu atendimento para nossa equipe comercial agora mesmo. Um especialista assumirá a conversa em instantes.",
+    "status": "handed_over",
+    "handoverReason": "Cliente solicitou transbordo humano explícito (termo identificado: \"humano\")",
+    "taskId": "tas_1789741766836_ob8z",
+    "timestamp": "2026-09-18T14:29:26.840Z",
+    "id": "ai__1789741766840_3vu1",
+    "createdAt": "2026-09-18T14:29:26.840Z",
+    "updatedAt": "2026-09-18T14:29:26.840Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "agentId": "agt_ten_demo_agentise_sofia",
+    "leadId": "lea_1789741766211_s0lx",
+    "dealId": "dea_1789741766844_gdl3",
+    "channel": "whatsapp",
+    "customerMessage": "Podemos fechar o contrato no valor total?",
+    "agentReply": "Transferindo seu atendimento para nossa equipe comercial agora mesmo. Um especialista assumirá a conversa em instantes.",
+    "status": "handed_over",
+    "handoverReason": "Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000)",
+    "taskId": "tas_1789741766848_lsc7",
+    "timestamp": "2026-09-18T14:29:26.852Z",
+    "id": "ai__1789741766852_euiw",
+    "createdAt": "2026-09-18T14:29:26.852Z",
+    "updatedAt": "2026-09-18T14:29:26.852Z"
+  }
+]

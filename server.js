@@ -28,7 +28,9 @@ const {
   campaignsDB,
   vehiclesDB,
   auditLogsDB,
-  aiUsageDB
+  aiUsageDB,
+  aiAgentsDB,
+  aiConversationsDB
 } = require('./database/db');
 
 const { 
@@ -69,6 +71,12 @@ const {
   generateAIResponse, 
   listAvailableModels 
 } = require('./services/aiGatewayService');
+
+const { 
+  ensureTenantAgents, 
+  checkHandoverRequired, 
+  processAgentInteraction 
+} = require('./services/aiAgentService');
 
 const { 
   TRIGGERS, 
@@ -1338,6 +1346,72 @@ const server = http.createServer(async (req, res) => {
     };
 
     return sendJson(res, 200, { success: true, summary, count: usageRecords.length, data: usageRecords });
+  }
+
+  // 13.10 AGENTES DE IA COMERCIAIS & TRANSBORDO HUMANO (FASE 7)
+  if (pathname === '/api/ai/agents' && method === 'GET') {
+    const agents = ensureTenantAgents(tenantId);
+    return sendJson(res, 200, { success: true, count: agents.length, data: agents });
+  }
+
+  if (pathname === '/api/ai/agents' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    if (!body.name) return sendJson(res, 400, { error: 'Nome do agente de IA é obrigatório.' });
+    const agent = aiAgentsDB.insert({
+      tenantId,
+      name: body.name,
+      role: body.role || 'SDR',
+      autonomyLevel: body.autonomyLevel || 'copiloto',
+      tone: body.tone || 'consultivo_estrategico',
+      systemPrompt: body.systemPrompt || 'Você é um assistente comercial inteligente focado em ajudar o cliente.',
+      maxDealAutonomy: Number(body.maxDealAutonomy || 25000),
+      handoverKeywords: body.handoverKeywords || ['humano', 'atendente', 'gerente'],
+      active: body.active !== false,
+      createdAt: new Date().toISOString()
+    });
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'AI_AGENT_CREATED',
+      resource: 'ai_agents',
+      entityId: agent.id,
+      ip: clientIp,
+      description: `${ctx.name} criou o agente de IA '${agent.name}'.`
+    });
+
+    return sendJson(res, 201, { success: true, data: agent });
+  }
+
+  if (pathname.startsWith('/api/ai/agents/') && pathname.endsWith('/interact') && method === 'POST') {
+    const agentId = pathname.split('/')[4];
+    const body = await parseRequestBody(req);
+    if (!body.message) {
+      return sendJson(res, 400, { error: 'Mensagem do cliente é obrigatória.' });
+    }
+
+    try {
+      const interactionResult = await processAgentInteraction({
+        agentId,
+        leadId: body.leadId,
+        dealId: body.dealId,
+        message: body.message,
+        tenantId,
+        channel: body.channel || 'whatsapp',
+        userId: ctx.userId
+      });
+
+      return sendJson(res, 200, { success: true, ...interactionResult });
+    } catch (err) {
+      return sendJson(res, 500, { error: err.message });
+    }
+  }
+
+  if (pathname === '/api/ai/conversations' && method === 'GET') {
+    const convs = aiConversationsDB.findByTenant(tenantId)
+      .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+    return sendJson(res, 200, { success: true, count: convs.length, data: convs });
   }
 
   // 14. CLAUDE AI COPILOT ENDPOINTS EXISTENTES

@@ -1368,6 +1368,154 @@ async function runTests() {
   console.log('  ✅ Teste 23 Aprovado: AI Gateway Multi-LLM, Cache LRU, Telemetria e Anti-IDOR 100% validados.\n');
   passed++;
 
+  // =========================================================================
+  // TESTE 24: VALIDAÇÃO DO AGENTE COMERCIAL DE IA E TRANSBORDO HUMANO (FASE 7)
+  // =========================================================================
+  console.log('▶ Teste 24: Validação do Agente Comercial de IA e Transbordo Humano (FASE 7)...');
+
+  // 24.1 Listagem de Agentes de IA Padrão do Tenant (GET /api/ai/agents)
+  const listAgentsRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/ai/agents',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(listAgentsRes.status, 200, 'GET /api/ai/agents deve responder HTTP 200');
+  assert.strictEqual(listAgentsRes.body.success, true);
+  assert.ok(listAgentsRes.body.data.length >= 2, 'Deve inicializar ao menos Sofia e Lucas como agentes');
+  const sofiaAgent = listAgentsRes.body.data.find(a => a.name.includes('Sofia'));
+  assert.ok(sofiaAgent, 'Agente Sofia Closer deve existir');
+
+  // 24.2 Atendimento Comercial Autônomo com IA (Sem transbordo)
+  const agentChatRes1 = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      leadId: leadA.id,
+      message: 'Quais são as condições de pagamento e faturamento no PIX?'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/ai/agents/${sofiaAgent.id}/interact`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(agentChatRes1.status, 200, 'POST /api/ai/agents/:id/interact deve responder HTTP 200');
+  assert.strictEqual(agentChatRes1.body.handover, false, 'Dúvida normal não deve acionar transbordo');
+  assert.ok(agentChatRes1.body.reply && agentChatRes1.body.reply.length > 20, 'IA deve gerar resposta comercial');
+
+  // 24.3 Transbordo Humano por Palavra-Chave Explícita
+  const agentChatRes2 = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      leadId: leadA.id,
+      message: 'Quero falar com um atendente humano urgente, não quero falar com robô.'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/ai/agents/${sofiaAgent.id}/interact`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(agentChatRes2.status, 200, 'Interação de transbordo deve responder HTTP 200');
+  assert.strictEqual(agentChatRes2.body.handover, true, 'Pedido de humano deve acionar transbordo');
+  assert.ok(agentChatRes2.body.taskId, 'Deve criar tarefa urgente para vendedor humano');
+
+  // 24.4 Transbordo Humano por Teto de Autonomia Financeira
+  const highValueDeal = dealsDB.insert({
+    tenantId: 'ten_demo_agentise',
+    leadId: leadA.id,
+    title: 'Negociação Mega Enterprise',
+    value: 95000,
+    stage: 'proposta'
+  });
+
+  const agentChatRes3 = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      leadId: leadA.id,
+      dealId: highValueDeal.id,
+      message: 'Podemos fechar o contrato no valor total?'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/ai/agents/${sofiaAgent.id}/interact`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(agentChatRes3.body.handover, true, 'Negócio acima do teto de autonomia deve transbordar');
+  dealsDB.delete(highValueDeal.id);
+
+  // 24.5 Consulta ao Histórico de Sessões com IA (GET /api/ai/conversations)
+  const convsRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/ai/conversations',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(convsRes.status, 200, 'GET /api/ai/conversations deve responder HTTP 200');
+  assert.ok(convsRes.body.data.length >= 2, 'Deve conter as interações registradas no histórico');
+
+  // 24.6 Isolamento Anti-IDOR em Agentes de IA
+  const idorAgentRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({ message: 'Ataque cross-tenant' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/ai/agents/${sofiaAgent.id}/interact`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${otherTenantAdminToken}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(idorAgentRes.status, 500, 'Tentativa de interagir com agente de outro tenant deve falhar (Tenant mismatch)');
+
+  console.log('  ✅ Teste 24 Aprovado: Agente Comercial de IA, Transbordo Humano, Teto de Autonomia e Histórico validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste
