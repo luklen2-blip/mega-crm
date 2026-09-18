@@ -476,14 +476,27 @@
             <p class="text-xs text-slate-400">Qualificação BANT, pitchs consultivos e quebra de objeções baseados no Cérebro da Empresa.</p>
           </div>
 
-          <!-- 4 Níveis Operacionais da IA -->
-          <div class="flex items-center gap-1.5 p-1 bg-slate-900 border border-slate-700 rounded-xl">
-            <button onclick="setAiLevel('desativada')" id="btn-ai-desativada" class="px-2.5 py-1 text-[11px] rounded-lg font-medium text-slate-400 transition">Desativada</button>
-            <button onclick="setAiLevel('assistente')" id="btn-ai-assistente" class="px-2.5 py-1 text-[11px] rounded-lg font-medium text-slate-400 transition">Assistente</button>
-            <button onclick="setAiLevel('copiloto')" id="btn-ai-copiloto" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-blue-600 text-white transition">Copiloto</button>
-            <button onclick="setAiLevel('autonoma')" id="btn-ai-autonoma" class="px-2.5 py-1 text-[11px] rounded-lg font-medium text-slate-400 transition">Autônoma</button>
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Seletor de Modelo Multi-LLM (FASE 6) -->
+            <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-300">
+              <i data-lucide="cpu" class="h-3.5 w-3.5 text-blue-400 shrink-0"></i>
+              <select id="ai-model-selector" class="bg-transparent text-xs text-white font-semibold focus:outline-none cursor-pointer pr-1">
+                <option value="auto">⚡ Automático (Roteamento)</option>
+                <option value="claude">🟣 Claude 3.5 Sonnet</option>
+                <option value="gemini">🔵 Gemini 1.5 Flash</option>
+                <option value="openai">🟢 GPT-4o Mini</option>
+                <option value="ollama">🏠 Ollama Local</option>
+              </select>
+            </div>
+
+            <!-- 4 Níveis Operacionais da IA -->
+            <div class="flex items-center gap-1.5 p-1 bg-slate-900 border border-slate-700 rounded-xl">
+              <button onclick="setAiLevel('desativada')" id="btn-ai-desativada" class="px-2.5 py-1 text-[11px] rounded-lg font-medium text-slate-400 transition">Desativada</button>
+              <button onclick="setAiLevel('assistente')" id="btn-ai-assistente" class="px-2.5 py-1 text-[11px] rounded-lg font-medium text-slate-400 transition">Assistente</button>
+              <button onclick="setAiLevel('copiloto')" id="btn-ai-copiloto" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-blue-600 text-white transition">Copiloto</button>
+              <button onclick="setAiLevel('autonoma')" id="btn-ai-autonoma" class="px-2.5 py-1 text-[11px] rounded-lg font-medium text-slate-400 transition">Autônoma</button>
+            </div>
           </div>
-        </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <!-- Left: Seletor de Contexto -->
@@ -526,8 +539,23 @@
               </div>
             </div>
 
+            <!-- Chat Livre com Copiloto IA (FASE 6) -->
+            <div class="flex gap-2">
+              <input type="text" id="copilot-freeform-input" onkeydown="if(event.key==='Enter') sendFreeformCopilotPrompt()" placeholder="Pergunte ao Copiloto (ex: crie um script para contornar objeção de prazo)..." class="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+              <button type="button" id="btn-send-freeform" onclick="sendFreeformCopilotPrompt()" class="px-3.5 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 transition">
+                <i data-lucide="send" class="h-3.5 w-3.5"></i>
+                <span>Enviar</span>
+              </button>
+            </div>
+
             <div>
-              <label class="block text-xs text-slate-400 mb-1">Mensagem Gerada pela IA</label>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs text-slate-400">Mensagem Gerada pela IA</label>
+                <div id="copilot-meta-badge" class="text-[10px] text-slate-500 flex items-center gap-3">
+                  <span>Modelo: <strong id="copilot-used-model" class="text-blue-400">Auto</strong></span>
+                  <span>Latência: <strong id="copilot-latency" class="text-emerald-400">-</strong></span>
+                </div>
+              </div>
               <textarea id="copilot-output" rows="6" class="w-full p-3 text-xs rounded-xl bg-slate-900 border border-slate-700 text-slate-200 focus:outline-none focus:border-blue-500" placeholder="Aguardando comando do vendedor..."></textarea>
             </div>
 

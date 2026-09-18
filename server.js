@@ -27,7 +27,8 @@ const {
   automationsDB,
   campaignsDB,
   vehiclesDB,
-  auditLogsDB
+  auditLogsDB,
+  aiUsageDB
 } = require('./database/db');
 
 const { 
@@ -63,6 +64,11 @@ const {
   handleObjection, 
   runManagerAnalyticsQuery 
 } = require('./services/aiCopilotService');
+
+const { 
+  generateAIResponse, 
+  listAvailableModels 
+} = require('./services/aiGatewayService');
 
 const { 
   TRIGGERS, 
@@ -1288,6 +1294,50 @@ const server = http.createServer(async (req, res) => {
     const body = await parseRequestBody(req);
     const result = calculateFinancing(body);
     return sendJson(res, 200, { success: true, data: result });
+  }
+
+  // 13.9 AI GATEWAY MULTI-LLM & TELEMETRIA (FASE 6)
+  if (pathname === '/api/ai/models' && method === 'GET') {
+    const models = listAvailableModels();
+    return sendJson(res, 200, { success: true, count: models.length, data: models });
+  }
+
+  if (pathname === '/api/ai/chat' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    if (!body.prompt) {
+      return sendJson(res, 400, { error: 'Prompt é obrigatório.' });
+    }
+
+    const aiResponse = await generateAIResponse({
+      prompt: body.prompt,
+      systemPrompt: body.systemPrompt,
+      taskType: body.taskType || 'chat',
+      modelPreference: body.modelPreference || 'auto',
+      tenantId,
+      userId: ctx.userId
+    });
+
+    return sendJson(res, 200, { success: true, ...aiResponse });
+  }
+
+  if (pathname === '/api/ai/usage' && method === 'GET') {
+    const usageRecords = aiUsageDB.findByTenant(tenantId);
+    const totalCredits = usageRecords.reduce((sum, r) => sum + (Number(r.costCredits || r.credits) || 0), 0);
+    const cachedCalls = usageRecords.filter(r => r.cached).length;
+    const byModel = {};
+    usageRecords.forEach(r => {
+      const m = r.model || 'outros';
+      byModel[m] = (byModel[m] || 0) + 1;
+    });
+
+    const summary = {
+      totalCalls: usageRecords.length,
+      totalCreditsUsed: totalCredits,
+      cachedCalls,
+      byModel
+    };
+
+    return sendJson(res, 200, { success: true, summary, count: usageRecords.length, data: usageRecords });
   }
 
   // 14. CLAUDE AI COPILOT ENDPOINTS EXISTENTES

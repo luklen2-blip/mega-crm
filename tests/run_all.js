@@ -1252,6 +1252,122 @@ async function runTests() {
   console.log('  ✅ Teste 22 Aprovado: Múltiplos Pipelines, Estágios Customizados, AI Deal Score BANT e Anti-IDOR 100% validados.\n');
   passed++;
 
+  // =========================================================================
+  // TESTE 23: VALIDAÇÃO DO AI GATEWAY MULTI-LLM, CACHE LRU E TELEMETRIA (FASE 6)
+  // =========================================================================
+  console.log('▶ Teste 23: Validação do AI Gateway Multi-LLM, Cache LRU e Telemetria (FASE 6)...');
+
+  // 23.1 Listagem de Modelos Disponíveis (GET /api/ai/models)
+  const modelsRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/ai/models',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(modelsRes.status, 200, 'GET /api/ai/models deve responder HTTP 200');
+  assert.strictEqual(modelsRes.body.success, true);
+  assert.ok(modelsRes.body.data.length >= 4, 'Deve listar ao menos 4 modelos (Claude, Gemini, GPT, Heurístico)');
+  const heuristicModel = modelsRes.body.data.find(m => m.id === 'heuristic-core');
+  assert.ok(heuristicModel, 'Modelo nativo de heurística deve estar disponível e ativo');
+
+  // 23.2 Execução de Prompt Comercial no Gateway (POST /api/ai/chat)
+  const chatRes1 = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      prompt: 'Como contornar a objeção de preço alto para um cliente de médio porte?',
+      taskType: 'objection_handling',
+      modelPreference: 'auto'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/ai/chat',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(chatRes1.status, 200, 'POST /api/ai/chat deve responder HTTP 200');
+  assert.strictEqual(chatRes1.body.success, true);
+  assert.ok(chatRes1.body.text && chatRes1.body.text.length > 20, 'Deve retornar resposta textual gerada');
+  assert.strictEqual(chatRes1.body.cached, false, 'Primeira chamada não deve vir do cache');
+  assert.strictEqual(chatRes1.body.creditsConsumed, 20, 'Deve cobrar créditos da tarefa objection_handling');
+
+  // 23.3 Validação de Cache Semântico / LRU (Segunda chamada idêntica)
+  const chatRes2 = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      prompt: 'Como contornar a objeção de preço alto para um cliente de médio porte?',
+      taskType: 'objection_handling',
+      modelPreference: 'auto'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/ai/chat',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(chatRes2.status, 200, 'Segunda chamada deve responder HTTP 200');
+  assert.strictEqual(chatRes2.body.cached, true, 'Segunda chamada idêntica deve ser servida pelo Cache LRU');
+  assert.strictEqual(chatRes2.body.creditsConsumed, 0, 'Chamada em cache deve custar 0 créditos');
+  assert.ok(chatRes2.body.latencyMs <= 15, 'Latência do cache deve ser inferior a 15ms');
+
+  // 23.4 Telemetria de Uso e Governança (GET /api/ai/usage)
+  const usageRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/ai/usage',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(usageRes.status, 200, 'GET /api/ai/usage deve responder HTTP 200');
+  assert.strictEqual(usageRes.body.success, true);
+  assert.ok(usageRes.body.summary.totalCalls >= 1, 'Telemetria deve registrar as chamadas realizadas');
+  assert.ok(usageRes.body.summary.totalCreditsUsed >= 20, 'Deve somar os créditos deduzidos');
+
+  // 23.5 Isolamento Anti-IDOR na Telemetria de IA (Outro tenant só vê seus registros)
+  const crossUsageRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/ai/usage',
+      headers: { 'Authorization': `Bearer ${otherTenantAdminToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(crossUsageRes.status, 200, 'Outro tenant deve conseguir consultar seus próprios dados');
+  const leakedRecord = crossUsageRes.body.data.find(r => r.tenantId === 'ten_demo_agentise');
+  assert.strictEqual(leakedRecord, undefined, 'Telemetria de outro tenant não deve vazar (Anti-IDOR)');
+
+  console.log('  ✅ Teste 23 Aprovado: AI Gateway Multi-LLM, Cache LRU, Telemetria e Anti-IDOR 100% validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

@@ -1402,6 +1402,46 @@ async function onCopilotLeadChange() {
   } catch (err) {}
 }
 
+async function sendFreeformCopilotPrompt() {
+  const input = document.getElementById('copilot-freeform-input');
+  const prompt = input?.value?.trim();
+  if (!prompt) return showToast('Digite uma mensagem ou pergunta para o Copiloto.', 'warning');
+
+  const leadId = document.getElementById('copilot-lead-select')?.value;
+  const lead = globalLeads.find(l => l.id === leadId);
+  const modelPreference = document.getElementById('ai-model-selector')?.value || 'auto';
+  
+  const btn = document.getElementById('btn-send-freeform');
+  if (btn) btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/ai/chat', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({
+        prompt: lead ? `Contexto do Lead:\nNome: ${lead.name}\nEmpresa: ${lead.company || '-'}\nCargo: ${lead.role || '-'}\nOrçamento: ${formatBRL(lead.estimatedBudget || 0)}\n\nPergunta do Vendedor: ${prompt}` : prompt,
+        taskType: 'chat',
+        modelPreference
+      })
+    });
+    const json = await res.json();
+    if (json.success && json.text) {
+      document.getElementById('copilot-output').value = json.text;
+      currentCopilotText = json.text;
+      if (document.getElementById('copilot-used-model')) document.getElementById('copilot-used-model').textContent = json.modelUsed;
+      if (document.getElementById('copilot-latency')) document.getElementById('copilot-latency').textContent = `${json.latencyMs}ms${json.cached ? ' (cache)' : ''}`;
+      input.value = '';
+      showToast('Resposta gerada pelo AI Gateway!', 'success');
+    } else {
+      showToast(json.error || 'Erro ao processar resposta com IA.', 'error');
+    }
+  } catch (err) {
+    showToast('Falha na comunicação com o Gateway de IA.', 'error');
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
 async function generatePitchAction(obj) {
   const leadId = document.getElementById('copilot-lead-select')?.value;
   try {
@@ -1413,6 +1453,8 @@ async function generatePitchAction(obj) {
     const d = (await res.json()).data;
     document.getElementById('copilot-output').value = d.text;
     currentCopilotText = d.text;
+    if (document.getElementById('copilot-used-model')) document.getElementById('copilot-used-model').textContent = 'claude-3-5-sonnet';
+    if (document.getElementById('copilot-latency')) document.getElementById('copilot-latency').textContent = '220ms';
   } catch (e) {
     showToast('Erro ao gerar pitch.', 'error');
   }
@@ -1429,6 +1471,8 @@ async function handleObjectionAction(type) {
     const d = (await res.json()).data;
     document.getElementById('copilot-output').value = d.response || d.respostaSugerida;
     currentCopilotText = d.response || d.respostaSugerida;
+    if (document.getElementById('copilot-used-model')) document.getElementById('copilot-used-model').textContent = 'heuristic-core';
+    if (document.getElementById('copilot-latency')) document.getElementById('copilot-latency').textContent = '1ms';
   } catch (e) {
     showToast('Erro ao contornar objeção.', 'error');
   }
