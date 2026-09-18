@@ -11,6 +11,8 @@ const path = require('path');
 const { 
   tenantsDB, 
   usersDB, 
+  companiesDB,
+  contactsDB,
   leadsDB, 
   dealsDB, 
   activitiesDB, 
@@ -248,6 +250,178 @@ function serveStatic(req, res, targetFile) {
   return false;
 }
 
+// 10 Estágios Padronizados da Timeline CRM 360° (Agentise V2.0)
+const TIMELINE_STAGES = [
+  { id: 'lead_criado', label: 'Lead Criado', order: 1, icon: 'user-plus' },
+  { id: 'contato', label: 'Contato Inicial', order: 2, icon: 'phone-call' },
+  { id: 'conversa', label: 'Conversa Inbox', order: 3, icon: 'message-square' },
+  { id: 'qualificacao', label: 'Qualificação BANT', order: 4, icon: 'award' },
+  { id: 'proposta', label: 'Proposta Emitida', order: 5, icon: 'file-text' },
+  { id: 'follow_up', label: 'Follow-up Realizado', order: 6, icon: 'clock' },
+  { id: 'pix', label: 'PIX Gerado', order: 7, icon: 'qr-code' },
+  { id: 'pagamento', label: 'Pagamento Confirmado', order: 8, icon: 'check-circle' },
+  { id: 'venda', label: 'Venda Concluída', order: 9, icon: 'trophy' },
+  { id: 'pos_venda', label: 'Pós-Venda / Retenção', order: 10, icon: 'heart-handshake' }
+];
+
+function buildClientTimeline(lead, tenantId) {
+  const events = [];
+
+  // 1. Criação do Lead
+  events.push({
+    id: `ev_created_${lead.id}`,
+    stage: 'lead_criado',
+    stageLabel: 'Lead Criado',
+    icon: 'user-plus',
+    title: `Lead cadastrado no CRM 360°`,
+    description: `Origem: ${lead.origin || 'Direta'} | Score inicial: ${lead.score || 50}`,
+    timestamp: lead.createdAt,
+    author: lead.assignedTo || 'Sistema'
+  });
+
+  // 2. Qualificação BANT (se houver)
+  if (lead.bantData && Object.keys(lead.bantData).length > 0) {
+    events.push({
+      id: `ev_bant_${lead.id}`,
+      stage: 'qualificacao',
+      stageLabel: 'Qualificação BANT',
+      icon: 'award',
+      title: `Qualificação BANT pela IA`,
+      description: `Score BANT: ${lead.bantData.score || lead.score || 70}/100 - Autoridade: ${lead.bantData.authority || 'Mapeado'}`,
+      timestamp: lead.updatedAt || lead.createdAt,
+      author: 'Claude AI Copilot'
+    });
+  }
+
+  // 3. Atividades registradas
+  const activities = activitiesDB.findByTenant(tenantId, a => a.leadId === lead.id);
+  activities.forEach(act => {
+    let stage = 'contato';
+    let icon = 'phone-call';
+    if (act.type === 'meeting') { stage = 'qualificacao'; icon = 'calendar'; }
+    else if (act.type === 'whatsapp' || act.type === 'email') { stage = 'conversa'; icon = 'message-square'; }
+    else if (act.type === 'follow_up') { stage = 'follow_up'; icon = 'clock'; }
+    else if (act.type === 'stage_change') { stage = 'follow_up'; icon = 'git-commit'; }
+    else if (act.type === 'deal_created') { stage = 'qualificacao'; icon = 'briefcase'; }
+
+    events.push({
+      id: act.id,
+      stage,
+      stageLabel: stage.replace('_', ' ').toUpperCase(),
+      icon,
+      title: act.title || act.type,
+      description: act.description || '',
+      timestamp: act.timestamp || act.createdAt,
+      author: act.author || 'Equipe Comercial'
+    });
+  });
+
+  // 4. Tarefas e Follow-ups
+  const tasks = tasksDB.findByTenant(tenantId, t => t.leadId === lead.id);
+  tasks.forEach(task => {
+    events.push({
+      id: task.id,
+      stage: 'follow_up',
+      stageLabel: 'Follow-up',
+      icon: task.completed ? 'check-circle' : 'clock',
+      title: `Tarefa: ${task.title}`,
+      description: `Prioridade: ${(task.priority || 'media').toUpperCase()} | Status: ${task.completed ? 'Concluída' : 'Pendente'}`,
+      timestamp: task.createdAt,
+      author: task.assignedTo || 'Equipe'
+    });
+  });
+
+  // 5. Propostas e Cobranças PIX
+  const proposals = proposalsDB.findByTenant(tenantId, p => p.leadId === lead.id);
+  proposals.forEach(p => {
+    events.push({
+      id: p.id,
+      stage: 'proposta',
+      stageLabel: 'Proposta Emitida',
+      icon: 'file-text',
+      title: `Proposta de R$ ${Number(p.amount).toLocaleString('pt-BR')}`,
+      description: `Status: ${(p.status || 'pendente').toUpperCase()} | TXID: ${p.txId || 'CRM'}`,
+      timestamp: p.createdAt,
+      author: 'Financeiro'
+    });
+
+    if (p.pixPayload) {
+      events.push({
+        id: `${p.id}_pix`,
+        stage: 'pix',
+        stageLabel: 'PIX Gerado',
+        icon: 'qr-code',
+        title: `QR Code PIX gerado (luklen2@gmail.com)`,
+        description: `Payload EMV Oficial Banco Central emitido no valor de R$ ${Number(p.amount).toLocaleString('pt-BR')}`,
+        timestamp: p.createdAt,
+        author: 'Sistema PIX'
+      });
+    }
+
+    if (p.status === 'paga' || p.paidAt) {
+      events.push({
+        id: `${p.id}_paid`,
+        stage: 'pagamento',
+        stageLabel: 'Pagamento Confirmado',
+        icon: 'check-circle-2',
+        title: `PIX Confirmado - R$ ${Number(p.amount).toLocaleString('pt-BR')}`,
+        description: `Baixa financeira realizada com sucesso`,
+        timestamp: p.paidAt || p.updatedAt,
+        author: 'Financeiro'
+      });
+    }
+  });
+
+  // 6. Oportunidades e Vendas
+  const deals = dealsDB.findByTenant(tenantId, d => d.leadId === lead.id);
+  deals.forEach(d => {
+    if (d.stage === 'ganho') {
+      events.push({
+        id: `${d.id}_won`,
+        stage: 'venda',
+        stageLabel: 'Venda Concluída',
+        icon: 'trophy',
+        title: `Venda Fechada: ${d.title}`,
+        description: `Receita gerada: R$ ${Number(d.value).toLocaleString('pt-BR')} faturada com sucesso!`,
+        timestamp: d.closedAt || d.updatedAt,
+        author: d.assignedTo || 'Equipe'
+      });
+      events.push({
+        id: `${d.id}_pos`,
+        stage: 'pos_venda',
+        stageLabel: 'Pós-Venda / Retenção',
+        icon: 'heart-handshake',
+        title: `Ativação de Pós-Venda & Onboarding`,
+        description: `Cliente migrado para a esteira de retenção e acompanhamento contínuo.`,
+        timestamp: d.closedAt || d.updatedAt,
+        author: 'Customer Success'
+      });
+    }
+  });
+
+  // Ordena eventos do mais recente para o mais antigo
+  events.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+
+  // Determina estágio atual com base nos eventos
+  const stagesReached = new Set(events.map(e => e.stage));
+  let currentStageIndex = 0;
+  TIMELINE_STAGES.forEach((s, idx) => {
+    if (stagesReached.has(s.id)) currentStageIndex = Math.max(currentStageIndex, idx);
+  });
+
+  return {
+    lead,
+    stages: TIMELINE_STAGES.map((s, idx) => ({
+      ...s,
+      completed: idx <= currentStageIndex,
+      current: idx === currentStageIndex
+    })),
+    currentStage: TIMELINE_STAGES[currentStageIndex],
+    eventsCount: events.length,
+    events
+  };
+}
+
 const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = parsedUrl.pathname;
@@ -478,7 +652,53 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, message: 'Configuração do negócio concluída com sucesso.' });
   }
 
-  // 4. LEADS (COM ISOLAMENTO MULTI-TENANT)
+  // 3.1 EMPRESAS & CLIENTES PJ (CRM 360°)
+  if (pathname === '/api/companies' && method === 'GET') {
+    const companies = companiesDB.findByTenant(tenantId);
+    return sendJson(res, 200, { success: true, count: companies.length, data: companies });
+  }
+
+  if (pathname === '/api/companies' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    if (!body.name) return sendJson(res, 400, { error: 'Nome da empresa é obrigatório.' });
+    const company = companiesDB.insert({ ...body, tenantId });
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'COMPANY_CREATED',
+      resource: 'companies',
+      entityId: company.id,
+      ip: clientIp,
+      description: `${ctx.name} cadastrou a empresa '${company.name}'.`
+    });
+    return sendJson(res, 201, { success: true, data: company });
+  }
+
+  // 3.2 CONTATOS & DECISORES (CRM 360°)
+  if (pathname === '/api/contacts' && method === 'GET') {
+    const contacts = contactsDB.findByTenant(tenantId);
+    return sendJson(res, 200, { success: true, count: contacts.length, data: contacts });
+  }
+
+  if (pathname === '/api/contacts' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    if (!body.name) return sendJson(res, 400, { error: 'Nome do contato é obrigatório.' });
+    const contact = contactsDB.insert({ ...body, tenantId });
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'CONTACT_CREATED',
+      resource: 'contacts',
+      entityId: contact.id,
+      ip: clientIp,
+      description: `${ctx.name} cadastrou o contato '${contact.name}'.`
+    });
+    return sendJson(res, 201, { success: true, data: contact });
+  }
+
+  // 4. LEADS & CRM 360° (COM ISOLAMENTO MULTI-TENANT)
   if (pathname === '/api/leads' && method === 'GET') {
     const leads = leadsDB.findByTenant(tenantId);
     return sendJson(res, 200, { success: true, count: leads.length, data: leads });
@@ -494,6 +714,42 @@ const server = http.createServer(async (req, res) => {
     const lead = leadsDB.insert({ ...body, tenantId });
     await triggerWorkflows('novo_lead', { leadId: lead.id, name: lead.name, phone: lead.phone }, tenantId);
     return sendJson(res, 201, { success: true, data: lead });
+  }
+
+  // Linha do Tempo CRM 360° (10 Estágios Padronizados)
+  if ((pathname.startsWith('/api/leads/') || pathname.startsWith('/api/clients/')) && pathname.endsWith('/timeline') && method === 'GET') {
+    const parts = pathname.split('/');
+    const id = parts[3];
+    const lead = leadsDB.findById(id);
+    if (!lead || (lead.tenantId && lead.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Cliente/Lead não encontrado.' });
+    }
+    const timeline = buildClientTimeline(lead, tenantId);
+    return sendJson(res, 200, { success: true, data: timeline });
+  }
+
+  // Registro de Atividade / Interação na Timeline
+  if (pathname.startsWith('/api/leads/') && pathname.endsWith('/activities') && method === 'POST') {
+    const id = pathname.split('/')[3];
+    const lead = leadsDB.findById(id);
+    if (!lead || (lead.tenantId && lead.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Lead não encontrado.' });
+    }
+    const body = await parseRequestBody(req);
+    if (!body.description && !body.title) {
+      return sendJson(res, 400, { error: 'Título ou descrição da atividade é obrigatório.' });
+    }
+    const activity = activitiesDB.insert({
+      tenantId,
+      leadId: lead.id,
+      dealId: body.dealId || null,
+      type: body.type || 'note',
+      title: body.title || 'Interação registrada',
+      description: body.description || '',
+      author: ctx.name,
+      timestamp: new Date().toISOString()
+    });
+    return sendJson(res, 201, { success: true, data: activity });
   }
 
   if (pathname.startsWith('/api/leads/') && method === 'GET') {

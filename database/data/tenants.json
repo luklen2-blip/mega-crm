@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 2080,
+    "aiCreditsUsed": 2150,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,7 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-18T14:11:15.083Z"
+    "updatedAt": "2026-09-18T14:17:32.788Z"
   },
   {
     "id": "ten_autoprime_veiculos",

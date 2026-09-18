@@ -945,6 +945,156 @@ async function runTests() {
   console.log('  ✅ Teste 20 Aprovado: Schema PostgreSQL, coleções JsonDB V2, auditoria delta (valor anterior/novo) e RBAC validados.\n');
   passed++;
 
+  // =========================================================================
+  // TESTE 21: VALIDAÇÃO DO CRM 360°, EMPRESAS, CONTATOS E TIMELINE 10 ESTÁGIOS (FASE 4)
+  // =========================================================================
+  console.log('▶ Teste 21: Validação do CRM 360°, Empresas, Contatos e Linha do Tempo de 10 Estágios (FASE 4)...');
+
+  // 21.1 Criação de Empresa PJ (POST /api/companies)
+  const createCompanyRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      name: 'Acme Corporativa S.A.',
+      cnpj: '12.345.678/0001-90',
+      industry: 'Tecnologia',
+      annualRevenue: 5000000
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/companies',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(createCompanyRes.status, 201, 'POST /api/companies deve responder HTTP 201');
+  assert.strictEqual(createCompanyRes.body.success, true);
+  const testCompanyId = createCompanyRes.body.data.id;
+
+  // 21.2 Listagem de Empresas (GET /api/companies)
+  const listCompaniesRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/companies',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(listCompaniesRes.status, 200, 'GET /api/companies deve responder HTTP 200');
+  assert.ok(listCompaniesRes.body.data.some(c => c.id === testCompanyId), 'Empresa criada deve constar na listagem');
+
+  // 21.3 Criação de Contato Decisor (POST /api/contacts)
+  const createContactRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      name: 'Mariana Lima',
+      role: 'Diretora de Operações',
+      email: 'mariana.lima@acmecorp.com.br',
+      phone: '11988887777',
+      companyId: testCompanyId
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/contacts',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(createContactRes.status, 201, 'POST /api/contacts deve responder HTTP 201');
+  assert.strictEqual(createContactRes.body.success, true);
+
+  // 21.4 Criação de Lead e Registro de Interação na Timeline (POST /api/leads/:id/activities)
+  const testLead360 = leadsDB.insert({
+    tenantId: 'ten_demo_agentise',
+    name: 'Roberto Valente',
+    company: 'Acme Corporativa S.A.',
+    email: 'roberto@acme.com',
+    phone: '11977776666',
+    estimatedBudget: 35000,
+    tags: ['Decisor', 'ERP'],
+    createdAt: new Date().toISOString()
+  });
+
+  const createActivityRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      type: 'call',
+      title: 'Ligação de Alinhamento Técnico',
+      description: 'Cliente confirmou interesse na proposta e solicitou emissão do PIX comercial.'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/leads/${testLead360.id}/activities`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${vendedorToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(createActivityRes.status, 201, 'POST /api/leads/:id/activities deve retornar HTTP 201');
+  assert.strictEqual(createActivityRes.body.success, true);
+
+  // 21.5 Consulta à Linha do Tempo Comercial 360° (GET /api/leads/:id/timeline)
+  const timelineRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/leads/${testLead360.id}/timeline`,
+      headers: { 'Authorization': `Bearer ${vendedorToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(timelineRes.status, 200, 'GET /api/leads/:id/timeline deve retornar HTTP 200');
+  assert.strictEqual(timelineRes.body.success, true);
+  assert.strictEqual(timelineRes.body.data.stages.length, 10, 'A linha do tempo deve contemplar os 10 estágios padronizados');
+  assert.ok(timelineRes.body.data.events.some(e => e.title === 'Ligação de Alinhamento Técnico'), 'A atividade registrada deve constar no feed');
+
+  // 21.6 Isolamento Anti-IDOR na Linha do Tempo 360°
+  const idorTimelineRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/leads/${testLead360.id}/timeline`,
+      headers: { 'Authorization': `Bearer ${otherTenantAdminToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+  });
+  assert.strictEqual(idorTimelineRes.status, 404, 'Tentativa de acessar timeline de outro tenant deve receber HTTP 404');
+
+  // Limpa lead temporário
+  leadsDB.delete(testLead360.id);
+
+  console.log('  ✅ Teste 21 Aprovado: CRM 360°, Empresas, Contatos, Linha do Tempo de 10 Estágios e Anti-IDOR 100% validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1789741053254_bja1",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1789741053265_rqjo",
+    "createdAt": "2026-09-18T14:17:33.265Z",
+    "updatedAt": "2026-09-18T14:17:33.265Z"
+  }
+]

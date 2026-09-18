@@ -323,6 +323,9 @@ function createKanbanCard(deal) {
     <div class="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[11px]">
       <span class="font-bold text-emerald-400">${formatBRL(deal.value)}</span>
       <div class="flex items-center gap-1.5">
+        <button onclick="openLead360('${deal.leadId}')" title="Visão 360° do Cliente" class="p-1 rounded hover:bg-indigo-500/20 text-indigo-400">
+          <i data-lucide="compass" class="h-3.5 w-3.5"></i>
+        </button>
         <button onclick="quickCopilotForDeal('${deal.id}')" title="Copiloto IA" class="p-1 rounded hover:bg-blue-500/20 text-blue-400">
           <i data-lucide="bot" class="h-3.5 w-3.5"></i>
         </button>
@@ -471,16 +474,184 @@ async function deleteLead(leadId) {
   }
 }
 
-function openLead360(leadId) {
-  const lead = globalLeads.find(l => l.id === leadId);
-  if (!lead) return;
-  
-  // Alterna para copiloto já com este lead selecionado
-  switchView('copilot');
-  const sel = document.getElementById('copilot-lead-select');
-  if (sel) {
-    sel.value = leadId;
-    onCopilotLeadChange();
+let current360Lead = null;
+
+async function openLead360(leadId) {
+  try {
+    const res = await fetch(`/api/leads/${leadId}/timeline`, { headers: authHeaders() });
+    if (!res.ok) {
+      showToast('Não foi possível carregar a Visão 360° do cliente.', 'error');
+      return;
+    }
+    const json = await res.json();
+    const timelineData = json.data;
+    if (!timelineData || !timelineData.lead) {
+      showToast('Lead não encontrado.', 'error');
+      return;
+    }
+
+    current360Lead = timelineData.lead;
+    const lead = timelineData.lead;
+
+    // Preenche cabeçalho do modal
+    const nameEl = document.getElementById('modal-360-lead-name');
+    const badgeEl = document.getElementById('modal-360-stage-badge');
+    const compEl = document.getElementById('modal-360-company');
+    const contactEl = document.getElementById('modal-360-contact');
+    const budgetEl = document.getElementById('modal-360-budget');
+    const eventsCountEl = document.getElementById('modal-360-events-count');
+    const hiddenLeadId = document.getElementById('activity-lead-id');
+
+    if (nameEl) nameEl.textContent = lead.name || 'Lead sem nome';
+    if (badgeEl) {
+      badgeEl.textContent = timelineData.currentStage?.label || 'Em Atendimento';
+      badgeEl.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300';
+    }
+    if (compEl) compEl.innerHTML = `<i data-lucide="building-2" class="h-3.5 w-3.5 text-slate-500"></i> ${escapeHtml(lead.company || 'Pessoa Física')}`;
+    if (contactEl) contactEl.innerHTML = `<i data-lucide="phone" class="h-3.5 w-3.5 text-slate-500"></i> ${escapeHtml(lead.phone || '-')} · ${escapeHtml(lead.email || '-')}`;
+    if (budgetEl) budgetEl.innerHTML = `<i data-lucide="dollar-sign" class="h-3.5 w-3.5"></i> ${formatBRL(lead.estimatedBudget || 0)}`;
+    if (eventsCountEl) eventsCountEl.textContent = `${timelineData.eventsCount || 0} eventos registrados`;
+    if (hiddenLeadId) hiddenLeadId.value = lead.id;
+
+    // Configura botão do WhatsApp
+    const waLink = document.getElementById('modal-360-whatsapp-link');
+    if (waLink) {
+      if (lead.phone) {
+        waLink.href = `https://wa.me/55${lead.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Olá ' + lead.name + ', tudo bem? Aqui é da equipe comercial.')}`;
+        waLink.classList.remove('hidden');
+        waLink.classList.add('inline-flex');
+      } else {
+        waLink.classList.add('hidden');
+        waLink.classList.remove('inline-flex');
+      }
+    }
+
+    // Renderiza a esteira de 10 estágios
+    renderTimelineStagesTrack(timelineData.stages || []);
+
+    // Renderiza os eventos
+    renderTimelineEventsFeed(timelineData.events || []);
+
+    openModal('modal-client-360');
+    if (window.lucide) lucide.createIcons();
+  } catch (err) {
+    console.error('Erro ao abrir CRM 360:', err);
+    showToast('Falha de conexão ao carregar linha do tempo.', 'error');
+  }
+}
+
+function renderTimelineStagesTrack(stages) {
+  const track = document.getElementById('modal-360-stages-track');
+  if (!track) return;
+  track.innerHTML = '';
+
+  stages.forEach((stg, idx) => {
+    const isCompleted = stg.completed;
+    const isCurrent = stg.current;
+
+    let bgClass = 'bg-slate-800 text-slate-400 border-slate-700';
+    let iconName = 'circle';
+    if (isCompleted && !isCurrent) {
+      bgClass = 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400';
+      iconName = 'check-circle-2';
+    } else if (isCurrent) {
+      bgClass = 'bg-blue-600 text-white border-blue-400 shadow-md shadow-blue-500/30 ring-2 ring-blue-400/40';
+      iconName = 'compass';
+    }
+
+    const stageItem = document.createElement('div');
+    stageItem.className = `flex-1 min-w-[70px] flex flex-col items-center text-center p-1.5 rounded-xl border text-[10px] transition ${bgClass}`;
+    stageItem.innerHTML = `
+      <i data-lucide="${iconName}" class="h-3.5 w-3.5 mb-1"></i>
+      <span class="font-bold leading-tight truncate w-full" title="${escapeHtml(stg.label)}">${escapeHtml(stg.label)}</span>
+    `;
+    track.appendChild(stageItem);
+  });
+}
+
+function renderTimelineEventsFeed(events) {
+  const feed = document.getElementById('modal-360-events-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  if (events.length === 0) {
+    feed.innerHTML = `
+      <div class="text-center py-6 text-slate-500 text-xs">
+        <i data-lucide="history" class="h-8 w-8 mx-auto mb-2 opacity-40"></i>
+        Nenhuma interação registrada ainda para este lead.
+      </div>
+    `;
+    return;
+  }
+
+  events.forEach(evt => {
+    const card = document.createElement('div');
+    card.className = 'p-3 rounded-xl bg-slate-900/80 border border-slate-800/80 hover:border-blue-500/20 transition text-xs space-y-1';
+    
+    const timeStr = evt.timestamp ? new Date(evt.timestamp).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : 'Agora';
+
+    card.innerHTML = `
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="p-1 rounded-lg bg-blue-500/15 text-blue-400">
+            <i data-lucide="${evt.icon || 'calendar'}" class="h-3.5 w-3.5"></i>
+          </span>
+          <span class="font-bold text-white">${escapeHtml(evt.title || 'Evento')}</span>
+          <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 uppercase font-semibold">${escapeHtml(evt.stageLabel || evt.stage || '')}</span>
+        </div>
+        <span class="text-[10px] text-slate-500">${timeStr}</span>
+      </div>
+      ${evt.description ? `<p class="text-slate-300 text-[11px] pl-7 leading-relaxed">${escapeHtml(evt.description)}</p>` : ''}
+      <div class="text-[10px] text-slate-500 pl-7 flex items-center gap-1 pt-0.5">
+        <i data-lucide="user" class="h-3 w-3"></i>
+        <span>Responsável: <strong>${escapeHtml(evt.author || 'Equipe')}</strong></span>
+      </div>
+    `;
+    feed.appendChild(card);
+  });
+}
+
+async function submitTimelineActivity(e) {
+  e.preventDefault();
+  const leadId = document.getElementById('activity-lead-id')?.value;
+  const type = document.getElementById('activity-type')?.value;
+  const title = document.getElementById('activity-title')?.value;
+  const description = document.getElementById('activity-description')?.value;
+
+  if (!leadId || !title) {
+    showToast('Preencha os campos obrigatórios.', 'warning');
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/leads/${leadId}/activities`, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ type, title, description })
+    });
+    const json = await res.json();
+    if (res.ok) {
+      showToast('Interação registrada na Linha do Tempo 360°!', 'success');
+      document.getElementById('activity-title').value = '';
+      document.getElementById('activity-description').value = '';
+      // Recarrega a timeline 360 do lead
+      await openLead360(leadId);
+    } else {
+      showToast(json.error || 'Erro ao registrar interação.', 'error');
+    }
+  } catch (err) {
+    showToast('Falha na comunicação ao registrar interação.', 'error');
+  }
+}
+
+function openPixModalFrom360() {
+  if (!current360Lead) return;
+  closeModal('modal-client-360');
+  switchView('pix');
+  if (document.getElementById('pix-amount')) document.getElementById('pix-amount').value = current360Lead.estimatedBudget || 5000;
+  if (document.getElementById('pix-desc')) document.getElementById('pix-desc').value = `Proposta Comercial - ${current360Lead.name}`;
+  if (document.getElementById('pix-phone') && current360Lead.phone) {
+    document.getElementById('pix-phone').value = current360Lead.phone;
   }
 }
 

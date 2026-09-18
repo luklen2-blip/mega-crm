@@ -168,20 +168,6 @@
     "paidAt": "2026-09-18T14:10:42.638Z"
   },
   {
-    "id": "prop_autoprime_bmw_11",
-    "tenantId": "ten_autoprime_veiculos",
-    "dealId": "deal_autoprime_bmw_villasboas",
-    "leadId": "lead_autoprime_51_villasboas",
-    "amount": 340000,
-    "pixKey": "financeiro@autoprime.com.br",
-    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
-    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
-    "status": "enviada",
-    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
-    "createdAt": "2026-09-18T14:11:15.125Z",
-    "updatedAt": "2026-09-18T14:11:15.125Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "dealId": null,
     "leadId": null,
@@ -194,5 +180,47 @@
     "createdAt": "2026-09-18T14:11:15.431Z",
     "updatedAt": "2026-09-18T14:11:15.444Z",
     "paidAt": "2026-09-18T14:11:15.444Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "amount": 15000,
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM9270416304E28D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM9270416304E28D",
+    "status": "paga",
+    "id": "pro_1789740927041_mnu0",
+    "createdAt": "2026-09-18T14:15:27.041Z",
+    "updatedAt": "2026-09-18T14:15:27.054Z",
+    "paidAt": "2026-09-18T14:15:27.054Z"
+  },
+  {
+    "id": "prop_autoprime_bmw_11",
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "amount": 340000,
+    "pixKey": "financeiro@autoprime.com.br",
+    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
+    "status": "enviada",
+    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
+    "createdAt": "2026-09-18T14:17:32.830Z",
+    "updatedAt": "2026-09-18T14:17:32.830Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "amount": 15000,
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM05315163048484",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM05315163048484",
+    "status": "paga",
+    "id": "pro_1789741053151_2rv9",
+    "createdAt": "2026-09-18T14:17:33.151Z",
+    "updatedAt": "2026-09-18T14:17:33.200Z",
+    "paidAt": "2026-09-18T14:17:33.200Z"
   }
 ]

@@ -495,5 +495,106 @@
     "id": "act_1789740675435_98ia",
     "createdAt": "2026-09-18T14:11:15.435Z",
     "updatedAt": "2026-09-18T14:11:15.435Z"
+  },
+  {
+    "id": "act_autoprime_1789740926745",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-18T14:15:26.745Z",
+    "updatedAt": "2026-09-18T14:15:26.745Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789740926769_40p3",
+    "createdAt": "2026-09-18T14:15:26.769Z",
+    "updatedAt": "2026-09-18T14:15:26.769Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789740926977_ugv2",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:15:26.986Z",
+    "id": "act_1789740926986_8r4d",
+    "createdAt": "2026-09-18T14:15:26.986Z",
+    "updatedAt": "2026-09-18T14:15:26.986Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:15:27.044Z",
+    "id": "act_1789740927044_sc56",
+    "createdAt": "2026-09-18T14:15:27.044Z",
+    "updatedAt": "2026-09-18T14:15:27.044Z"
+  },
+  {
+    "id": "act_autoprime_1789741052816",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-18T14:17:32.816Z",
+    "updatedAt": "2026-09-18T14:17:32.816Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789741052835_nc6b",
+    "createdAt": "2026-09-18T14:17:32.835Z",
+    "updatedAt": "2026-09-18T14:17:32.835Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789741053053_dl3b",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:17:33.064Z",
+    "id": "act_1789741053064_rgj0",
+    "createdAt": "2026-09-18T14:17:33.064Z",
+    "updatedAt": "2026-09-18T14:17:33.064Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:17:33.155Z",
+    "id": "act_1789741053155_1k2v",
+    "createdAt": "2026-09-18T14:17:33.155Z",
+    "updatedAt": "2026-09-18T14:17:33.155Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789741053271_fnmm",
+    "dealId": null,
+    "type": "call",
+    "title": "Ligação de Alinhamento Técnico",
+    "description": "Cliente confirmou interesse na proposta e solicitou emissão do PIX comercial.",
+    "author": "Camila Mendes",
+    "timestamp": "2026-09-18T14:17:33.274Z",
+    "id": "act_1789741053274_tl1y",
+    "createdAt": "2026-09-18T14:17:33.274Z",
+    "updatedAt": "2026-09-18T14:17:33.274Z"
   }
 ]
