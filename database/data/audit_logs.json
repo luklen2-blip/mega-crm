@@ -135,5 +135,130 @@
     "id": "aud_1789738441830_pba1",
     "createdAt": "2026-09-18T13:34:01.830Z",
     "updatedAt": "2026-09-18T13:34:01.830Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "details": {
+      "proposalId": "pro_1789740212944_u6a9",
+      "amount": 50000
+    },
+    "timestamp": "2026-09-18T14:03:32.964Z",
+    "id": "aud_1789740212964_yd4p",
+    "createdAt": "2026-09-18T14:03:32.964Z",
+    "updatedAt": "2026-09-18T14:03:32.964Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "USER_CREATED",
+    "resource": "users",
+    "details": {
+      "userId": "use_1789740212982_vty1",
+      "role": "VENDEDOR"
+    },
+    "timestamp": "2026-09-18T14:03:32.984Z",
+    "id": "aud_1789740212984_9kgu",
+    "createdAt": "2026-09-18T14:03:32.984Z",
+    "updatedAt": "2026-09-18T14:03:32.984Z"
+  },
+  {
+    "tenantId": "ten_1789740252521_s43i",
+    "userId": "use_1789740252533_zx2v",
+    "action": "TENANT_REGISTERED",
+    "resource": "tenants",
+    "details": {
+      "companyName": "Tech Sul Soluções",
+      "segment": "Serviços"
+    },
+    "timestamp": "2026-09-18T14:04:12.535Z",
+    "id": "aud_1789740252535_jcru",
+    "createdAt": "2026-09-18T14:04:12.535Z",
+    "updatedAt": "2026-09-18T14:04:12.535Z"
+  },
+  {
+    "tenantId": "ten_1789740252521_s43i",
+    "userId": "use_1789740252533_zx2v",
+    "action": "USER_LOGIN",
+    "resource": "users",
+    "details": {
+      "email": "empresa_1789740252521@teste.com"
+    },
+    "timestamp": "2026-09-18T14:04:12.544Z",
+    "id": "aud_1789740252544_sdhu",
+    "createdAt": "2026-09-18T14:04:12.544Z",
+    "updatedAt": "2026-09-18T14:04:12.544Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "details": {
+      "proposalId": "pro_1789740252995_m0qs",
+      "amount": 50000
+    },
+    "timestamp": "2026-09-18T14:04:13.015Z",
+    "id": "aud_1789740253015_dg79",
+    "createdAt": "2026-09-18T14:04:13.015Z",
+    "updatedAt": "2026-09-18T14:04:13.015Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "USER_CREATED",
+    "resource": "users",
+    "details": {
+      "userId": "use_1789740253035_44rs",
+      "role": "VENDEDOR"
+    },
+    "timestamp": "2026-09-18T14:04:13.037Z",
+    "id": "aud_1789740253037_hsa9",
+    "createdAt": "2026-09-18T14:04:13.037Z",
+    "updatedAt": "2026-09-18T14:04:13.037Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "details": {
+      "proposalId": "pro_1789740306291_1ks2",
+      "amount": 50000
+    },
+    "timestamp": "2026-09-18T14:05:06.309Z",
+    "id": "aud_1789740306309_k6c4",
+    "createdAt": "2026-09-18T14:05:06.309Z",
+    "updatedAt": "2026-09-18T14:05:06.309Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "USER_CREATED",
+    "resource": "users",
+    "details": {
+      "userId": "use_1789740306328_7zib",
+      "role": "VENDEDOR"
+    },
+    "timestamp": "2026-09-18T14:05:06.329Z",
+    "id": "aud_1789740306329_vh3p",
+    "createdAt": "2026-09-18T14:05:06.329Z",
+    "updatedAt": "2026-09-18T14:05:06.329Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_mariana",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "details": {
+      "proposalId": "pro_1789740306353_1ypo",
+      "amount": 15000
+    },
+    "timestamp": "2026-09-18T14:05:06.371Z",
+    "id": "aud_1789740306371_r1gn",
+    "createdAt": "2026-09-18T14:05:06.371Z",
+    "updatedAt": "2026-09-18T14:05:06.371Z"
   }
 ]

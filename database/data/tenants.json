@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 1905,
+    "aiCreditsUsed": 2010,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,7 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-18T13:34:01.452Z"
+    "updatedAt": "2026-09-18T14:05:06.018Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -55,6 +55,31 @@
     "id": "ten_1789738395458_558z",
     "createdAt": "2026-09-18T13:33:15.458Z",
     "updatedAt": "2026-09-18T13:33:15.525Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T14:04:12.521Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 50,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789740252521_s43i",
+    "createdAt": "2026-09-18T14:04:12.521Z",
+    "updatedAt": "2026-09-18T14:04:12.584Z",
     "leadSources": [
       "WhatsApp",
       "Instagram"

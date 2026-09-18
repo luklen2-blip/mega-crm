@@ -5,7 +5,7 @@
     "name": "Luciano",
     "email": "luciano@recuperaia.local",
     "passwordHash": "5edf5812bf557a52a6139a6ce5720bbc:c90bbee025df63245946cb275006cf9cdba8ce87c489684de1441773223bbfd234389bd1b0d448f774a21af287007160a4c5742b85ed4902218247d289cf6c8c",
-    "role": "ADMINISTRADOR",
+    "role": "PROPRIETARIO",
     "status": "active",
     "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Luciano",
     "createdAt": "2026-09-12T20:43:09.492Z",
@@ -34,6 +34,42 @@
     "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Camila",
     "createdAt": "2026-09-12T20:43:09.532Z",
     "updatedAt": "2026-09-12T20:43:09.532Z"
+  },
+  {
+    "id": "usr_demo_felipe",
+    "tenantId": "ten_demo_agentise",
+    "name": "Felipe SDR",
+    "email": "felipe@agentise.ia.br",
+    "passwordHash": "01a035cd2476b92e08da0c11abf3ce13:9e899a18aa7b0e2cc45e7bc73f049f6c9023b0f582c5970671cecbeb25e483092d10c2ee9138acea70d3e2aab6ae452f9a6187f9ed813f1bd7ced86e385233d1",
+    "role": "SDR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Felipe",
+    "createdAt": "2026-09-18T14:00:00.000Z",
+    "updatedAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "usr_demo_mariana",
+    "tenantId": "ten_demo_agentise",
+    "name": "Mariana Financeiro",
+    "email": "mariana@agentise.ia.br",
+    "passwordHash": "01a035cd2476b92e08da0c11abf3ce13:9e899a18aa7b0e2cc45e7bc73f049f6c9023b0f582c5970671cecbeb25e483092d10c2ee9138acea70d3e2aab6ae452f9a6187f9ed813f1bd7ced86e385233d1",
+    "role": "FINANCEIRO",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Mariana",
+    "createdAt": "2026-09-18T14:00:00.000Z",
+    "updatedAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "usr_demo_beatriz",
+    "tenantId": "ten_demo_agentise",
+    "name": "Beatriz Atendimento",
+    "email": "beatriz@agentise.ia.br",
+    "passwordHash": "01a035cd2476b92e08da0c11abf3ce13:9e899a18aa7b0e2cc45e7bc73f049f6c9023b0f582c5970671cecbeb25e483092d10c2ee9138acea70d3e2aab6ae452f9a6187f9ed813f1bd7ced86e385233d1",
+    "role": "ATENDIMENTO",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Beatriz",
+    "createdAt": "2026-09-18T14:00:00.000Z",
+    "updatedAt": "2026-09-18T14:00:00.000Z"
   },
   {
     "id": "usr_autoprime_fernanda",
@@ -94,5 +130,17 @@
     "id": "use_1789738395470_pueo",
     "createdAt": "2026-09-18T13:33:15.470Z",
     "updatedAt": "2026-09-18T13:33:15.470Z"
+  },
+  {
+    "tenantId": "ten_1789740252521_s43i",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789740252521@teste.com",
+    "passwordHash": "ea3d077c70f84b0277f62026b718903c:d94d8948721d81220f417de1bcb92d9d83d75f5bc9dc3fa265bf86a29b3401f5e97d8a57b2e1dcf13ad88befaccde34bfc5a3ce30c444734c445f46db33fb9cd",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789740252533_zx2v",
+    "createdAt": "2026-09-18T14:04:12.534Z",
+    "updatedAt": "2026-09-18T14:04:12.534Z"
   }
 ]

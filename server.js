@@ -27,6 +27,10 @@ const {
 
 const { runSeeds } = require('./database/seeds');
 const { 
+  ROLES,
+  VALID_ROLES,
+  PERMISSIONS,
+  hasPermission,
   registerTenant, 
   login, 
   generateToken,
@@ -343,6 +347,10 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
+  if (pathname === '/api/users/roles' && method === 'GET') {
+    return sendJson(res, 200, { success: true, count: VALID_ROLES.length, data: VALID_ROLES, roles: ROLES });
+  }
+
   if (pathname === '/api/users' && method === 'GET') {
     const users = usersDB.findByTenant(tenantId).map(u => {
       const { passwordHash, ...safe } = u;
@@ -352,8 +360,8 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/users' && method === 'POST') {
-    if (ctx.role !== 'ADMINISTRADOR') {
-      return sendJson(res, 403, { error: 'Apenas administradores podem cadastrar novos membros ou vendedores na equipe.' });
+    if (!hasPermission(ctx.role, 'USERS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Apenas administradores ou proprietários podem cadastrar novos membros ou vendedores na equipe.' });
     }
     const limitCheck = checkResourceLimit(tenantId, 'users');
     if (!limitCheck.allowed) {
@@ -372,11 +380,12 @@ const server = http.createServer(async (req, res) => {
     }
 
     const defaultPassword = body.password || 'Mudar@1234';
+    const targetRole = VALID_ROLES.includes(body.role) ? body.role : 'VENDEDOR';
     const newUser = usersDB.insert({
       tenantId,
       name: body.name.trim(),
       email: body.email.toLowerCase().trim(),
-      role: body.role || 'VENDEDOR',
+      role: targetRole,
       phone: body.phone || '',
       passwordHash: hashPassword(defaultPassword),
       status: 'active',
@@ -899,6 +908,9 @@ const server = http.createServer(async (req, res) => {
 
   // Baixa / Confirmação de recebimento PIX de proposta comercial
   if (pathname.startsWith('/api/proposals/') && pathname.endsWith('/confirm') && method === 'PATCH') {
+    if (!hasPermission(ctx.role, 'PROPOSALS_CONFIRM')) {
+      return sendJson(res, 403, { error: 'Acesso negado. Apenas financeiro, administradores ou proprietários podem confirmar recebimento de propostas.' });
+    }
     const parts = pathname.split('/');
     const proposalId = parts[3];
     const proposal = proposalsDB.findById(proposalId);
@@ -1039,8 +1051,8 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/settings' && method === 'POST') {
-    if (ctx.role !== 'ADMINISTRADOR') {
-      return sendJson(res, 403, { error: 'Acesso negado. Apenas administradores podem alterar configurações do sistema.' });
+    if (!hasPermission(ctx.role, 'SETTINGS_EDIT')) {
+      return sendJson(res, 403, { error: 'Acesso negado. Apenas administradores ou proprietários podem alterar configurações do sistema.' });
     }
     const body = await parseRequestBody(req);
     if (body._error) return sendJson(res, 413, { error: body._error });
@@ -1087,8 +1099,8 @@ const server = http.createServer(async (req, res) => {
 
   // Backup Completo de Dados da Empresa (Contingência e Arquivamento)
   if (pathname === '/api/backup' && method === 'GET') {
-    if (ctx.role !== 'ADMINISTRADOR') {
-      return sendJson(res, 403, { error: 'Apenas administradores podem baixar o backup completo da empresa.' });
+    if (!hasPermission(ctx.role, 'BACKUP_DOWNLOAD')) {
+      return sendJson(res, 403, { error: 'Apenas administradores ou proprietários podem baixar o backup completo da empresa.' });
     }
 
     const backupData = {

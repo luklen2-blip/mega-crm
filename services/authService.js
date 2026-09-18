@@ -9,6 +9,63 @@ const { usersDB, tenantsDB, auditLogsDB } = require('../database/db');
 const JWT_SECRET = process.env.JWT_SECRET || 'agentise-mega-crm-secret-salt-2026-luciano-cloud';
 const TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 dias
 
+// 7 Níveis de Acesso RBAC Oficiais (Agentise V2.0)
+const ROLES = {
+  PROPRIETARIO: 'PROPRIETARIO',   // Acesso total irrestrito
+  ADMINISTRADOR: 'ADMINISTRADOR', // Gestão operacional, usuários e integrações
+  GERENTE: 'GERENTE',             // Gestão da equipe, pipeline e relatórios
+  VENDEDOR: 'VENDEDOR',           // Seus próprios leads, clientes e oportunidades
+  SDR: 'SDR',                     // Leads, qualificação e prospecção inicial
+  FINANCEIRO: 'FINANCEIRO',       // Propostas, cobranças e conciliação de pagamentos
+  ATENDIMENTO: 'ATENDIMENTO'      // Conversas omnichannel e suporte a clientes
+};
+
+const VALID_ROLES = Object.values(ROLES);
+
+const PERMISSIONS = {
+  // Configurações & Governança do Tenant
+  SETTINGS_VIEW: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR],
+  SETTINGS_EDIT: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR],
+  USERS_MANAGE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR],
+  BILLING_MANAGE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.FINANCEIRO],
+  BACKUP_DOWNLOAD: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR],
+  AUDIT_VIEW: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR],
+  
+  // Leads, Contatos e CRM 360°
+  LEADS_VIEW_ALL: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.FINANCEIRO],
+  LEADS_CREATE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR, ROLES.SDR, ROLES.ATENDIMENTO],
+  LEADS_EDIT: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR, ROLES.SDR],
+  LEADS_DELETE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR],
+  
+  // Pipeline & Oportunidades
+  DEALS_VIEW_ALL: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.FINANCEIRO],
+  DEALS_MANAGE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR],
+  
+  // Propostas & Pagamentos PIX
+  PROPOSALS_VIEW: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR, ROLES.FINANCEIRO],
+  PROPOSALS_CREATE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR, ROLES.FINANCEIRO],
+  PROPOSALS_CONFIRM: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.FINANCEIRO],
+  
+  // Conversas & Omnichannel Inbox
+  CONVERSATIONS_VIEW: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR, ROLES.SDR, ROLES.ATENDIMENTO],
+  CONVERSATIONS_REPLY: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR, ROLES.SDR, ROLES.ATENDIMENTO],
+  
+  // Automações & Agentes IA
+  AUTOMATIONS_MANAGE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE],
+  AI_EXECUTE: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR, ROLES.GERENTE, ROLES.VENDEDOR, ROLES.SDR, ROLES.ATENDIMENTO],
+  AI_CONFIG: [ROLES.PROPRIETARIO, ROLES.ADMINISTRADOR]
+};
+
+function hasPermission(userRole, permissionKey) {
+  if (!userRole) return false;
+  // Compatibilidade: PROPRIETARIO e ADMINISTRADOR possuem acesso mestre
+  if (userRole === ROLES.PROPRIETARIO || userRole === 'PROPRIETARIO' || userRole === ROLES.ADMINISTRADOR || userRole === 'ADMINISTRADOR') {
+    return true;
+  }
+  const allowed = PERMISSIONS[permissionKey];
+  return allowed ? allowed.includes(userRole) : false;
+}
+
 // Funções criptográficas nativas
 function hashPassword(password, salt = crypto.randomBytes(16).toString('hex')) {
   const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
@@ -196,6 +253,10 @@ function getRequestContext(req) {
 }
 
 module.exports = {
+  ROLES,
+  VALID_ROLES,
+  PERMISSIONS,
+  hasPermission,
   hashPassword,
   verifyPassword,
   generateToken,

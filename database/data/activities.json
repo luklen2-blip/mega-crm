@@ -295,5 +295,117 @@
     "id": "act_1789738441793_o87b",
     "createdAt": "2026-09-18T13:34:01.793Z",
     "updatedAt": "2026-09-18T13:34:01.793Z"
+  },
+  {
+    "id": "act_autoprime_1789740212601",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-18T14:03:32.601Z",
+    "updatedAt": "2026-09-18T14:03:32.601Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789740212618_v0z4",
+    "createdAt": "2026-09-18T14:03:32.618Z",
+    "updatedAt": "2026-09-18T14:03:32.618Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789740212939_wfrd",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:03:32.948Z",
+    "id": "act_1789740212948_kny6",
+    "createdAt": "2026-09-18T14:03:32.948Z",
+    "updatedAt": "2026-09-18T14:03:32.948Z"
+  },
+  {
+    "id": "act_autoprime_1789740252609",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-18T14:04:12.609Z",
+    "updatedAt": "2026-09-18T14:04:12.609Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789740252633_a3f8",
+    "createdAt": "2026-09-18T14:04:12.633Z",
+    "updatedAt": "2026-09-18T14:04:12.633Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789740252977_io4z",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:04:13.000Z",
+    "id": "act_1789740253000_06pi",
+    "createdAt": "2026-09-18T14:04:13.000Z",
+    "updatedAt": "2026-09-18T14:04:13.000Z"
+  },
+  {
+    "id": "act_autoprime_1789740306040",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-18T14:05:06.040Z",
+    "updatedAt": "2026-09-18T14:05:06.040Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789740306057_wecv",
+    "createdAt": "2026-09-18T14:05:06.057Z",
+    "updatedAt": "2026-09-18T14:05:06.057Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789740306287_v99s",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:05:06.294Z",
+    "id": "act_1789740306294_kwm1",
+    "createdAt": "2026-09-18T14:05:06.295Z",
+    "updatedAt": "2026-09-18T14:05:06.295Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Ação acionada automaticamente pelo fluxo comercial.",
+    "timestamp": "2026-09-18T14:05:06.357Z",
+    "id": "act_1789740306357_ucne",
+    "createdAt": "2026-09-18T14:05:06.357Z",
+    "updatedAt": "2026-09-18T14:05:06.357Z"
   }
 ]

@@ -259,5 +259,68 @@
     "id": "ai__1789738441454_8cx6",
     "createdAt": "2026-09-18T13:34:01.454Z",
     "updatedAt": "2026-09-18T13:34:01.454Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:03:32.559Z",
+    "id": "ai__1789740212559_c3bx",
+    "createdAt": "2026-09-18T14:03:32.559Z",
+    "updatedAt": "2026-09-18T14:03:32.559Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:03:32.575Z",
+    "id": "ai__1789740212575_aqi2",
+    "createdAt": "2026-09-18T14:03:32.575Z",
+    "updatedAt": "2026-09-18T14:03:32.575Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:04:12.566Z",
+    "id": "ai__1789740252566_cnhf",
+    "createdAt": "2026-09-18T14:04:12.566Z",
+    "updatedAt": "2026-09-18T14:04:12.566Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:04:12.580Z",
+    "id": "ai__1789740252580_s71l",
+    "createdAt": "2026-09-18T14:04:12.580Z",
+    "updatedAt": "2026-09-18T14:04:12.580Z"
+  },
+  {
+    "tenantId": "ten_1789740252521_s43i",
+    "feature": "teste_ia",
+    "credits": 50,
+    "timestamp": "2026-09-18T14:04:12.587Z",
+    "id": "ai__1789740252587_pd39",
+    "createdAt": "2026-09-18T14:04:12.587Z",
+    "updatedAt": "2026-09-18T14:04:12.587Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:05:06.004Z",
+    "id": "ai__1789740306004_l43s",
+    "createdAt": "2026-09-18T14:05:06.004Z",
+    "updatedAt": "2026-09-18T14:05:06.004Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:05:06.020Z",
+    "id": "ai__1789740306020_wayp",
+    "createdAt": "2026-09-18T14:05:06.020Z",
+    "updatedAt": "2026-09-18T14:05:06.020Z"
   }
 ]

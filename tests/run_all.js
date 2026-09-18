@@ -652,6 +652,184 @@ async function runTests() {
   console.log('  ✅ Teste 18 Aprovado: PWA, PIX oficial, propostas com fechamento automático, equipe e backup validados.\n');
   passed++;
 
+  // =========================================================================
+  // TESTE 19: Validação da Arquitetura Multi-Tenant Real e 7 Papéis RBAC (FASE 2)
+  // =========================================================================
+  console.log('▶ Teste 19: Validação da Arquitetura Multi-Tenant Real e 7 Papéis RBAC (FASE 2)...');
+
+  // 19.1 Verificação dos 7 Papéis Oficiais via API
+  const rolesRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/api/users/roles`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve(JSON.parse(d)));
+    });
+  });
+  assert.strictEqual(rolesRes.success, true);
+  assert.strictEqual(rolesRes.data.length, 7, 'Devem existir exatamente 7 papéis RBAC oficiais');
+  const expectedRoles = ['PROPRIETARIO', 'ADMINISTRADOR', 'GERENTE', 'VENDEDOR', 'SDR', 'FINANCEIRO', 'ATENDIMENTO'];
+  expectedRoles.forEach(r => assert.ok(rolesRes.data.includes(r), `Papel ${r} deve estar presente`));
+
+  // 19.2 Tokens com os diferentes papéis para teste de RBAC
+  const { generateToken: genTok19 } = require('../services/authService');
+  const vendedorToken19 = genTok19({
+    userId: 'usr_demo_camila',
+    tenantId: 'ten_demo_agentise',
+    role: 'VENDEDOR',
+    name: 'Camila Mendes',
+    email: 'camila@agentise.ia.br'
+  });
+
+  const financeiroToken19 = genTok19({
+    userId: 'usr_demo_mariana',
+    tenantId: 'ten_demo_agentise',
+    role: 'FINANCEIRO',
+    name: 'Mariana Financeiro',
+    email: 'mariana@agentise.ia.br'
+  });
+
+  const proprietarioToken19 = genTok19({
+    userId: 'usr_demo_luciano',
+    tenantId: 'ten_demo_agentise',
+    role: 'PROPRIETARIO',
+    name: 'Luciano',
+    email: 'luciano@recuperaia.local'
+  });
+
+  // 19.3 Teste de Permissões: VENDEDOR tentando alterar configurações (Deve receber 403)
+  const vendedorSettingRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({ companyName: 'Hack Tentativa' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/settings',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${vendedorToken19}`,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(vendedorSettingRes.status, 403, 'Vendedor tentando alterar settings deve receber HTTP 403');
+
+  // 19.4 Criação de Proposta no tenant ten_demo_agentise
+  const prop19Res = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      amount: 15000,
+      description: 'Consultoria Empresarial RBAC'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pix/generate',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${financeiroToken19}`,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve(JSON.parse(d)));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(prop19Res.success, true);
+  const prop19Id = prop19Res.data.proposalId;
+
+  // 19.5 Teste de Permissões: VENDEDOR tentando confirmar proposta (Deve receber 403)
+  const vendedorProposalRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/proposals/${prop19Id}/confirm`,
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${vendedorToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+  assert.strictEqual(vendedorProposalRes.status, 403, 'Vendedor tentando confirmar proposta deve receber HTTP 403');
+
+  // 19.6 Teste de Permissões: FINANCEIRO confirmando proposta do seu tenant (Deve receber 200)
+  const financeiroProposalRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/proposals/${prop19Id}/confirm`,
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${financeiroToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+  assert.strictEqual(financeiroProposalRes.status, 200, 'Financeiro confirmando proposta deve receber HTTP 200');
+
+  // 19.7 Teste Anti-IDOR: Usuário de OUTRO tenant tentando confirmar a mesma proposta (Deve receber 404)
+  const otherTenantToken = genTok19({
+    userId: 'usr_other_tenant',
+    tenantId: 'ten_autoprime_veiculos',
+    role: 'FINANCEIRO',
+    name: 'Financeiro AutoPrime',
+    email: 'financeiro@autoprime.com.br'
+  });
+
+  const crossTenantProposalRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/proposals/${prop19Id}/confirm`,
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${otherTenantToken}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+    req.end();
+  });
+  assert.strictEqual(crossTenantProposalRes.status, 404, 'Manipulação cross-tenant deve ser bloqueada com 404');
+
+  // 19.8 Teste de Permissões: PROPRIETARIO alterando configurações (Deve receber 200)
+  const propSettingRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({ notes: 'Configuracao Proprietario OK' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/settings',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(propSettingRes.status, 200, 'Proprietário alterando settings deve receber HTTP 200');
+
+  console.log('  ✅ Teste 19 Aprovado: Multi-Tenant real, 7 papéis RBAC e matriz de permissões 100% validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

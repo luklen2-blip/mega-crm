@@ -51,14 +51,14 @@ function runSeeds(force = false) {
 
   const tenantId = tenant.id;
 
-  // 2. Usuários Multi-Tenant (Admin, Gerente, Vendedor)
+  // 2. Usuários Multi-Tenant (Proprietário, Administrador, Gerente, Vendedor, SDR, Financeiro, Atendimento)
   const adminUser = usersDB.insert({
     id: 'usr_demo_luciano',
     tenantId,
     name: 'Luciano',
     email: 'luciano@recuperaia.local',
     passwordHash: hashPassword('admin123456'),
-    role: 'ADMINISTRADOR',
+    role: 'PROPRIETARIO',
     status: 'active',
     avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Luciano'
   });
@@ -83,6 +83,39 @@ function runSeeds(force = false) {
     role: 'VENDEDOR',
     status: 'active',
     avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Camila'
+  });
+
+  const sdrUser = usersDB.insert({
+    id: 'usr_demo_felipe',
+    tenantId,
+    name: 'Felipe SDR',
+    email: 'felipe@agentise.ia.br',
+    passwordHash: hashPassword('equipe123'),
+    role: 'SDR',
+    status: 'active',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Felipe'
+  });
+
+  const financeiroUser = usersDB.insert({
+    id: 'usr_demo_mariana',
+    tenantId,
+    name: 'Mariana Financeiro',
+    email: 'mariana@agentise.ia.br',
+    passwordHash: hashPassword('equipe123'),
+    role: 'FINANCEIRO',
+    status: 'active',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Mariana'
+  });
+
+  const atendimentoUser = usersDB.insert({
+    id: 'usr_demo_beatriz',
+    tenantId,
+    name: 'Beatriz Atendimento',
+    email: 'beatriz@agentise.ia.br',
+    passwordHash: hashPassword('equipe123'),
+    role: 'ATENDIMENTO',
+    status: 'active',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Beatriz'
   });
 
   // 3. Configurações Globais / PIX
