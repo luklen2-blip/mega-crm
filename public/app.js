@@ -1516,6 +1516,104 @@ async function loadAnalytics() {
   } catch (err) {}
 }
 
+let pendingUpgradePlan = null;
+
+async function loadWorkspaceSettings() {
+  try {
+    const res = await fetch('/api/workspace', { headers: authHeaders() });
+    const json = await res.json();
+    if (json.success && json.data) {
+      const ws = json.data;
+      if (document.getElementById('ws-name-input')) document.getElementById('ws-name-input').value = ws.name || '';
+      if (document.getElementById('ws-segment-input')) document.getElementById('ws-segment-input').value = ws.segment || '';
+      if (document.getElementById('ws-phone-input')) document.getElementById('ws-phone-input').value = ws.phone || '';
+    }
+  } catch (err) {}
+}
+
+async function saveWorkspaceSettings() {
+  const name = (document.getElementById('ws-name-input') || {}).value;
+  const segment = (document.getElementById('ws-segment-input') || {}).value;
+  const phone = (document.getElementById('ws-phone-input') || {}).value;
+
+  try {
+    const res = await fetch('/api/workspace', {
+      method: 'PUT',
+      headers: authHeaders(),
+      body: JSON.stringify({ name, segment, phone })
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast('Configurações do workspace salvas com sucesso!', 'success');
+      if (json.data && json.data.name) {
+        const logoName = document.getElementById('company-name-display');
+        if (logoName) logoName.innerText = json.data.name;
+      }
+    } else {
+      showToast(json.error || 'Erro ao salvar configurações.', 'error');
+    }
+  } catch (err) {
+    showToast('Erro ao atualizar workspace.', 'error');
+  }
+}
+
+async function openPlanUpgradeModal(planKey, planName, planPrice) {
+  pendingUpgradePlan = planKey;
+  const titleEl = document.getElementById('modal-upgrade-plan-title');
+  const priceEl = document.getElementById('modal-upgrade-plan-price');
+  const qrImg = document.getElementById('modal-upgrade-pix-qr');
+  const codeBox = document.getElementById('modal-upgrade-pix-code');
+
+  if (titleEl) titleEl.innerText = `Plano ${planName}`;
+  if (priceEl) priceEl.innerHTML = `R$ ${planPrice},00<span class="text-xs font-normal text-slate-400">/mês</span>`;
+
+  try {
+    const res = await fetch('/api/pix/generate', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({
+        amount: planPrice,
+        description: `Assinatura Agentise ${planName}`
+      })
+    });
+    const d = (await res.json()).data;
+    if (d) {
+      if (qrImg) qrImg.src = d.qrCodeUrl;
+      if (codeBox) codeBox.value = d.payload;
+    }
+  } catch (e) {}
+
+  openModal('modal-plan-upgrade');
+}
+
+function copyUpgradePixCode() {
+  const box = document.getElementById('modal-upgrade-pix-code');
+  if (!box || !box.value) return;
+  navigator.clipboard.writeText(box.value);
+  showToast('Código PIX Copia-e-Cola copiado com sucesso!', 'success');
+}
+
+async function confirmPlanUpgrade() {
+  if (!pendingUpgradePlan) return;
+  try {
+    const res = await fetch('/api/billing/upgrade', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ plan: pendingUpgradePlan })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(data.message || 'Plano atualizado com sucesso!', 'success');
+      closeModal('modal-plan-upgrade');
+      await loadBilling();
+    } else {
+      showToast(data.error || 'Erro ao realizar upgrade.', 'error');
+    }
+  } catch (err) {
+    showToast('Falha na comunicação ao realizar upgrade.', 'error');
+  }
+}
+
 // 12. BILLING & PLANOS SAAS (FASE 13 & 14)
 async function loadBilling() {
   try {
@@ -1532,6 +1630,84 @@ async function loadBilling() {
     if (document.getElementById('billing-credits-val')) {
       document.getElementById('billing-credits-val').innerText = `${d.aiCreditsRemaining} / ${d.aiCredits}`;
     }
+    if (document.getElementById('billing-plan-badge')) {
+      document.getElementById('billing-plan-badge').innerText = `Plano ${d.plan.name} (${d.daysLeftTrial}d restantes)`;
+    }
+    if (document.getElementById('billing-trial-title')) {
+      document.getElementById('billing-trial-title').innerText = d.isTrialActive 
+        ? `Você está no período de Demonstração (${d.daysLeftTrial} dias restantes)` 
+        : `Plano Ativo: ${d.plan.name}`;
+    }
+
+    // Atualiza Quotas Visuais
+    if (d.quotas) {
+      // Leads
+      const leadsQ = d.quotas.leads || {};
+      const leadsTxt = document.getElementById('quota-leads-text');
+      const leadsBar = document.getElementById('quota-leads-bar');
+      const leadsPct = document.getElementById('quota-leads-pct');
+      if (leadsTxt) leadsTxt.innerText = `${leadsQ.current || 0} / ${(leadsQ.limit || 0).toLocaleString('pt-BR')}`;
+      if (leadsBar) leadsBar.style.width = `${leadsQ.percent || 0}%`;
+      if (leadsPct) leadsPct.innerText = `${leadsQ.percent || 0}% utilizado`;
+
+      // Usuários
+      const usersQ = d.quotas.users || {};
+      const usersTxt = document.getElementById('quota-users-text');
+      const usersBar = document.getElementById('quota-users-bar');
+      const usersPct = document.getElementById('quota-users-pct');
+      if (usersTxt) usersTxt.innerText = `${usersQ.current || 0} / ${usersQ.limit || 0}`;
+      if (usersBar) usersBar.style.width = `${usersQ.percent || 0}%`;
+      if (usersPct) usersPct.innerText = `${usersQ.percent || 0}% utilizado`;
+
+      // Pipelines
+      const pipesQ = d.quotas.pipelines || {};
+      const pipesTxt = document.getElementById('quota-pipelines-text');
+      const pipesBar = document.getElementById('quota-pipelines-bar');
+      const pipesPct = document.getElementById('quota-pipelines-pct');
+      if (pipesTxt) pipesTxt.innerText = `${pipesQ.current || 0} / ${pipesQ.limit || 0}`;
+      if (pipesBar) pipesBar.style.width = `${pipesQ.percent || 0}%`;
+      if (pipesPct) pipesPct.innerText = `${pipesQ.percent || 0}% utilizado`;
+
+      // Automações
+      const autoQ = d.quotas.automations || {};
+      const autoTxt = document.getElementById('quota-automations-text');
+      const autoBar = document.getElementById('quota-automations-bar');
+      const autoPct = document.getElementById('quota-automations-pct');
+      if (autoTxt) autoTxt.innerText = `${autoQ.current || 0} / ${autoQ.limit || 0}`;
+      if (autoBar) autoBar.style.width = `${autoQ.percent || 0}%`;
+      if (autoPct) autoPct.innerText = `${autoQ.percent || 0}% utilizado`;
+
+      // Créditos IA
+      const aiQ = d.quotas.aiCredits || {};
+      const aiTxt = document.getElementById('quota-credits-text');
+      const aiBar = document.getElementById('quota-credits-bar');
+      const aiPct = document.getElementById('quota-credits-pct');
+      if (aiTxt) aiTxt.innerText = `${(aiQ.current || 0).toLocaleString('pt-BR')} / ${(aiQ.limit || 0).toLocaleString('pt-BR')}`;
+      if (aiBar) aiBar.style.width = `${aiQ.percent || 0}%`;
+      if (aiPct) aiPct.innerText = `${aiQ.percent || 0}% consumido`;
+    }
+
+    // Destaca o plano ativo e ajusta botões
+    const planKeys = ['starter', 'professional', 'business', 'enterprise'];
+    planKeys.forEach(pk => {
+      const btn = document.getElementById(`btn-upgrade-${pk}`);
+      if (btn) {
+        if (d.plan.id === pk || (pk === 'enterprise' && d.plan.id === 'enterprise')) {
+          btn.innerText = 'Plano Atual';
+          btn.className = 'w-full mt-5 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg cursor-default';
+          btn.onclick = null;
+        } else {
+          const names = { starter: 'Starter', professional: 'Professional', business: 'Business', enterprise: 'Agency Enterprise' };
+          const prices = { starter: 97, professional: 197, business: 397, enterprise: 897 };
+          btn.innerText = `Selecionar ${names[pk]}`;
+          btn.className = 'w-full mt-5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition';
+          btn.onclick = () => openPlanUpgradeModal(pk, names[pk], prices[pk]);
+        }
+      }
+    });
+
+    await loadWorkspaceSettings();
+    if (window.lucide) lucide.createIcons();
   } catch (err) {}
 }
 

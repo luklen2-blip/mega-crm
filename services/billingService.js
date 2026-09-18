@@ -2,7 +2,7 @@
  * Serviço de Planos SaaS, Trial de 7 Dias e Gestão de Créditos de IA
  */
 
-const { tenantsDB, aiUsageDB, leadsDB, usersDB, automationsDB } = require('../database/db');
+const { tenantsDB, aiUsageDB, leadsDB, usersDB, automationsDB, pipelinesDB } = require('../database/db');
 
 const PLANS = {
   starter: {
@@ -10,6 +10,7 @@ const PLANS = {
     name: 'Starter',
     price: 97,
     maxUsers: 2,
+    maxPipelines: 1,
     maxLeads: 500,
     maxAutomations: 3,
     monthlyAiCredits: 1000,
@@ -20,6 +21,7 @@ const PLANS = {
     name: 'Professional',
     price: 197,
     maxUsers: 5,
+    maxPipelines: 3,
     maxLeads: 2500,
     maxAutomations: 10,
     monthlyAiCredits: 5000,
@@ -30,6 +32,7 @@ const PLANS = {
     name: 'Business',
     price: 397,
     maxUsers: 15,
+    maxPipelines: 10,
     maxLeads: 10000,
     maxAutomations: 50,
     monthlyAiCredits: 20000,
@@ -40,6 +43,7 @@ const PLANS = {
     name: 'Agency Enterprise',
     price: 897,
     maxUsers: 50,
+    maxPipelines: 50,
     maxLeads: 50000,
     maxAutomations: 200,
     monthlyAiCredits: 60000,
@@ -58,9 +62,13 @@ function getTenantSubscription(tenantId) {
   const isTrialActive = now < trialEnds;
   const daysLeftTrial = isTrialActive ? Math.ceil((trialEnds - now) / (1000 * 60 * 60 * 24)) : 0;
 
-  const leadsCount = leadsDB.countByTenant(tenantId);
+  const leadsCount = leadsDB.countByTenant ? leadsDB.countByTenant(tenantId) : leadsDB.findByTenant(tenantId).length;
   const usersCount = usersDB.findAll(u => u.tenantId === tenantId).length;
   const automationsCount = automationsDB.findByTenant(tenantId).length;
+  const pipelinesCount = pipelinesDB ? pipelinesDB.findByTenant(tenantId).length : 1;
+
+  const maxCredits = tenant.aiCredits || planInfo.monthlyAiCredits;
+  const usedCredits = tenant.aiCreditsUsed || 0;
 
   return {
     tenantId: tenant.id,
@@ -69,15 +77,36 @@ function getTenantSubscription(tenantId) {
     isTrialActive,
     daysLeftTrial,
     trialEndsAt: tenant.trialEndsAt,
-    aiCredits: tenant.aiCredits || 1000,
-    aiCreditsUsed: tenant.aiCreditsUsed || 0,
-    aiCreditsRemaining: Math.max(0, (tenant.aiCredits || 1000) - (tenant.aiCreditsUsed || 0)),
+    aiCredits: maxCredits,
+    aiCreditsUsed: usedCredits,
+    aiCreditsRemaining: Math.max(0, maxCredits - usedCredits),
+    quotas: {
+      users: { current: usersCount, limit: planInfo.maxUsers, percent: Math.min(100, Math.round((usersCount / planInfo.maxUsers) * 100)) },
+      leads: { current: leadsCount, limit: planInfo.maxLeads, percent: Math.min(100, Math.round((leadsCount / planInfo.maxLeads) * 100)) },
+      pipelines: { current: pipelinesCount, limit: planInfo.maxPipelines, percent: Math.min(100, Math.round((pipelinesCount / planInfo.maxPipelines) * 100)) },
+      automations: { current: automationsCount, limit: planInfo.maxAutomations, percent: Math.min(100, Math.round((automationsCount / planInfo.maxAutomations) * 100)) },
+      aiCredits: { current: usedCredits, limit: maxCredits, percent: Math.min(100, Math.round((usedCredits / maxCredits) * 100)) }
+    },
     usage: {
       users: { current: usersCount, limit: planInfo.maxUsers },
       leads: { current: leadsCount, limit: planInfo.maxLeads },
-      automations: { current: automationsCount, limit: planInfo.maxAutomations }
+      automations: { current: automationsCount, limit: planInfo.maxAutomations },
+      pipelines: { current: pipelinesCount, limit: planInfo.maxPipelines }
     }
   };
+}
+
+function upgradeTenantPlan(tenantId, newPlanId) {
+  const plan = PLANS[newPlanId];
+  if (!plan) throw new Error(`Plano '${newPlanId}' inválido.`);
+
+  const updated = tenantsDB.update(tenantId, {
+    plan: newPlanId,
+    aiCredits: plan.monthlyAiCredits,
+    aiCreditsUsed: 0
+  });
+
+  return { tenant: updated, plan };
 }
 
 function checkResourceLimit(tenantId, resource) {
@@ -94,6 +123,10 @@ function checkResourceLimit(tenantId, resource) {
 
   if (resource === 'automations' && sub.usage.automations.current >= sub.plan.maxAutomations) {
     return { allowed: false, error: `Limite de automações ativas atingido (${sub.plan.maxAutomations}). Faça upgrade do plano.` };
+  }
+
+  if (resource === 'pipelines' && sub.usage.pipelines && sub.usage.pipelines.current >= sub.plan.maxPipelines) {
+    return { allowed: false, error: `Limite de funis de vendas atingido para o plano ${sub.plan.name} (${sub.plan.maxPipelines} funis). Faça upgrade para continuar.` };
   }
 
   return { allowed: true };
@@ -135,5 +168,6 @@ module.exports = {
   PLANS,
   getTenantSubscription,
   checkResourceLimit,
-  consumeAiCredits
+  consumeAiCredits,
+  upgradeTenantPlan
 };

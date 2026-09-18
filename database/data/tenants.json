@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 3255,
+    "aiCreditsUsed": 3435,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,7 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-18T14:46:09.204Z"
+    "updatedAt": "2026-09-18T14:54:57.603Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -261,5 +261,41 @@
     ],
     "primaryGoal": "Aumentar vendas e recuperar clientes",
     "onboardingCompleted": true
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T14:54:01.063Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 50,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789743241063_xvds",
+    "createdAt": "2026-09-18T14:54:01.063Z",
+    "updatedAt": "2026-09-18T14:54:01.149Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  },
+  {
+    "id": "ten_test_tier_1789743242180",
+    "name": "Auto Prime Filial Norte",
+    "plan": "professional",
+    "segment": "Concessionária de Veículos",
+    "phone": "11977776666",
+    "aiCredits": 5000,
+    "aiCreditsUsed": 0,
+    "createdAt": "2026-09-18T14:54:02.180Z",
+    "updatedAt": "2026-09-18T14:54:02.242Z"
   }
 ]

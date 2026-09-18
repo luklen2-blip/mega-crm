@@ -25,5 +25,14 @@
     "createdAt": "2026-09-18T14:22:30.188Z",
     "id": "pip_1789741350188_bolc",
     "updatedAt": "2026-09-18T14:22:30.188Z"
+  },
+  {
+    "tenantId": "ten_test_tier_1789743242180",
+    "name": "Funil Veículos Novos",
+    "description": "",
+    "isDefault": false,
+    "createdAt": "2026-09-18T14:54:02.195Z",
+    "id": "pip_1789743242195_xsxl",
+    "updatedAt": "2026-09-18T14:54:02.195Z"
   }
 ]

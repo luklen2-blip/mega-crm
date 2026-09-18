@@ -109,7 +109,8 @@ const {
   PLANS, 
   getTenantSubscription, 
   checkResourceLimit, 
-  consumeAiCredits 
+  consumeAiCredits,
+  upgradeTenantPlan
 } = require('./services/billingService');
 
 const { 
@@ -1175,6 +1176,10 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/pipelines' && method === 'POST') {
+    const limitCheck = checkResourceLimit(tenantId, 'pipelines');
+    if (!limitCheck.allowed) {
+      return sendJson(res, 402, { error: limitCheck.error });
+    }
     const body = await parseRequestBody(req);
     if (!body.name) return sendJson(res, 400, { error: 'Nome do funil/pipeline é obrigatório.' });
     const pipeline = pipelinesDB.insert({
@@ -1747,6 +1752,115 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === '/api/billing/plans' && method === 'GET') {
     return sendJson(res, 200, { success: true, data: Object.values(PLANS) });
+  }
+
+  if (pathname === '/api/billing/upgrade' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'BILLING_MANAGE')) {
+      return sendJson(res, 403, { error: 'Permissão negada. Apenas Proprietários, Administradores ou Financeiro podem alterar planos.' });
+    }
+    const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
+    const targetPlan = body.plan || body.targetPlan;
+    if (!targetPlan || !PLANS[targetPlan]) {
+      return sendJson(res, 400, { error: `Plano '${targetPlan}' inválido. Planos disponíveis: ${Object.keys(PLANS).join(', ')}` });
+    }
+
+    const previousSub = getTenantSubscription(tenantId);
+    const { tenant: updatedTenant, plan } = upgradeTenantPlan(tenantId, targetPlan);
+
+    // Gera chave PIX Banco Central para liquidação oficial
+    const txid = `UPG${Date.now().toString().slice(-10)}`;
+    const pixPayload = generatePixPayload({
+      amount: plan.price,
+      txid,
+      description: `Upgrade Agentise ${plan.name}`
+    });
+    const pix = {
+      payload: pixPayload,
+      qrCodeUrl: getPixQrCodeUrl(pixPayload),
+      amount: plan.price,
+      txid
+    };
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'BILLING_UPGRADE',
+      resource: 'tenants',
+      entityId: tenantId,
+      ip: clientIp,
+      description: `${ctx.name} efetuou upgrade do workspace para o plano ${plan.name} (R$ ${plan.price}/mês).`,
+      oldValues: { plan: previousSub.plan },
+      newValues: { plan: targetPlan }
+    });
+
+    return sendJson(res, 200, {
+      success: true,
+      message: `Workspace atualizado com sucesso para o plano ${plan.name}!`,
+      data: {
+        plan: targetPlan,
+        planName: plan.name,
+        price: plan.price,
+        pix,
+        subscription: getTenantSubscription(tenantId)
+      }
+    });
+  }
+
+  // 12.1 WORKSPACE E GOVERNANÇA MULTI-TENANT (FASE 13)
+  if (pathname === '/api/workspace' && method === 'GET') {
+    const tenant = tenantsDB.findById(tenantId);
+    if (!tenant) return sendJson(res, 404, { error: 'Workspace não encontrado.' });
+    const members = usersDB.findByTenant(tenantId).map(u => sanitizeUser(u));
+    const subscription = getTenantSubscription(tenantId);
+    return sendJson(res, 200, {
+      success: true,
+      data: {
+        ...tenant,
+        members,
+        subscription
+      }
+    });
+  }
+
+  if (pathname === '/api/workspace' && method === 'PUT') {
+    if (!hasPermission(ctx.role, 'SETTINGS_EDIT')) {
+      return sendJson(res, 403, { error: 'Permissão negada. Apenas Administradores ou Proprietários podem alterar configurações do workspace.' });
+    }
+    const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
+
+    const tenant = tenantsDB.findById(tenantId);
+    if (!tenant) return sendJson(res, 404, { error: 'Workspace não encontrado.' });
+
+    const allowedUpdates = {};
+    if (body.name && typeof body.name === 'string') allowedUpdates.name = body.name.trim();
+    if (body.segment && typeof body.segment === 'string') allowedUpdates.segment = body.segment.trim();
+    if (body.phone && typeof body.phone === 'string') allowedUpdates.phone = body.phone.trim();
+    if (body.website && typeof body.website === 'string') allowedUpdates.website = body.website.trim();
+    if (body.settings && typeof body.settings === 'object') allowedUpdates.settings = body.settings;
+
+    const updated = tenantsDB.update(tenantId, allowedUpdates);
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'WORKSPACE_UPDATED',
+      resource: 'tenants',
+      entityId: tenantId,
+      ip: clientIp,
+      description: `${ctx.name} atualizou as informações corporativas do workspace ${updated.name}.`,
+      oldValues: tenant,
+      newValues: updated
+    });
+
+    return sendJson(res, 200, {
+      success: true,
+      message: 'Workspace atualizado com sucesso.',
+      data: updated
+    });
   }
 
   // 13. VERTICAL AUTOMOTIVO (AGENTISE AUTO - FASE 18)

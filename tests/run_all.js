@@ -2116,6 +2116,249 @@ async function runTests() {
   console.log('  ✅ Teste 29 Aprovado: Segurança, /termos, /privacidade, LGPD Art. 18, Auditoria Delta e Anti-IDOR validados.\n');
   passed++;
 
+  // TESTE 30 — PLANOS SAAS, QUOTAS DE CONSUMO EM TEMPO REAL & GESTÃO DE WORKSPACE (FASE 13)
+  console.log('🧪 Teste 30: Validação de Planos SaaS, Quotas em Tempo Real & Workspace Multi-Tenant (FASE 13)...');
+  const { generateToken: genTok30 } = require('../services/authService');
+  const { tenantsDB: tenDB30, usersDB: usrDB30, pipelinesDB: pipeDB30, auditLogsDB: auditDB30 } = require('../database/db');
+
+  // Criar tenant de teste no plano starter (maxPipelines: 1, maxUsers: 2, maxLeads: 500)
+  const tierTenant = tenDB30.insert({
+    id: 'ten_test_tier_' + Date.now(),
+    name: 'Auto Prime Filial Norte',
+    plan: 'starter',
+    segment: 'Concessionária de Veículos',
+    phone: '11977776666',
+    aiCredits: 1000,
+    aiCreditsUsed: 50,
+    createdAt: new Date().toISOString()
+  });
+
+  const tierOwner = usrDB30.insert({
+    id: 'usr_owner_' + Date.now(),
+    tenantId: tierTenant.id,
+    name: 'Diretor Geral',
+    email: `owner_${Date.now()}@autoprime.com.br`,
+    role: 'PROPRIETARIO'
+  });
+
+  const tierVendor = usrDB30.insert({
+    id: 'usr_vendor_' + Date.now(),
+    tenantId: tierTenant.id,
+    name: 'Vendedor Consultor',
+    email: `vendor_${Date.now()}@autoprime.com.br`,
+    role: 'VENDEDOR'
+  });
+
+  const tierOwnerToken = genTok30(tierOwner);
+  const tierVendorToken = genTok30(tierVendor);
+
+  // 1. Validar GET /api/billing/subscription com quotas e percentuais
+  const subRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/billing/subscription',
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${tierOwnerToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+
+  assert.strictEqual(subRes.status, 200, 'GET /api/billing/subscription deve retornar 200');
+  assert.strictEqual(subRes.body.data.plan.id, 'starter', 'Plano inicial deve ser starter');
+  assert(subRes.body.data.quotas, 'Deve conter objeto quotas');
+  assert(subRes.body.data.quotas.pipelines, 'Quotas deve conter pipelines');
+  assert(typeof subRes.body.data.quotas.pipelines.percent === 'number', 'Quotas deve conter percentual');
+
+  // 2. Criar 1º funil (pipeline) - Permitido (starter suporta 1)
+  const pipe1Res = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pipelines',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tierOwnerToken}`,
+        'Content-Type': 'application/json'
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(JSON.stringify({ name: 'Funil Veículos Novos' }));
+    req.end();
+  });
+  assert.strictEqual(pipe1Res.status, 201, '1º funil deve ser criado com sucesso (201)');
+
+  // 3. Tentar criar 2º funil no plano starter - Deve ser BLOQUEADO com 402 (Payment Required)
+  const pipe2BlockedRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pipelines',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tierOwnerToken}`,
+        'Content-Type': 'application/json'
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(JSON.stringify({ name: 'Funil Veículos Seminovos' }));
+    req.end();
+  });
+  assert.strictEqual(pipe2BlockedRes.status, 402, '2º funil no plano starter deve retornar 402 por quota atingida');
+  assert(pipe2BlockedRes.body.error.includes('Limite de funis de vendas atingido'), 'Mensagem de erro deve citar limite de funis');
+
+  // 4. Vendedor sem permissão tentando fazer upgrade - Deve retornar 403
+  const vendorUpgradeRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/billing/upgrade',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tierVendorToken}`,
+        'Content-Type': 'application/json'
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(JSON.stringify({ plan: 'professional' }));
+    req.end();
+  });
+  assert.strictEqual(vendorUpgradeRes.status, 403, 'Vendedor não pode fazer upgrade de plano (403)');
+
+  // 5. Proprietário executa upgrade para 'professional' (maxPipelines: 3, R$ 197)
+  const ownerUpgradeRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/billing/upgrade',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tierOwnerToken}`,
+        'Content-Type': 'application/json'
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(JSON.stringify({ plan: 'professional' }));
+    req.end();
+  });
+  assert.strictEqual(ownerUpgradeRes.status, 200, 'Upgrade para professional deve retornar 200');
+  assert.strictEqual(ownerUpgradeRes.body.data.plan, 'professional', 'Plano atualizado deve ser professional');
+  assert(ownerUpgradeRes.body.data.pix, 'Deve gerar objeto PIX para cobrança');
+  assert(ownerUpgradeRes.body.data.pix.payload.includes('luklen2@gmail.com') || ownerUpgradeRes.body.data.pix.payload.length > 50, 'Payload PIX oficial deve ser gerado');
+
+  // 6. Agora o 2º funil deve ser criado com êxito!
+  const pipe2SuccessRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pipelines',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tierOwnerToken}`,
+        'Content-Type': 'application/json'
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(JSON.stringify({ name: 'Funil Veículos Seminovos' }));
+    req.end();
+  });
+  assert.strictEqual(pipe2SuccessRes.status, 201, '2º funil deve ser criado com sucesso após upgrade (201)');
+
+  // 7. GET /api/workspace
+  const wsGetRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/workspace',
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${tierOwnerToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+  assert.strictEqual(wsGetRes.status, 200, 'GET /api/workspace deve retornar 200');
+  assert.strictEqual(wsGetRes.body.data.id, tierTenant.id, 'Deve retornar id do workspace correto');
+  assert(Array.isArray(wsGetRes.body.data.members), 'Deve conter array de membros');
+  assert.strictEqual(wsGetRes.body.data.members[0].passwordHash, undefined, 'Membros devem ser higienizados sem hash de senha');
+  assert.strictEqual(wsGetRes.body.data.subscription.plan.id, 'professional', 'Assinatura no workspace deve refletir novo plano');
+
+  // 8. PUT /api/workspace com proteção contra adulteração de plano
+  const wsPutRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/workspace',
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${tierOwnerToken}`,
+        'Content-Type': 'application/json'
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(JSON.stringify({
+      name: 'Auto Prime Matriz Renovada',
+      segment: 'Concessionária Multimarcas Premium',
+      phone: '11999998888',
+      plan: 'hacked_enterprise',
+      aiCredits: 999999
+    }));
+    req.end();
+  });
+  assert.strictEqual(wsPutRes.status, 200, 'PUT /api/workspace deve retornar 200');
+  assert.strictEqual(wsPutRes.body.data.name, 'Auto Prime Matriz Renovada', 'Nome deve ser atualizado');
+  assert.strictEqual(wsPutRes.body.data.plan, 'professional', 'Anti-tampering: campo plan não pode ser alterado via PUT /api/workspace');
+
+  // 9. Vendedor tentando alterar workspace - Bloqueado com 403
+  const vendorPutWsRes = await new Promise(resolve => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/workspace',
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${tierVendorToken}`,
+        'Content-Type': 'application/json'
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(JSON.stringify({ name: 'Hacked Workspace' }));
+    req.end();
+  });
+  assert.strictEqual(vendorPutWsRes.status, 403, 'Vendedor não pode alterar configurações do workspace (403)');
+
+  // 10. Validar auditoria de upgrade e alteração de workspace
+  const auditLogs30 = auditDB30.findByTenant(tierTenant.id);
+  assert(auditLogs30.some(l => l.action === 'BILLING_UPGRADE'), 'Deve conter log de auditoria BILLING_UPGRADE');
+  assert(auditLogs30.some(l => l.action === 'WORKSPACE_UPDATED'), 'Deve conter log de auditoria WORKSPACE_UPDATED');
+
+  // Limpeza
+  pipeDB30.deleteWhere(p => p.tenantId === tierTenant.id);
+  usrDB30.deleteWhere(u => u.tenantId === tierTenant.id);
+  tenDB30.delete(tierTenant.id);
+  auditDB30.deleteWhere(a => a.tenantId === tierTenant.id);
+
+  console.log('  ✅ Teste 30 Aprovado: Quotas em tempo real, bloqueio 402 elegante, upgrade PIX, RBAC e Workspace 360° validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

@@ -226,5 +226,35 @@
     "id": "use_1789742746431_11dt",
     "createdAt": "2026-09-18T14:45:46.431Z",
     "updatedAt": "2026-09-18T14:45:46.431Z"
+  },
+  {
+    "tenantId": "ten_1789743241063_xvds",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789743241063@teste.com",
+    "passwordHash": "cc072799dba4b33f8159766d2aa4fc7a:35eaa6f49660ea01e602f7ca5e08d842904e0a0f871929e3599f1ced60fd53c08a1912a63b680204ccfd7a704acfa3699e13bdca21dc3880f30e50aaf69402a7",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789743241079_41r4",
+    "createdAt": "2026-09-18T14:54:01.079Z",
+    "updatedAt": "2026-09-18T14:54:01.079Z"
+  },
+  {
+    "id": "usr_owner_1789743242182",
+    "tenantId": "ten_test_tier_1789743242180",
+    "name": "Diretor Geral",
+    "email": "owner_1789743242182@autoprime.com.br",
+    "role": "PROPRIETARIO",
+    "createdAt": "2026-09-18T14:54:02.182Z",
+    "updatedAt": "2026-09-18T14:54:02.182Z"
+  },
+  {
+    "id": "usr_vendor_1789743242186",
+    "tenantId": "ten_test_tier_1789743242180",
+    "name": "Vendedor Consultor",
+    "email": "vendor_1789743242186@autoprime.com.br",
+    "role": "VENDEDOR",
+    "createdAt": "2026-09-18T14:54:02.186Z",
+    "updatedAt": "2026-09-18T14:54:02.186Z"
   }
 ]
