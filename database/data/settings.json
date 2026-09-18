@@ -9,7 +9,7 @@
     "language": "pt-BR",
     "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
     "createdAt": "2026-09-12T19:34:26.591Z",
-    "updatedAt": "2026-09-18T16:00:29.292Z",
+    "updatedAt": "2026-09-18T18:42:02.624Z",
     "notes": "Configuracao Proprietario OK"
   },
   {
@@ -24,5 +24,34 @@
     "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
     "createdAt": "2026-09-12T20:43:09.534Z",
     "updatedAt": "2026-09-12T20:43:09.534Z"
+  },
+  {
+    "id": "settings_ten_demo_agentise",
+    "companyName": "Agentise Empreendimentos Digitais",
+    "pixKey": "luklen2@gmail.com",
+    "pixName": "LUCIANO SANT ANNA",
+    "pixCity": "SAO PAULO",
+    "currency": "BRL",
+    "language": "pt-BR",
+    "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
+    "createdAt": "2026-09-12T19:34:26.591Z",
+    "updatedAt": "2026-09-18T18:55:22.489Z",
+    "notes": "Configuracao Proprietario OK",
+    "tenantId": "ten_demo_agentise"
+  },
+  {
+    "id": "settings_ten_1789757698497_0t8l",
+    "companyName": "Agentise Empreendimentos Digitais",
+    "pixKey": "luklen2@gmail.com",
+    "pixName": "LUCIANO SANT ANNA",
+    "pixCity": "SAO PAULO",
+    "currency": "BRL",
+    "language": "pt-BR",
+    "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
+    "createdAt": "2026-09-12T19:34:26.591Z",
+    "updatedAt": "2026-09-18T18:54:58.698Z",
+    "notes": "Configuracao Proprietario OK",
+    "apiKey": "sk-ant-api03-SECRET-KEY-TENANT-ALPHA-9999",
+    "tenantId": "ten_1789757698497_0t8l"
   }
 ]

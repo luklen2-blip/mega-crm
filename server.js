@@ -929,6 +929,44 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, message: 'Sessão revogada e encerrada com sucesso.' });
   }
 
+  if (pathname === '/api/auth/change-password' && method === 'POST') {
+    if (!ctx.isAuthenticated && !ctx.userId) {
+      return sendJson(res, 401, { error: 'Autenticação necessária para alterar senha.' });
+    }
+    const body = await parseRequestBody(req);
+    if (!body.newPassword || body.newPassword.length < 6) {
+      return sendJson(res, 400, { error: 'A nova senha deve possuir no mínimo 6 caracteres.' });
+    }
+    const user = usersDB.findById(ctx.userId);
+    if (!user) {
+      return sendJson(res, 404, { error: 'Usuário não encontrado.' });
+    }
+    if (!user.mustChangePassword) {
+      if (!body.currentPassword) {
+        return sendJson(res, 400, { error: 'Senha atual é obrigatória.' });
+      }
+      if (!verifyPassword(body.currentPassword, user.passwordHash)) {
+        return sendJson(res, 401, { error: 'Senha atual incorreta.' });
+      }
+    }
+    const updated = usersDB.update(ctx.userId, {
+      passwordHash: hashPassword(body.newPassword),
+      mustChangePassword: false,
+      passwordChangedAt: new Date().toISOString()
+    });
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'PASSWORD_CHANGED',
+      resource: 'users',
+      entityId: ctx.userId,
+      ip: clientIp,
+      description: `${ctx.name} alterou sua senha de acesso com sucesso.`
+    });
+    return sendJson(res, 200, { success: true, message: 'Senha atualizada com sucesso.', data: sanitizeUser(updated) });
+  }
+
   if (pathname === '/api/auth/me' && method === 'GET') {
     const user = usersDB.findById(ctx.userId);
     const tenant = tenantsDB.findById(tenantId);
@@ -970,7 +1008,14 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 409, { error: 'Já existe um usuário com este e-mail cadastrado.' });
     }
 
-    const defaultPassword = body.password || 'Mudar@1234';
+    // Regra 5: Não utilizar senha padrão fixa. Se senha não informada, gerar temporária segura
+    let userPassword = body.password;
+    let mustChangePassword = false;
+    if (!userPassword || typeof userPassword !== 'string' || userPassword.trim().length === 0) {
+      userPassword = crypto.randomBytes(8).toString('base64url') + '!A9';
+      mustChangePassword = true;
+    }
+
     const targetRole = VALID_ROLES.includes(body.role) ? body.role : 'VENDEDOR';
     const newUser = usersDB.insert({
       tenantId,
@@ -978,12 +1023,13 @@ const server = http.createServer(async (req, res) => {
       email: body.email.toLowerCase().trim(),
       role: targetRole,
       phone: body.phone || '',
-      passwordHash: hashPassword(defaultPassword),
+      passwordHash: hashPassword(userPassword),
+      mustChangePassword,
       status: 'active',
       avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(body.name)}`
     });
 
-    logAudit(tenantId, ctx.userId, 'USER_CREATED', 'users', { userId: newUser.id, role: newUser.role });
+    logAudit(tenantId, ctx.userId, 'USER_CREATED', 'users', { userId: newUser.id, role: newUser.role, mustChangePassword });
     return sendJson(res, 201, { success: true, data: sanitizeUser(newUser) });
   }
 
@@ -1176,7 +1222,10 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/companies' && method === 'POST') {
     const body = await parseRequestBody(req);
     if (!body.name) return sendJson(res, 400, { error: 'Nome da empresa é obrigatório.' });
-    const company = companiesDB.insert({ ...body, tenantId });
+    const cleanBody = Object.assign({}, body);
+    delete cleanBody.id;
+    delete cleanBody.tenantId;
+    const company = companiesDB.insert({ ...cleanBody, tenantId });
     logAudit({
       tenantId,
       userId: ctx.userId,
@@ -1199,7 +1248,10 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/contacts' && method === 'POST') {
     const body = await parseRequestBody(req);
     if (!body.name) return sendJson(res, 400, { error: 'Nome do contato é obrigatório.' });
-    const contact = contactsDB.insert({ ...body, tenantId });
+    const cleanBody = Object.assign({}, body);
+    delete cleanBody.id;
+    delete cleanBody.tenantId;
+    const contact = contactsDB.insert({ ...cleanBody, tenantId });
     logAudit({
       tenantId,
       userId: ctx.userId,
@@ -1229,7 +1281,10 @@ const server = http.createServer(async (req, res) => {
     const limitCheck = checkResourceLimit(tenantId, 'leads');
     if (!limitCheck.allowed) return sendJson(res, 403, { error: limitCheck.error });
 
-    const lead = leadsDB.insert({ ...body, tenantId });
+    const cleanBody = Object.assign({}, body);
+    delete cleanBody.id;
+    delete cleanBody.tenantId;
+    const lead = leadsDB.insert({ ...cleanBody, tenantId });
     await triggerWorkflows('novo_lead', { leadId: lead.id, name: lead.name, phone: lead.phone }, tenantId);
     return sendJson(res, 201, { success: true, data: lead });
   }
@@ -1541,15 +1596,18 @@ const server = http.createServer(async (req, res) => {
     }
 
     const lead = leadsDB.findById(body.leadId) || {};
-    const initialScore = calculateAiDealScore({ ...body, value: val, stage: body.stage || 'prospeccao' }, lead, [], [], []);
+    const cleanBody = Object.assign({}, body);
+    delete cleanBody.id;
+    delete cleanBody.tenantId;
+    const initialScore = calculateAiDealScore({ ...cleanBody, value: val, stage: cleanBody.stage || 'prospeccao' }, lead, [], [], []);
 
     const deal = dealsDB.insert({
-      stage: body.stage || 'prospeccao',
+      stage: cleanBody.stage || 'prospeccao',
       value: val,
-      probability: Number(body.probability || 20),
-      priority: body.priority || 'media',
-      assignedTo: body.assignedTo || ctx.name,
-      ...body,
+      probability: Number(cleanBody.probability || 20),
+      priority: cleanBody.priority || 'media',
+      assignedTo: cleanBody.assignedTo || ctx.name,
+      ...cleanBody,
       tenantId,
       aiDealScore: initialScore.score,
       aiScoreClassification: initialScore.classification,
@@ -1765,7 +1823,10 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/tasks' && method === 'POST') {
     const body = await parseRequestBody(req);
     if (!body.title) return sendJson(res, 400, { error: 'Título da tarefa é obrigatório.' });
-    const task = tasksDB.insert({ tenantId, completed: false, priority: 'media', ...body });
+    const cleanBody = Object.assign({}, body);
+    delete cleanBody.id;
+    delete cleanBody.tenantId;
+    const task = tasksDB.insert({ ...cleanBody, completed: false, priority: cleanBody.priority || 'media', tenantId });
     return sendJson(res, 201, { success: true, data: task });
   }
 
@@ -2088,6 +2149,9 @@ const server = http.createServer(async (req, res) => {
 
   // 11. ANALISTA IA PARA GESTORES (FASE 11)
   if (pathname === '/api/copilot/analyst' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'FINANCIAL_VIEW') && !hasPermission(ctx.role, 'DEALS_VIEW_ALL')) {
+      return sendJson(res, 403, { error: 'Acesso negado: o Analista IA para Gestores é restrito a gerentes, administradores e financeiro.' });
+    }
     const body = await parseRequestBody(req);
     if (!body.question) return sendJson(res, 400, { error: 'Pergunta é obrigatória.' });
     const result = runManagerAnalyticsQuery(tenantId, body.question);
@@ -2096,6 +2160,9 @@ const server = http.createServer(async (req, res) => {
 
   // 12. PLANOS SAAS E CRÉDITOS DE IA (FASE 13 & 14)
   if (pathname === '/api/billing/subscription' && method === 'GET') {
+    if (!hasPermission(ctx.role, 'FINANCIAL_VIEW') && !hasPermission(ctx.role, 'BILLING_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: dados de faturamento e assinatura restritos à gestão e financeiro.' });
+    }
     const sub = getTenantSubscription(tenantId);
     return sendJson(res, 200, { success: true, data: sub });
   }
@@ -2598,6 +2665,9 @@ const server = http.createServer(async (req, res) => {
 
   // 16. DASHBOARD EXECUTIVO, ANALYTICS & BI AVANÇADO (FASE 11)
   if (pathname === '/api/analytics/bi' && method === 'GET') {
+    if (!hasPermission(ctx.role, 'FINANCIAL_VIEW')) {
+      return sendJson(res, 403, { error: 'Acesso negado: métricas financeiras administrativas restritas à gestão e financeiro.' });
+    }
     const biData = calculateAdvancedBi(tenantId);
     return sendJson(res, 200, { success: true, data: biData });
   }
@@ -2705,15 +2775,30 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 17. CONFIGURAÇÕES DO SISTEMA
+  // 17. CONFIGURAÇÕES DO SISTEMA (ISOLADAS POR TENANT & SEGREDOS MASCARADOS)
   if (pathname === '/api/settings' && method === 'GET') {
-    const settings = settingsDB.findById('general_settings') || {};
-    const safeSettings = { ...settings };
-    if (safeSettings.apiKey) {
-      safeSettings.hasApiKey = true;
-      safeSettings.apiKey = safeSettings.apiKey.slice(0, 4) + '...' + safeSettings.apiKey.slice(-4);
+    if (!hasPermission(ctx.role, 'SETTINGS_VIEW')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão SETTINGS_VIEW necessária.' });
+    }
+    const tenantSettingsId = `settings_${tenantId}`;
+    const settings = settingsDB.findById(tenantSettingsId) || settingsDB.findById('general_settings') || {};
+    const safeSettings = Object.assign({}, settings);
+    delete safeSettings.id;
+    safeSettings.tenantId = tenantId;
+
+    const secretFields = ['apiKey', 'anthropicApiKey', 'openaiApiKey', 'geminiApiKey', 'whatsappToken', 'metaToken', 'webhookSecret'];
+    for (const field of secretFields) {
+      if (safeSettings[field]) {
+        safeSettings[`has_${field}`] = true;
+        const val = String(safeSettings[field]);
+        safeSettings[field] = val.length > 8 ? val.slice(0, 4) + '***' + val.slice(-4) : '***';
+      }
     }
     return sendJson(res, 200, { success: true, data: safeSettings });
+  }
+
+  if (pathname.startsWith('/api/settings/') && method === 'GET') {
+    return sendJson(res, 403, { error: 'Acesso negado: acesso direto a configurações externas proibido.' });
   }
 
   if (pathname === '/api/settings' && (method === 'POST' || method === 'PUT')) {
@@ -2722,12 +2807,34 @@ const server = http.createServer(async (req, res) => {
     }
     const body = await parseRequestBody(req);
     if (body._error) return sendJson(res, 413, { error: body._error });
-    const existing = settingsDB.findById('general_settings') || {};
-    const updated = settingsDB.update('general_settings', {
+
+    const tenantSettingsId = `settings_${tenantId}`;
+    const existing = settingsDB.findById(tenantSettingsId) || settingsDB.findById('general_settings') || {};
+
+    const cleanBody = Object.assign({}, body);
+    delete cleanBody.id;
+    delete cleanBody.tenantId;
+
+    const secretFields = ['apiKey', 'anthropicApiKey', 'openaiApiKey', 'geminiApiKey', 'whatsappToken', 'metaToken', 'webhookSecret'];
+    for (const field of secretFields) {
+      if (cleanBody[field] && String(cleanBody[field]).includes('***')) {
+        cleanBody[field] = existing[field] || '';
+      }
+    }
+
+    const toSave = {
       ...existing,
-      ...body,
-      id: 'general_settings'
-    });
+      ...cleanBody,
+      id: tenantSettingsId,
+      tenantId
+    };
+
+    let updated;
+    if (settingsDB.findById(tenantSettingsId)) {
+      updated = settingsDB.update(tenantSettingsId, toSave);
+    } else {
+      updated = settingsDB.insert(toSave);
+    }
 
     logAudit({
       tenantId,
@@ -2735,14 +2842,24 @@ const server = http.createServer(async (req, res) => {
       userName: ctx.name,
       action: 'SETTINGS_UPDATED',
       resource: 'settings',
-      entityId: 'general_settings',
+      entityId: tenantSettingsId,
       ip: clientIp,
       description: `${ctx.name} atualizou parâmetros e configurações corporativas.`,
       oldValues: existing,
       newValues: updated
     });
 
-    return sendJson(res, 200, { success: true, data: updated });
+    const safeResponse = Object.assign({}, updated);
+    delete safeResponse.id;
+    for (const field of secretFields) {
+      if (safeResponse[field]) {
+        safeResponse[`has_${field}`] = true;
+        const val = String(safeResponse[field]);
+        safeResponse[field] = val.length > 8 ? val.slice(0, 4) + '***' + val.slice(-4) : '***';
+      }
+    }
+
+    return sendJson(res, 200, { success: true, data: safeResponse });
   }
 
   // 18. LGPD

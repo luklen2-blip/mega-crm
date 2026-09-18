@@ -1359,6 +1359,126 @@
     "updatedAt": "2026-09-18T16:00:23.270Z"
   },
   {
+    "tenantId": "ten_1789756900828_jb8s",
+    "name": "Lead Teste Exclusão",
+    "email": "alvo@teste.com",
+    "id": "lea_1789756901058_le5p",
+    "createdAt": "2026-09-18T18:41:41.058Z",
+    "updatedAt": "2026-09-18T18:41:41.058Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789756909804_xz0l",
+    "id": "lea_1789756909860_552j",
+    "createdAt": "2026-09-18T18:41:49.860Z",
+    "updatedAt": "2026-09-18T18:41:49.860Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789756909824_29of",
+    "id": "lea_1789756909927_gikd",
+    "createdAt": "2026-09-18T18:41:49.927Z",
+    "updatedAt": "2026-09-18T18:41:49.927Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789756909824_29of",
+    "id": "lea_1789756909933_27v8",
+    "createdAt": "2026-09-18T18:41:49.933Z",
+    "updatedAt": "2026-09-18T18:41:49.933Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789757608565_sbbm",
+    "id": "lea_1789757608626_5q9x",
+    "createdAt": "2026-09-18T18:53:28.626Z",
+    "updatedAt": "2026-09-18T18:53:28.626Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789757608587_306r",
+    "id": "lea_1789757608712_4m8f",
+    "createdAt": "2026-09-18T18:53:28.713Z",
+    "updatedAt": "2026-09-18T18:53:28.713Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789757608587_306r",
+    "id": "lea_1789757608717_ubfz",
+    "createdAt": "2026-09-18T18:53:28.717Z",
+    "updatedAt": "2026-09-18T18:53:28.717Z"
+  },
+  {
+    "tenantId": "ten_1789757619006_98wi",
+    "name": "Lead Teste Exclusão",
+    "email": "alvo@teste.com",
+    "id": "lea_1789757619098_2xq2",
+    "createdAt": "2026-09-18T18:53:39.098Z",
+    "updatedAt": "2026-09-18T18:53:39.098Z"
+  },
+  {
+    "tenantId": "ten_1789757698528_hg7v",
+    "name": "Lead Beta Confidencial",
+    "email": "lead.beta@empresa.com",
+    "phone": "11999998888",
+    "status": "novo",
+    "id": "lea_1789757698544_4njt",
+    "createdAt": "2026-09-18T18:54:58.544Z",
+    "updatedAt": "2026-09-18T18:54:58.544Z"
+  },
+  {
+    "name": "Lead Injetado",
+    "email": "spoofed@teste.com",
+    "tenantId": "ten_1789757698497_0t8l",
+    "id": "lea_1789757698593_5ykj",
+    "createdAt": "2026-09-18T18:54:58.593Z",
+    "updatedAt": "2026-09-18T18:54:58.593Z"
+  },
+  {
+    "tenantId": "ten_1789757707004_uppu",
+    "name": "Lead Teste Exclusão",
+    "email": "alvo@teste.com",
+    "id": "lea_1789757707070_znsg",
+    "createdAt": "2026-09-18T18:55:07.070Z",
+    "updatedAt": "2026-09-18T18:55:07.070Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789757716718_xla2",
+    "id": "lea_1789757716774_3ifg",
+    "createdAt": "2026-09-18T18:55:16.774Z",
+    "updatedAt": "2026-09-18T18:55:16.774Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789757716738_nvfh",
+    "id": "lea_1789757716841_acs3",
+    "createdAt": "2026-09-18T18:55:16.841Z",
+    "updatedAt": "2026-09-18T18:55:16.841Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789757716738_nvfh",
+    "id": "lea_1789757716846_05ap",
+    "createdAt": "2026-09-18T18:55:16.846Z",
+    "updatedAt": "2026-09-18T18:55:16.846Z"
+  },
+  {
     "id": "lead_autoprime_51_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "name": "Dr. André Villas-Bôas",
@@ -1376,7 +1496,7 @@
       "WhatsApp"
     ],
     "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-09-18T16:00:28.645Z",
-    "updatedAt": "2026-09-18T16:00:28.661Z"
+    "createdAt": "2026-09-18T18:55:21.949Z",
+    "updatedAt": "2026-09-18T18:55:21.981Z"
   }
 ]

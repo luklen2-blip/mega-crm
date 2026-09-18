@@ -70,5 +70,59 @@
     "id": "kno_1789747223313_0aqc",
     "createdAt": "2026-09-18T16:00:23.313Z",
     "updatedAt": "2026-09-18T16:00:23.313Z"
+  },
+  {
+    "tenantId": "ten_1789756909804_xz0l",
+    "category": "Estratégia",
+    "title": "Segredo Industrial da Alpha",
+    "content": "Fórmula de precificação secreta R$ 10.000",
+    "version": 1,
+    "history": [
+      {
+        "version": 1,
+        "title": "Segredo Industrial da Alpha",
+        "content": "Fórmula de precificação secreta R$ 10.000",
+        "updatedAt": "2026-09-18T18:41:49.953Z"
+      }
+    ],
+    "id": "kno_1789756909954_jy7x",
+    "createdAt": "2026-09-18T18:41:49.954Z",
+    "updatedAt": "2026-09-18T18:41:49.954Z"
+  },
+  {
+    "tenantId": "ten_1789757608565_sbbm",
+    "category": "Estratégia",
+    "title": "Segredo Industrial da Alpha",
+    "content": "Fórmula de precificação secreta R$ 10.000",
+    "version": 1,
+    "history": [
+      {
+        "version": 1,
+        "title": "Segredo Industrial da Alpha",
+        "content": "Fórmula de precificação secreta R$ 10.000",
+        "updatedAt": "2026-09-18T18:53:28.738Z"
+      }
+    ],
+    "id": "kno_1789757608738_pbgz",
+    "createdAt": "2026-09-18T18:53:28.738Z",
+    "updatedAt": "2026-09-18T18:53:28.738Z"
+  },
+  {
+    "tenantId": "ten_1789757716718_xla2",
+    "category": "Estratégia",
+    "title": "Segredo Industrial da Alpha",
+    "content": "Fórmula de precificação secreta R$ 10.000",
+    "version": 1,
+    "history": [
+      {
+        "version": 1,
+        "title": "Segredo Industrial da Alpha",
+        "content": "Fórmula de precificação secreta R$ 10.000",
+        "updatedAt": "2026-09-18T18:55:16.869Z"
+      }
+    ],
+    "id": "kno_1789757716869_16zm",
+    "createdAt": "2026-09-18T18:55:16.869Z",
+    "updatedAt": "2026-09-18T18:55:16.869Z"
   }
 ]

@@ -207,6 +207,15 @@ function runManagerAnalyticsQuery(tenantId, question) {
   const tasks = tasksDB.findByTenant(tenantId);
   const proposals = proposalsDB.findByTenant(tenantId);
 
+  if (leads.length === 0 && deals.length === 0 && proposals.length === 0) {
+    return {
+      question,
+      answer: 'Não há dados suficientes cadastrados no CRM para realizar uma análise fundamentada. Cadastre leads e oportunidades para obter insights comerciais precisos.',
+      supportingData: { totalLeads: 0, totalOportunidades: 0, tarefasPendentes: 0, propostasEmitidas: 0 },
+      generatedAt: new Date().toISOString()
+    };
+  }
+
   const totalPipeline = deals.reduce((sum, d) => sum + Number(d.value || 0), 0);
   const wonDeals = deals.filter(d => d.stage === 'ganho');
   const wonValue = wonDeals.reduce((sum, d) => sum + Number(d.value || 0), 0);
