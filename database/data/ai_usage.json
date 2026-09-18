@@ -1162,5 +1162,95 @@
     "id": "ai__1789742425469_o87d",
     "createdAt": "2026-09-18T14:40:25.469Z",
     "updatedAt": "2026-09-18T14:40:25.469Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:42:25.298Z",
+    "id": "ai__1789742545298_hypo",
+    "createdAt": "2026-09-18T14:42:25.298Z",
+    "updatedAt": "2026-09-18T14:42:25.298Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:42:25.316Z",
+    "id": "ai__1789742545316_4h7d",
+    "createdAt": "2026-09-18T14:42:25.316Z",
+    "updatedAt": "2026-09-18T14:42:25.316Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_objection_handling",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:42:25.877Z",
+    "id": "ai__1789742545877_7arf",
+    "createdAt": "2026-09-18T14:42:25.877Z",
+    "updatedAt": "2026-09-18T14:42:25.877Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "objection_handling",
+    "model": "heuristic-core",
+    "promptTokens": 18,
+    "completionTokens": 85,
+    "costCredits": 20,
+    "latencyMs": 6,
+    "cached": false,
+    "timestamp": "2026-09-18T14:42:25.880Z",
+    "id": "ai__1789742545880_imw9",
+    "createdAt": "2026-09-18T14:42:25.880Z",
+    "updatedAt": "2026-09-18T14:42:25.880Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_sales_pitch",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:42:25.923Z",
+    "id": "ai__1789742545923_vxyk",
+    "createdAt": "2026-09-18T14:42:25.923Z",
+    "updatedAt": "2026-09-18T14:42:25.923Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "sales_pitch",
+    "model": "heuristic-core",
+    "promptTokens": 15,
+    "completionTokens": 56,
+    "costCredits": 20,
+    "latencyMs": 5,
+    "cached": false,
+    "timestamp": "2026-09-18T14:42:25.926Z",
+    "id": "ai__1789742545926_p2t9",
+    "createdAt": "2026-09-18T14:42:25.926Z",
+    "updatedAt": "2026-09-18T14:42:25.926Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_chat",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:42:26.001Z",
+    "id": "ai__1789742546001_jngn",
+    "createdAt": "2026-09-18T14:42:26.001Z",
+    "updatedAt": "2026-09-18T14:42:26.001Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "system",
+    "taskType": "chat",
+    "model": "heuristic-core",
+    "promptTokens": 64,
+    "completionTokens": 86,
+    "costCredits": 15,
+    "latencyMs": 6,
+    "cached": false,
+    "timestamp": "2026-09-18T14:42:26.005Z",
+    "id": "ai__1789742546005_1lzr",
+    "createdAt": "2026-09-18T14:42:26.005Z",
+    "updatedAt": "2026-09-18T14:42:26.005Z"
   }
 ]

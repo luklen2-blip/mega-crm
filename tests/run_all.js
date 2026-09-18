@@ -1918,6 +1918,67 @@ async function runTests() {
   console.log('  ✅ Teste 27 Aprovado: Propostas com Itens, Checkout Público, PIX Bacen, Baixa por Webhook e Anti-IDOR validados.\n');
   passed++;
 
+  // 28. Validação de Analytics Comercial Avançado & BI (FASE 11)
+  console.log('▶ Teste 28: Validação de Analytics Comercial Avançado & BI (FASE 11)...');
+
+  // 28.1 Consulta ao Endpoint Dedicado de BI (/api/analytics/bi)
+  const biRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/analytics/bi',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(biRes.status, 200, 'GET /api/analytics/bi deve responder HTTP 200');
+  assert.strictEqual(biRes.body.success, true);
+  const kpis = biRes.body.data.kpis;
+  assert.ok(typeof kpis.cac === 'number', 'CAC deve ser numérico');
+  assert.ok(typeof kpis.ltv === 'number', 'LTV deve ser numérico');
+  assert.ok(typeof kpis.ltvCacRatio === 'number', 'LTV/CAC ratio deve ser numérico');
+  assert.ok(typeof kpis.salesCycleDays === 'number', 'Ciclo de vendas deve ser numérico');
+  assert.ok(typeof kpis.weightedForecast === 'number', 'Forecast ponderado deve ser numérico');
+  assert.ok(Array.isArray(biRes.body.data.channelPerformance), 'channelPerformance deve ser um array');
+  assert.ok(Array.isArray(biRes.body.data.sellersPerformance), 'sellersPerformance deve ser um array');
+  assert.ok(typeof biRes.body.data.aiUsageSummary.totalTokens === 'number', 'aiUsageSummary deve conter totalTokens');
+
+  // 28.2 Validação de Compatibilidade Retroativa no Dashboard (/api/analytics)
+  const analyticsRes28 = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/analytics',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(analyticsRes28.status, 200);
+  assert.ok(analyticsRes28.body.data.bi, 'Dashboard tradicional deve conter objeto bi enriquecido');
+  assert.ok(analyticsRes28.body.data.channelPerformance, 'Dashboard deve conter channelPerformance');
+
+  // 28.3 Isolamento Cross-Tenant no BI (Outro tenant não visualiza métricas de ten_demo_agentise)
+  const idorBiRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/analytics/bi',
+      headers: { 'Authorization': `Bearer ${otherTenantAdminToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(idorBiRes.status, 200);
+  assert.notStrictEqual(idorBiRes.body.data.kpis.totalPipelineValue, kpis.totalPipelineValue, 'Métricas entre tenants distintos devem ser isoladas');
+
+  console.log('  ✅ Teste 28 Aprovado: BI Avançado (CAC, LTV, LTV/CAC, Ciclo de Vendas, Previsibilidade Ponderada) e Anti-IDOR validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

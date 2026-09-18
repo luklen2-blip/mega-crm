@@ -42,6 +42,8 @@ const {
   calculateAiDealScore 
 } = require('./services/pipelineService');
 
+const { calculateAdvancedBi } = require('./services/analyticsBiService');
+
 const { runSeeds } = require('./database/seeds');
 const { 
   ROLES,
@@ -1867,13 +1869,20 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, data: updated });
   }
 
-  // 16. DASHBOARD EXECUTIVO & ANALYTICS (FASE 4 & 12)
+  // 16. DASHBOARD EXECUTIVO, ANALYTICS & BI AVANÇADO (FASE 11)
+  if (pathname === '/api/analytics/bi' && method === 'GET') {
+    const biData = calculateAdvancedBi(tenantId);
+    return sendJson(res, 200, { success: true, data: biData });
+  }
+
   if (pathname === '/api/analytics' && method === 'GET') {
     const deals = dealsDB.findByTenant(tenantId);
     const leads = leadsDB.findByTenant(tenantId);
     const tasks = tasksDB.findByTenant(tenantId);
     const users = usersDB.findByTenant(tenantId);
     const proposals = proposalsDB.findByTenant(tenantId);
+
+    const bi = calculateAdvancedBi(tenantId);
 
     const totalPipelineValue = deals.reduce((sum, d) => sum + (Number(d.value) || 0), 0);
     const wonDeals = deals.filter(d => d.stage === 'ganho');
@@ -1961,7 +1970,10 @@ const server = http.createServer(async (req, res) => {
         pendingTasks: tasks.filter(t => !t.completed).length,
         stageBreakdown,
         aiAlerts,
-        sellersPerformance
+        sellersPerformance,
+        bi: bi.kpis,
+        channelPerformance: bi.channelPerformance,
+        aiUsageSummary: bi.aiUsageSummary
       }
     });
   }

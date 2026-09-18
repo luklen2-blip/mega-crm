@@ -1393,5 +1393,95 @@
     "id": "tas_1789742425565_5liq",
     "createdAt": "2026-09-18T14:40:25.565Z",
     "updatedAt": "2026-09-18T14:40:25.565Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789742545173_v8fh",
+    "createdAt": "2026-09-18T14:42:25.173Z",
+    "updatedAt": "2026-09-18T14:42:25.173Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789742545346",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T14:42:25.346Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T14:42:25.346Z",
+    "updatedAt": "2026-09-18T14:42:25.363Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789742545612_q5hw",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:42:25.623Z",
+    "completed": false,
+    "id": "tas_1789742545623_hco7",
+    "createdAt": "2026-09-18T14:42:25.623Z",
+    "updatedAt": "2026-09-18T14:42:25.623Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:42:25.706Z",
+    "completed": false,
+    "id": "tas_1789742545706_11x1",
+    "createdAt": "2026-09-18T14:42:25.706Z",
+    "updatedAt": "2026-09-18T14:42:25.706Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742545328_4s5j",
+    "dealId": null,
+    "title": "🚨 TRANSBORDO HUMANO: Lead Confidencial A",
+    "description": "Motivo: Cliente solicitou transbordo humano explícito (termo identificado: \"humano\"). Última mensagem: \"Quero falar com um atendente humano urgente, não quero falar com robô.\"",
+    "priority": "urgente",
+    "completed": false,
+    "assignedTo": "Equipe Comercial",
+    "createdAt": "2026-09-18T14:42:25.937Z",
+    "id": "tas_1789742545937_6l87",
+    "updatedAt": "2026-09-18T14:42:25.938Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742545328_4s5j",
+    "dealId": "dea_1789742545947_6eqa",
+    "title": "🚨 TRANSBORDO HUMANO: Lead Confidencial A",
+    "description": "Motivo: Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000). Última mensagem: \"Podemos fechar o contrato no valor total?\"",
+    "priority": "urgente",
+    "completed": false,
+    "assignedTo": "Equipe Comercial",
+    "createdAt": "2026-09-18T14:42:25.950Z",
+    "id": "tas_1789742545950_at0i",
+    "updatedAt": "2026-09-18T14:42:25.950Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742545328_4s5j",
+    "title": "⚠️ [Alerta Gestão] Alerta Deal VIP Score Alto: Expansão Enterprise Corp",
+    "priority": "urgente",
+    "deadline": "2026-09-18T18:42:26.044Z",
+    "completed": false,
+    "id": "tas_1789742546044_qf1o",
+    "createdAt": "2026-09-18T14:42:26.044Z",
+    "updatedAt": "2026-09-18T14:42:26.044Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742545328_4s5j",
+    "dealId": "dea_1789742546074_br2u",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T14:42:26.081Z",
+    "completed": false,
+    "id": "tas_1789742546081_53xh",
+    "createdAt": "2026-09-18T14:42:26.081Z",
+    "updatedAt": "2026-09-18T14:42:26.081Z"
   }
 ]
