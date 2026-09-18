@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 4155,
+    "aiCreditsUsed": 4370,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,7 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-18T18:55:22.691Z"
+    "updatedAt": "2026-09-18T19:23:04.190Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -754,5 +754,282 @@
     "id": "ten_1789757716738_nvfh",
     "createdAt": "2026-09-18T18:55:16.738Z",
     "updatedAt": "2026-09-18T18:55:16.738Z"
+  },
+  {
+    "name": "Alpha Corp Renomeada",
+    "segment": "Tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:19:34.414Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759174418_du9z",
+    "createdAt": "2026-09-18T19:19:34.418Z",
+    "updatedAt": "2026-09-18T19:19:34.611Z"
+  },
+  {
+    "name": "Beta Corp 1789759174414",
+    "segment": "Automotivo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:19:34.454Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759174454_1yj8",
+    "createdAt": "2026-09-18T19:19:34.454Z",
+    "updatedAt": "2026-09-18T19:19:34.454Z"
+  },
+  {
+    "name": "Pentest Corp 1789759180135",
+    "segment": "tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:19:40.135Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759180137_3hx9",
+    "createdAt": "2026-09-18T19:19:40.138Z",
+    "updatedAt": "2026-09-18T19:19:40.351Z"
+  },
+  {
+    "name": "Empresa Privada B2B",
+    "isDemo": false,
+    "id": "ten_1789759180363_nx9u",
+    "createdAt": "2026-09-18T19:19:40.363Z",
+    "updatedAt": "2026-09-18T19:19:40.363Z"
+  },
+  {
+    "name": "Tenant Alpha 1789759185822",
+    "segment": "consultoria",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:19:45.823Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759185824_vg2d",
+    "createdAt": "2026-09-18T19:19:45.824Z",
+    "updatedAt": "2026-09-18T19:19:45.824Z"
+  },
+  {
+    "name": "Tenant Beta 1789759185822",
+    "segment": "varejo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:19:45.849Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759185849_i2ca",
+    "createdAt": "2026-09-18T19:19:45.849Z",
+    "updatedAt": "2026-09-18T19:19:45.849Z"
+  },
+  {
+    "name": "Tech Sul Soluções",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:19:52.801Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 50,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759192801_m8pr",
+    "createdAt": "2026-09-18T19:19:52.801Z",
+    "updatedAt": "2026-09-18T19:19:52.888Z",
+    "leadSources": [
+      "WhatsApp",
+      "Instagram"
+    ],
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "onboardingCompleted": true
+  },
+  {
+    "id": "ten_pix_audit_a_1789759278455",
+    "name": "Corporação Alfa (Auditoria PIX)",
+    "pixWebhookSecret": "secret_alfa_1789759278455",
+    "status": "active",
+    "createdAt": "2026-09-18T19:21:18.455Z",
+    "updatedAt": "2026-09-18T19:21:18.455Z"
+  },
+  {
+    "id": "ten_pix_audit_b_1789759278455",
+    "name": "Corporação Beta (Auditoria PIX)",
+    "pixWebhookSecret": "secret_beta_1789759278455",
+    "status": "active",
+    "createdAt": "2026-09-18T19:21:18.459Z",
+    "updatedAt": "2026-09-18T19:21:18.459Z"
+  },
+  {
+    "id": "ten_pix_audit_a_1789759323287",
+    "name": "Corporação Alfa (Auditoria PIX)",
+    "pixWebhookSecret": "secret_alfa_1789759323287",
+    "status": "active",
+    "createdAt": "2026-09-18T19:22:03.288Z",
+    "updatedAt": "2026-09-18T19:22:03.288Z"
+  },
+  {
+    "id": "ten_pix_audit_b_1789759323287",
+    "name": "Corporação Beta (Auditoria PIX)",
+    "pixWebhookSecret": "secret_beta_1789759323287",
+    "status": "active",
+    "createdAt": "2026-09-18T19:22:03.292Z",
+    "updatedAt": "2026-09-18T19:22:03.292Z"
+  },
+  {
+    "id": "ten_pix_audit_a_1789759363964",
+    "name": "Corporação Alfa (Auditoria PIX)",
+    "pixWebhookSecret": "secret_alfa_1789759363964",
+    "status": "active",
+    "createdAt": "2026-09-18T19:22:43.964Z",
+    "updatedAt": "2026-09-18T19:22:43.964Z"
+  },
+  {
+    "id": "ten_pix_audit_b_1789759363964",
+    "name": "Corporação Beta (Auditoria PIX)",
+    "pixWebhookSecret": "secret_beta_1789759363964",
+    "status": "active",
+    "createdAt": "2026-09-18T19:22:43.968Z",
+    "updatedAt": "2026-09-18T19:22:43.968Z"
+  },
+  {
+    "name": "Alpha Corp Renomeada",
+    "segment": "Tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:22:48.954Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759368956_d6gh",
+    "createdAt": "2026-09-18T19:22:48.956Z",
+    "updatedAt": "2026-09-18T19:22:49.166Z"
+  },
+  {
+    "name": "Beta Corp 1789759368953",
+    "segment": "Automotivo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:22:49.008Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759369008_bja6",
+    "createdAt": "2026-09-18T19:22:49.008Z",
+    "updatedAt": "2026-09-18T19:22:49.008Z"
+  },
+  {
+    "name": "Pentest Corp 1789759373453",
+    "segment": "tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:22:53.453Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759373455_2m6z",
+    "createdAt": "2026-09-18T19:22:53.455Z",
+    "updatedAt": "2026-09-18T19:22:53.662Z"
+  },
+  {
+    "name": "Empresa Privada B2B",
+    "isDemo": false,
+    "id": "ten_1789759373681_3dxv",
+    "createdAt": "2026-09-18T19:22:53.681Z",
+    "updatedAt": "2026-09-18T19:22:53.681Z"
+  },
+  {
+    "name": "Tenant Alpha 1789759378122",
+    "segment": "consultoria",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:22:58.123Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759378125_swzv",
+    "createdAt": "2026-09-18T19:22:58.125Z",
+    "updatedAt": "2026-09-18T19:22:58.125Z"
+  },
+  {
+    "name": "Tenant Beta 1789759378122",
+    "segment": "varejo",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-09-25T19:22:58.149Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1789759378149_xlc6",
+    "createdAt": "2026-09-18T19:22:58.149Z",
+    "updatedAt": "2026-09-18T19:22:58.149Z"
   }
 ]

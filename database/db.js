@@ -64,6 +64,17 @@ class JsonDB {
   }
 
   insert(record) {
+    // Idempotência e deduplicação estrita para pagamentos
+    if (this.collectionName === 'payments') {
+      const existing = this.cache.find(p =>
+        (p.proposalId && record.proposalId && p.proposalId === record.proposalId) ||
+        (p.endToEndId && record.endToEndId && p.endToEndId === record.endToEndId)
+      );
+      if (existing) {
+        return existing;
+      }
+    }
+
     const id = record.id || `${this.collectionName.slice(0, 3)}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
     const now = new Date().toISOString();
     const doc = {

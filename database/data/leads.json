@@ -1479,6 +1479,117 @@
     "updatedAt": "2026-09-18T18:55:16.846Z"
   },
   {
+    "tenantId": "ten_1789759174454_1yj8",
+    "name": "Lead Beta Confidencial",
+    "email": "lead.beta@empresa.com",
+    "phone": "11999998888",
+    "status": "novo",
+    "id": "lea_1789759174473_vf2v",
+    "createdAt": "2026-09-18T19:19:34.473Z",
+    "updatedAt": "2026-09-18T19:19:34.473Z"
+  },
+  {
+    "name": "Lead Injetado",
+    "email": "spoofed@teste.com",
+    "tenantId": "ten_1789759174418_du9z",
+    "id": "lea_1789759174524_hbvy",
+    "createdAt": "2026-09-18T19:19:34.524Z",
+    "updatedAt": "2026-09-18T19:19:34.524Z"
+  },
+  {
+    "tenantId": "ten_1789759180137_3hx9",
+    "name": "Lead Teste Exclusão",
+    "email": "alvo@teste.com",
+    "id": "lea_1789759180226_6qqi",
+    "createdAt": "2026-09-18T19:19:40.226Z",
+    "updatedAt": "2026-09-18T19:19:40.226Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789759185824_vg2d",
+    "id": "lea_1789759185889_vh3t",
+    "createdAt": "2026-09-18T19:19:45.889Z",
+    "updatedAt": "2026-09-18T19:19:45.889Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789759185849_i2ca",
+    "id": "lea_1789759185957_ekkd",
+    "createdAt": "2026-09-18T19:19:45.957Z",
+    "updatedAt": "2026-09-18T19:19:45.957Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789759185849_i2ca",
+    "id": "lea_1789759185963_6sd9",
+    "createdAt": "2026-09-18T19:19:45.963Z",
+    "updatedAt": "2026-09-18T19:19:45.963Z"
+  },
+  {
+    "tenantId": "tenant_A_seguro",
+    "name": "Lead Confidencial A",
+    "id": "lea_1789759192893_cui6",
+    "createdAt": "2026-09-18T19:19:52.893Z",
+    "updatedAt": "2026-09-18T19:19:52.893Z"
+  },
+  {
+    "tenantId": "ten_1789759369008_bja6",
+    "name": "Lead Beta Confidencial",
+    "email": "lead.beta@empresa.com",
+    "phone": "11999998888",
+    "status": "novo",
+    "id": "lea_1789759369029_233g",
+    "createdAt": "2026-09-18T19:22:49.029Z",
+    "updatedAt": "2026-09-18T19:22:49.029Z"
+  },
+  {
+    "name": "Lead Injetado",
+    "email": "spoofed@teste.com",
+    "tenantId": "ten_1789759368956_d6gh",
+    "id": "lea_1789759369077_nu2l",
+    "createdAt": "2026-09-18T19:22:49.077Z",
+    "updatedAt": "2026-09-18T19:22:49.077Z"
+  },
+  {
+    "tenantId": "ten_1789759373455_2m6z",
+    "name": "Lead Teste Exclusão",
+    "email": "alvo@teste.com",
+    "id": "lea_1789759373525_rysh",
+    "createdAt": "2026-09-18T19:22:53.525Z",
+    "updatedAt": "2026-09-18T19:22:53.525Z"
+  },
+  {
+    "name": "João da Silva",
+    "phone": "11988887777",
+    "email": "joao@silva.com",
+    "value": 10000,
+    "tenantId": "ten_1789759378125_swzv",
+    "id": "lea_1789759378195_95w4",
+    "createdAt": "2026-09-18T19:22:58.195Z",
+    "updatedAt": "2026-09-18T19:22:58.195Z"
+  },
+  {
+    "name": "Lead Cavalo de Tróia",
+    "phone": "11900001111",
+    "tenantId": "ten_1789759378149_xlc6",
+    "id": "lea_1789759378286_ircl",
+    "createdAt": "2026-09-18T19:22:58.286Z",
+    "updatedAt": "2026-09-18T19:22:58.286Z"
+  },
+  {
+    "name": "Cliente Legítimo B",
+    "phone": "11977776666",
+    "tenantId": "ten_1789759378149_xlc6",
+    "id": "lea_1789759378291_lr69",
+    "createdAt": "2026-09-18T19:22:58.291Z",
+    "updatedAt": "2026-09-18T19:22:58.291Z"
+  },
+  {
     "id": "lead_autoprime_51_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "name": "Dr. André Villas-Bôas",
@@ -1496,7 +1607,7 @@
       "WhatsApp"
     ],
     "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-09-18T18:55:21.949Z",
-    "updatedAt": "2026-09-18T18:55:21.981Z"
+    "createdAt": "2026-09-18T19:23:03.470Z",
+    "updatedAt": "2026-09-18T19:23:03.482Z"
   }
 ]

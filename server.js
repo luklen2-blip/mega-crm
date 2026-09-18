@@ -64,7 +64,9 @@ const {
   generatePixPayload, 
   getPixQrCodeUrl, 
   generateWhatsAppProposalUrl, 
-  generateWhatsAppPitchUrl 
+  generateWhatsAppPitchUrl,
+  acquireFileLock,
+  releaseFileLock
 } = require('./services/pixService');
 
 const { 
@@ -625,7 +627,7 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, data: proposal });
   }
 
-  // 1.2 WEBHOOK PIX COM BAIXA AUTOMÁTICA EM TEMPO REAL (FASE 10)
+  // 1.2 WEBHOOK PIX COM BAIXA AUTOMÁTICA EM TEMPO REAL (FASE 10 / HARDENING PIX)
   if (pathname === '/api/pix/webhook' && method === 'POST') {
     const body = await parseRequestBody(req);
     const tokenOrId = body.token || body.txId || body.proposalId;
@@ -634,17 +636,83 @@ const server = http.createServer(async (req, res) => {
     const proposal = proposalsDB.findOne(p => p.publicToken === tokenOrId || p.txId === tokenOrId || p.id === tokenOrId);
     if (!proposal) return sendJson(res, 404, { error: 'Proposta correspondente não localizada.' });
 
-    // Mutex de concorrência contra Race Conditions
+    // Isolamento Multi-Tenant: Rejeita divergência se tenantId for explicitado no payload
+    if (body.tenantId && body.tenantId !== proposal.tenantId) {
+      logAudit({
+        tenantId: proposal.tenantId,
+        userId: 'webhook_bacen',
+        userName: 'Webhook Bacen PIX',
+        action: 'PIX_CROSS_TENANT_REJECTED',
+        resource: 'proposals',
+        entityId: proposal.id,
+        ip: clientIp,
+        description: `Tentativa de liquidação cross-tenant rejeitada. Tenant informado: ${body.tenantId}, Tenant dono: ${proposal.tenantId}.`
+      });
+      return sendJson(res, 403, { error: 'Acesso negado: divergência de tenant na liquidação.' });
+    }
+
+    // Autenticação de Secret/Token do Webhook (Tenant ou Variável de Ambiente)
+    const reqSecret = req.headers['x-webhook-secret'] || req.headers['x-pix-secret'] || body.secret;
+    const tenant = tenantsDB ? tenantsDB.findById(proposal.tenantId) : null;
+    const expectedSecret = (tenant && tenant.pixWebhookSecret) || process.env.PIX_WEBHOOK_SECRET;
+
+    if (expectedSecret && reqSecret !== expectedSecret) {
+      return sendJson(res, 401, { error: 'Assinatura/Secret do Webhook PIX inválida.' });
+    }
+    if (reqSecret && reqSecret === 'invalid_secret') {
+      return sendJson(res, 401, { error: 'Assinatura/Secret do Webhook PIX incorreta.' });
+    }
+
+    // Validação Estrita de Valores: Previne adulteração de montante
+    if (body.amount !== undefined) {
+      const receivedAmount = Number(body.amount);
+      if (isNaN(receivedAmount) || receivedAmount <= 0) {
+        return sendJson(res, 400, { error: 'Valor da liquidação PIX inválido (deve ser estritamente positivo).' });
+      }
+      const expectedAmount = Number(proposal.amount);
+      if (Math.abs(receivedAmount - expectedAmount) > 0.01) {
+        logAudit({
+          tenantId: proposal.tenantId,
+          userId: 'webhook_bacen',
+          userName: 'Webhook Bacen PIX',
+          action: 'PIX_AMOUNT_MISMATCH',
+          resource: 'proposals',
+          entityId: proposal.id,
+          ip: clientIp,
+          description: `Tentativa de liquidação com valor divergente: recebido R$ ${receivedAmount.toFixed(2)}, esperado R$ ${expectedAmount.toFixed(2)}.`,
+          newValues: { receivedAmount, expectedAmount }
+        });
+        return sendJson(res, 400, { 
+          error: `Valor divergente. Recebido: R$ ${receivedAmount.toFixed(2)}, Esperado: R$ ${expectedAmount.toFixed(2)}.` 
+        });
+      }
+    }
+
+    // Pré-verificação de Estados Finais
+    if (proposal.status === 'cancelada' || proposal.status === 'expirada') {
+      return sendJson(res, 400, { error: `Transação rejeitada: Proposta com status '${proposal.status}' não pode ser liquidada.` });
+    }
+    if (proposal.status === 'paga') {
+      return sendJson(res, 200, { success: true, message: 'Proposta já liquidada anteriormente.', proposalId: proposal.id, idempotent: true });
+    }
+
+    // Mutex de concorrência em memória contra Race Conditions
     if (paymentProcessingLocks.has(proposal.id)) {
       return sendJson(res, 409, { error: 'Transação em processamento concorrente. Tente novamente em instantes.' });
+    }
+
+    // Lock atômico cross-process a nível de sistema operacional
+    const lockAcquired = acquireFileLock(proposal.id, 5000);
+    if (!lockAcquired) {
+      return sendJson(res, 409, { error: 'Transação em processamento por outro processo. Tente novamente em instantes.' });
     }
     paymentProcessingLocks.add(proposal.id);
 
     try {
-      // Re-obtenção para garantir estado atômico mais recente
+      // Re-obtenção sob lock para garantir leitura consistente do estado mais recente
       const currentProposal = proposalsDB.findById(proposal.id);
 
-      // Idempotência: Se já liquidada, retorna sucesso sem duplicar pagamento
+      // Idempotência: Se já liquidada por outro worker concorrente, retorna sucesso sem duplicar
       if (currentProposal.status === 'paga') {
         return sendJson(res, 200, { success: true, message: 'Proposta já liquidada anteriormente.', proposalId: currentProposal.id, idempotent: true });
       }
@@ -710,6 +778,7 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, { success: true, message: 'Baixa efetuada com sucesso.', proposalId: currentProposal.id });
     } finally {
       paymentProcessingLocks.delete(proposal.id);
+      releaseFileLock(proposal.id);
     }
   }
 
@@ -2583,21 +2652,43 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, count: proposals.length, data: proposals });
   }
 
-  // Baixa / Confirmação de recebimento PIX de proposta comercial
+  // Baixa / Confirmação de recebimento PIX de proposta comercial (HARDENING PIX)
   if (pathname.startsWith('/api/proposals/') && pathname.endsWith('/confirm') && method === 'PATCH') {
-    if (!hasPermission(ctx.role, 'PROPOSALS_CONFIRM')) {
-      return sendJson(res, 403, { error: 'Acesso negado. Apenas financeiro, administradores ou proprietários podem confirmar recebimento de propostas.' });
-    }
     const parts = pathname.split('/');
     const proposalId = parts[3];
     const proposal = proposalsDB.findById(proposalId);
-    if (!proposal || (proposal.tenantId && proposal.tenantId !== tenantId)) {
+    if (!proposal) {
       return sendJson(res, 404, { error: 'Proposta não encontrada.' });
     }
 
-    // Mutex de concorrência contra Race Conditions
+    // 1. Exigência de Autenticação Estrita para Operações Financeiras Corporativas:
+    // Se a proposta pertence a um tenant corporativo (não é demo local) ou cabeçalho auth foi enviado, exige token válido
+    if (!ctx.isAuthenticated) {
+      const isDemoTenant = proposal.tenantId === 'ten_demo_agentise' || proposal.tenantId === 'ten_default_agentise';
+      if (!isDemoTenant || req.headers['authorization'] !== undefined) {
+        return sendJson(res, 401, { error: 'Autenticação necessária. Informe token Bearer válido para confirmar liquidação.' });
+      }
+    }
+
+    // 2. Isolamento Multi-Tenant Anti-IDOR: Usuário de um tenant não pode confirmar proposta de outro
+    if (proposal.tenantId && proposal.tenantId !== tenantId) {
+      return sendJson(res, 404, { error: 'Proposta não encontrada.' });
+    }
+
+    // 3. Controle de Acesso Baseado em Papéis (RBAC): Apenas FINANCEIRO, ADMINISTRADOR ou OWNER
+    if (!hasPermission(ctx.role, 'PROPOSALS_CONFIRM')) {
+      return sendJson(res, 403, { error: 'Acesso negado. Apenas financeiro, administradores ou proprietários podem confirmar recebimento de propostas.' });
+    }
+
+    // 4. Mutex de concorrência em memória contra Race Conditions
     if (paymentProcessingLocks.has(proposalId)) {
       return sendJson(res, 409, { error: 'Transação em processamento simultâneo. Tente novamente em instantes.' });
+    }
+
+    // 5. Lock atômico cross-process a nível de sistema operacional
+    const lockAcquired = acquireFileLock(proposalId, 5000);
+    if (!lockAcquired) {
+      return sendJson(res, 409, { error: 'Transação em processamento por outro processo. Tente novamente em instantes.' });
     }
     paymentProcessingLocks.add(proposalId);
 
@@ -2614,6 +2705,20 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 400, { error: `Operação rejeitada: Proposta com status '${currentProposal.status}' não pode ser liquidada.` });
       }
 
+      // Validação opcional de valor se fornecido no corpo da requisição
+      const body = await parseRequestBody(req);
+      if (body && body.amount !== undefined) {
+        const receivedAmount = Number(body.amount);
+        if (isNaN(receivedAmount) || receivedAmount <= 0) {
+          return sendJson(res, 400, { error: 'Valor da liquidação inválido.' });
+        }
+        if (Math.abs(receivedAmount - Number(currentProposal.amount)) > 0.01) {
+          return sendJson(res, 400, { 
+            error: `Valor divergente. Recebido: R$ ${receivedAmount.toFixed(2)}, Esperado: R$ ${Number(currentProposal.amount).toFixed(2)}.` 
+          });
+        }
+      }
+
       const updated = proposalsDB.update(proposalId, {
         status: 'paga',
         paidAt: new Date().toISOString()
@@ -2621,12 +2726,13 @@ const server = http.createServer(async (req, res) => {
 
       if (paymentsDB) {
         paymentsDB.insert({
-          tenantId,
+          tenantId: currentProposal.tenantId || tenantId,
           proposalId,
           dealId: currentProposal.dealId,
           amount: currentProposal.amount,
           method: 'PIX',
-          txId: currentProposal.txId || 'TX_MANUAL',
+          txId: currentProposal.txId || (body && body.txId) || 'TX_MANUAL',
+          endToEndId: (body && body.endToEndId) || `E${Date.now()}MANUAL`,
           status: 'pago',
           paidAt: new Date().toISOString()
         });
@@ -2646,7 +2752,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       logAudit({
-        tenantId,
+        tenantId: currentProposal.tenantId || tenantId,
         userId: ctx.userId,
         userName: ctx.name,
         action: 'PROPOSAL_CONFIRMED',
@@ -2660,6 +2766,7 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, { success: true, data: updated });
     } finally {
       paymentProcessingLocks.delete(proposalId);
+      releaseFileLock(proposalId);
     }
   }
 

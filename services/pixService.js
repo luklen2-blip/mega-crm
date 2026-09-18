@@ -95,9 +95,77 @@ function generateWhatsAppPitchUrl({ phone, customerName, pitchText }) {
   return `https://wa.me/${destination}?text=${encodeURIComponent(pitchText)}`;
 }
 
+const fs = require('fs');
+const path = require('path');
+
+const LOCKS_DIR = path.join(__dirname, '..', 'database', 'data', '.locks');
+
+function ensureLocksDir() {
+  if (!fs.existsSync(LOCKS_DIR)) {
+    try {
+      fs.mkdirSync(LOCKS_DIR, { recursive: true });
+    } catch (e) {
+      // Ignora se já criado concorrentemente
+    }
+  }
+}
+
+/**
+ * Adquire trava exclusiva atômica cross-process no nível do SO (flag 'wx')
+ */
+function acquireFileLock(resourceId, timeoutMs = 5000) {
+  ensureLocksDir();
+  const safeId = String(resourceId).replace(/[^a-zA-Z0-9_-]/g, '_');
+  const lockFilePath = path.join(LOCKS_DIR, `pix_${safeId}.lock`);
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < timeoutMs) {
+    try {
+      const fd = fs.openSync(lockFilePath, 'wx');
+      const lockData = JSON.stringify({ pid: process.pid, createdAt: Date.now() });
+      fs.writeFileSync(fd, lockData);
+      fs.closeSync(fd);
+      return true;
+    } catch (err) {
+      if (err.code === 'EEXIST') {
+        try {
+          const content = fs.readFileSync(lockFilePath, 'utf8');
+          const parsed = JSON.parse(content);
+          if (Date.now() - parsed.createdAt > 10000) {
+            try { fs.unlinkSync(lockFilePath); } catch (e) {}
+            continue;
+          }
+        } catch (readErr) {}
+        
+        const waitUntil = Date.now() + 10;
+        while (Date.now() < waitUntil) {}
+      } else {
+        throw err;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Libera a trava atômica do recurso
+ */
+function releaseFileLock(resourceId) {
+  try {
+    const safeId = String(resourceId).replace(/[^a-zA-Z0-9_-]/g, '_');
+    const lockFilePath = path.join(LOCKS_DIR, `pix_${safeId}.lock`);
+    if (fs.existsSync(lockFilePath)) {
+      fs.unlinkSync(lockFilePath);
+    }
+  } catch (err) {}
+}
+
 module.exports = {
   generatePixPayload,
   getPixQrCodeUrl,
   generateWhatsAppProposalUrl,
-  generateWhatsAppPitchUrl
+  generateWhatsAppPitchUrl,
+  acquireFileLock,
+  releaseFileLock
 };
+
