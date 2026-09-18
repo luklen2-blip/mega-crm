@@ -19,7 +19,8 @@ try {
   // fallback
 }
 
-const zipPath = path.join(desktopDir, 'mega-crm-deploy.zip');
+const zipPath = path.join(desktopDir, 'AGENTISE_MEGA_CRM_V2_PRODUCAO.zip');
+const legacyZipPath = path.join(desktopDir, 'mega-crm-deploy.zip');
 
 console.log(`📁 Destino na Área de Trabalho: ${desktopDir}`);
 
@@ -58,8 +59,10 @@ console.log('▶ Compactando pacote ZIP via PowerShell...');
 try {
   execSync(`powershell -Command "Compress-Archive -Path '${tempPackDir}\\*' -DestinationPath '${zipPath}' -Force"`, { stdio: 'inherit' });
   console.log(`\n✅ Pacote gerado com sucesso em:\n   ${zipPath}`);
+  fs.copyFileSync(zipPath, legacyZipPath);
   const stats = fs.statSync(zipPath);
   console.log(`📊 Tamanho do arquivo: ${(stats.size / 1024).toFixed(1)} KB`);
+  console.log(`📁 Cópia legada atualizada em:\n   ${legacyZipPath}`);
   console.log('🚀 Pronto para upload imediato no Render, Railway ou GitHub!');
 } catch (err) {
   console.error('❌ Falha na compactação do arquivo ZIP:', err.message);
