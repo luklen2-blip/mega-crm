@@ -87,8 +87,22 @@ function generateToken(payload) {
   return `${header}.${data}.${signature}`;
 }
 
+const revokedTokens = new Set();
+
+function revokeToken(token) {
+  if (token && typeof token === 'string') {
+    revokedTokens.add(token.trim());
+  }
+}
+
+function isTokenRevoked(token) {
+  if (!token || typeof token !== 'string') return false;
+  return revokedTokens.has(token.trim());
+}
+
 function verifyToken(token) {
   if (!token || typeof token !== 'string') return null;
+  if (revokedTokens.has(token.trim())) return null;
   const parts = token.split('.');
   if (parts.length !== 3) return null;
   const [header, data, signature] = parts;
@@ -236,7 +250,9 @@ function login(email, password) {
 
 function sanitizeUser(user) {
   if (!user) return null;
-  const { passwordHash, resetToken, ...safe } = user;
+  const safe = Object.assign({}, user);
+  delete safe.passwordHash;
+  delete safe.resetToken;
   return safe;
 }
 
@@ -296,5 +312,7 @@ module.exports = {
   login,
   sanitizeUser,
   getRequestContext,
+  revokeToken,
+  isTokenRevoked,
   logAudit
 };

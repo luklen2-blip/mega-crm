@@ -136,10 +136,11 @@ function consumeAiCredits(tenantId, featureName, cost = 10, metadata = {}) {
   const tenant = tenantsDB.findById(tenantId);
   if (!tenant) return { success: true };
 
+  const safeCost = Math.max(0, Number(cost) || 0);
   const currentUsed = tenant.aiCreditsUsed || 0;
   const maxCredits = tenant.aiCredits || 1000;
 
-  if (currentUsed + cost > maxCredits) {
+  if (currentUsed + safeCost > maxCredits) {
     return {
       success: false,
       error: 'Créditos de IA esgotados para este ciclo. Recarregue seus créditos ou faça upgrade do plano.'
@@ -147,7 +148,7 @@ function consumeAiCredits(tenantId, featureName, cost = 10, metadata = {}) {
   }
 
   tenantsDB.update(tenantId, {
-    aiCreditsUsed: currentUsed + cost
+    aiCreditsUsed: currentUsed + safeCost
   });
 
   const usageRecord = aiUsageDB.insert({
@@ -155,18 +156,18 @@ function consumeAiCredits(tenantId, featureName, cost = 10, metadata = {}) {
     userId: metadata.userId || null,
     agent: metadata.agent || 'Claude Commercial Copilot',
     model: metadata.model || 'claude-3-7-sonnet',
-    tokens: metadata.tokens || cost * 100,
-    cost: cost,
+    tokens: metadata.tokens || safeCost * 100,
+    cost: safeCost,
     operation: featureName,
     feature: featureName,
-    credits: cost,
+    credits: safeCost,
     timestamp: new Date().toISOString()
   });
 
   return {
     success: true,
-    creditsUsed: cost,
-    remainingCredits: maxCredits - (currentUsed + cost),
+    creditsUsed: safeCost,
+    remainingCredits: maxCredits - (currentUsed + safeCost),
     usageRecord
   };
 }

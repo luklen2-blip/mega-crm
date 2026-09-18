@@ -56,6 +56,7 @@ const {
   generateToken,
   sanitizeUser,
   getRequestContext, 
+  revokeToken,
   logAudit 
 } = require('./services/authService');
 
@@ -170,6 +171,9 @@ function parseRequestBody(req) {
 // In-Memory Rate Limiter nativo e de alta performance (sem dependências externas)
 const rateLimitMap = new Map();
 
+// In-Memory Mutex para proteção de concorrência e liquidação idempotente de pagamentos PIX
+const paymentProcessingLocks = new Set();
+
 function checkRateLimit(ip, bucketName, maxRequests, windowMs) {
   const now = Date.now();
   const key = `${bucketName}:${ip}`;
@@ -219,7 +223,7 @@ function sendJson(res, statusCode, data) {
 }
 
 // Resolução segura de arquivos estáticos com isolamento e blindagem contra Directory Traversal
-const BLOCKED_STATIC_PREFIXES = ['database', 'services', 'tests', 'scripts', '.git', 'node_modules', '.gemini', 'config'];
+const BLOCKED_STATIC_PREFIXES = ['api', 'database', 'services', 'tests', 'scripts', '.git', 'node_modules', '.gemini', 'config'];
 const BLOCKED_STATIC_FILES = ['server.js', 'package.json', 'package-lock.json', 'render.yaml', 'Dockerfile', '.gitignore', '.dockerignore', '.env'];
 
 function serveStatic(req, res, targetFile) {
@@ -461,6 +465,7 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = parsedUrl.pathname;
   const method = req.method;
+  const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
 
   // CORS Pre-flight
   if (method === 'OPTIONS') {
@@ -629,48 +634,83 @@ const server = http.createServer(async (req, res) => {
     const proposal = proposalsDB.findOne(p => p.publicToken === tokenOrId || p.txId === tokenOrId || p.id === tokenOrId);
     if (!proposal) return sendJson(res, 404, { error: 'Proposta correspondente não localizada.' });
 
-    const updated = proposalsDB.update(proposal.id, {
-      status: 'paga',
-      paidAt: new Date().toISOString()
-    });
+    // Mutex de concorrência contra Race Conditions
+    if (paymentProcessingLocks.has(proposal.id)) {
+      return sendJson(res, 409, { error: 'Transação em processamento concorrente. Tente novamente em instantes.' });
+    }
+    paymentProcessingLocks.add(proposal.id);
 
-    if (paymentsDB) {
-      paymentsDB.insert({
-        tenantId: proposal.tenantId,
-        proposalId: proposal.id,
-        dealId: proposal.dealId,
-        amount: proposal.amount,
-        method: 'PIX',
-        txId: proposal.txId || body.txId || 'TX_BACEN',
-        endToEndId: body.endToEndId || `E${Date.now()}BACEN`,
-        status: 'pago',
+    try {
+      // Re-obtenção para garantir estado atômico mais recente
+      const currentProposal = proposalsDB.findById(proposal.id);
+
+      // Idempotência: Se já liquidada, retorna sucesso sem duplicar pagamento
+      if (currentProposal.status === 'paga') {
+        return sendJson(res, 200, { success: true, message: 'Proposta já liquidada anteriormente.', proposalId: currentProposal.id, idempotent: true });
+      }
+
+      // Rejeita transições de estados finais inválidos
+      if (currentProposal.status === 'cancelada' || currentProposal.status === 'expirada') {
+        return sendJson(res, 400, { error: `Transação rejeitada: Proposta com status '${currentProposal.status}' não pode ser liquidada.` });
+      }
+
+      const updated = proposalsDB.update(currentProposal.id, {
+        status: 'paga',
         paidAt: new Date().toISOString()
       });
-    }
 
-    if (proposal.dealId) {
-      const deal = dealsDB.findById(proposal.dealId);
-      if (deal && deal.stage !== 'ganho') {
-        dealsDB.update(proposal.dealId, {
-          stage: 'ganho',
-          probability: 100,
-          closedAt: new Date().toISOString()
+      if (paymentsDB) {
+        paymentsDB.insert({
+          tenantId: currentProposal.tenantId,
+          proposalId: currentProposal.id,
+          dealId: currentProposal.dealId,
+          amount: currentProposal.amount,
+          method: 'PIX',
+          txId: currentProposal.txId || body.txId || 'TX_BACEN',
+          endToEndId: body.endToEndId || `E${Date.now()}BACEN`,
+          status: 'pago',
+          paidAt: new Date().toISOString()
         });
-        await triggerWorkflows('venda_fechada', { dealId: proposal.dealId, leadId: proposal.leadId, amount: proposal.amount }, proposal.tenantId);
       }
+
+      if (currentProposal.dealId) {
+        const deal = dealsDB.findById(currentProposal.dealId);
+        if (deal && deal.stage !== 'ganho') {
+          dealsDB.update(currentProposal.dealId, {
+            stage: 'ganho',
+            probability: 100,
+            closedAt: new Date().toISOString()
+          });
+          await triggerWorkflows('venda_fechada', { dealId: currentProposal.dealId, leadId: currentProposal.leadId, amount: currentProposal.amount }, currentProposal.tenantId);
+        }
+      }
+
+      activitiesDB.insert({
+        tenantId: currentProposal.tenantId,
+        leadId: currentProposal.leadId,
+        dealId: currentProposal.dealId,
+        type: 'payment_received',
+        title: '💰 Pagamento PIX Confirmado via Webhook Bacen',
+        description: `Valor recebido: R$ ${Number(currentProposal.amount).toFixed(2)}. Baixa automática concluída.`,
+        timestamp: new Date().toISOString()
+      });
+
+      logAudit({
+        tenantId: currentProposal.tenantId,
+        userId: 'webhook_bacen',
+        userName: 'Webhook Bacen PIX',
+        action: 'PIX_WEBHOOK_CONFIRMED',
+        resource: 'proposals',
+        entityId: currentProposal.id,
+        ip: clientIp,
+        description: `Pagamento PIX de R$ ${Number(currentProposal.amount).toFixed(2)} confirmado via Webhook Bacen.`,
+        newValues: { status: 'paga', txId: currentProposal.txId }
+      });
+
+      return sendJson(res, 200, { success: true, message: 'Baixa efetuada com sucesso.', proposalId: currentProposal.id });
+    } finally {
+      paymentProcessingLocks.delete(proposal.id);
     }
-
-    activitiesDB.insert({
-      tenantId: proposal.tenantId,
-      leadId: proposal.leadId,
-      dealId: proposal.dealId,
-      type: 'payment_received',
-      title: '💰 Pagamento PIX Confirmado via Webhook Bacen',
-      description: `Valor recebido: R$ ${Number(proposal.amount).toFixed(2)}. Baixa automática concluída.`,
-      timestamp: new Date().toISOString()
-    });
-
-    return sendJson(res, 200, { success: true, message: 'Baixa efetuada com sucesso.', proposalId: proposal.id });
   }
 
   // 1.3 TERMOS DE USO & POLÍTICA DE PRIVACIDADE LGPD (FASE 12 / NORMA LUCIANO)
@@ -771,8 +811,7 @@ const server = http.createServer(async (req, res) => {
 </body></html>`);
   }
 
-  // Identificação do IP do cliente e aplicação de Rate Limiting defensivo
-  const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
+  // Rate Limiting defensivo por IP
 
   // Rate limit para rotas de autenticação (mitigação contra força bruta)
   if (pathname === '/api/auth/login' || pathname === '/api/auth/register') {
@@ -780,6 +819,26 @@ const server = http.createServer(async (req, res) => {
     if (!authRate.allowed) {
       return sendJson(res, 429, { 
         error: 'Muitas tentativas de autenticação a partir deste IP. Por favor, aguarde 15 minutos.' 
+      });
+    }
+  }
+
+  // Rate limit para operações financeiras PIX (mitigação contra abuso e spam de transações)
+  if (pathname.startsWith('/api/pix/')) {
+    const pixRate = checkRateLimit(clientIp, 'pix', 60, 15 * 60 * 1000);
+    if (!pixRate.allowed) {
+      return sendJson(res, 429, { 
+        error: 'Limite de requisições financeiras PIX excedido para este endereço IP. Tente novamente mais tarde.' 
+      });
+    }
+  }
+
+  // Rate limit para rotas de Inteligência Artificial (mitigação de exaustão computacional)
+  if (pathname.startsWith('/api/ai/') || pathname.startsWith('/api/copilot/') || pathname.startsWith('/api/agent/')) {
+    const aiRate = checkRateLimit(clientIp, 'ai', 100, 15 * 60 * 1000);
+    if (!aiRate.allowed) {
+      return sendJson(res, 429, { 
+        error: 'Limite de requisições de Inteligência Artificial excedido para este IP. Aguarde alguns instantes.' 
       });
     }
   }
@@ -828,10 +887,46 @@ const server = http.createServer(async (req, res) => {
     }
     try {
       const session = login(body.email, body.password);
+      logAudit({
+        tenantId: session.tenant.id,
+        userId: session.user.id,
+        userName: session.user.name,
+        action: 'USER_LOGIN',
+        resource: 'auth',
+        ip: clientIp,
+        description: `Usuário ${session.user.name} (${session.user.email}) realizou login com sucesso.`
+      });
       return sendJson(res, 200, { success: true, data: session });
     } catch (err) {
+      logAudit({
+        tenantId: 'system',
+        userId: 'anonymous',
+        userName: body.email || 'Anônimo',
+        action: 'USER_LOGIN_FAILED',
+        resource: 'auth',
+        ip: clientIp,
+        description: `Tentativa de login falhou para o e-mail: ${body.email || '-'}. Motivo: ${err.message}`
+      });
       return sendJson(res, 401, { error: err.message });
     }
+  }
+
+  if (pathname === '/api/auth/logout' && method === 'POST') {
+    const authHeader = req.headers['authorization'] || '';
+    if (authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7).trim();
+      revokeToken(token);
+    }
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'USER_LOGOUT',
+      resource: 'auth',
+      ip: clientIp,
+      description: `${ctx.name} encerrou a sessão.`
+    });
+    return sendJson(res, 200, { success: true, message: 'Sessão revogada e encerrada com sucesso.' });
   }
 
   if (pathname === '/api/auth/me' && method === 'GET') {
@@ -851,10 +946,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/users' && method === 'GET') {
-    const users = usersDB.findByTenant(tenantId).map(u => {
-      const { passwordHash, ...safe } = u;
-      return safe;
-    });
+    const users = usersDB.findByTenant(tenantId).map(u => sanitizeUser(u));
     return sendJson(res, 200, { success: true, count: users.length, data: users });
   }
 
@@ -892,8 +984,98 @@ const server = http.createServer(async (req, res) => {
     });
 
     logAudit(tenantId, ctx.userId, 'USER_CREATED', 'users', { userId: newUser.id, role: newUser.role });
-    const { passwordHash, ...safe } = newUser;
-    return sendJson(res, 201, { success: true, data: safe });
+    return sendJson(res, 201, { success: true, data: sanitizeUser(newUser) });
+  }
+
+  if (pathname.startsWith('/api/users/') && method === 'GET' && pathname !== '/api/users/roles') {
+    const targetUserId = pathname.split('/')[3];
+    const user = usersDB.findById(targetUserId);
+    if (!user || (user.tenantId && user.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Usuário não encontrado.' });
+    }
+    return sendJson(res, 200, { success: true, data: sanitizeUser(user) });
+  }
+
+  if (pathname.startsWith('/api/users/') && method === 'PUT') {
+    if (!hasPermission(ctx.role, 'USERS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão USERS_MANAGE necessária.' });
+    }
+    const targetUserId = pathname.split('/')[3];
+    const user = usersDB.findById(targetUserId);
+    if (!user || (user.tenantId && user.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Usuário não encontrado.' });
+    }
+    const body = await parseRequestBody(req);
+
+    // Defesa contra Escalada de Privilégios:
+    if (ctx.userId === targetUserId && body.role && body.role !== user.role) {
+      return sendJson(res, 403, { error: 'Não é permitido alterar o próprio nível de acesso.' });
+    }
+    if (body.role === 'PROPRIETARIO' && ctx.role !== 'PROPRIETARIO') {
+      return sendJson(res, 403, { error: 'Apenas o proprietário da conta pode conceder papel de PROPRIETARIO.' });
+    }
+
+    const allowedUpdates = Object.assign({}, body);
+    delete allowedUpdates.id;
+    delete allowedUpdates.tenantId;
+    delete allowedUpdates.passwordHash;
+    delete allowedUpdates.password;
+
+    if (allowedUpdates.role && !VALID_ROLES.includes(allowedUpdates.role)) {
+      return sendJson(res, 400, { error: `Papel '${allowedUpdates.role}' inválido.` });
+    }
+
+    const updated = usersDB.update(targetUserId, {
+      ...allowedUpdates,
+      tenantId
+    });
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'USER_UPDATED',
+      resource: 'users',
+      entityId: targetUserId,
+      ip: clientIp,
+      description: `${ctx.name} atualizou o usuário ${user.name} (${user.email}).`,
+      oldValues: { role: user.role, name: user.name, status: user.status },
+      newValues: { role: updated.role, name: updated.name, status: updated.status }
+    });
+
+    return sendJson(res, 200, { success: true, data: sanitizeUser(updated) });
+  }
+
+  if (pathname.startsWith('/api/users/') && method === 'DELETE') {
+    if (!hasPermission(ctx.role, 'USERS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão USERS_MANAGE necessária.' });
+    }
+    const targetUserId = pathname.split('/')[3];
+    const user = usersDB.findById(targetUserId);
+    if (!user || (user.tenantId && user.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Usuário não encontrado.' });
+    }
+    if (ctx.userId === targetUserId) {
+      return sendJson(res, 400, { error: 'Não é permitido excluir sua própria conta em uso.' });
+    }
+    if (user.role === 'PROPRIETARIO') {
+      return sendJson(res, 403, { error: 'O proprietário da organização não pode ser excluído.' });
+    }
+
+    usersDB.delete(targetUserId);
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'USER_DELETED',
+      resource: 'users',
+      entityId: targetUserId,
+      ip: clientIp,
+      description: `${ctx.name} removeu o usuário ${user.name} (${user.email}).`
+    });
+
+    return sendJson(res, 200, { success: true, message: 'Usuário excluído com sucesso.' });
   }
 
   // Listagem de empresas multi-tenant disponíveis
@@ -907,22 +1089,31 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, count: list.length, data: list });
   }
 
-  // Alternar empresa ativa (troca rápida de tenant)
+  // Alternar empresa ativa (troca rápida de tenant protegida)
   if (pathname === '/api/auth/switch-tenant' && method === 'POST') {
     const body = await parseRequestBody(req);
     const targetId = body.tenantId || 'ten_demo_agentise';
     const targetTenant = tenantsDB.findById(targetId);
     if (!targetTenant) return sendJson(res, 404, { error: 'Empresa não encontrada.' });
     
-    const targetUser = usersDB.findOne(u => u.tenantId === targetId && u.role === 'ADMINISTRADOR') || 
-                       usersDB.findOne(u => u.tenantId === targetId) || {
-                         id: `usr_${targetId}_admin`,
-                         tenantId: targetId,
-                         name: targetTenant.name,
-                         email: `contato@${targetId}.com`,
-                         role: 'ADMINISTRADOR',
-                         status: 'active'
-                       };
+    const isPublicDemo = targetId === 'ten_demo_agentise' || targetId === 'ten_autoprime_veiculos' || targetTenant.isDemo || (targetTenant.name && targetTenant.name.includes('Demo'));
+    let targetUser = usersDB.findOne(u => u.tenantId === targetId && u.email === ctx.email);
+
+    if (!targetUser && !isPublicDemo && ctx.role !== 'PROPRIETARIO') {
+      return sendJson(res, 403, { error: 'Acesso negado. Você não possui permissão para acessar este workspace.' });
+    }
+
+    if (!targetUser) {
+      targetUser = usersDB.findOne(u => u.tenantId === targetId && u.role === 'ADMINISTRADOR') || 
+                   usersDB.findOne(u => u.tenantId === targetId) || {
+                     id: `usr_${targetId}_admin`,
+                     tenantId: targetId,
+                     name: targetTenant.name,
+                     email: `contato@${targetId}.com`,
+                     role: 'ADMINISTRADOR',
+                     status: 'active'
+                   };
+    }
 
     const token = generateToken({
       userId: targetUser.id,
@@ -1336,17 +1527,25 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/deals' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'DEALS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão DEALS_MANAGE necessária para criar oportunidades.' });
+    }
     const body = await parseRequestBody(req);
     if (!body.title || !body.leadId) {
       return sendJson(res, 400, { error: 'Título e LeadId são obrigatórios.' });
     }
 
+    const val = Number(body.value !== undefined ? body.value : 0);
+    if (isNaN(val) || val < 0) {
+      return sendJson(res, 400, { error: 'O valor da oportunidade não pode ser negativo.' });
+    }
+
     const lead = leadsDB.findById(body.leadId) || {};
-    const initialScore = calculateAiDealScore({ ...body, stage: body.stage || 'prospeccao' }, lead, [], [], []);
+    const initialScore = calculateAiDealScore({ ...body, value: val, stage: body.stage || 'prospeccao' }, lead, [], [], []);
 
     const deal = dealsDB.insert({
       stage: body.stage || 'prospeccao',
-      value: Number(body.value || 0),
+      value: val,
       probability: Number(body.probability || 20),
       priority: body.priority || 'media',
       assignedTo: body.assignedTo || ctx.name,
@@ -1372,6 +1571,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/deals/') && pathname.endsWith('/stage') && (method === 'PATCH' || method === 'PUT')) {
+    if (!hasPermission(ctx.role, 'DEALS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão DEALS_MANAGE necessária para mover oportunidades.' });
+    }
     const id = pathname.split('/')[3];
     const deal = dealsDB.findById(id);
     if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
@@ -1430,12 +1632,26 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/deals/') && (method === 'PUT' || method === 'PATCH') && !pathname.endsWith('/stage')) {
+    if (!hasPermission(ctx.role, 'DEALS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão DEALS_MANAGE necessária para alterar oportunidades.' });
+    }
     const id = pathname.split('/')[3];
     const deal = dealsDB.findById(id);
     if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
       return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
     }
     const body = await parseRequestBody(req);
+
+    if (body.value !== undefined) {
+      const val = Number(body.value);
+      if (isNaN(val) || val < 0) {
+        return sendJson(res, 400, { error: 'O valor da oportunidade não pode ser negativo.' });
+      }
+    }
+
+    if (body.stage === 'ganho' && deal.stage !== 'ganho' && !hasPermission(ctx.role, 'PROPOSALS_CONFIRM')) {
+      return sendJson(res, 403, { error: 'Avanço para estágio ganho requer liquidação financeira legítima ou permissão de gestor/financeiro.' });
+    }
     const oldValues = {
       title: deal.title,
       value: deal.value,
@@ -2165,14 +2381,50 @@ const server = http.createServer(async (req, res) => {
     const name = body.name || settings.pixName || 'LUCIANO SANT ANNA';
     const city = body.city || settings.pixCity || 'SAO PAULO';
     
-    // Cálculo de itens e valor final
+    // Validação estrita de itens e cálculo de valor final
     const rawItems = Array.isArray(body.items) && body.items.length > 0 ? body.items : null;
     let calculatedSubtotal = 0;
     if (rawItems) {
-      calculatedSubtotal = rawItems.reduce((acc, item) => acc + ((Number(item.unitPrice) || 0) * (Number(item.quantity) || 1) - (Number(item.discount) || 0)), 0);
+      for (const item of rawItems) {
+        const uPrice = Number(item.unitPrice);
+        const q = Number(item.quantity !== undefined ? item.quantity : 1);
+        const d = Number(item.discount !== undefined ? item.discount : 0);
+        if (isNaN(uPrice) || uPrice < 0 || isNaN(q) || q <= 0 || isNaN(d) || d < 0) {
+          return sendJson(res, 400, { error: 'Valores inválidos nos itens da proposta (preço, quantidade ou desconto).' });
+        }
+        calculatedSubtotal += (uPrice * q - d);
+      }
+      if (calculatedSubtotal < 0) {
+        return sendJson(res, 400, { error: 'Subtotal dos itens não pode ser negativo.' });
+      }
     }
-    const globalDiscount = Number(body.discount) || 0;
-    const amount = body.amount !== undefined && !rawItems ? Number(body.amount) : Math.max(0, calculatedSubtotal - globalDiscount);
+    const globalDiscount = Number(body.discount !== undefined ? body.discount : 0);
+    if (isNaN(globalDiscount) || globalDiscount < 0) {
+      return sendJson(res, 400, { error: 'Desconto global não pode ser negativo.' });
+    }
+
+    let amount = 0;
+    if (body.amount !== undefined && !rawItems) {
+      const parsedAmount = Number(body.amount);
+      if (isNaN(parsedAmount) || parsedAmount <= 0) {
+        return sendJson(res, 400, { error: 'O valor da cobrança deve ser estritamente positivo e maior que zero.' });
+      }
+      if (globalDiscount >= parsedAmount) {
+        return sendJson(res, 400, { error: 'O desconto não pode exceder ou zerar o valor total da proposta.' });
+      }
+      amount = parsedAmount - globalDiscount;
+    } else if (rawItems) {
+      if (globalDiscount >= calculatedSubtotal) {
+        return sendJson(res, 400, { error: 'O desconto não pode exceder ou zerar o valor total da proposta.' });
+      }
+      amount = calculatedSubtotal - globalDiscount;
+    } else {
+      return sendJson(res, 400, { error: 'Informe o valor (amount) ou uma lista válida de itens para a proposta.' });
+    }
+
+    if (isNaN(amount) || amount <= 0) {
+      return sendJson(res, 400, { error: 'O valor final da proposta deve ser estritamente maior que zero.' });
+    }
     const txId = body.txId || 'CRM' + Date.now().toString().slice(-6);
 
     const payload = generatePixPayload({ pixKey, name, city, amount, txId });
@@ -2276,39 +2528,72 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 404, { error: 'Proposta não encontrada.' });
     }
 
-    const updated = proposalsDB.update(proposalId, {
-      status: 'paga',
-      paidAt: new Date().toISOString()
-    });
+    // Mutex de concorrência contra Race Conditions
+    if (paymentProcessingLocks.has(proposalId)) {
+      return sendJson(res, 409, { error: 'Transação em processamento simultâneo. Tente novamente em instantes.' });
+    }
+    paymentProcessingLocks.add(proposalId);
 
-    if (paymentsDB) {
-      paymentsDB.insert({
-        tenantId,
-        proposalId,
-        dealId: proposal.dealId,
-        amount: proposal.amount,
-        method: 'PIX',
-        txId: proposal.txId || 'TX_MANUAL',
-        status: 'pago',
+    try {
+      const currentProposal = proposalsDB.findById(proposalId);
+
+      // Idempotência: Se já liquidada, retorna sucesso sem duplicar pagamento
+      if (currentProposal.status === 'paga') {
+        return sendJson(res, 200, { success: true, message: 'Proposta já liquidada anteriormente.', data: currentProposal, idempotent: true });
+      }
+
+      // Rejeição de transições inválidas a partir de estados finais
+      if (currentProposal.status === 'cancelada' || currentProposal.status === 'expirada') {
+        return sendJson(res, 400, { error: `Operação rejeitada: Proposta com status '${currentProposal.status}' não pode ser liquidada.` });
+      }
+
+      const updated = proposalsDB.update(proposalId, {
+        status: 'paga',
         paidAt: new Date().toISOString()
       });
-    }
 
-    // Se houver Oportunidade vinculada, avança automaticamente para 'ganho' (Venda Fechada)
-    if (proposal.dealId) {
-      const deal = dealsDB.findById(proposal.dealId);
-      if (deal && deal.stage !== 'ganho') {
-        dealsDB.update(proposal.dealId, {
-          stage: 'ganho',
-          probability: 100,
-          closedAt: new Date().toISOString()
+      if (paymentsDB) {
+        paymentsDB.insert({
+          tenantId,
+          proposalId,
+          dealId: currentProposal.dealId,
+          amount: currentProposal.amount,
+          method: 'PIX',
+          txId: currentProposal.txId || 'TX_MANUAL',
+          status: 'pago',
+          paidAt: new Date().toISOString()
         });
-        await triggerWorkflows('venda_fechada', { dealId: proposal.dealId, leadId: proposal.leadId, amount: proposal.amount }, tenantId);
       }
-    }
 
-    logAudit(tenantId, ctx.userId, 'PROPOSAL_CONFIRMED', 'proposals', { proposalId, amount: proposal.amount });
-    return sendJson(res, 200, { success: true, data: updated });
+      // Se houver Oportunidade vinculada, avança automaticamente para 'ganho' (Venda Fechada)
+      if (currentProposal.dealId) {
+        const deal = dealsDB.findById(currentProposal.dealId);
+        if (deal && deal.stage !== 'ganho') {
+          dealsDB.update(currentProposal.dealId, {
+            stage: 'ganho',
+            probability: 100,
+            closedAt: new Date().toISOString()
+          });
+          await triggerWorkflows('venda_fechada', { dealId: currentProposal.dealId, leadId: currentProposal.leadId, amount: currentProposal.amount }, tenantId);
+        }
+      }
+
+      logAudit({
+        tenantId,
+        userId: ctx.userId,
+        userName: ctx.name,
+        action: 'PROPOSAL_CONFIRMED',
+        resource: 'proposals',
+        entityId: proposalId,
+        ip: clientIp,
+        description: `${ctx.name} confirmou liquidação da proposta ${proposalId} no valor de R$ ${Number(currentProposal.amount).toFixed(2)}.`,
+        newValues: { status: 'paga', amount: currentProposal.amount }
+      });
+
+      return sendJson(res, 200, { success: true, data: updated });
+    } finally {
+      paymentProcessingLocks.delete(proposalId);
+    }
   }
 
   // 16. DASHBOARD EXECUTIVO, ANALYTICS & BI AVANÇADO (FASE 11)
@@ -2431,7 +2716,7 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, data: safeSettings });
   }
 
-  if (pathname === '/api/settings' && method === 'POST') {
+  if (pathname === '/api/settings' && (method === 'POST' || method === 'PUT')) {
     if (!hasPermission(ctx.role, 'SETTINGS_EDIT')) {
       return sendJson(res, 403, { error: 'Acesso negado. Apenas administradores ou proprietários podem alterar configurações do sistema.' });
     }
@@ -2553,12 +2838,16 @@ const server = http.createServer(async (req, res) => {
   const served = serveStatic(req, res, targetFile);
 
   if (!served) {
+    if (pathname.startsWith('/api/')) {
+      return sendJson(res, 404, { error: 'Endpoint da API não encontrado ou método não suportado.', status: 404 });
+    }
+
     const ext = path.extname(pathname).toLowerCase();
-    const isHtmlNavigation = !ext || (req.headers.accept && req.headers.accept.includes('text/html'));
+    const isHtmlNavigation = method === 'GET' && (!ext || (req.headers.accept && req.headers.accept.includes('text/html')));
     const isBlocked = BLOCKED_STATIC_PREFIXES.some(p => pathname.toLowerCase().startsWith(`/${p}`)) ||
                       BLOCKED_STATIC_FILES.some(f => pathname.toLowerCase() === `/${f}`);
 
-    // SPA fallback exclusivamente para rotas navegacionais legítimas
+    // SPA fallback exclusivamente para rotas navegacionais legítimas (GET)
     if (isHtmlNavigation && !isBlocked) {
       const fallbackServed = serveStatic(req, res, 'index.html');
       if (fallbackServed) return;

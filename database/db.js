@@ -79,9 +79,12 @@ class JsonDB {
   update(id, updates) {
     const idx = this.cache.findIndex(item => item.id === id);
     if (idx === -1) return null;
+    const existing = this.cache[idx];
     const updated = {
-      ...this.cache[idx],
+      ...existing,
       ...updates,
+      id: existing.id, // IMMUTABLE: Primary key cannot be altered via mass assignment
+      tenantId: existing.tenantId !== undefined ? existing.tenantId : updates.tenantId, // IMMUTABLE: Tenant ownership cannot be transferred
       updatedAt: new Date().toISOString()
     };
     const newCache = [...this.cache];

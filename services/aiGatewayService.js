@@ -310,6 +310,34 @@ function generateHeuristicResponse(prompt, systemPrompt, taskType = 'chat') {
   return `Compreendo perfeitamente suas prioridades. O Agentise Mega CRM combina gestão de funil 360°, central omnichannel integrada e agentes de IA autônomos treinados com o Cérebro da sua empresa para fechar negócios mais rápido e recuperar leads que você considerava perdidos. Vamos avançar com uma demonstração prática ou envio da proposta comercial?`;
 }
 
+// Padrões de detecção de Prompt Injection, Jailbreak e Exfiltração de Sistema
+const INJECTION_PATTERNS = [
+  /ignore\s+(all\s+)?(previous|prior)\s+instructions/i,
+  /desconsidere\s+(todas\s+as\s+)?instru[çc][õo]es/i,
+  /you\s+are\s+now\s+(unrestricted|DAN|jailbroken|an\s+evil)/i,
+  /voc[êe]\s+agora\s+[ée]\s+(desbloqueado|sem\s+restri[çc][õo]es|livre)/i,
+  /system\s*override/i,
+  /bypass\s+safety\s+guidelines/i,
+  /reveal\s+(your\s+)?(system\s+prompt|instructions|secret|api\s*key)/i,
+  /revele\s+(o\s+)?(prompt\s+do\s+sistema|instru[çc][õo]es\s+do\s+sistema|chaves\s+de\s+api)/i,
+  /exiba\s+(o\s+)?prompt\s+original/i,
+  /<script[\s\S]*?>[\s\S]*?<\/script>/i
+];
+
+function sanitizeAIPrompt(prompt) {
+  if (typeof prompt !== 'string') return { isInjected: false, sanitized: '' };
+  for (const pattern of INJECTION_PATTERNS) {
+    if (pattern.test(prompt)) {
+      return {
+        isInjected: true,
+        pattern: pattern.toString(),
+        sanitized: prompt.replace(pattern, '[BLOCKED_INJECTION]')
+      };
+    }
+  }
+  return { isInjected: false, sanitized: prompt };
+}
+
 // -------------------------------------------------------------
 // Orquestrador Universal Multi-LLM com Fallback Automático
 // -------------------------------------------------------------
@@ -323,6 +351,30 @@ async function generateAIResponse({
 }) {
   const startTime = Date.now();
   const config = TASK_ROUTING[taskType] || TASK_ROUTING.chat;
+
+  // 0. Validação de Entrada e Blindagem contra Prompt Injection
+  if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
+    return {
+      text: 'Prompt não informado.',
+      modelUsed: 'heuristic-core',
+      creditsConsumed: 0,
+      latencyMs: Date.now() - startTime,
+      cached: false
+    };
+  }
+
+  const injectionCheck = sanitizeAIPrompt(prompt);
+  if (injectionCheck.isInjected) {
+    return {
+      text: '🛡️ Operação Bloqueada: Foi detectada uma tentativa de quebra de diretrizes (Prompt Injection / Jailbreak). O Agentise AI Gateway rejeitou o processamento para manter a integridade do sistema e dos dados.',
+      modelUsed: 'ai-guardrail-firewall',
+      creditsConsumed: 0,
+      latencyMs: Date.now() - startTime,
+      cached: false,
+      blocked: true,
+      reason: 'PROMPT_INJECTION_DETECTED'
+    };
+  }
 
   // 1. Verificação de Cache LRU
   const cacheKey = getCacheKey(prompt, systemPrompt, taskType);
@@ -489,5 +541,7 @@ module.exports = {
   TASK_ROUTING,
   generateAIResponse,
   listAvailableModels,
-  PROMPT_CACHE
+  PROMPT_CACHE,
+  sanitizeAIPrompt,
+  INJECTION_PATTERNS
 };
