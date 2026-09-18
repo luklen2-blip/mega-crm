@@ -856,5 +856,95 @@
     "id": "ai__1789742037249_fmj1",
     "createdAt": "2026-09-18T14:33:57.249Z",
     "updatedAt": "2026-09-18T14:33:57.249Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:37:00.348Z",
+    "id": "ai__1789742220348_1nvx",
+    "createdAt": "2026-09-18T14:37:00.348Z",
+    "updatedAt": "2026-09-18T14:37:00.348Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:37:00.365Z",
+    "id": "ai__1789742220365_tq8o",
+    "createdAt": "2026-09-18T14:37:00.365Z",
+    "updatedAt": "2026-09-18T14:37:00.365Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_objection_handling",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:37:01.006Z",
+    "id": "ai__1789742221006_ezxd",
+    "createdAt": "2026-09-18T14:37:01.007Z",
+    "updatedAt": "2026-09-18T14:37:01.007Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "objection_handling",
+    "model": "heuristic-core",
+    "promptTokens": 18,
+    "completionTokens": 85,
+    "costCredits": 20,
+    "latencyMs": 5,
+    "cached": false,
+    "timestamp": "2026-09-18T14:37:01.009Z",
+    "id": "ai__1789742221009_om6p",
+    "createdAt": "2026-09-18T14:37:01.009Z",
+    "updatedAt": "2026-09-18T14:37:01.009Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_sales_pitch",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:37:01.041Z",
+    "id": "ai__1789742221041_967p",
+    "createdAt": "2026-09-18T14:37:01.041Z",
+    "updatedAt": "2026-09-18T14:37:01.041Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "sales_pitch",
+    "model": "heuristic-core",
+    "promptTokens": 15,
+    "completionTokens": 56,
+    "costCredits": 20,
+    "latencyMs": 4,
+    "cached": false,
+    "timestamp": "2026-09-18T14:37:01.043Z",
+    "id": "ai__1789742221043_p5wm",
+    "createdAt": "2026-09-18T14:37:01.043Z",
+    "updatedAt": "2026-09-18T14:37:01.043Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_chat",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:37:01.098Z",
+    "id": "ai__1789742221098_6mwr",
+    "createdAt": "2026-09-18T14:37:01.098Z",
+    "updatedAt": "2026-09-18T14:37:01.098Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "system",
+    "taskType": "chat",
+    "model": "heuristic-core",
+    "promptTokens": 64,
+    "completionTokens": 86,
+    "costCredits": 15,
+    "latencyMs": 6,
+    "cached": false,
+    "timestamp": "2026-09-18T14:37:01.101Z",
+    "id": "ai__1789742221101_25xp",
+    "createdAt": "2026-09-18T14:37:01.101Z",
+    "updatedAt": "2026-09-18T14:37:01.101Z"
   }
 ]

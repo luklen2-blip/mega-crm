@@ -190,5 +190,53 @@
     "id": "ai__1789742037220_d3d5",
     "createdAt": "2026-09-18T14:33:57.220Z",
     "updatedAt": "2026-09-18T14:33:57.220Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "agentId": "agt_ten_demo_agentise_sofia",
+    "leadId": "lea_1789742220375_kshe",
+    "dealId": null,
+    "channel": "whatsapp",
+    "customerMessage": "Quais são as condições de pagamento e faturamento no PIX?",
+    "agentReply": "Operamos com faturamento transparente via PIX oficial do Banco Central (payload EMV instantâneo com QR Code e Copia-e-Cola), além de cartão de crédito em até 12x. A confirmação é imediata e libera o acesso instantaneamente.",
+    "status": "handled_by_ai",
+    "modelUsed": "heuristic-core",
+    "latencyMs": 4,
+    "timestamp": "2026-09-18T14:37:01.045Z",
+    "id": "ai__1789742221045_sphq",
+    "createdAt": "2026-09-18T14:37:01.045Z",
+    "updatedAt": "2026-09-18T14:37:01.045Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "agentId": "agt_ten_demo_agentise_sofia",
+    "leadId": "lea_1789742220375_kshe",
+    "dealId": null,
+    "channel": "whatsapp",
+    "customerMessage": "Quero falar com um atendente humano urgente, não quero falar com robô.",
+    "agentReply": "Transferindo seu atendimento para nossa equipe comercial agora mesmo. Um especialista assumirá a conversa em instantes.",
+    "status": "handed_over",
+    "handoverReason": "Cliente solicitou transbordo humano explícito (termo identificado: \"humano\")",
+    "taskId": "tas_1789742221053_sy4j",
+    "timestamp": "2026-09-18T14:37:01.057Z",
+    "id": "ai__1789742221057_1ney",
+    "createdAt": "2026-09-18T14:37:01.057Z",
+    "updatedAt": "2026-09-18T14:37:01.057Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "agentId": "agt_ten_demo_agentise_sofia",
+    "leadId": "lea_1789742220375_kshe",
+    "dealId": "dea_1789742221060_dcjl",
+    "channel": "whatsapp",
+    "customerMessage": "Podemos fechar o contrato no valor total?",
+    "agentReply": "Transferindo seu atendimento para nossa equipe comercial agora mesmo. Um especialista assumirá a conversa em instantes.",
+    "status": "handed_over",
+    "handoverReason": "Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000)",
+    "taskId": "tas_1789742221064_bmzo",
+    "timestamp": "2026-09-18T14:37:01.070Z",
+    "id": "ai__1789742221070_etw9",
+    "createdAt": "2026-09-18T14:37:01.070Z",
+    "updatedAt": "2026-09-18T14:37:01.070Z"
   }
 ]

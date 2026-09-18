@@ -1159,28 +1159,128 @@ function renderAutomations() {
   if (!container) return;
   container.innerHTML = '';
 
+  if (globalAutomations.length === 0) {
+    container.innerHTML = '<div class="text-center py-8 text-slate-500 text-xs">Nenhuma regra de automação configurada. Clique em "Nova Automação" para começar.</div>';
+    return;
+  }
+
   globalAutomations.forEach(a => {
     const div = document.createElement('div');
-    div.className = 'glass-card p-4 rounded-2xl border border-slate-800 flex items-center justify-between';
+    div.className = 'glass-card p-4 rounded-2xl border border-slate-800 flex items-center justify-between gap-3';
+    
+    let condBadge = '';
+    if (a.condition && a.condition.field) {
+      condBadge = `<span class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px]">SE ${escapeHtml(a.condition.field)} ${escapeHtml(a.condition.operator)} ${escapeHtml(String(a.condition.value))}</span>`;
+    }
+
     div.innerHTML = `
       <div class="space-y-1">
         <div class="text-xs font-bold text-white flex items-center gap-2">
           <i data-lucide="workflow" class="h-4 w-4 text-amber-400"></i>
           <span>${escapeHtml(a.name)}</span>
+          ${condBadge}
         </div>
         <div class="text-[11px] text-slate-400">
-          QUANDO: <span class="text-amber-300 font-semibold">${escapeHtml(a.trigger)}</span> ➔ ENTÃO: <span class="text-blue-300 font-semibold">${escapeHtml(a.action?.type || 'Ação')}</span>
+          QUANDO: <span class="text-amber-300 font-semibold">${escapeHtml(a.trigger)}</span> ➔ ENTÃO: <span class="text-blue-300 font-semibold">${escapeHtml(a.action?.type || a.action?.id || 'Ação')}</span>
         </div>
       </div>
-      <div>
+      <div class="flex items-center gap-2">
         <button onclick="toggleAutomation('${escapeHtml(a.id)}')" class="px-3 py-1.5 text-xs font-semibold rounded-xl ${a.active !== false ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'} transition">
           ${a.active !== false ? 'Ativa' : 'Pausada'}
+        </button>
+        <button onclick="deleteAutomation('${escapeHtml(a.id)}')" title="Excluir Automação" class="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition">
+          <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
         </button>
       </div>
     `;
     container.appendChild(div);
   });
   if (window.lucide) lucide.createIcons();
+}
+
+function switchAutomationTab(tab) {
+  const rulesList = document.getElementById('automations-list');
+  const runsList = document.getElementById('automations-runs-list');
+  const tabRules = document.getElementById('tab-auto-rules');
+  const tabRuns = document.getElementById('tab-auto-runs');
+
+  if (tab === 'rules') {
+    if (rulesList) rulesList.classList.remove('hidden');
+    if (runsList) runsList.classList.add('hidden');
+    if (tabRules) tabRules.className = 'px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30';
+    if (tabRuns) tabRuns.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 text-slate-400 border border-slate-800 hover:text-white';
+  } else {
+    if (rulesList) rulesList.classList.add('hidden');
+    if (runsList) runsList.classList.remove('hidden');
+    if (tabRuns) tabRuns.className = 'px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30';
+    if (tabRules) tabRules.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 text-slate-400 border border-slate-800 hover:text-white';
+    loadAutomationRuns();
+  }
+}
+
+async function loadAutomationRuns() {
+  const container = document.getElementById('automations-runs-list');
+  if (!container) return;
+  container.innerHTML = '<div class="text-center py-6 text-slate-500 text-xs">Carregando execuções...</div>';
+
+  try {
+    const res = await fetch('/api/automations/runs', { headers: authHeaders() });
+    const data = await res.json();
+    const runs = data.data || [];
+
+    if (runs.length === 0) {
+      container.innerHTML = '<div class="text-center py-8 text-slate-500 text-xs">Nenhuma execução registrada até o momento.</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    runs.forEach(run => {
+      const card = document.createElement('div');
+      card.className = 'glass-card p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs';
+      const isOk = run.status === 'success';
+      card.innerHTML = `
+        <div class="space-y-0.5">
+          <div class="font-bold text-white flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full ${isOk ? 'bg-emerald-400' : 'bg-rose-400'}"></span>
+            <span>${escapeHtml(run.automationName || 'Automação')}</span>
+            <span class="text-[10px] text-slate-500">(${escapeHtml(run.triggerType)})</span>
+          </div>
+          <div class="text-[11px] text-slate-400">
+            Ações: ${run.actionsExecuted ? run.actionsExecuted.length : 0} executada(s)
+          </div>
+        </div>
+        <div class="text-[10px] text-slate-500">
+          ${run.executedAt ? new Date(run.executedAt).toLocaleString('pt-BR') : '-'}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    container.innerHTML = '<div class="text-center py-6 text-rose-400 text-xs">Erro ao carregar histórico de execuções.</div>';
+  }
+}
+
+async function testActiveAutomations() {
+  try {
+    const res = await fetch('/api/automations/test-trigger', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({
+        triggerType: 'novo_lead',
+        context: { name: 'Lead Teste Automação', title: 'Oportunidade Teste', value: 10000 }
+      })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showToast(`Disparo de teste concluído: ${(data.executedActions || []).length} ação(ões) executadas!`, 'success');
+      await loadAutomations();
+      if (!document.getElementById('automations-runs-list')?.classList.contains('hidden')) {
+        await loadAutomationRuns();
+      }
+    }
+  } catch (e) {
+    showToast('Erro ao testar disparo.', 'error');
+  }
 }
 
 function openNewAutomationModal() {
@@ -1193,6 +1293,15 @@ async function submitNewAutomation(e) {
   const trigger = document.getElementById('auto-trigger').value;
   const actionType = document.getElementById('auto-action-type').value;
 
+  const condField = document.getElementById('auto-cond-field')?.value;
+  const condOp = document.getElementById('auto-cond-op')?.value;
+  const condVal = document.getElementById('auto-cond-val')?.value;
+
+  let condition = null;
+  if (condField && condVal) {
+    condition = { field: condField, operator: condOp || 'greater_than', value: condVal };
+  }
+
   try {
     const res = await fetch('/api/automations', {
       method: 'POST',
@@ -1200,7 +1309,8 @@ async function submitNewAutomation(e) {
       body: JSON.stringify({
         name,
         trigger,
-        action: { type: actionType, params: { title: `Ação Automática: ${name}` } }
+        condition,
+        action: { type: actionType, id: actionType, params: { title: `Ação Automática: ${name}` } }
       })
     });
     if (res.ok) {
@@ -1218,6 +1328,19 @@ async function toggleAutomation(id) {
     await fetch(`/api/automations/${id}/toggle`, { method: 'PATCH', headers: authHeaders() });
     await loadAutomations();
   } catch (err) {}
+}
+
+async function deleteAutomation(id) {
+  if (!confirm('Deseja realmente excluir esta automação comercial?')) return;
+  try {
+    const res = await fetch(`/api/automations/${id}`, { method: 'DELETE', headers: authHeaders() });
+    if (res.ok) {
+      showToast('Automação removida com sucesso.', 'info');
+      await loadAutomations();
+    }
+  } catch (err) {
+    showToast('Erro ao excluir automação.', 'error');
+  }
 }
 
 // 9. ANALISTA IA PARA GESTORES (FASE 11)

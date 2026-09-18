@@ -30,7 +30,8 @@ const {
   auditLogsDB,
   aiUsageDB,
   aiAgentsDB,
-  aiConversationsDB
+  aiConversationsDB,
+  workflowRunsDB
 } = require('./database/db');
 
 const { 
@@ -1292,7 +1293,26 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, count: list.length, data: list });
   }
 
-  // 10. AUTOMAÇÕES (FASE 10)
+  // 10. AUTOMAÇÕES COMERCIAIS VISUAL & MOTOR DE REGRAS (FASE 9)
+  if (pathname === '/api/automations/runs' && method === 'GET') {
+    const runs = (workflowRunsDB ? workflowRunsDB.findByTenant(tenantId) : []).sort((a, b) => {
+      return new Date(b.executedAt) - new Date(a.executedAt);
+    });
+    return sendJson(res, 200, { success: true, count: runs.length, data: runs.slice(0, 50) });
+  }
+
+  if (pathname === '/api/automations/test-trigger' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    const triggerType = body.triggerType || 'novo_lead';
+    const context = body.context || {};
+    try {
+      const executed = await triggerWorkflows(triggerType, context, tenantId);
+      return sendJson(res, 200, { success: true, triggerType, executedActions: executed });
+    } catch (err) {
+      return sendJson(res, 500, { error: err.message });
+    }
+  }
+
   if (pathname === '/api/automations' && method === 'GET') {
     const list = automationsDB.findByTenant(tenantId);
     return sendJson(res, 200, { 
@@ -1318,7 +1338,7 @@ const server = http.createServer(async (req, res) => {
       trigger: body.trigger,
       condition: body.condition || null,
       action: body.action,
-      active: true
+      active: body.active !== undefined ? Boolean(body.active) : true
     });
     return sendJson(res, 201, { success: true, data: auto });
   }
@@ -1331,6 +1351,33 @@ const server = http.createServer(async (req, res) => {
     }
     const updated = automationsDB.update(id, { active: !existing.active });
     return sendJson(res, 200, { success: true, data: updated });
+  }
+
+  if (pathname.startsWith('/api/automations/') && (method === 'PUT' || method === 'PATCH') && !pathname.endsWith('/toggle')) {
+    const id = pathname.split('/')[3];
+    const existing = automationsDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Automação não encontrada.' });
+    }
+    const body = await parseRequestBody(req);
+    const updated = automationsDB.update(id, {
+      ...(body.name && { name: body.name }),
+      ...(body.trigger && { trigger: body.trigger }),
+      ...(body.condition !== undefined && { condition: body.condition }),
+      ...(body.action && { action: body.action }),
+      ...(body.active !== undefined && { active: Boolean(body.active) })
+    });
+    return sendJson(res, 200, { success: true, data: updated });
+  }
+
+  if (pathname.startsWith('/api/automations/') && method === 'DELETE') {
+    const id = pathname.split('/')[3];
+    const existing = automationsDB.findById(id);
+    if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Automação não encontrada.' });
+    }
+    automationsDB.delete(id);
+    return sendJson(res, 200, { success: true, message: 'Automação excluída com sucesso.' });
   }
 
   // 11. ANALISTA IA PARA GESTORES (FASE 11)

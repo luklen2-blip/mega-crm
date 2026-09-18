@@ -1371,5 +1371,143 @@
     "id": "act_1789742037267_waej",
     "createdAt": "2026-09-18T14:33:57.267Z",
     "updatedAt": "2026-09-18T14:33:57.267Z"
+  },
+  {
+    "id": "act_autoprime_1789742220391",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-09-18T14:37:00.391Z",
+    "updatedAt": "2026-09-18T14:37:00.391Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1789742220412_ko2p",
+    "createdAt": "2026-09-18T14:37:00.412Z",
+    "updatedAt": "2026-09-18T14:37:00.412Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789742220712_c3nd",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-09-18T14:37:00.722Z",
+    "id": "act_1789742220722_sujh",
+    "createdAt": "2026-09-18T14:37:00.722Z",
+    "updatedAt": "2026-09-18T14:37:00.722Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-09-18T14:37:00.833Z",
+    "id": "act_1789742220833_c9ai",
+    "createdAt": "2026-09-18T14:37:00.833Z",
+    "updatedAt": "2026-09-18T14:37:00.833Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742220920_ityr",
+    "dealId": null,
+    "type": "call",
+    "title": "Ligação de Alinhamento Técnico",
+    "description": "Cliente confirmou interesse na proposta e solicitou emissão do PIX comercial.",
+    "author": "Camila Mendes",
+    "timestamp": "2026-09-18T14:37:00.924Z",
+    "id": "act_1789742220924_wv5v",
+    "createdAt": "2026-09-18T14:37:00.924Z",
+    "updatedAt": "2026-09-18T14:37:00.924Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789742220968_n101",
+    "leadId": "lea_1789742220375_kshe",
+    "type": "deal_created",
+    "title": "Oportunidade criada: Contrato de Licenciamento Enterprise",
+    "description": "Valor inicial: R$ 48000.00 - Responsável: Camila Mendes | AI Score: 85/100",
+    "timestamp": "2026-09-18T14:37:00.970Z",
+    "id": "act_1789742220970_ydyc",
+    "createdAt": "2026-09-18T14:37:00.970Z",
+    "updatedAt": "2026-09-18T14:37:00.970Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742220375_kshe",
+    "dealId": null,
+    "type": "ai_interaction",
+    "title": "Interação com Sofia - Closer Comercial IA",
+    "description": "Cliente: \"Quais são as condições de pagamento e faturamento no PIX?...\" | IA: \"Operamos com faturamento transparente via PIX oficial do Ban...\"",
+    "timestamp": "2026-09-18T14:37:01.047Z",
+    "id": "act_1789742221047_lwct",
+    "createdAt": "2026-09-18T14:37:01.047Z",
+    "updatedAt": "2026-09-18T14:37:01.047Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742220375_kshe",
+    "dealId": null,
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Cliente solicitou transbordo humano explícito (termo identificado: \"humano\")",
+    "timestamp": "2026-09-18T14:37:01.055Z",
+    "id": "act_1789742221055_6duf",
+    "createdAt": "2026-09-18T14:37:01.055Z",
+    "updatedAt": "2026-09-18T14:37:01.055Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742220375_kshe",
+    "dealId": "dea_1789742221060_dcjl",
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000)",
+    "timestamp": "2026-09-18T14:37:01.067Z",
+    "id": "act_1789742221067_wufi",
+    "createdAt": "2026-09-18T14:37:01.067Z",
+    "updatedAt": "2026-09-18T14:37:01.067Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742220375_kshe",
+    "type": "message_sent",
+    "title": "Mensagem enviada por Luciano (Aprovado IA)",
+    "description": "Compreendo perfeitamente suas prioridades. O Agentise Mega CRM combina gestão de...",
+    "timestamp": "2026-09-18T14:37:01.110Z",
+    "id": "act_1789742221110_xn7k",
+    "createdAt": "2026-09-18T14:37:01.110Z",
+    "updatedAt": "2026-09-18T14:37:01.110Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742220375_kshe",
+    "type": "mode_change",
+    "title": "Modo de atendimento alterado para HUMANO",
+    "description": "A conversa agora opera no modo humano.",
+    "timestamp": "2026-09-18T14:37:01.120Z",
+    "id": "act_1789742221120_16mf",
+    "createdAt": "2026-09-18T14:37:01.120Z",
+    "updatedAt": "2026-09-18T14:37:01.120Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742220375_kshe",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Alerta Deal VIP Score Alto",
+    "description": "Gatilho \"deal_score_alto\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-09-18T14:37:01.148Z",
+    "id": "act_1789742221148_qa32",
+    "createdAt": "2026-09-18T14:37:01.148Z",
+    "updatedAt": "2026-09-18T14:37:01.148Z"
   }
 ]

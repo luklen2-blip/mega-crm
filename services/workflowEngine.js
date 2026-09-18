@@ -3,24 +3,34 @@
  * Modelo: QUANDO -> SE -> ENTÃO
  */
 
-const { automationsDB, tasksDB, activitiesDB, dealsDB } = require('../database/db');
+const { 
+  automationsDB, 
+  tasksDB, 
+  activitiesDB, 
+  dealsDB, 
+  workflowRunsDB,
+  messagesDB 
+} = require('../database/db');
 
-// Modelos de Gatilhos e Ações Suportados
+// Modelos de Gatilhos Suportados
 const TRIGGERS = [
   { id: 'novo_lead', name: 'Novo Lead Entrar no Sistema', icon: 'user-plus' },
   { id: 'mudanca_estagio', name: 'Oportunidade Mudar de Estágio', icon: 'git-commit' },
   { id: 'proposta_criada', name: 'Nova Proposta PIX Gerada', icon: 'file-text' },
   { id: 'proposta_parada', name: 'Proposta Sem Resposta (+48h)', icon: 'clock' },
+  { id: 'lead_estagnado', name: 'Lead Sem Contato (+3 dias)', icon: 'alert-circle' },
+  { id: 'deal_score_alto', name: 'AI Deal Score Elevado (>= 75)', icon: 'flame' },
+  { id: 'deal_score_baixo', name: 'AI Deal Score de Risco (< 40)', icon: 'shield-alert' },
   { id: 'venda_fechada', name: 'Venda Fechada (Ganho)', icon: 'check-circle' },
   { id: 'lead_perdido', name: 'Oportunidade Perdida', icon: 'x-circle' }
 ];
 
 const ACTIONS = [
-  { id: 'enviar_whatsapp', name: 'Preparar Mensagem de WhatsApp', type: 'message' },
+  { id: 'enviar_whatsapp', name: 'Disparar / Preparar Mensagem de WhatsApp', type: 'message' },
   { id: 'criar_tarefa', name: 'Criar Tarefa para Vendedor', type: 'task' },
   { id: 'qualificar_ia', name: 'Acionar Diagnóstico BANT por IA', type: 'ai' },
   { id: 'mover_estagio', name: 'Mover Oportunidade no Funil', type: 'pipeline' },
-  { id: 'notificar_gestor', name: 'Enviar Alerta para o Gerente Comercial', type: 'alert' }
+  { id: 'alertar_gestor', name: 'Enviar Alerta para o Gerente / Proprietário', type: 'alert' }
 ];
 
 function evaluateCondition(condition, context) {
@@ -30,13 +40,17 @@ function evaluateCondition(condition, context) {
 
   switch (condition.operator) {
     case 'equals': return String(val).toLowerCase() === String(target).toLowerCase();
+    case 'not_equals': return String(val).toLowerCase() !== String(target).toLowerCase();
     case 'greater_than': return Number(val) > Number(target);
-    case 'contains': return String(val).toLowerCase().includes(String(target).toLowerCase());
+    case 'less_than': return Number(val) < Number(target);
+    case 'gte': return Number(val) >= Number(target);
+    case 'lte': return Number(val) <= Number(target);
+    case 'contains': return String(val || '').toLowerCase().includes(String(target || '').toLowerCase());
     default: return true;
   }
 }
 
-async function triggerWorkflows(triggerType, context, tenantId) {
+async function triggerWorkflows(triggerType, context = {}, tenantId) {
   const automations = automationsDB.findByTenant(tenantId, a => a.trigger === triggerType && a.active !== false);
   const executedActions = [];
 
@@ -46,36 +60,85 @@ async function triggerWorkflows(triggerType, context, tenantId) {
       continue;
     }
 
-    // Executa ação "ENTÃO"
-    const action = auto.action;
-    if (action.type === 'criar_tarefa') {
-      const task = tasksDB.insert({
+    const autoExecuted = [];
+    const action = auto.action || {};
+
+    try {
+      if (action.type === 'criar_tarefa' || action.id === 'criar_tarefa') {
+        const task = tasksDB.insert({
+          tenantId,
+          leadId: context.leadId,
+          dealId: context.dealId,
+          title: (action.params && action.params.title) || `Tarefa Automática: ${auto.name}`,
+          priority: (action.params && action.params.priority) || 'alta',
+          deadline: new Date(Date.now() + ((action.params && action.params.delayHours) || 24) * 3600000).toISOString(),
+          completed: false
+        });
+        autoExecuted.push({ type: 'task_created', taskId: task.id });
+      }
+
+      if ((action.type === 'mover_estagio' || action.id === 'mover_estagio') && context.dealId && action.params && action.params.targetStage) {
+        dealsDB.update(context.dealId, { stage: action.params.targetStage });
+        autoExecuted.push({ type: 'stage_moved', stage: action.params.targetStage });
+      }
+
+      if (action.type === 'alertar_gestor' || action.id === 'alertar_gestor') {
+        const alertTask = tasksDB.insert({
+          tenantId,
+          leadId: context.leadId,
+          dealId: context.dealId,
+          title: `⚠️ [Alerta Gestão] ${auto.name}: ${context.title || context.name || 'Atenção requerida'}`,
+          priority: 'urgente',
+          deadline: new Date(Date.now() + 4 * 3600000).toISOString(),
+          completed: false
+        });
+        autoExecuted.push({ type: 'alert_created', taskId: alertTask.id });
+      }
+
+      if (action.type === 'enviar_whatsapp' || action.id === 'enviar_whatsapp') {
+        autoExecuted.push({ type: 'whatsapp_prepared', text: (action.params && action.params.text) || 'Mensagem automática pronta.' });
+      }
+
+      // Registra na timeline de atividades
+      activitiesDB.insert({
         tenantId,
         leadId: context.leadId,
         dealId: context.dealId,
-        title: action.params.title || `Tarefa Automática: ${auto.name}`,
-        priority: action.params.priority || 'alta',
-        deadline: new Date(Date.now() + (action.params.delayHours || 24) * 3600000).toISOString(),
-        completed: false
+        type: 'automation_executed',
+        title: `⚡ Automação Executada: ${auto.name}`,
+        description: `Gatilho "${triggerType}" disparou ${autoExecuted.length} ação(ões) com sucesso.`,
+        timestamp: new Date().toISOString()
       });
-      executedActions.push({ automationId: auto.id, type: 'task_created', taskId: task.id });
-    }
 
-    if (action.type === 'mover_estagio' && context.dealId && action.params.targetStage) {
-      dealsDB.update(context.dealId, { stage: action.params.targetStage });
-      executedActions.push({ automationId: auto.id, type: 'stage_moved', stage: action.params.targetStage });
-    }
+      // Registra no histórico de execuções (workflowRunsDB - FASE 9)
+      if (workflowRunsDB) {
+        workflowRunsDB.insert({
+          tenantId,
+          automationId: auto.id,
+          automationName: auto.name,
+          triggerType,
+          contextId: context.dealId || context.leadId || null,
+          status: 'success',
+          actionsExecuted: autoExecuted,
+          executedAt: new Date().toISOString()
+        });
+      }
 
-    // Registra no histórico de atividades
-    activitiesDB.insert({
-      tenantId,
-      leadId: context.leadId,
-      dealId: context.dealId,
-      type: 'automation_executed',
-      title: `⚡ Automação Executada: ${auto.name}`,
-      description: `Ação acionada automaticamente pelo fluxo comercial.`,
-      timestamp: new Date().toISOString()
-    });
+      executedActions.push(...autoExecuted.map(a => ({ ...a, automationId: auto.id })));
+    } catch (err) {
+      if (workflowRunsDB) {
+        workflowRunsDB.insert({
+          tenantId,
+          automationId: auto.id,
+          automationName: auto.name,
+          triggerType,
+          contextId: context.dealId || context.leadId || null,
+          status: 'failed',
+          errorMessage: err.message,
+          executedAt: new Date().toISOString()
+        });
+      }
+    }
   }
 
   return executedActions;

@@ -1653,6 +1653,140 @@ async function runTests() {
   console.log('  ✅ Teste 25 Aprovado: Inbox Multicanal com IA, Sugestão Assistida, Human-in-the-Loop e Anti-IDOR validados.\n');
   passed++;
 
+  // 26. Validação do Motor de Automações Comerciais Visual & Telemetria (FASE 9)
+  console.log('▶ Teste 26: Validação do Motor de Automações Comerciais Visual & Telemetria (FASE 9)...');
+  const { automationsDB: autoDB26, workflowRunsDB: runsDB26 } = require('../database/db');
+
+  // 26.1 Criação de nova regra com QUANDO -> SE -> ENTÃO
+  const newAutoRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      name: 'Alerta Deal VIP Score Alto',
+      trigger: 'deal_score_alto',
+      condition: { field: 'value', operator: 'greater_than', value: 20000 },
+      action: { type: 'alertar_gestor', params: { title: 'Lead de Alto Valor requer atenção imediata' } }
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/automations',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(newAutoRes.status, 201, 'POST /api/automations deve responder 201');
+  const createdAutoId = newAutoRes.body.data.id;
+  assert.ok(createdAutoId, 'Automação deve possuir ID gerado');
+
+  // 26.2 Teste de Disparo Imediato via Endpoint (POST /api/automations/test-trigger)
+  const testTriggerRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      triggerType: 'deal_score_alto',
+      context: { title: 'Expansão Enterprise Corp', value: 50000, leadId: leadA.id }
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/automations/test-trigger',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(testTriggerRes.status, 200, 'POST /api/automations/test-trigger deve responder 200');
+  assert.ok(testTriggerRes.body.executedActions.length >= 1, 'Pelo menos uma ação deve ter sido executada');
+  const alertAction = testTriggerRes.body.executedActions.find(a => a.type === 'alert_created');
+  assert.ok(alertAction, 'Ação de alert_created deve ter sido disparada');
+
+  // 26.3 Verificação de Histórico de Execuções (workflowRunsDB & GET /api/automations/runs)
+  const runsRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/automations/runs',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(runsRes.status, 200, 'GET /api/automations/runs deve responder 200');
+  assert.ok(runsRes.body.data.length >= 1, 'Deve conter registro de execução no histórico');
+  const autoRun = runsRes.body.data.find(r => r.automationId === createdAutoId);
+  assert.ok(autoRun, 'Execução da automação criada deve constar no log');
+  assert.strictEqual(autoRun.status, 'success');
+
+  // 26.4 Atualização da Automação (PUT /api/automations/:id)
+  const updateAutoRes = await new Promise((resolve) => {
+    const putData = JSON.stringify({ name: 'Alerta Deal VIP Score Alto - Atualizado' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/automations/${createdAutoId}`,
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(putData);
+    req.end();
+  });
+  assert.strictEqual(updateAutoRes.status, 200, 'PUT /api/automations/:id deve responder 200');
+  assert.strictEqual(updateAutoRes.body.data.name, 'Alerta Deal VIP Score Alto - Atualizado');
+
+  // 26.5 Isolamento Anti-IDOR em Automações (Exclusão por outro tenant é bloqueada)
+  const idorAutoRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/automations/${createdAutoId}`,
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${otherTenantAdminToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+    req.end();
+  });
+  assert.strictEqual(idorAutoRes.status, 404, 'Exclusão de automação de outro tenant deve retornar 404');
+
+  // 26.6 Exclusão Autorizada da Automação (DELETE /api/automations/:id)
+  const deleteAutoRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/automations/${createdAutoId}`,
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+  assert.strictEqual(deleteAutoRes.status, 200, 'DELETE /api/automations/:id autorizado deve responder 200');
+
+  console.log('  ✅ Teste 26 Aprovado: Motor de Automações Visuais (QUANDO->SE->ENTÃO), Telemetria de Runs e Anti-IDOR validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste
