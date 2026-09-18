@@ -376,7 +376,12 @@
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button onclick="triggerCopilotSuggestion()" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/30 transition flex items-center gap-1">
+                <select id="chat-mode-selector" onchange="changeActiveChatMode(this.value)" class="bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300 rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-500">
+                  <option value="autonoma">🤖 Autônoma (IA)</option>
+                  <option value="copiloto" selected>👥 Copiloto (IA + Humano)</option>
+                  <option value="humano">👤 Humano (Vendedor)</option>
+                </select>
+                <button id="btn-suggest-ia" onclick="triggerCopilotSuggestion()" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/30 transition flex items-center gap-1">
                   <i data-lucide="sparkles" class="h-3 w-3"></i>
                   <span>Sugerir com IA</span>
                 </button>

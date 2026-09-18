@@ -2,9 +2,19 @@
  * Central de Atendimento Omnichannel
  * Gerenciamento de conversas, mensagens e conectores para APIs oficiais (WhatsApp, Instagram, Webchat).
  * Cumpre a diretriz de integridade: NUNCA simula conexão falsa. Exibe "Conectar canal" quando não configurado.
+ * FASE 8: Inbox Multicanal com Modos Human-in-the-Loop (autonoma, copiloto, humano) e Sugestão com IA.
  */
 
-const { conversationsDB, messagesDB, settingsDB, activitiesDB } = require('../database/db');
+const { 
+  conversationsDB, 
+  messagesDB, 
+  settingsDB, 
+  activitiesDB, 
+  leadsDB, 
+  knowledgeBaseDB 
+} = require('../database/db');
+
+const { generateAIResponse } = require('./aiGatewayService');
 
 const SUPPORTED_CHANNELS = [
   {
@@ -62,7 +72,7 @@ function getConversationMessages(conversationId) {
 
 function sendMessage({ tenantId, conversationId, text, sender = 'vendedor', senderName = 'Equipe' }) {
   const conv = conversationsDB.findById(conversationId);
-  if (!conv) throw new Error('Conversa não encontrada.');
+  if (!conv || (conv.tenantId && conv.tenantId !== tenantId)) throw new Error('Conversa não encontrada.');
 
   const msg = messagesDB.insert({
     tenantId,
@@ -92,10 +102,76 @@ function sendMessage({ tenantId, conversationId, text, sender = 'vendedor', send
   return msg;
 }
 
+/**
+ * Gera sugestão de resposta com IA baseada nas últimas mensagens e Cérebro da Empresa (Human-in-the-Loop)
+ */
+async function generateSuggestedResponse({ conversationId, tenantId }) {
+  const conv = conversationsDB.findById(conversationId);
+  if (!conv || (conv.tenantId && conv.tenantId !== tenantId)) {
+    throw new Error('Conversa não encontrada.');
+  }
+
+  const messages = getConversationMessages(conversationId).slice(-6);
+  const lead = leadsDB.findById(conv.leadId) || {};
+  const kbItems = knowledgeBaseDB.findByTenant(tenantId);
+  const kbContext = kbItems.map(k => `[${k.category}] ${k.title}: ${k.content}`).join('\n\n');
+
+  const historyText = messages.map(m => `${m.sender === 'cliente' ? 'Cliente' : 'Atendente'}: ${m.text}`).join('\n');
+
+  const prompt = `Histórico Recente da Conversa:\n${historyText || 'Sem mensagens anteriores.'}\n\nCom base no histórico e nas informações da empresa, gere uma sugestão de resposta consultiva, empática e focada em avançar a negociação comercial.`;
+
+  const systemPrompt = `Você é o Copiloto Comercial do Inbox Omnichannel do Agentise Mega CRM.\n` +
+    `Informações do Cérebro da Empresa:\n${kbContext || 'Empresa especializada em soluções comerciais de alta performance.'}\n\n` +
+    `Dados do Cliente:\nNome: ${lead.name || 'Cliente'}\nEmpresa: ${lead.company || '-'}\n` +
+    `Regras: Forneça uma resposta direta, pronta para envio no WhatsApp pelo vendedor, sem introduções explicativas.`;
+
+  const aiResult = await generateAIResponse({
+    prompt,
+    systemPrompt,
+    taskType: 'chat',
+    modelPreference: 'auto',
+    tenantId
+  });
+
+  return {
+    suggestion: aiResult.text,
+    modelUsed: aiResult.modelUsed,
+    latencyMs: aiResult.latencyMs
+  };
+}
+
+/**
+ * Alterna o modo de atendimento da conversa: 'autonoma', 'copiloto', 'humano'
+ */
+function setConversationMode({ conversationId, tenantId, mode }) {
+  const conv = conversationsDB.findById(conversationId);
+  if (!conv || (conv.tenantId && conv.tenantId !== tenantId)) {
+    throw new Error('Conversa não encontrada.');
+  }
+
+  const validModes = ['autonoma', 'copiloto', 'humano'];
+  const newMode = validModes.includes(mode) ? mode : 'copiloto';
+
+  const updated = conversationsDB.update(conversationId, { mode: newMode });
+
+  activitiesDB.insert({
+    tenantId,
+    leadId: conv.leadId,
+    type: 'mode_change',
+    title: `Modo de atendimento alterado para ${newMode.toUpperCase()}`,
+    description: `A conversa agora opera no modo ${newMode}.`,
+    timestamp: new Date().toISOString()
+  });
+
+  return updated;
+}
+
 module.exports = {
   SUPPORTED_CHANNELS,
   getChannelsStatus,
   getConversations,
   getConversationMessages,
-  sendMessage
+  sendMessage,
+  generateSuggestedResponse,
+  setConversationMode
 };

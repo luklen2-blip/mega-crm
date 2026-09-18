@@ -1516,6 +1516,143 @@ async function runTests() {
   console.log('  ✅ Teste 24 Aprovado: Agente Comercial de IA, Transbordo Humano, Teto de Autonomia e Histórico validados.\n');
   passed++;
 
+  // 25. Validação do Inbox Multicanal com IA & Human-in-the-Loop (FASE 8)
+  console.log('▶ Teste 25: Validação do Inbox Multicanal com IA & Human-in-the-Loop (FASE 8)...');
+  const { conversationsDB, messagesDB } = require('../database/db');
+
+  // 25.1 Cria conversa de teste associada ao tenant
+  const testConv = conversationsDB.insert({
+    tenantId: 'ten_demo_agentise',
+    leadId: leadA.id,
+    customerName: leadA.name,
+    customerPhone: leadA.phone || '11999990000',
+    channel: 'whatsapp',
+    mode: 'copiloto',
+    status: 'aguardando_atendimento',
+    lastMessage: 'Qual é o prazo de entrega?'
+  });
+
+  messagesDB.insert({
+    tenantId: 'ten_demo_agentise',
+    conversationId: testConv.id,
+    text: 'Olá, gostaria de saber os detalhes da proposta e o prazo de entrega.',
+    sender: 'cliente',
+    senderName: leadA.name,
+    status: 'received',
+    channel: 'whatsapp'
+  });
+
+  // 25.2 GET /api/inbox/conversations
+  const inboxListRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/inbox/conversations',
+      headers: { 'Authorization': `Bearer ${proprietarioToken19}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(inboxListRes.status, 200, 'GET /api/inbox/conversations deve responder 200');
+  const foundConv = inboxListRes.body.data.find(c => c.id === testConv.id);
+  assert.ok(foundConv, 'Conversa criada deve estar presente na listagem do inbox');
+  assert.strictEqual(foundConv.lead.name, leadA.name, 'Conversa enriquecida deve trazer dados do lead');
+
+  // 25.3 POST /api/inbox/conversations/:id/suggest (IA gera sugestão)
+  const suggestRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/inbox/conversations/${testConv.id}/suggest`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.end();
+  });
+  assert.strictEqual(suggestRes.status, 200, 'POST /api/inbox/conversations/:id/suggest deve responder 200');
+  assert.ok(suggestRes.body.suggestion, 'Sugestão da IA deve ser gerada');
+  assert.ok(suggestRes.body.modelUsed, 'Modelo de IA utilizado deve ser informado');
+
+  // 25.4 POST /api/inbox/conversations/:id/messages (Humano envia/aprova)
+  const humanSendRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      text: suggestRes.body.suggestion,
+      sender: 'vendedor',
+      approvedByHuman: true
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/inbox/conversations/${testConv.id}/messages`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(humanSendRes.status, 201, 'POST /api/inbox/conversations/:id/messages deve responder 201');
+  assert.strictEqual(humanSendRes.body.data.sender, 'vendedor');
+
+  // 25.5 PATCH /api/inbox/conversations/:id/mode (Alterna modo)
+  const modeRes = await new Promise((resolve) => {
+    const patchData = JSON.stringify({ mode: 'humano' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/inbox/conversations/${testConv.id}/mode`,
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(patchData);
+    req.end();
+  });
+  assert.strictEqual(modeRes.status, 200, 'PATCH /api/inbox/conversations/:id/mode deve responder 200');
+  assert.strictEqual(modeRes.body.data.mode, 'humano', 'Modo deve ter sido alterado para humano');
+
+  // 25.6 Anti-IDOR: Outro tenant não pode sugerir ou enviar mensagens na conversa
+  const idorInboxRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/inbox/conversations/${testConv.id}/suggest`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${otherTenantAdminToken}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+    req.end();
+  });
+  assert.strictEqual(idorInboxRes.status, 404, 'Tentativa de obter sugestão em conversa de outro tenant deve retornar 404');
+
+  conversationsDB.delete(testConv.id);
+  messagesDB.deleteWhere(m => m.conversationId === testConv.id);
+
+  console.log('  ✅ Teste 25 Aprovado: Inbox Multicanal com IA, Sugestão Assistida, Human-in-the-Loop e Anti-IDOR validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

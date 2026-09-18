@@ -89,7 +89,9 @@ const {
   getChannelsStatus, 
   getConversations, 
   getConversationMessages, 
-  sendMessage 
+  sendMessage,
+  generateSuggestedResponse,
+  setConversationMode 
 } = require('./services/omnichannelService');
 
 const { 
@@ -1184,6 +1186,63 @@ const server = http.createServer(async (req, res) => {
       senderName: ctx.name
     });
     return sendJson(res, 201, { success: true, data: msg });
+  }
+
+  // 7.1 INBOX MULTICANAL COM IA & HUMAN-IN-THE-LOOP (FASE 8)
+  if (pathname === '/api/inbox/conversations' && method === 'GET') {
+    let convs = getConversations(tenantId);
+    const statusFilter = parsedUrl.searchParams.get('status');
+    const channelFilter = parsedUrl.searchParams.get('channel');
+    if (statusFilter) convs = convs.filter(c => c.status === statusFilter || c.mode === statusFilter);
+    if (channelFilter) convs = convs.filter(c => c.channel === channelFilter);
+
+    const enriched = convs.map(c => {
+      const lead = leadsDB.findById(c.leadId) || {};
+      const recentMsgs = getConversationMessages(c.id).slice(-2);
+      return { ...c, lead, recentMessages: recentMsgs };
+    });
+
+    return sendJson(res, 200, { success: true, count: enriched.length, data: enriched });
+  }
+
+  if (pathname.startsWith('/api/inbox/conversations/') && pathname.endsWith('/suggest') && method === 'POST') {
+    const convId = pathname.split('/')[4];
+    try {
+      const result = await generateSuggestedResponse({ conversationId: convId, tenantId });
+      return sendJson(res, 200, { success: true, ...result });
+    } catch (err) {
+      return sendJson(res, 404, { error: err.message });
+    }
+  }
+
+  if (pathname.startsWith('/api/inbox/conversations/') && pathname.endsWith('/messages') && method === 'POST') {
+    const convId = pathname.split('/')[4];
+    const body = await parseRequestBody(req);
+    if (!body.text) return sendJson(res, 400, { error: 'Mensagem é obrigatória.' });
+
+    try {
+      const msg = sendMessage({
+        tenantId,
+        conversationId: convId,
+        text: body.text,
+        sender: body.sender || 'vendedor',
+        senderName: body.approvedByHuman ? `${ctx.name} (Aprovado IA)` : ctx.name
+      });
+      return sendJson(res, 201, { success: true, data: msg });
+    } catch (err) {
+      return sendJson(res, 404, { error: err.message });
+    }
+  }
+
+  if (pathname.startsWith('/api/inbox/conversations/') && pathname.endsWith('/mode') && (method === 'PATCH' || method === 'PUT')) {
+    const convId = pathname.split('/')[4];
+    const body = await parseRequestBody(req);
+    try {
+      const updated = setConversationMode({ conversationId: convId, tenantId, mode: body.mode });
+      return sendJson(res, 200, { success: true, data: updated });
+    } catch (err) {
+      return sendJson(res, 404, { error: err.message });
+    }
   }
 
   // 8. CÉREBRO DA EMPRESA (KNOWLEDGE BASE - FASE 8)

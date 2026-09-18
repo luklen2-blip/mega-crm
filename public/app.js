@@ -875,12 +875,35 @@ async function selectConversation(cvId) {
   document.getElementById('chat-customer-phone').innerText = cv.customerPhone || 'Canal Web';
   document.getElementById('chat-customer-avatar').innerText = (cv.customerName || 'C').charAt(0).toUpperCase();
 
+  const modeSelector = document.getElementById('chat-mode-selector');
+  if (modeSelector) {
+    modeSelector.value = cv.mode || 'copiloto';
+  }
+
   try {
     const res = await fetch(`/api/omnichannel/conversations/${cvId}/messages`, { headers: authHeaders() });
     const msgs = (await res.json()).data || [];
     renderChatMessages(msgs);
   } catch (e) {
     console.error('Erro ao carregar mensagens:', e);
+  }
+}
+
+async function changeActiveChatMode(mode) {
+  if (!activeConversationId) return;
+  try {
+    const res = await fetch(`/api/inbox/conversations/${activeConversationId}/mode`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: JSON.stringify({ mode })
+    });
+    if (res.ok) {
+      const cv = globalConversations.find(c => c.id === activeConversationId);
+      if (cv) cv.mode = mode;
+      showToast(`Modo alterado para ${mode.toUpperCase()}`, 'success');
+    }
+  } catch (e) {
+    showToast('Erro ao alterar modo da conversa.', 'error');
   }
 }
 
@@ -914,10 +937,10 @@ async function sendChatMessage() {
   input.value = '';
 
   try {
-    const res = await fetch('/api/omnichannel/messages', {
+    const res = await fetch(`/api/inbox/conversations/${activeConversationId}/messages`, {
       method: 'POST',
       headers: authHeaders(),
-      body: JSON.stringify({ conversationId: activeConversationId, text, sender: 'vendedor' })
+      body: JSON.stringify({ text, sender: 'vendedor', approvedByHuman: true })
     });
     if (res.ok) {
       await selectConversation(activeConversationId);
@@ -927,12 +950,41 @@ async function sendChatMessage() {
   }
 }
 
-function triggerCopilotSuggestion() {
-  const cv = globalConversations.find(c => c.id === activeConversationId);
-  const input = document.getElementById('chat-input');
-  if (!input) return;
-  input.value = `Olá ${cv ? cv.customerName : 'cliente'}, tudo bem? Analisei seu projeto com a nossa IA e preparei uma condição exclusiva.`;
-  showToast('Sugestão de resposta gerada pela IA aplicada no campo.', 'info');
+async function triggerCopilotSuggestion() {
+  if (!activeConversationId) {
+    showToast('Selecione uma conversa ativa primeiro.', 'warning');
+    return;
+  }
+  const btn = document.getElementById('btn-suggest-ia');
+  const originalHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i data-lucide="loader-2" class="h-3 w-3 animate-spin"></i><span>Pensando...</span>';
+    if (window.lucide) lucide.createIcons();
+  }
+
+  try {
+    const res = await fetch(`/api/inbox/conversations/${activeConversationId}/suggest`, {
+      method: 'POST',
+      headers: authHeaders()
+    });
+    const data = await res.json();
+    if (res.ok && data.suggestion) {
+      const input = document.getElementById('chat-input');
+      if (input) input.value = data.suggestion;
+      showToast(`Sugestão gerada com ${data.modelUsed || 'IA'} (${data.latencyMs || 0}ms)`, 'info');
+    } else {
+      showToast(data.error || 'Não foi possível gerar sugestão.', 'warning');
+    }
+  } catch (e) {
+    showToast('Erro ao consultar IA para sugestão.', 'error');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+      if (window.lucide) lucide.createIcons();
+    }
+  }
 }
 
 function connectChannelModal(channelId) {

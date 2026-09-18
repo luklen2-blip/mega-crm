@@ -28,5 +28,17 @@
     "createdAt": "2026-09-12T19:43:09.597Z",
     "id": "mes_1789245789597_g2ja",
     "updatedAt": "2026-09-12T20:43:09.597Z"
+  },
+  {
+    "tenantId": "ten_1789741990141_63wj",
+    "conversationId": "con_1789741990804_9v3l",
+    "text": "Olá, gostaria de saber os detalhes da proposta e o prazo de entrega.",
+    "sender": "cliente",
+    "senderName": "Lead Confidencial A",
+    "status": "received",
+    "channel": "whatsapp",
+    "id": "mes_1789741990807_mjux",
+    "createdAt": "2026-09-18T14:33:10.807Z",
+    "updatedAt": "2026-09-18T14:33:10.807Z"
   }
 ]

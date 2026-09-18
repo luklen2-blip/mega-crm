@@ -11,5 +11,18 @@
     "id": "con_1789245789588_cv7f",
     "createdAt": "2026-09-12T20:43:09.588Z",
     "updatedAt": "2026-09-12T20:43:09.588Z"
+  },
+  {
+    "tenantId": "ten_1789741990141_63wj",
+    "leadId": "lea_1789741990225_zo8h",
+    "customerName": "Lead Confidencial A",
+    "customerPhone": "11999990000",
+    "channel": "whatsapp",
+    "mode": "copiloto",
+    "status": "aguardando_atendimento",
+    "lastMessage": "Qual é o prazo de entrega?",
+    "id": "con_1789741990804_9v3l",
+    "createdAt": "2026-09-18T14:33:10.804Z",
+    "updatedAt": "2026-09-18T14:33:10.804Z"
   }
 ]
