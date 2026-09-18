@@ -322,5 +322,50 @@
     "id": "ai__1789740306020_wayp",
     "createdAt": "2026-09-18T14:05:06.020Z",
     "updatedAt": "2026-09-18T14:05:06.020Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:10:42.255Z",
+    "id": "ai__1789740642255_7lz2",
+    "createdAt": "2026-09-18T14:10:42.255Z",
+    "updatedAt": "2026-09-18T14:10:42.255Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:10:42.271Z",
+    "id": "ai__1789740642272_xhfo",
+    "createdAt": "2026-09-18T14:10:42.272Z",
+    "updatedAt": "2026-09-18T14:10:42.272Z"
+  },
+  {
+    "tenantId": "ten_1789740642210_etm0",
+    "feature": "teste_ia",
+    "credits": 50,
+    "timestamp": "2026-09-18T14:10:42.277Z",
+    "id": "ai__1789740642277_h923",
+    "createdAt": "2026-09-18T14:10:42.277Z",
+    "updatedAt": "2026-09-18T14:10:42.277Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:11:15.067Z",
+    "id": "ai__1789740675067_oyg7",
+    "createdAt": "2026-09-18T14:11:15.067Z",
+    "updatedAt": "2026-09-18T14:11:15.067Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:11:15.085Z",
+    "id": "ai__1789740675085_oxe3",
+    "createdAt": "2026-09-18T14:11:15.085Z",
+    "updatedAt": "2026-09-18T14:11:15.085Z"
   }
 ]

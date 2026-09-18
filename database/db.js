@@ -118,46 +118,62 @@ class JsonDB {
   }
 }
 
-// Inicializa e exporta todas as coleções do SaaS Multi-Tenant
+// Inicializa e exporta todas as coleções do SaaS Multi-Tenant (V2.0 Paridade PostgreSQL)
 const tenantsDB = new JsonDB('tenants');
 const usersDB = new JsonDB('users');
+const membershipsDB = new JsonDB('memberships');
 const contactsDB = new JsonDB('contacts');
 const companiesDB = new JsonDB('companies');
 const leadsDB = new JsonDB('leads');
+const pipelinesDB = new JsonDB('pipelines');
+const pipelineStagesDB = new JsonDB('pipeline_stages');
 const dealsDB = new JsonDB('deals');
 const activitiesDB = new JsonDB('activities');
 const tasksDB = new JsonDB('tasks');
 const proposalsDB = new JsonDB('proposals');
+const paymentsDB = new JsonDB('payments');
 const productsDB = new JsonDB('products');
 const conversationsDB = new JsonDB('conversations');
 const messagesDB = new JsonDB('messages');
 const campaignsDB = new JsonDB('campaigns');
 const automationsDB = new JsonDB('automations');
+const workflowRunsDB = new JsonDB('workflow_runs');
+const aiAgentsDB = new JsonDB('ai_agents');
+const aiConversationsDB = new JsonDB('ai_conversations');
+const aiUsageDB = new JsonDB('ai_usage');
 const knowledgeBaseDB = new JsonDB('knowledge_base');
 const vehiclesDB = new JsonDB('vehicles');
-const aiUsageDB = new JsonDB('ai_usage');
 const auditLogsDB = new JsonDB('audit_logs');
+const consentsDB = new JsonDB('consents');
 const settingsDB = new JsonDB('settings');
 
 module.exports = {
   JsonDB,
   tenantsDB,
   usersDB,
+  membershipsDB,
   contactsDB,
   companiesDB,
   leadsDB,
+  pipelinesDB,
+  pipelineStagesDB,
   dealsDB,
   activitiesDB,
   tasksDB,
   proposalsDB,
+  paymentsDB,
   productsDB,
   conversationsDB,
   messagesDB,
   campaignsDB,
   automationsDB,
+  workflowRunsDB,
+  aiAgentsDB,
+  aiConversationsDB,
+  aiUsageDB,
   knowledgeBaseDB,
   vehiclesDB,
-  aiUsageDB,
   auditLogsDB,
+  consentsDB,
   settingsDB
 };

@@ -107,19 +107,45 @@ function verifyToken(token) {
   }
 }
 
-// Registro de Auditoria
-function logAudit(tenantId, userId, action, resource, details = {}) {
+// Registro de Auditoria Aprofundada com Rastreamento de Delta (Valor Anterior vs Novo)
+function logAudit(paramsOrTenantId, userId, action, resource, details = {}) {
   try {
-    auditLogsDB.insert({
-      tenantId: tenantId || 'system',
-      userId: userId || 'anonymous',
-      action,
-      resource,
-      details,
-      timestamp: new Date().toISOString()
-    });
+    let entry = {};
+    if (typeof paramsOrTenantId === 'object' && paramsOrTenantId !== null) {
+      entry = {
+        tenantId: paramsOrTenantId.tenantId || 'system',
+        userId: paramsOrTenantId.userId || 'system',
+        userName: paramsOrTenantId.userName || 'Sistema',
+        action: paramsOrTenantId.action || 'ACTION',
+        resource: paramsOrTenantId.resource || 'general',
+        entityId: paramsOrTenantId.entityId || null,
+        ip: paramsOrTenantId.ip || '127.0.0.1',
+        description: paramsOrTenantId.description || '',
+        oldValues: paramsOrTenantId.oldValues || {},
+        newValues: paramsOrTenantId.newValues || {},
+        details: paramsOrTenantId.details || {},
+        timestamp: new Date().toISOString()
+      };
+    } else {
+      entry = {
+        tenantId: paramsOrTenantId || 'system',
+        userId: userId || 'anonymous',
+        userName: details.userName || 'Usuário',
+        action: action || 'ACTION',
+        resource: resource || 'general',
+        entityId: details.entityId || null,
+        ip: details.ip || '127.0.0.1',
+        description: details.description || '',
+        oldValues: details.oldValues || {},
+        newValues: details.newValues || {},
+        details,
+        timestamp: new Date().toISOString()
+      };
+    }
+    return auditLogsDB.insert(entry);
   } catch (err) {
     console.error('[AuditLog] Erro ao registrar log:', err.message);
+    return null;
   }
 }
 

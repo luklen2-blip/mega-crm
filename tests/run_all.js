@@ -830,6 +830,121 @@ async function runTests() {
   console.log('  ✅ Teste 19 Aprovado: Multi-Tenant real, 7 papéis RBAC e matriz de permissões 100% validados.\n');
   passed++;
 
+  // =========================================================================
+  // TESTE 20: Validação de Banco de Dados, Segurança e Auditoria com Delta (FASE 3)
+  // =========================================================================
+  console.log('▶ Teste 20: Validação de Banco de Dados, Segurança e Auditoria com Delta (FASE 3)...');
+
+  // 20.1 Validação do Schema Relacional PostgreSQL
+  const { validateSchemaSyntax } = require('../database/migrate_postgres');
+  const schemaValidation = validateSchemaSyntax();
+  assert.strictEqual(schemaValidation.isValid, true, 'Schema SQL deve ser válido');
+  assert.ok(schemaValidation.totalTables >= 20, 'Schema deve conter pelo menos 20 tabelas relacionais');
+
+  // 20.2 Verificação de Paridade das Coleções JsonDB V2
+  const dbV2 = require('../database/db');
+  assert.ok(dbV2.pipelinesDB, 'pipelinesDB deve estar disponível');
+  assert.ok(dbV2.pipelineStagesDB, 'pipelineStagesDB deve estar disponível');
+  assert.ok(dbV2.paymentsDB, 'paymentsDB deve estar disponível');
+  assert.ok(dbV2.workflowRunsDB, 'workflowRunsDB deve estar disponível');
+  assert.ok(dbV2.aiAgentsDB, 'aiAgentsDB deve estar disponível');
+  assert.ok(dbV2.consentsDB, 'consentsDB deve estar disponível');
+
+  // 20.3 Atualização de Oportunidade com Geração de Auditoria Delta (Valor Anterior vs Novo)
+  const testDeal20 = dbV2.dealsDB.insert({
+    tenantId: 'ten_demo_agentise',
+    title: 'Auditoria de Delta Deal #382',
+    value: 5000,
+    stage: 'prospeccao'
+  });
+
+  const updateDealRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({ value: 7500, stage: 'proposta' });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/deals/${testDeal20.id}`,
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(updateDealRes.status, 200, 'Atualização da oportunidade deve retornar HTTP 200');
+
+  // 20.4 Consulta à Trilha de Auditoria (/api/audit-logs) com Validação de Delta
+  const auditLogsRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/audit-logs?resource=deals`,
+      headers: {
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(auditLogsRes.status, 200, 'GET /api/audit-logs deve responder HTTP 200 para Proprietário');
+  assert.strictEqual(auditLogsRes.body.success, true);
+  const foundLog = auditLogsRes.body.data.find(l => l.entityId === testDeal20.id && l.action === 'DEAL_UPDATED');
+  assert.ok(foundLog, 'Log de auditoria da atualização do deal deve existir');
+  assert.strictEqual(foundLog.oldValues.value, 5000, 'Valor anterior no log deve ser 5000');
+  assert.strictEqual(foundLog.newValues.value, 7500, 'Valor novo no log deve ser 7500');
+
+  // 20.5 Bloqueio de Acesso aos Logs de Auditoria para Vendedor (RBAC)
+  const vendedorAuditRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/audit-logs`,
+      headers: {
+        'Authorization': `Bearer ${vendedorToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+  });
+  assert.strictEqual(vendedorAuditRes.status, 403, 'Vendedor tentando ver audit-logs deve receber HTTP 403');
+
+  // 20.6 Isolamento Anti-IDOR nos Logs de Auditoria (Admin de outro tenant só vê seus próprios logs)
+  const otherTenantAdminToken = genTok19({
+    userId: 'usr_other_admin',
+    tenantId: 'ten_autoprime_veiculos',
+    role: 'ADMINISTRADOR',
+    name: 'Admin AutoPrime',
+    email: 'admin@autoprime.com.br'
+  });
+
+  const crossTenantAuditRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/audit-logs`,
+      headers: {
+        'Authorization': `Bearer ${otherTenantAdminToken}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(crossTenantAuditRes.status, 200, 'Admin de outro tenant deve conseguir consultar seus próprios logs');
+  const leakedLog = crossTenantAuditRes.body.data.find(l => l.tenantId === 'ten_demo_agentise');
+  assert.strictEqual(leakedLog, undefined, 'Logs de outro tenant não devem vazar (Anti-IDOR)');
+
+  console.log('  ✅ Teste 20 Aprovado: Schema PostgreSQL, coleções JsonDB V2, auditoria delta (valor anterior/novo) e RBAC validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

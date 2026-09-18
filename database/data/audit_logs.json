@@ -260,5 +260,300 @@
     "id": "aud_1789740306371_r1gn",
     "createdAt": "2026-09-18T14:05:06.371Z",
     "updatedAt": "2026-09-18T14:05:06.371Z"
+  },
+  {
+    "tenantId": "ten_1789740642210_etm0",
+    "userId": "use_1789740642222_3dz2",
+    "userName": "Usuário",
+    "action": "TENANT_REGISTERED",
+    "resource": "tenants",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "companyName": "Tech Sul Soluções",
+      "segment": "Serviços"
+    },
+    "timestamp": "2026-09-18T14:10:42.223Z",
+    "id": "aud_1789740642223_jj6b",
+    "createdAt": "2026-09-18T14:10:42.223Z",
+    "updatedAt": "2026-09-18T14:10:42.223Z"
+  },
+  {
+    "tenantId": "ten_1789740642210_etm0",
+    "userId": "use_1789740642222_3dz2",
+    "userName": "Usuário",
+    "action": "USER_LOGIN",
+    "resource": "users",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "email": "empresa_1789740642210@teste.com"
+    },
+    "timestamp": "2026-09-18T14:10:42.233Z",
+    "id": "aud_1789740642233_my6w",
+    "createdAt": "2026-09-18T14:10:42.233Z",
+    "updatedAt": "2026-09-18T14:10:42.233Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Usuário",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "proposalId": "pro_1789740642537_iuux",
+      "amount": 50000
+    },
+    "timestamp": "2026-09-18T14:10:42.568Z",
+    "id": "aud_1789740642568_jesb",
+    "createdAt": "2026-09-18T14:10:42.568Z",
+    "updatedAt": "2026-09-18T14:10:42.568Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Usuário",
+    "action": "USER_CREATED",
+    "resource": "users",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "userId": "use_1789740642593_7yhf",
+      "role": "VENDEDOR"
+    },
+    "timestamp": "2026-09-18T14:10:42.595Z",
+    "id": "aud_1789740642595_wmxg",
+    "createdAt": "2026-09-18T14:10:42.595Z",
+    "updatedAt": "2026-09-18T14:10:42.595Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_mariana",
+    "userName": "Usuário",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "proposalId": "pro_1789740642623_p82l",
+      "amount": 15000
+    },
+    "timestamp": "2026-09-18T14:10:42.640Z",
+    "id": "aud_1789740642640_5dky",
+    "createdAt": "2026-09-18T14:10:42.640Z",
+    "updatedAt": "2026-09-18T14:10:42.640Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Luciano",
+    "action": "SETTINGS_UPDATED",
+    "resource": "settings",
+    "entityId": "general_settings",
+    "ip": "127.0.0.1",
+    "description": "Luciano atualizou parâmetros e configurações corporativas.",
+    "oldValues": {
+      "id": "general_settings",
+      "companyName": "Agentise Empreendimentos Digitais",
+      "pixKey": "luklen2@gmail.com",
+      "pixName": "LUCIANO SANT ANNA",
+      "pixCity": "SAO PAULO",
+      "currency": "BRL",
+      "language": "pt-BR",
+      "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
+      "createdAt": "2026-09-12T19:34:26.591Z",
+      "updatedAt": "2026-09-18T14:05:06.383Z",
+      "notes": "Configuracao Proprietario OK"
+    },
+    "newValues": {
+      "id": "general_settings",
+      "companyName": "Agentise Empreendimentos Digitais",
+      "pixKey": "luklen2@gmail.com",
+      "pixName": "LUCIANO SANT ANNA",
+      "pixCity": "SAO PAULO",
+      "currency": "BRL",
+      "language": "pt-BR",
+      "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
+      "createdAt": "2026-09-12T19:34:26.591Z",
+      "updatedAt": "2026-09-18T14:10:42.652Z",
+      "notes": "Configuracao Proprietario OK"
+    },
+    "details": {},
+    "timestamp": "2026-09-18T14:10:42.654Z",
+    "id": "aud_1789740642654_sotb",
+    "createdAt": "2026-09-18T14:10:42.654Z",
+    "updatedAt": "2026-09-18T14:10:42.654Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Luciano",
+    "action": "DEAL_UPDATED",
+    "resource": "deals",
+    "entityId": "dea_1789740642662_59s6",
+    "ip": "127.0.0.1",
+    "description": "Luciano alterou oportunidade #59s6 de R$ 5.000 para R$ 7.500.",
+    "oldValues": {
+      "title": "Auditoria de Delta Deal #382",
+      "value": 5000,
+      "stage": "prospeccao"
+    },
+    "newValues": {
+      "title": "Auditoria de Delta Deal #382",
+      "value": 7500,
+      "stage": "proposta"
+    },
+    "details": {
+      "dealTitle": "Auditoria de Delta Deal #382"
+    },
+    "timestamp": "2026-09-18T14:10:42.669Z",
+    "id": "aud_1789740642670_0mua",
+    "createdAt": "2026-09-18T14:10:42.670Z",
+    "updatedAt": "2026-09-18T14:10:42.670Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Usuário",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "proposalId": "pro_1789740675333_9601",
+      "amount": 50000
+    },
+    "timestamp": "2026-09-18T14:11:15.350Z",
+    "id": "aud_1789740675350_igoh",
+    "createdAt": "2026-09-18T14:11:15.350Z",
+    "updatedAt": "2026-09-18T14:11:15.350Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Usuário",
+    "action": "USER_CREATED",
+    "resource": "users",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "userId": "use_1789740675369_pi01",
+      "role": "VENDEDOR"
+    },
+    "timestamp": "2026-09-18T14:11:15.371Z",
+    "id": "aud_1789740675371_sm9t",
+    "createdAt": "2026-09-18T14:11:15.371Z",
+    "updatedAt": "2026-09-18T14:11:15.371Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_mariana",
+    "userName": "Usuário",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "entityId": null,
+    "ip": "127.0.0.1",
+    "description": "",
+    "oldValues": {},
+    "newValues": {},
+    "details": {
+      "proposalId": "pro_1789740675431_dufp",
+      "amount": 15000
+    },
+    "timestamp": "2026-09-18T14:11:15.446Z",
+    "id": "aud_1789740675446_rseu",
+    "createdAt": "2026-09-18T14:11:15.446Z",
+    "updatedAt": "2026-09-18T14:11:15.446Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Luciano",
+    "action": "SETTINGS_UPDATED",
+    "resource": "settings",
+    "entityId": "general_settings",
+    "ip": "127.0.0.1",
+    "description": "Luciano atualizou parâmetros e configurações corporativas.",
+    "oldValues": {
+      "id": "general_settings",
+      "companyName": "Agentise Empreendimentos Digitais",
+      "pixKey": "luklen2@gmail.com",
+      "pixName": "LUCIANO SANT ANNA",
+      "pixCity": "SAO PAULO",
+      "currency": "BRL",
+      "language": "pt-BR",
+      "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
+      "createdAt": "2026-09-12T19:34:26.591Z",
+      "updatedAt": "2026-09-18T14:10:42.652Z",
+      "notes": "Configuracao Proprietario OK"
+    },
+    "newValues": {
+      "id": "general_settings",
+      "companyName": "Agentise Empreendimentos Digitais",
+      "pixKey": "luklen2@gmail.com",
+      "pixName": "LUCIANO SANT ANNA",
+      "pixCity": "SAO PAULO",
+      "currency": "BRL",
+      "language": "pt-BR",
+      "aiModel": "Claude 3.7 Sonnet / Claude Code Engine",
+      "createdAt": "2026-09-12T19:34:26.591Z",
+      "updatedAt": "2026-09-18T14:11:15.463Z",
+      "notes": "Configuracao Proprietario OK"
+    },
+    "details": {},
+    "timestamp": "2026-09-18T14:11:15.500Z",
+    "id": "aud_1789740675500_g2wg",
+    "createdAt": "2026-09-18T14:11:15.500Z",
+    "updatedAt": "2026-09-18T14:11:15.500Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "userName": "Luciano",
+    "action": "DEAL_UPDATED",
+    "resource": "deals",
+    "entityId": "dea_1789740675508_1qrr",
+    "ip": "127.0.0.1",
+    "description": "Luciano alterou oportunidade #1qrr de R$ 5.000 para R$ 7.500.",
+    "oldValues": {
+      "title": "Auditoria de Delta Deal #382",
+      "value": 5000,
+      "stage": "prospeccao"
+    },
+    "newValues": {
+      "title": "Auditoria de Delta Deal #382",
+      "value": 7500,
+      "stage": "proposta"
+    },
+    "details": {
+      "dealTitle": "Auditoria de Delta Deal #382"
+    },
+    "timestamp": "2026-09-18T14:11:15.515Z",
+    "id": "aud_1789740675515_6uye",
+    "createdAt": "2026-09-18T14:11:15.515Z",
+    "updatedAt": "2026-09-18T14:11:15.515Z"
   }
 ]

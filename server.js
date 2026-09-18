@@ -22,7 +22,8 @@ const {
   messagesDB,
   automationsDB,
   campaignsDB,
-  vehiclesDB
+  vehiclesDB,
+  auditLogsDB
 } = require('./database/db');
 
 const { runSeeds } = require('./database/seeds');
@@ -589,6 +590,20 @@ const server = http.createServer(async (req, res) => {
       timestamp: new Date().toISOString()
     });
 
+    // Auditoria de Governança com Delta
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'DEAL_STAGE_CHANGED',
+      resource: 'deals',
+      entityId: id,
+      ip: clientIp,
+      description: `${ctx.name} moveu a oportunidade '${deal.title}' do estágio "${oldStage}" para "${newStage}".`,
+      oldValues: { stage: oldStage },
+      newValues: { stage: newStage }
+    });
+
     if (newStage === 'ganho') {
       await triggerWorkflows('venda_fechada', { dealId: deal.id, leadId: deal.leadId, value: deal.value }, tenantId);
     } else if (newStage === 'perdido') {
@@ -600,14 +615,47 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, data: updated });
   }
 
-  if (pathname.startsWith('/api/deals/') && method === 'PUT') {
+  if (pathname.startsWith('/api/deals/') && (method === 'PUT' || method === 'PATCH') && !pathname.endsWith('/stage')) {
     const id = pathname.split('/')[3];
     const deal = dealsDB.findById(id);
     if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
       return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
     }
     const body = await parseRequestBody(req);
+    const oldValues = {
+      title: deal.title,
+      value: deal.value,
+      stage: deal.stage,
+      assignedTo: deal.assignedTo
+    };
     const updated = dealsDB.update(id, { ...body, tenantId });
+    const newValues = {
+      title: updated.title,
+      value: updated.value,
+      stage: updated.stage,
+      assignedTo: updated.assignedTo
+    };
+
+    // Auditoria de Governança com Delta (Valor Anterior vs Novo)
+    let description = `${ctx.name} atualizou a oportunidade #${id.slice(-4)} (${updated.title})`;
+    if (oldValues.value !== newValues.value) {
+      description = `${ctx.name} alterou oportunidade #${id.slice(-4)} de R$ ${Number(oldValues.value).toLocaleString('pt-BR')} para R$ ${Number(newValues.value).toLocaleString('pt-BR')}.`;
+    }
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'DEAL_UPDATED',
+      resource: 'deals',
+      entityId: id,
+      ip: clientIp,
+      description,
+      oldValues,
+      newValues,
+      details: { dealTitle: updated.title }
+    });
+
     return sendJson(res, 200, { success: true, data: updated });
   }
 
@@ -617,6 +665,17 @@ const server = http.createServer(async (req, res) => {
     if (!deal || (deal.tenantId && deal.tenantId !== tenantId)) {
       return sendJson(res, 404, { error: 'Oportunidade não encontrada.' });
     }
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'DEAL_DELETED',
+      resource: 'deals',
+      entityId: id,
+      ip: clientIp,
+      description: `${ctx.name} removeu a oportunidade '${deal.title}' (R$ ${Number(deal.value).toLocaleString('pt-BR')}).`,
+      oldValues: { title: deal.title, value: deal.value, stage: deal.stage }
+    });
     const deleted = dealsDB.delete(id);
     return sendJson(res, 200, { success: deleted });
   }
@@ -1062,6 +1121,20 @@ const server = http.createServer(async (req, res) => {
       ...body,
       id: 'general_settings'
     });
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'SETTINGS_UPDATED',
+      resource: 'settings',
+      entityId: 'general_settings',
+      ip: clientIp,
+      description: `${ctx.name} atualizou parâmetros e configurações corporativas.`,
+      oldValues: existing,
+      newValues: updated
+    });
+
     return sendJson(res, 200, { success: true, data: updated });
   }
 
@@ -1125,6 +1198,32 @@ const server = http.createServer(async (req, res) => {
     };
 
     return sendJson(res, 200, { success: true, data: backupData });
+  }
+
+  // 18.2 TRILHA DE AUDITORIA & GOVERNANÇA (DELTA ANTES/DEPOIS)
+  if (pathname === '/api/audit-logs' && method === 'GET') {
+    if (!hasPermission(ctx.role, 'AUDIT_VIEW')) {
+      return sendJson(res, 403, { error: 'Acesso restrito. Apenas administradores e proprietários têm permissão para auditar os logs do sistema.' });
+    }
+    let logs = auditLogsDB.findByTenant(tenantId);
+    
+    // Filtros opcionais via query string
+    const resourceFilter = parsedUrl.searchParams.get('resource');
+    const actionFilter = parsedUrl.searchParams.get('action');
+    if (resourceFilter) {
+      logs = logs.filter(l => l.resource === resourceFilter);
+    }
+    if (actionFilter) {
+      logs = logs.filter(l => l.action === actionFilter);
+    }
+    
+    logs.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+
+    return sendJson(res, 200, {
+      success: true,
+      count: logs.length,
+      data: logs
+    });
   }
 
   // 19. ARQUIVOS ESTÁTICOS & SPA FALLBACK
