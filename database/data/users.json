@@ -190,5 +190,29 @@
     "id": "use_1789741990153_vkmi",
     "createdAt": "2026-09-18T14:33:10.153Z",
     "updatedAt": "2026-09-18T14:33:10.153Z"
+  },
+  {
+    "tenantId": "ten_1789742366963_f0jl",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789742366962@teste.com",
+    "passwordHash": "44d396187cb47cf6262cbdffa8bda484:3bf434ad7f266d0c3ffc661b23961710962c8ef1ca9805aecbb5afc709c95f33d9e80e0e4f3f801ba74946177006a73261a017c8193aec1ba391942a16a09ff0",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789742366977_5e95",
+    "createdAt": "2026-09-18T14:39:26.977Z",
+    "updatedAt": "2026-09-18T14:39:26.977Z"
+  },
+  {
+    "tenantId": "ten_1789742380869_06si",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789742380868@teste.com",
+    "passwordHash": "71e8aeea5cabcdd207fd1942bff08f88:862a85dec7f9a1acad56cb50eee8ac7dd51de1ceff8b2ada1137dadb0bacaac9378bfa55c508b479d7aa211a02c0b123fa2a3fd89616313669a79ee10e30b024",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789742380879_f9w7",
+    "createdAt": "2026-09-18T14:39:40.879Z",
+    "updatedAt": "2026-09-18T14:39:40.879Z"
   }
 ]

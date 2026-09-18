@@ -1787,6 +1787,137 @@ async function runTests() {
   console.log('  ✅ Teste 26 Aprovado: Motor de Automações Visuais (QUANDO->SE->ENTÃO), Telemetria de Runs e Anti-IDOR validados.\n');
   passed++;
 
+  // 27. Validação de Propostas Comerciais, Checkout Público & PIX Banco Central (FASE 10)
+  console.log('▶ Teste 27: Validação de Propostas Comerciais, Checkout Público & PIX Banco Central (FASE 10)...');
+  const { proposalsDB: propDB27, paymentsDB: payDB27 } = require('../database/db');
+
+  // 27.1 Criação de Deal para a Proposta
+  const testDeal27 = dealsDB.insert({
+    tenantId: 'ten_demo_agentise',
+    leadId: leadA.id,
+    title: 'Projeto Solução Enterprise AI V2',
+    value: 10000,
+    stage: 'proposta'
+  });
+
+  // 27.2 Geração de Proposta com Itens Detalhados e Desconto
+  const genPropRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      dealId: testDeal27.id,
+      leadId: leadA.id,
+      items: [
+        { description: 'Licença Enterprise Agentise AI', quantity: 1, unitPrice: 8000, discount: 500 },
+        { description: 'Capacitação e Setup Especializado', quantity: 2, unitPrice: 1500, discount: 0 }
+      ],
+      discount: 500,
+      customerName: leadA.name,
+      customerPhone: '11999998888',
+      dealTitle: 'Projeto Solução Enterprise AI V2'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pix/generate',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${proprietarioToken19}`
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(genPropRes.status, 200, 'POST /api/pix/generate deve responder 200');
+  const propData = genPropRes.body.data;
+  assert.strictEqual(propData.amount, 10000, 'Valor final calculado deve ser 10000');
+  assert.ok(propData.publicToken, 'Deve gerar publicToken para checkout');
+  assert.ok(propData.checkoutUrl.startsWith('/p/'), 'Deve conter URL amigável de checkout');
+  assert.ok(propData.payload.includes('luklen2@gmail.com'), 'Payload PIX deve conter a chave oficial');
+  assert.ok(propData.payload.includes('LUCIANO SANT ANNA'), 'Payload PIX deve conter o nome do titular oficial');
+
+  // 27.3 Acesso Público ao Checkout HTML (GET /p/:token sem header de autenticação)
+  const checkoutHtmlRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}${propData.checkoutUrl}`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: d }));
+    });
+  });
+  assert.strictEqual(checkoutHtmlRes.status, 200, 'Página pública de checkout deve responder 200');
+  assert.ok(checkoutHtmlRes.body.includes('Proposta Comercial Oficial'), 'Página deve renderizar título da proposta');
+  assert.ok(checkoutHtmlRes.body.includes('Licença Enterprise Agentise AI'), 'Página deve exibir itens detalhados');
+  assert.ok(checkoutHtmlRes.body.includes(propData.payload), 'Página deve exibir payload PIX Copia-e-Cola');
+
+  // 27.4 Acesso Público à API da Proposta (GET /api/public/proposals/:token)
+  const publicApiRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/api/public/proposals/${propData.publicToken}`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(publicApiRes.status, 200, 'API pública da proposta deve responder 200');
+  assert.strictEqual(publicApiRes.body.data.amount, 10000);
+
+  // 27.5 Webhook de Baixa Automática PIX em Tempo Real (POST /api/pix/webhook)
+  const webhookRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      token: propData.publicToken,
+      txId: propData.txId,
+      amount: 10000,
+      endToEndId: 'E9999999920260918BACEN'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pix/webhook',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(webhookRes.status, 200, 'Webhook PIX deve responder 200');
+
+  // 27.6 Verificação de Fechamento Automático do Deal e Registro em paymentsDB
+  const updatedProposal = propDB27.findById(propData.proposalId);
+  assert.strictEqual(updatedProposal.status, 'paga', 'Proposta deve estar com status paga');
+  assert.ok(updatedProposal.paidAt, 'Proposta deve ter paidAt preenchido');
+
+  const updatedDeal = dealsDB.findById(testDeal27.id);
+  assert.strictEqual(updatedDeal.stage, 'ganho', 'Deal deve avançar automaticamente para "ganho"');
+
+  const paymentRecord = payDB27.findOne(p => p.proposalId === propData.proposalId);
+  assert.ok(paymentRecord, 'Registro de pagamento deve ter sido gravado em paymentsDB');
+  assert.strictEqual(paymentRecord.status, 'pago');
+  assert.strictEqual(paymentRecord.method, 'PIX');
+
+  // 27.7 Isolamento Anti-IDOR (Outro tenant não pode consultar a proposta via API privada)
+  const idorPropRes = await new Promise((resolve) => {
+    http.get({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/proposals/${propData.proposalId}`,
+      headers: { 'Authorization': `Bearer ${otherTenantAdminToken}` }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode }));
+    });
+  });
+  assert.strictEqual(idorPropRes.status, 404, 'Consulta cross-tenant a proposta deve ser bloqueada com 404');
+
+  // Limpeza
+  propDB27.delete(propData.proposalId);
+  dealsDB.delete(testDeal27.id);
+  payDB27.deleteWhere(p => p.proposalId === propData.proposalId);
+
+  console.log('  ✅ Teste 27 Aprovado: Propostas com Itens, Checkout Público, PIX Bacen, Baixa por Webhook e Anti-IDOR validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

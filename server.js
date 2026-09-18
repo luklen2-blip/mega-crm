@@ -6,6 +6,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // Módulos do Sistema
 const { 
@@ -31,7 +32,8 @@ const {
   aiUsageDB,
   aiAgentsDB,
   aiConversationsDB,
-  workflowRunsDB
+  workflowRunsDB,
+  paymentsDB
 } = require('./database/db');
 
 const { 
@@ -129,6 +131,10 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon'
 };
+
+function escapeHtml(str) {
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 // Helper para parsing seguro de JSON
 function parseRequestBody(req) {
@@ -473,6 +479,158 @@ const server = http.createServer(async (req, res) => {
       uptime_seconds: Math.floor(process.uptime()),
       timestamp: new Date().toISOString()
     });
+  }
+
+  // 1.1 CHECKOUT PÚBLICO DE PROPOSTAS COMERCIAIS & PIX BACEN (FASE 10)
+  if (pathname.startsWith('/p/') && method === 'GET') {
+    const token = pathname.split('/')[2];
+    const proposal = proposalsDB.findOne(p => p.publicToken === token || p.id === token);
+    if (!proposal) {
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      return res.end(`<!DOCTYPE html><html lang="pt-BR" class="dark"><head><meta charset="UTF-8"><title>Proposta Não Encontrada</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-slate-950 text-white min-h-screen flex items-center justify-center p-4"><div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center space-y-4"><div class="h-14 w-14 rounded-full bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center text-2xl font-bold">✕</div><h1 class="text-xl font-bold">Proposta não encontrada</h1><p class="text-xs text-slate-400">O link informado é inválido ou expirou.</p></div></body></html>`);
+    }
+
+    const tenant = tenantsDB.findById(proposal.tenantId) || { name: 'Agentise Mega CRM' };
+    const deal = proposal.dealId ? dealsDB.findById(proposal.dealId) : null;
+    const lead = proposal.leadId ? leadsDB.findById(proposal.leadId) : (deal && deal.leadId ? leadsDB.findById(deal.leadId) : null);
+    const clientName = lead ? lead.name : (proposal.customerName || 'Cliente');
+    const items = proposal.items || [{ description: deal ? deal.title : 'Serviços Comerciais', quantity: 1, unitPrice: proposal.amount, discount: 0 }];
+    const formattedTotal = Number(proposal.amount || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const isPaid = proposal.status === 'paga';
+
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    return res.end(`<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta Comercial | ${escapeHtml(tenant.name)}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between p-4 sm:p-6">
+  <div class="max-w-xl w-full mx-auto space-y-6 pt-4 pb-12">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-emerald-400 font-bold">Proposta Comercial Oficial</div>
+        <h1 class="text-xl font-black text-white">${escapeHtml(tenant.name)}</h1>
+      </div>
+      <div>
+        <span class="px-3 py-1 rounded-full text-xs font-bold ${isPaid ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
+          ${isPaid ? '✓ PAGAMENTO CONFIRMADO' : 'AGUARDANDO PAGAMENTO'}
+        </span>
+      </div>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex justify-between items-center text-xs">
+      <div><span class="text-slate-400">Destinatário:</span><div class="text-sm font-bold text-white">${escapeHtml(clientName)}</div></div>
+      <div class="text-right"><span class="text-slate-400">Data de Emissão:</span><div class="text-slate-200">${proposal.createdAt ? new Date(proposal.createdAt).toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR')}</div></div>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div class="text-xs font-bold text-slate-300 uppercase tracking-wider">Itens do Projeto</div>
+      <div class="divide-y divide-slate-800 text-xs">
+        ${items.map(item => `
+          <div class="py-2 flex justify-between items-center">
+            <div>
+              <div class="font-semibold text-white">${escapeHtml(item.description)}</div>
+              <div class="text-[11px] text-slate-400">Qtd: ${item.quantity || 1} x ${Number(item.unitPrice || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+            </div>
+            <div class="font-bold text-white">${Number((item.quantity || 1) * (item.unitPrice || 0) - (item.discount || 0)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="border-t border-slate-800 pt-3 flex justify-between items-center text-sm font-black">
+        <span class="text-white">Valor Total:</span>
+        <span class="text-emerald-400 text-lg">${formattedTotal}</span>
+      </div>
+    </div>
+
+    ${!isPaid ? `
+      <div class="bg-slate-900/90 border border-emerald-500/30 rounded-3xl p-6 text-center space-y-4 shadow-xl">
+        <div class="text-emerald-400 font-bold text-sm">Pague com PIX Oficial Banco Central</div>
+        <div class="inline-block p-3 bg-white rounded-2xl shadow-md">
+          <img src="${proposal.qrCodeUrl}" alt="QR Code PIX" class="w-44 h-44 mx-auto" />
+        </div>
+        <div class="space-y-2 text-left">
+          <label class="block text-[11px] text-slate-400 font-medium">PIX Copia e Cola:</label>
+          <div class="flex gap-2">
+            <input type="text" id="pix-emv" readonly value="${proposal.pixPayload}" class="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-950 border border-slate-700 text-slate-300 font-mono select-all">
+            <button onclick="navigator.clipboard.writeText(document.getElementById('pix-emv').value); alert('Chave PIX copiada!');" class="px-4 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white">Copiar</button>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 pt-2">
+          Chave PIX: <b class="text-slate-400">${proposal.pixKey || 'luklen2@gmail.com'}</b> • Titular: <b class="text-slate-400">LUCIANO SANT ANNA</b>
+        </div>
+      </div>
+    ` : `
+      <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-3xl p-8 text-center space-y-3">
+        <div class="h-12 w-12 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-xl font-bold">✓</div>
+        <h2 class="text-lg font-bold text-white">Pagamento Confirmado!</h2>
+        <p class="text-xs text-slate-300">Obrigado! Seu projeto foi formalizado com sucesso.</p>
+      </div>
+    `}
+  </div>
+</body></html>`);
+  }
+
+  if (pathname.startsWith('/api/public/proposals/') && method === 'GET') {
+    const token = pathname.split('/')[4];
+    const proposal = proposalsDB.findOne(p => p.publicToken === token || p.id === token);
+    if (!proposal) return sendJson(res, 404, { error: 'Proposta não encontrada.' });
+    return sendJson(res, 200, { success: true, data: proposal });
+  }
+
+  // 1.2 WEBHOOK PIX COM BAIXA AUTOMÁTICA EM TEMPO REAL (FASE 10)
+  if (pathname === '/api/pix/webhook' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    const tokenOrId = body.token || body.txId || body.proposalId;
+    if (!tokenOrId) return sendJson(res, 400, { error: 'Identificador da transação/proposta é obrigatório.' });
+
+    const proposal = proposalsDB.findOne(p => p.publicToken === tokenOrId || p.txId === tokenOrId || p.id === tokenOrId);
+    if (!proposal) return sendJson(res, 404, { error: 'Proposta correspondente não localizada.' });
+
+    const updated = proposalsDB.update(proposal.id, {
+      status: 'paga',
+      paidAt: new Date().toISOString()
+    });
+
+    if (paymentsDB) {
+      paymentsDB.insert({
+        tenantId: proposal.tenantId,
+        proposalId: proposal.id,
+        dealId: proposal.dealId,
+        amount: proposal.amount,
+        method: 'PIX',
+        txId: proposal.txId || body.txId || 'TX_BACEN',
+        endToEndId: body.endToEndId || `E${Date.now()}BACEN`,
+        status: 'pago',
+        paidAt: new Date().toISOString()
+      });
+    }
+
+    if (proposal.dealId) {
+      const deal = dealsDB.findById(proposal.dealId);
+      if (deal && deal.stage !== 'ganho') {
+        dealsDB.update(proposal.dealId, {
+          stage: 'ganho',
+          probability: 100,
+          closedAt: new Date().toISOString()
+        });
+        await triggerWorkflows('venda_fechada', { dealId: proposal.dealId, leadId: proposal.leadId, amount: proposal.amount }, proposal.tenantId);
+      }
+    }
+
+    activitiesDB.insert({
+      tenantId: proposal.tenantId,
+      leadId: proposal.leadId,
+      dealId: proposal.dealId,
+      type: 'payment_received',
+      title: '💰 Pagamento PIX Confirmado via Webhook Bacen',
+      description: `Valor recebido: R$ ${Number(proposal.amount).toFixed(2)}. Baixa automática concluída.`,
+      timestamp: new Date().toISOString()
+    });
+
+    return sendJson(res, 200, { success: true, message: 'Baixa efetuada com sucesso.', proposalId: proposal.id });
   }
 
   // Identificação do IP do cliente e aplicação de Rate Limiting defensivo
@@ -1554,19 +1712,30 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, data: result });
   }
 
-  // 15. PIX OFICIAL EMV & PROPOSTAS
-  if (pathname === '/api/pix/generate' && method === 'POST') {
+  // 15. PIX OFICIAL EMV & PROPOSTAS COM ITENS & CHECKOUT (FASE 10)
+  if ((pathname === '/api/pix/generate' || pathname === '/api/proposals') && method === 'POST') {
     const body = await parseRequestBody(req);
     const settings = settingsDB.findById('general_settings') || {};
 
     const pixKey = body.pixKey || settings.pixKey || 'luklen2@gmail.com';
     const name = body.name || settings.pixName || 'LUCIANO SANT ANNA';
     const city = body.city || settings.pixCity || 'SAO PAULO';
-    const amount = body.amount || 0;
+    
+    // Cálculo de itens e valor final
+    const rawItems = Array.isArray(body.items) && body.items.length > 0 ? body.items : null;
+    let calculatedSubtotal = 0;
+    if (rawItems) {
+      calculatedSubtotal = rawItems.reduce((acc, item) => acc + ((Number(item.unitPrice) || 0) * (Number(item.quantity) || 1) - (Number(item.discount) || 0)), 0);
+    }
+    const globalDiscount = Number(body.discount) || 0;
+    const amount = body.amount !== undefined && !rawItems ? Number(body.amount) : Math.max(0, calculatedSubtotal - globalDiscount);
     const txId = body.txId || 'CRM' + Date.now().toString().slice(-6);
 
     const payload = generatePixPayload({ pixKey, name, city, amount, txId });
     const qrCodeUrl = getPixQrCodeUrl(payload);
+
+    const publicToken = crypto.randomBytes(16).toString('hex');
+    const checkoutUrl = `/p/${publicToken}`;
 
     let whatsappUrl = '';
     if (body.customerPhone) {
@@ -1575,19 +1744,35 @@ const server = http.createServer(async (req, res) => {
         customerName: body.customerName || 'Cliente',
         dealTitle: body.dealTitle || 'Proposta Comercial',
         amount,
-        pixPayload: payload
+        pixPayload: payload,
+        checkoutUrl
       });
     }
+
+    const items = rawItems || [{
+      description: body.dealTitle || 'Serviços Comerciais de Alta Performance',
+      quantity: 1,
+      unitPrice: amount,
+      discount: 0
+    }];
 
     const proposal = proposalsDB.insert({
       tenantId,
       dealId: body.dealId || null,
       leadId: body.leadId || null,
+      items,
+      subtotal: calculatedSubtotal || amount,
+      discount: globalDiscount,
       amount,
+      notes: body.notes || '',
+      validUntil: body.validUntil || new Date(Date.now() + 7 * 86400000).toISOString(),
+      publicToken,
+      checkoutUrl,
       pixKey,
       pixPayload: payload,
       qrCodeUrl,
-      status: 'pendente'
+      status: 'pendente',
+      txId
     });
 
     await triggerWorkflows('proposta_criada', { dealId: body.dealId, leadId: body.leadId, amount }, tenantId);
@@ -1596,13 +1781,27 @@ const server = http.createServer(async (req, res) => {
       success: true,
       data: {
         proposalId: proposal.id,
+        publicToken,
+        checkoutUrl,
         payload,
         qrCodeUrl,
         whatsappUrl,
         txId,
-        amount
+        amount,
+        items: proposal.items,
+        validUntil: proposal.validUntil
       }
     });
+  }
+
+  // Consulta proposta individual
+  if (pathname.startsWith('/api/proposals/') && !pathname.endsWith('/confirm') && method === 'GET') {
+    const proposalId = pathname.split('/')[3];
+    const proposal = proposalsDB.findById(proposalId);
+    if (!proposal || (proposal.tenantId && proposal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Proposta não encontrada.' });
+    }
+    return sendJson(res, 200, { success: true, data: proposal });
   }
 
   // Listagem de propostas do tenant
@@ -1637,6 +1836,19 @@ const server = http.createServer(async (req, res) => {
       status: 'paga',
       paidAt: new Date().toISOString()
     });
+
+    if (paymentsDB) {
+      paymentsDB.insert({
+        tenantId,
+        proposalId,
+        dealId: proposal.dealId,
+        amount: proposal.amount,
+        method: 'PIX',
+        txId: proposal.txId || 'TX_MANUAL',
+        status: 'pago',
+        paidAt: new Date().toISOString()
+      });
+    }
 
     // Se houver Oportunidade vinculada, avança automaticamente para 'ganho' (Venda Fechada)
     if (proposal.dealId) {

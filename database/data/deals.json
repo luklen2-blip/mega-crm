@@ -582,6 +582,43 @@
     "updatedAt": "2026-09-18T14:33:57.042Z"
   },
   {
+    "tenantId": "ten_demo_agentise",
+    "title": "Auditoria de Delta Deal #382",
+    "value": 7500,
+    "stage": "proposta",
+    "id": "dea_1789742220872_dg03",
+    "createdAt": "2026-09-18T14:37:00.873Z",
+    "updatedAt": "2026-09-18T14:37:00.876Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Projeto Enterprise IA - Teste 18",
+    "value": 50000,
+    "stage": "proposta",
+    "id": "dea_1789742367404_3sxb",
+    "createdAt": "2026-09-18T14:39:27.404Z",
+    "updatedAt": "2026-09-18T14:39:27.404Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Auditoria de Delta Deal #382",
+    "value": 7500,
+    "stage": "proposta",
+    "id": "dea_1789742381393_k3wz",
+    "createdAt": "2026-09-18T14:39:41.393Z",
+    "updatedAt": "2026-09-18T14:39:41.397Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1789742380945_9why",
+    "title": "Projeto Solução Enterprise AI V2",
+    "value": 10000,
+    "stage": "proposta",
+    "id": "dea_1789742381730_5egs",
+    "createdAt": "2026-09-18T14:39:41.730Z",
+    "updatedAt": "2026-09-18T14:39:41.730Z"
+  },
+  {
     "id": "deal_autoprime_bmw_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "leadId": "lead_autoprime_51_villasboas",
@@ -591,16 +628,16 @@
     "assignedTo": "Fernanda Lima",
     "probability": 100,
     "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
-    "createdAt": "2026-09-18T14:37:00.401Z",
-    "updatedAt": "2026-09-18T14:37:00.408Z"
+    "createdAt": "2026-09-18T14:40:24.883Z",
+    "updatedAt": "2026-09-18T14:40:24.889Z"
   },
   {
     "tenantId": "ten_demo_agentise",
     "title": "Auditoria de Delta Deal #382",
     "value": 7500,
     "stage": "proposta",
-    "id": "dea_1789742220872_dg03",
-    "createdAt": "2026-09-18T14:37:00.873Z",
-    "updatedAt": "2026-09-18T14:37:00.876Z"
+    "id": "dea_1789742425243_11hp",
+    "createdAt": "2026-09-18T14:40:25.243Z",
+    "updatedAt": "2026-09-18T14:40:25.247Z"
   }
 ]

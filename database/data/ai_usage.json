@@ -946,5 +946,221 @@
     "id": "ai__1789742221101_25xp",
     "createdAt": "2026-09-18T14:37:01.101Z",
     "updatedAt": "2026-09-18T14:37:01.101Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:39:27.024Z",
+    "id": "ai__1789742367024_meif",
+    "createdAt": "2026-09-18T14:39:27.024Z",
+    "updatedAt": "2026-09-18T14:39:27.024Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:39:27.039Z",
+    "id": "ai__1789742367039_2pwb",
+    "createdAt": "2026-09-18T14:39:27.039Z",
+    "updatedAt": "2026-09-18T14:39:27.039Z"
+  },
+  {
+    "tenantId": "ten_1789742366963_f0jl",
+    "feature": "teste_ia",
+    "credits": 50,
+    "timestamp": "2026-09-18T14:39:27.046Z",
+    "id": "ai__1789742367046_o1qz",
+    "createdAt": "2026-09-18T14:39:27.046Z",
+    "updatedAt": "2026-09-18T14:39:27.046Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:39:40.914Z",
+    "id": "ai__1789742380914_1896",
+    "createdAt": "2026-09-18T14:39:40.914Z",
+    "updatedAt": "2026-09-18T14:39:40.914Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:39:40.936Z",
+    "id": "ai__1789742380936_rc68",
+    "createdAt": "2026-09-18T14:39:40.936Z",
+    "updatedAt": "2026-09-18T14:39:40.936Z"
+  },
+  {
+    "tenantId": "ten_1789742380869_06si",
+    "feature": "teste_ia",
+    "credits": 50,
+    "timestamp": "2026-09-18T14:39:40.942Z",
+    "id": "ai__1789742380942_njwy",
+    "createdAt": "2026-09-18T14:39:40.942Z",
+    "updatedAt": "2026-09-18T14:39:40.942Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_objection_handling",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:39:41.542Z",
+    "id": "ai__1789742381542_6jg8",
+    "createdAt": "2026-09-18T14:39:41.542Z",
+    "updatedAt": "2026-09-18T14:39:41.542Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "objection_handling",
+    "model": "heuristic-core",
+    "promptTokens": 18,
+    "completionTokens": 85,
+    "costCredits": 20,
+    "latencyMs": 6,
+    "cached": false,
+    "timestamp": "2026-09-18T14:39:41.545Z",
+    "id": "ai__1789742381545_9o8q",
+    "createdAt": "2026-09-18T14:39:41.545Z",
+    "updatedAt": "2026-09-18T14:39:41.545Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_sales_pitch",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:39:41.577Z",
+    "id": "ai__1789742381577_kj9q",
+    "createdAt": "2026-09-18T14:39:41.577Z",
+    "updatedAt": "2026-09-18T14:39:41.577Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "sales_pitch",
+    "model": "heuristic-core",
+    "promptTokens": 15,
+    "completionTokens": 56,
+    "costCredits": 20,
+    "latencyMs": 5,
+    "cached": false,
+    "timestamp": "2026-09-18T14:39:41.579Z",
+    "id": "ai__1789742381579_h599",
+    "createdAt": "2026-09-18T14:39:41.579Z",
+    "updatedAt": "2026-09-18T14:39:41.579Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_chat",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:39:41.646Z",
+    "id": "ai__1789742381646_8kbc",
+    "createdAt": "2026-09-18T14:39:41.646Z",
+    "updatedAt": "2026-09-18T14:39:41.646Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "system",
+    "taskType": "chat",
+    "model": "heuristic-core",
+    "promptTokens": 64,
+    "completionTokens": 86,
+    "costCredits": 15,
+    "latencyMs": 5,
+    "cached": false,
+    "timestamp": "2026-09-18T14:39:41.648Z",
+    "id": "ai__1789742381648_rh5d",
+    "createdAt": "2026-09-18T14:39:41.648Z",
+    "updatedAt": "2026-09-18T14:39:41.648Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:40:24.834Z",
+    "id": "ai__1789742424834_h8n2",
+    "createdAt": "2026-09-18T14:40:24.834Z",
+    "updatedAt": "2026-09-18T14:40:24.834Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:40:24.849Z",
+    "id": "ai__1789742424849_s54h",
+    "createdAt": "2026-09-18T14:40:24.849Z",
+    "updatedAt": "2026-09-18T14:40:24.849Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_objection_handling",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:40:25.367Z",
+    "id": "ai__1789742425367_xwu1",
+    "createdAt": "2026-09-18T14:40:25.367Z",
+    "updatedAt": "2026-09-18T14:40:25.367Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "objection_handling",
+    "model": "heuristic-core",
+    "promptTokens": 18,
+    "completionTokens": 85,
+    "costCredits": 20,
+    "latencyMs": 8,
+    "cached": false,
+    "timestamp": "2026-09-18T14:40:25.369Z",
+    "id": "ai__1789742425369_o3n2",
+    "createdAt": "2026-09-18T14:40:25.369Z",
+    "updatedAt": "2026-09-18T14:40:25.369Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_sales_pitch",
+    "credits": 20,
+    "timestamp": "2026-09-18T14:40:25.397Z",
+    "id": "ai__1789742425397_ae1y",
+    "createdAt": "2026-09-18T14:40:25.397Z",
+    "updatedAt": "2026-09-18T14:40:25.397Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "taskType": "sales_pitch",
+    "model": "heuristic-core",
+    "promptTokens": 15,
+    "completionTokens": 56,
+    "costCredits": 20,
+    "latencyMs": 5,
+    "cached": false,
+    "timestamp": "2026-09-18T14:40:25.399Z",
+    "id": "ai__1789742425399_q9d4",
+    "createdAt": "2026-09-18T14:40:25.399Z",
+    "updatedAt": "2026-09-18T14:40:25.399Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "ai_chat",
+    "credits": 15,
+    "timestamp": "2026-09-18T14:40:25.468Z",
+    "id": "ai__1789742425468_2m84",
+    "createdAt": "2026-09-18T14:40:25.468Z",
+    "updatedAt": "2026-09-18T14:40:25.468Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "system",
+    "taskType": "chat",
+    "model": "heuristic-core",
+    "promptTokens": 64,
+    "completionTokens": 86,
+    "costCredits": 15,
+    "latencyMs": 3,
+    "cached": false,
+    "timestamp": "2026-09-18T14:40:25.469Z",
+    "id": "ai__1789742425469_o87d",
+    "createdAt": "2026-09-18T14:40:25.469Z",
+    "updatedAt": "2026-09-18T14:40:25.469Z"
   }
 ]

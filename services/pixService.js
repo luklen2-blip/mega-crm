@@ -66,7 +66,7 @@ function getPixQrCodeUrl(payloadPix) {
   return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(payloadPix)}`;
 }
 
-function generateWhatsAppProposalUrl({ phone, customerName, dealTitle, amount, pixPayload }) {
+function generateWhatsAppProposalUrl({ phone, customerName, dealTitle, amount, pixPayload, checkoutUrl }) {
   const cleanPhone = (phone || '').replace(/\D/g, '');
   const destination = cleanPhone.startsWith('55') ? cleanPhone : `55${cleanPhone}`;
   
@@ -77,12 +77,12 @@ function generateWhatsAppProposalUrl({ phone, customerName, dealTitle, amount, p
 
 Olá, *${customerName}*! Tudo bem?
 
-Conforme conversamos, segue o link e os dados para formalizarmos nossa parceria no valor de *${formattedAmount}*:
-
+Conforme conversamos, segue a sua proposta formalizada no valor de *${formattedAmount}*:
+${checkoutUrl ? `🔗 *Acesse sua Proposta & Checkout:* ${checkoutUrl}\n` : ''}
 📱 *Chave PIX Copia-e-Cola:*
 \`\`\`${pixPayload}\`\`\`
 
-✅ Assim que efetuar o pagamento, seu projeto entra imediatamente em esteira de execução prioritária.
+✅ Assim que efetuar o pagamento, a baixa é automática e o projeto entra imediatamente em esteira de execução.
 
 Qualquer dúvida estou à disposição!`;
 
