@@ -152,6 +152,30 @@ async function runLiveE2E() {
   console.log('  ✅ Hardening de segurança 100% verificado em nuvem (Sandbox isolado, Headers OWASP ativos).');
   passed++;
 
+  // 11. PWA Manifest e Service Worker
+  console.log('▶ [Nuvem] Validando PWA (manifest.json e sw.js)...');
+  const manifestRes = await requestUrl('/manifest.json');
+  if (manifestRes.statusCode !== 200 || !manifestRes.data.includes('MegaCRM')) {
+    throw new Error(`/manifest.json falhou ou conteúdo inválido: HTTP ${manifestRes.statusCode}`);
+  }
+  const swRes = await requestUrl('/sw.js');
+  if (swRes.statusCode !== 200 || !swRes.data.includes('CACHE_NAME')) {
+    throw new Error(`/sw.js falhou ou conteúdo inválido: HTTP ${swRes.statusCode}`);
+  }
+  console.log('  ✅ PWA instalado e Service Worker acessível na nuvem.');
+  passed++;
+
+  // 12. Gestão de Propostas e Cobranças PIX
+  console.log('▶ [Nuvem] Validando Gestão de Propostas e Cobranças (/api/proposals)...');
+  const propRes = await requestUrl('/api/proposals');
+  if (propRes.statusCode !== 200) throw new Error(`/api/proposals falhou: HTTP ${propRes.statusCode}`);
+  const propData = JSON.parse(propRes.data);
+  if (!Array.isArray(propData.data)) {
+    throw new Error('Formato de propostas inválido');
+  }
+  console.log(`  ✅ Propostas & PIX operacionais (${propData.data.length} propostas registradas).`);
+  passed++;
+
   console.log('\n=============================================================');
   console.log(`🚀 HOMOLOGAÇÃO CONCLUÍDA: ${passed} verificações passaram com 100% de sucesso!`);
   console.log('🎉 Sistema 100% íntegro e operacional 24/7 na nuvem.');

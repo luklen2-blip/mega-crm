@@ -508,6 +508,150 @@ async function runTests() {
   console.log('  ✅ Teste 17 Aprovado: Sandbox estático, OWASP Headers, JWT seguro, Anti-IDOR, RBAC e Rate Limiting 100% blindados.\n');
   passed++;
 
+  // 18. Teste de Propostas Integradas, Baixa Automática PIX, PWA, Equipe e Backup
+  console.log('▶ Teste 18: Validação de Propostas com Baixa PIX Automática, PWA, Gestão de Vendedores e Backup...');
+  const { dealsDB, proposalsDB, usersDB } = require('../database/db');
+
+  // 18.1 PWA: manifest.json e sw.js
+  const manifestRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/manifest.json`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(manifestRes.status, 200, 'manifest.json deve estar acessível com HTTP 200');
+  assert.strictEqual(manifestRes.body.short_name, 'MegaCRM', 'Manifest deve conter short_name');
+
+  const swRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/sw.js`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: d }));
+    });
+  });
+  assert.strictEqual(swRes.status, 200, 'sw.js deve estar acessível com HTTP 200');
+  assert.ok(swRes.body.includes('agentise-crm-cache'), 'sw.js deve conter lógica de cache');
+
+  // 18.2 Configuração Oficial de PIX (luklen2@gmail.com / LUCIANO SANT ANNA)
+  const setCheck = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/api/settings`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve(JSON.parse(d).data));
+    });
+  });
+  assert.strictEqual(setCheck.pixKey, 'luklen2@gmail.com', 'Chave PIX oficial deve ser luklen2@gmail.com');
+  assert.strictEqual(setCheck.pixName, 'LUCIANO SANT ANNA', 'Nome do recebedor deve ser LUCIANO SANT ANNA');
+
+  // 18.3 Ciclo Completo de Propostas e Baixa Automática de Venda
+  const testDeal18 = dealsDB.insert({
+    tenantId: 'ten_demo_agentise',
+    title: 'Projeto Enterprise IA - Teste 18',
+    value: 50000,
+    stage: 'proposta'
+  });
+
+  const pixGenRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      dealId: testDeal18.id,
+      amount: 50000,
+      description: 'Implantação SaaS Enterprise'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/pix/generate',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve(JSON.parse(d)));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(pixGenRes.success, true);
+  const createdProposalId = pixGenRes.data.proposalId;
+  assert.ok(createdProposalId, 'ID da proposta gerado');
+
+  // Listagem de Propostas
+  const propListRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/api/proposals`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve(JSON.parse(d)));
+    });
+  });
+  assert.strictEqual(propListRes.success, true);
+  const foundProp = propListRes.data.find(p => p.id === createdProposalId);
+  assert.ok(foundProp, 'Proposta recém-criada deve estar na listagem');
+  assert.strictEqual(foundProp.status, 'pendente');
+
+  // Confirmação de Pagamento PIX (Baixa Manual/Webhook)
+  const confirmRes = await new Promise((resolve) => {
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: `/api/proposals/${createdProposalId}/confirm`,
+      method: 'PATCH'
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve(JSON.parse(d)));
+    });
+    req.end();
+  });
+  assert.strictEqual(confirmRes.success, true);
+  assert.strictEqual(confirmRes.data.status, 'paga', 'Proposta deve estar com status paga');
+
+  // Verificação de avanço automático do Deal para 'ganho'
+  const updatedDeal18 = dealsDB.findById(testDeal18.id);
+  assert.strictEqual(updatedDeal18.stage, 'ganho', 'Deal deve avançar automaticamente para estágio ganho ao confirmar PIX');
+  dealsDB.delete(testDeal18.id);
+  proposalsDB.delete(createdProposalId);
+
+  // 18.4 Gestão de Usuários / Vendedores da Equipe (POST /api/users)
+  const newSellerRes = await new Promise((resolve) => {
+    const postData = JSON.stringify({
+      name: 'Gabriel Souza Consultor',
+      email: 'gabriel.teste18@agentise.com.br',
+      role: 'VENDEDOR',
+      phone: '11988776655'
+    });
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: TEST_PORT,
+      path: '/api/users',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+    req.write(postData);
+    req.end();
+  });
+  assert.strictEqual(newSellerRes.status, 201, 'POST /api/users deve cadastrar novo vendedor com status 201');
+  assert.strictEqual(newSellerRes.body.data.email, 'gabriel.teste18@agentise.com.br');
+  usersDB.delete(newSellerRes.body.data.id);
+
+  // 18.5 Backup Completo do Tenant (GET /api/backup)
+  const backupRes = await new Promise((resolve) => {
+    http.get(`http://127.0.0.1:${TEST_PORT}/api/backup`, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(d) }));
+    });
+  });
+  assert.strictEqual(backupRes.status, 200, 'GET /api/backup deve responder HTTP 200');
+  assert.ok(backupRes.body.data.dados.leads, 'Backup deve conter coleção de leads');
+  assert.ok(backupRes.body.data.dados.deals, 'Backup deve conter coleção de deals');
+  assert.ok(backupRes.body.data.dados.proposals, 'Backup deve conter coleção de proposals');
+
+  console.log('  ✅ Teste 18 Aprovado: PWA, PIX oficial, propostas com fechamento automático, equipe e backup validados.\n');
+  passed++;
+
   console.log(`🎉 SUCESSO TOTAL: Todos os ${passed} testes foram aprovados com êxito!`);
   console.log('=========================================================\n');
   // Limpeza de entidades temporárias de teste

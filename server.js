@@ -351,6 +351,43 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, count: users.length, data: users });
   }
 
+  if (pathname === '/api/users' && method === 'POST') {
+    if (ctx.role !== 'ADMINISTRADOR') {
+      return sendJson(res, 403, { error: 'Apenas administradores podem cadastrar novos membros ou vendedores na equipe.' });
+    }
+    const limitCheck = checkResourceLimit(tenantId, 'users');
+    if (!limitCheck.allowed) {
+      return sendJson(res, 402, { error: limitCheck.error });
+    }
+    const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
+    if (!body.name || !body.email) {
+      return sendJson(res, 400, { error: 'Nome e e-mail são obrigatórios.' });
+    }
+
+    const { hashPassword } = require('./services/authService');
+    const existing = usersDB.findOne(u => u.email.toLowerCase() === body.email.toLowerCase().trim());
+    if (existing) {
+      return sendJson(res, 409, { error: 'Já existe um usuário com este e-mail cadastrado.' });
+    }
+
+    const defaultPassword = body.password || 'Mudar@1234';
+    const newUser = usersDB.insert({
+      tenantId,
+      name: body.name.trim(),
+      email: body.email.toLowerCase().trim(),
+      role: body.role || 'VENDEDOR',
+      phone: body.phone || '',
+      passwordHash: hashPassword(defaultPassword),
+      status: 'active',
+      avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(body.name)}`
+    });
+
+    logAudit(tenantId, ctx.userId, 'USER_CREATED', 'users', { userId: newUser.id, role: newUser.role });
+    const { passwordHash, ...safe } = newUser;
+    return sendJson(res, 201, { success: true, data: safe });
+  }
+
   // Listagem de empresas multi-tenant disponíveis
   if (pathname === '/api/auth/tenants' && method === 'GET') {
     const list = tenantsDB.findAll().map(t => ({
@@ -798,8 +835,8 @@ const server = http.createServer(async (req, res) => {
     const body = await parseRequestBody(req);
     const settings = settingsDB.findById('general_settings') || {};
 
-    const pixKey = body.pixKey || settings.pixKey || 'luciano.contato@crm.ia.br';
-    const name = body.name || settings.pixName || 'MEGA CRM AGENTISE';
+    const pixKey = body.pixKey || settings.pixKey || 'luklen2@gmail.com';
+    const name = body.name || settings.pixName || 'LUCIANO SANT ANNA';
     const city = body.city || settings.pixCity || 'SAO PAULO';
     const amount = body.amount || 0;
     const txId = body.txId || 'CRM' + Date.now().toString().slice(-6);
@@ -842,6 +879,53 @@ const server = http.createServer(async (req, res) => {
         amount
       }
     });
+  }
+
+  // Listagem de propostas do tenant
+  if (pathname === '/api/proposals' && method === 'GET') {
+    const proposals = proposalsDB.findByTenant(tenantId).map(p => {
+      const deal = p.dealId ? dealsDB.findById(p.dealId) : null;
+      const lead = p.leadId ? leadsDB.findById(p.leadId) : (deal && deal.leadId ? leadsDB.findById(deal.leadId) : null);
+      return {
+        ...p,
+        dealTitle: deal ? deal.title : 'Proposta Avulsa',
+        customerName: lead ? lead.name : (p.customerName || 'Cliente'),
+        customerPhone: lead ? lead.phone : (p.customerPhone || '-')
+      };
+    }).sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+    return sendJson(res, 200, { success: true, count: proposals.length, data: proposals });
+  }
+
+  // Baixa / Confirmação de recebimento PIX de proposta comercial
+  if (pathname.startsWith('/api/proposals/') && pathname.endsWith('/confirm') && method === 'PATCH') {
+    const parts = pathname.split('/');
+    const proposalId = parts[3];
+    const proposal = proposalsDB.findById(proposalId);
+    if (!proposal || (proposal.tenantId && proposal.tenantId !== tenantId)) {
+      return sendJson(res, 404, { error: 'Proposta não encontrada.' });
+    }
+
+    const updated = proposalsDB.update(proposalId, {
+      status: 'paga',
+      paidAt: new Date().toISOString()
+    });
+
+    // Se houver Oportunidade vinculada, avança automaticamente para 'ganho' (Venda Fechada)
+    if (proposal.dealId) {
+      const deal = dealsDB.findById(proposal.dealId);
+      if (deal && deal.stage !== 'ganho') {
+        dealsDB.update(proposal.dealId, {
+          stage: 'ganho',
+          probability: 100,
+          closedAt: new Date().toISOString()
+        });
+        await triggerWorkflows('venda_fechada', { dealId: proposal.dealId, leadId: proposal.leadId, amount: proposal.amount }, tenantId);
+      }
+    }
+
+    logAudit(tenantId, ctx.userId, 'PROPOSAL_CONFIRMED', 'proposals', { proposalId, amount: proposal.amount });
+    return sendJson(res, 200, { success: true, data: updated });
   }
 
   // 16. DASHBOARD EXECUTIVO & ANALYTICS (FASE 4 & 12)
@@ -999,6 +1083,36 @@ const server = http.createServer(async (req, res) => {
     });
 
     return sendJson(res, 200, { success: true, data: anonymized });
+  }
+
+  // Backup Completo de Dados da Empresa (Contingência e Arquivamento)
+  if (pathname === '/api/backup' && method === 'GET') {
+    if (ctx.role !== 'ADMINISTRADOR') {
+      return sendJson(res, 403, { error: 'Apenas administradores podem baixar o backup completo da empresa.' });
+    }
+
+    const backupData = {
+      empresa: tenantsDB.findById(tenantId),
+      exportadoEm: new Date().toISOString(),
+      versao: '2.0.0',
+      totalRegistros: {
+        leads: leadsDB.countByTenant(tenantId),
+        deals: dealsDB.countByTenant(tenantId),
+        tasks: tasksDB.countByTenant(tenantId),
+        proposals: proposalsDB.countByTenant(tenantId)
+      },
+      dados: {
+        leads: leadsDB.findByTenant(tenantId),
+        deals: dealsDB.findByTenant(tenantId),
+        tasks: tasksDB.findByTenant(tenantId),
+        proposals: proposalsDB.findByTenant(tenantId),
+        knowledgeBase: knowledgeBaseDB.findByTenant(tenantId),
+        automations: automationsDB.findByTenant(tenantId),
+        settings: settingsDB.findByTenant(tenantId)
+      }
+    };
+
+    return sendJson(res, 200, { success: true, data: backupData });
   }
 
   // 19. ARQUIVOS ESTÁTICOS & SPA FALLBACK

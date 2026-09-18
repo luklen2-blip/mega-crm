@@ -52,5 +52,88 @@
     "id": "aud_1789245932205_4gqh",
     "createdAt": "2026-09-12T20:45:32.205Z",
     "updatedAt": "2026-09-12T20:45:32.205Z"
+  },
+  {
+    "tenantId": "ten_1789738395458_558z",
+    "userId": "use_1789738395470_pueo",
+    "action": "TENANT_REGISTERED",
+    "resource": "tenants",
+    "details": {
+      "companyName": "Tech Sul Soluções",
+      "segment": "Serviços"
+    },
+    "timestamp": "2026-09-18T13:33:15.472Z",
+    "id": "aud_1789738395472_osse",
+    "createdAt": "2026-09-18T13:33:15.472Z",
+    "updatedAt": "2026-09-18T13:33:15.472Z"
+  },
+  {
+    "tenantId": "ten_1789738395458_558z",
+    "userId": "use_1789738395470_pueo",
+    "action": "USER_LOGIN",
+    "resource": "users",
+    "details": {
+      "email": "empresa_1789738395458@teste.com"
+    },
+    "timestamp": "2026-09-18T13:33:15.485Z",
+    "id": "aud_1789738395485_5e2i",
+    "createdAt": "2026-09-18T13:33:15.485Z",
+    "updatedAt": "2026-09-18T13:33:15.485Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "details": {
+      "proposalId": "pro_1789738418949_eeek",
+      "amount": 50000
+    },
+    "timestamp": "2026-09-18T13:33:38.965Z",
+    "id": "aud_1789738418965_bo04",
+    "createdAt": "2026-09-18T13:33:38.965Z",
+    "updatedAt": "2026-09-18T13:33:38.965Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "USER_CREATED",
+    "resource": "users",
+    "details": {
+      "userId": "use_1789738418984_fzv4",
+      "role": "VENDEDOR"
+    },
+    "timestamp": "2026-09-18T13:33:38.987Z",
+    "id": "aud_1789738418987_0tx8",
+    "createdAt": "2026-09-18T13:33:38.987Z",
+    "updatedAt": "2026-09-18T13:33:38.987Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "PROPOSAL_CONFIRMED",
+    "resource": "proposals",
+    "details": {
+      "proposalId": "pro_1789738441790_s04z",
+      "amount": 50000
+    },
+    "timestamp": "2026-09-18T13:34:01.808Z",
+    "id": "aud_1789738441808_ursc",
+    "createdAt": "2026-09-18T13:34:01.808Z",
+    "updatedAt": "2026-09-18T13:34:01.808Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "userId": "usr_demo_luciano",
+    "action": "USER_CREATED",
+    "resource": "users",
+    "details": {
+      "userId": "use_1789738441827_xp8t",
+      "role": "VENDEDOR"
+    },
+    "timestamp": "2026-09-18T13:34:01.830Z",
+    "id": "aud_1789738441830_pba1",
+    "createdAt": "2026-09-18T13:34:01.830Z",
+    "updatedAt": "2026-09-18T13:34:01.830Z"
   }
 ]

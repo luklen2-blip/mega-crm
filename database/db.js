@@ -31,7 +31,16 @@ class JsonDB {
     this.cache = data;
     const tempPath = `${this.filePath}.tmp_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
     fs.writeFileSync(tempPath, JSON.stringify(this.cache, null, 2), 'utf-8');
-    fs.renameSync(tempPath, this.filePath);
+    try {
+      fs.renameSync(tempPath, this.filePath);
+    } catch (err) {
+      try {
+        fs.copyFileSync(tempPath, this.filePath);
+        fs.unlinkSync(tempPath);
+      } catch (e) {
+        fs.writeFileSync(this.filePath, JSON.stringify(this.cache, null, 2), 'utf-8');
+      }
+    }
   }
 
   findAll(predicate) {

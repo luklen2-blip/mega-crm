@@ -82,5 +82,17 @@
     "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Eduardo",
     "createdAt": "2026-09-12T21:14:42.665Z",
     "updatedAt": "2026-09-12T21:14:42.665Z"
+  },
+  {
+    "tenantId": "ten_1789738395458_558z",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1789738395458@teste.com",
+    "passwordHash": "09ca9751ed50fec8073f40df2bf10c87:f9f27bdfadf8cc2c0b01e262db3714a2681fa1f0674810d70e16ab73f31870d69968b4263c113152030933fed07b056b51217094699d52ecef47056ad8ffdd34",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1789738395470_pueo",
+    "createdAt": "2026-09-18T13:33:15.470Z",
+    "updatedAt": "2026-09-18T13:33:15.470Z"
   }
 ]

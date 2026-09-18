@@ -10,8 +10,8 @@ function generatePixPayload({ pixKey, name, city = 'SAO PAULO', amount, txId = '
     return `${id}${len}${str}`;
   };
 
-  const cleanPixKey = (pixKey || 'luciano.contato@crm.ia.br').trim();
-  const cleanName = (name || 'MEGA CRM EMPREENDIMENTOS')
+  const cleanPixKey = (pixKey || 'luklen2@gmail.com').trim();
+  const cleanName = (name || 'LUCIANO SANT ANNA')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toUpperCase()

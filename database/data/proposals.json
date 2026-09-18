@@ -150,7 +150,7 @@
     "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
     "status": "enviada",
     "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
-    "createdAt": "2026-09-14T17:37:59.055Z",
-    "updatedAt": "2026-09-14T17:37:59.055Z"
+    "createdAt": "2026-09-18T13:34:01.493Z",
+    "updatedAt": "2026-09-18T13:34:01.493Z"
   }
 ]

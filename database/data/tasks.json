@@ -273,5 +273,107 @@
     "completed": true,
     "createdAt": "2026-09-14T17:37:59.045Z",
     "updatedAt": "2026-09-14T17:37:59.058Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789737434454_oje9",
+    "createdAt": "2026-09-18T13:17:14.454Z",
+    "updatedAt": "2026-09-18T13:17:14.454Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789737434664",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T13:17:14.664Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T13:17:14.664Z",
+    "updatedAt": "2026-09-18T13:17:14.676Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789738395385_08d8",
+    "createdAt": "2026-09-18T13:33:15.385Z",
+    "updatedAt": "2026-09-18T13:33:15.385Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789738395548",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T13:33:15.548Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T13:33:15.548Z",
+    "updatedAt": "2026-09-18T13:33:15.561Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789738418560_9f5p",
+    "createdAt": "2026-09-18T13:33:38.560Z",
+    "updatedAt": "2026-09-18T13:33:38.560Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789738418722",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T13:33:38.722Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T13:33:38.722Z",
+    "updatedAt": "2026-09-18T13:33:38.734Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789738418945_2sza",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T13:33:38.951Z",
+    "completed": false,
+    "id": "tas_1789738418951_ssx3",
+    "createdAt": "2026-09-18T13:33:38.951Z",
+    "updatedAt": "2026-09-18T13:33:38.951Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "completed": false,
+    "priority": "alta",
+    "title": "Tarefa de Teste Automatizado",
+    "id": "tas_1789738441317_2l98",
+    "createdAt": "2026-09-18T13:34:01.317Z",
+    "updatedAt": "2026-09-18T13:34:01.317Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1789738441485",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-18T13:34:01.485Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-18T13:34:01.485Z",
+    "updatedAt": "2026-09-18T13:34:01.497Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1789738441786_mfvj",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-19T13:34:01.792Z",
+    "completed": false,
+    "id": "tas_1789738441792_vxg5",
+    "createdAt": "2026-09-18T13:34:01.792Z",
+    "updatedAt": "2026-09-18T13:34:01.792Z"
   }
 ]

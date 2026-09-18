@@ -178,5 +178,86 @@
     "id": "ai__1789407479016_071i",
     "createdAt": "2026-09-14T17:37:59.016Z",
     "updatedAt": "2026-09-14T17:37:59.016Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T13:17:14.610Z",
+    "id": "ai__1789737434610_tueb",
+    "createdAt": "2026-09-18T13:17:14.610Z",
+    "updatedAt": "2026-09-18T13:17:14.610Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T13:17:14.624Z",
+    "id": "ai__1789737434624_sg42",
+    "createdAt": "2026-09-18T13:17:14.624Z",
+    "updatedAt": "2026-09-18T13:17:14.624Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T13:33:15.505Z",
+    "id": "ai__1789738395505_sec7",
+    "createdAt": "2026-09-18T13:33:15.505Z",
+    "updatedAt": "2026-09-18T13:33:15.505Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T13:33:15.519Z",
+    "id": "ai__1789738395519_wqcu",
+    "createdAt": "2026-09-18T13:33:15.519Z",
+    "updatedAt": "2026-09-18T13:33:15.519Z"
+  },
+  {
+    "tenantId": "ten_1789738395458_558z",
+    "feature": "teste_ia",
+    "credits": 50,
+    "timestamp": "2026-09-18T13:33:15.527Z",
+    "id": "ai__1789738395527_flve",
+    "createdAt": "2026-09-18T13:33:15.527Z",
+    "updatedAt": "2026-09-18T13:33:15.527Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T13:33:38.678Z",
+    "id": "ai__1789738418678_k5i1",
+    "createdAt": "2026-09-18T13:33:38.678Z",
+    "updatedAt": "2026-09-18T13:33:38.678Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T13:33:38.694Z",
+    "id": "ai__1789738418694_1jlz",
+    "createdAt": "2026-09-18T13:33:38.694Z",
+    "updatedAt": "2026-09-18T13:33:38.694Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "recupera_ia_campaign",
+    "credits": 15,
+    "timestamp": "2026-09-18T13:34:01.438Z",
+    "id": "ai__1789738441438_peho",
+    "createdAt": "2026-09-18T13:34:01.438Z",
+    "updatedAt": "2026-09-18T13:34:01.438Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "feature": "analista_gestor_ia",
+    "credits": 20,
+    "timestamp": "2026-09-18T13:34:01.454Z",
+    "id": "ai__1789738441454_8cx6",
+    "createdAt": "2026-09-18T13:34:01.454Z",
+    "updatedAt": "2026-09-18T13:34:01.454Z"
   }
 ]

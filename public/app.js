@@ -22,6 +22,7 @@ let globalConversations = [];
 let globalKnowledge = [];
 let globalAutomations = [];
 let globalVehicles = [];
+let globalProposals = [];
 let activeView = 'pipeline';
 let activeConversationId = null;
 let currentCopilotText = '';
@@ -108,8 +109,10 @@ async function initApp() {
     loadKnowledgeBase(),
     loadAutomations(),
     loadAutoVehicles(),
-    loadBilling()
+    loadBilling(),
+    loadProposals()
   ]);
+  checkCookieConsent();
   if (window.lucide) lucide.createIcons();
 }
 
@@ -218,6 +221,7 @@ function switchView(viewName) {
   if (viewName === 'auto') loadAutoVehicles();
   if (viewName === 'sellers') loadAnalytics();
   if (viewName === 'billing') loadBilling();
+  if (viewName === 'pix') loadProposals();
 
   if (window.lucide) lucide.createIcons();
 }
@@ -396,8 +400,8 @@ function renderLeadsTable() {
           ${(lead.tags || ['Qualificado']).map(t => `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300">${escapeHtml(t)}</span>`).join('')}
         </div>
       </td>
-      <td class="p-3.5 text-right space-x-1.5">
-        <button onclick="openLead360('${lead.id}')" class="px-2.5 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 font-semibold transition">
+      <td class="p-3.5 text-right space-x-1.5 whitespace-nowrap">
+        <button onclick="openLead360('${escapeHtml(lead.id)}')" class="px-2.5 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 font-semibold transition">
           Visão 360°
         </button>
         ${lead.phone ? `
@@ -405,12 +409,66 @@ function renderLeadsTable() {
             <i data-lucide="message-circle" class="h-3 w-3"></i> WhatsApp
           </a>
         ` : ''}
+        <button onclick="anonymizeLead('${escapeHtml(lead.id)}')" title="Anonimizar dados pessoais (Art. 18 LGPD)" class="px-2 py-1 rounded-lg bg-amber-600/20 hover:bg-amber-600/40 text-amber-300 font-semibold transition inline-flex items-center gap-1">
+          <i data-lucide="shield-alert" class="h-3 w-3"></i> LGPD
+        </button>
+        <button onclick="deleteLead('${escapeHtml(lead.id)}')" title="Excluir Lead" class="px-2 py-1 rounded-lg bg-rose-600/20 hover:bg-rose-600/40 text-rose-300 font-semibold transition inline-flex items-center">
+          <i data-lucide="trash-2" class="h-3 w-3"></i>
+        </button>
       </td>
     `;
     tbody.appendChild(tr);
   });
 
   if (window.lucide) lucide.createIcons();
+}
+
+function filterLeads() {
+  const q = (document.getElementById('leads-search')?.value || '').toLowerCase().trim();
+  const rows = document.querySelectorAll('#leads-table-body tr');
+  rows.forEach(r => {
+    const text = r.innerText.toLowerCase();
+    r.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+
+async function anonymizeLead(leadId) {
+  if (!confirm('Deseja realmente anonimizar os dados pessoais deste lead conforme o Art. 18 da LGPD? Esta ação é irreversível.')) return;
+  try {
+    const res = await fetch('/api/lgpd/anonymize', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ leadId })
+    });
+    const json = await res.json();
+    if (res.ok) {
+      showToast('Dados do lead expurgados e anonimizados com sucesso.', 'success');
+      await loadLeads();
+    } else {
+      showToast(json.error || 'Erro ao anonimizar lead.', 'error');
+    }
+  } catch (e) {
+    showToast('Erro de comunicação ao anonimizar lead.', 'error');
+  }
+}
+
+async function deleteLead(leadId) {
+  if (!confirm('Deseja excluir permanentemente este lead do sistema?')) return;
+  try {
+    const res = await fetch(`/api/leads/${leadId}`, {
+      method: 'DELETE',
+      headers: authHeaders()
+    });
+    if (res.ok) {
+      showToast('Lead removido com sucesso.', 'info');
+      await loadLeads();
+      await loadDeals();
+    } else {
+      showToast('Erro ao remover lead.', 'error');
+    }
+  } catch (e) {
+    showToast('Erro de comunicação ao excluir lead.', 'error');
+  }
 }
 
 function openLead360(leadId) {
@@ -1117,6 +1175,7 @@ async function generatePixAction() {
         waBtn.onclick = () => window.open(d.whatsappUrl, '_blank');
       }
       showToast('PIX EMV do Banco Central gerado com sucesso!', 'success');
+      await loadProposals();
     }
   } catch (err) {
     showToast('Erro ao gerar PIX.', 'error');
@@ -1152,10 +1211,16 @@ function renderTasks() {
         <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${escapeHtml(t.id)}', this.checked)" class="rounded text-blue-600">
         <span class="text-xs ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${escapeHtml(t.title)}</span>
       </div>
-      <span class="text-[10px] px-2 py-0.5 rounded uppercase font-bold ${t.priority === 'urgente' ? 'bg-rose-500/20 text-rose-300' : 'bg-slate-800 text-slate-400'}">${escapeHtml(t.priority)}</span>
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] px-2 py-0.5 rounded uppercase font-bold ${t.priority === 'urgente' ? 'bg-rose-500/20 text-rose-300' : 'bg-slate-800 text-slate-400'}">${escapeHtml(t.priority)}</span>
+        <button onclick="deleteTask('${escapeHtml(t.id)}')" title="Excluir tarefa" class="p-1 rounded text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition">
+          <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+        </button>
+      </div>
     `;
     container.appendChild(div);
   });
+  if (window.lucide) lucide.createIcons();
 }
 
 async function toggleTask(id, completed) {
@@ -1167,6 +1232,19 @@ async function toggleTask(id, completed) {
     });
     await loadTasks();
   } catch (e) {}
+}
+
+async function deleteTask(id) {
+  try {
+    await fetch(`/api/tasks/${id}`, {
+      method: 'DELETE',
+      headers: authHeaders()
+    });
+    showToast('Tarefa removida.', 'info');
+    await loadTasks();
+  } catch (e) {
+    showToast('Erro ao remover tarefa.', 'error');
+  }
 }
 
 // 16. ONBOARDING (FASE 3)
@@ -1359,4 +1437,192 @@ function sendPixWhatsApp() {
   const msg = `Olá! Segue sua proposta de ${desc} no valor de ${formatBRL(amount)}.\n\nCódigo PIX Copia-e-Cola:\n${payload}`;
   const url = `https://wa.me/55${phone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
+}
+
+// 17. GESTÃO DE PROPOSTAS & COBRANÇAS PIX
+async function loadProposals() {
+  try {
+    const res = await fetch('/api/proposals', { headers: authHeaders() });
+    const json = await res.json();
+    globalProposals = json.data || [];
+    renderProposalsTable();
+  } catch (e) {
+    console.error('Erro ao carregar propostas:', e);
+  }
+}
+
+function renderProposalsTable() {
+  const tbody = document.getElementById('proposals-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  if (globalProposals.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" class="p-4 text-center text-slate-500 text-xs">
+          Nenhuma proposta comercial emitida até o momento. Utilize o formulário acima para gerar cobranças instantâneas PIX EMV.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  globalProposals.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-slate-900/40 transition';
+    const isPaid = p.status === 'paga';
+
+    tr.innerHTML = `
+      <td class="p-3">
+        <div class="font-bold text-white">${escapeHtml(p.dealTitle || 'Proposta Comercial')}</div>
+        <div class="text-[10px] text-slate-500 font-mono">ID: ${escapeHtml(p.id)}</div>
+      </td>
+      <td class="p-3">
+        <div class="text-slate-200">${escapeHtml(p.customerName || 'Cliente')}</div>
+        <div class="text-[10px] text-slate-400">${escapeHtml(p.customerPhone || '-')}</div>
+      </td>
+      <td class="p-3 font-bold text-emerald-400">
+        ${formatBRL(p.amount)}
+      </td>
+      <td class="p-3">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${isPaid ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
+          ${isPaid ? '✓ Paga / Faturada' : '⏳ Pendente'}
+        </span>
+      </td>
+      <td class="p-3 text-[11px] text-slate-400">
+        ${p.createdAt ? new Date(p.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '-'}
+      </td>
+      <td class="p-3 text-right">
+        ${!isPaid ? `
+          <button onclick="confirmProposalPayment('${escapeHtml(p.id)}')" class="px-2.5 py-1 text-xs rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition shadow-md shadow-emerald-600/20 inline-flex items-center gap-1">
+            <i data-lucide="check-circle" class="h-3.5 w-3.5"></i>
+            <span>Confirmar PIX</span>
+          </button>
+        ` : `
+          <span class="text-[11px] text-emerald-400 font-medium inline-flex items-center gap-1">
+            <i data-lucide="check" class="h-3 w-3"></i> Baixa Confirmada
+          </span>
+        `}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  if (window.lucide) lucide.createIcons();
+}
+
+async function confirmProposalPayment(proposalId) {
+  try {
+    const res = await fetch(`/api/proposals/${proposalId}/confirm`, {
+      method: 'PATCH',
+      headers: authHeaders()
+    });
+    const json = await res.json();
+    if (res.ok) {
+      showToast('🎉 Pagamento PIX Confirmado! Oportunidade faturada como GANHO e métricas atualizadas!', 'success');
+      await Promise.all([
+        loadProposals(),
+        loadDeals(),
+        loadAnalytics()
+      ]);
+    } else {
+      showToast(json.error || 'Erro ao confirmar proposta.', 'error');
+    }
+  } catch (e) {
+    showToast('Erro de comunicação ao confirmar recebimento.', 'error');
+  }
+}
+
+// 18. GESTÃO E CONVITE DE VENDEDORES
+function openNewSellerModal() {
+  openModal('modal-new-seller');
+}
+
+async function submitNewSeller(e) {
+  e.preventDefault();
+  const name = document.getElementById('seller-name')?.value;
+  const email = document.getElementById('seller-email')?.value;
+  const role = document.getElementById('seller-role')?.value || 'VENDEDOR';
+  const phone = document.getElementById('seller-phone')?.value || '';
+  const password = document.getElementById('seller-password')?.value || 'Mudar@1234';
+
+  try {
+    const res = await fetch('/api/users', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ name, email, role, phone, password })
+    });
+    const json = await res.json();
+    if (res.ok) {
+      showToast(`Vendedor ${name} cadastrado com sucesso na equipe!`, 'success');
+      closeModal('modal-new-seller');
+      e.target.reset();
+      await loadAnalytics();
+    } else {
+      showToast(json.error || 'Erro ao cadastrar vendedor.', 'error');
+    }
+  } catch (err) {
+    showToast('Erro de comunicação ao cadastrar vendedor.', 'error');
+  }
+}
+
+// 19. EXPORTAÇÃO LGPD & BACKUP DE CONTINGÊNCIA
+async function exportLgpdData() {
+  try {
+    showToast('Gerando pacote de exportação LGPD (Art. 18)...', 'info');
+    const res = await fetch('/api/lgpd/export', { headers: authHeaders() });
+    const json = await res.json();
+    if (json.success) {
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(json.data, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute('href', dataStr);
+      downloadAnchor.setAttribute('download', `agentise_lgpd_export_${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('Exportação de dados LGPD baixada com sucesso!', 'success');
+    }
+  } catch (e) {
+    showToast('Erro ao exportar dados LGPD.', 'error');
+  }
+}
+
+async function downloadTenantBackup() {
+  try {
+    showToast('Gerando backup consolidado do sistema...', 'info');
+    const res = await fetch('/api/backup', { headers: authHeaders() });
+    const json = await res.json();
+    if (json.success) {
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(json.data, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute('href', dataStr);
+      downloadAnchor.setAttribute('download', `agentise_backup_${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('Backup completo baixado com sucesso!', 'success');
+    } else {
+      showToast(json.error || 'Erro ao gerar backup.', 'error');
+    }
+  } catch (e) {
+    showToast('Erro ao baixar backup da empresa.', 'error');
+  }
+}
+
+// 20. CONSENTIMENTO DE COOKIES & PRIVACIDADE LGPD
+function checkCookieConsent() {
+  const consent = localStorage.getItem('agentise_cookie_consent');
+  const banner = document.getElementById('cookie-consent-banner');
+  if (!consent && banner) {
+    banner.classList.remove('hidden');
+  }
+}
+
+function acceptCookieConsent() {
+  localStorage.setItem('agentise_cookie_consent', 'accepted_' + new Date().toISOString());
+  const banner = document.getElementById('cookie-consent-banner');
+  if (banner) {
+    banner.classList.add('hidden');
+  }
+  showToast('Preferências de privacidade salvas.', 'info');
 }

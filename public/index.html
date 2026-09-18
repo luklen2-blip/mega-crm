@@ -6,6 +6,11 @@
   <title>Agentise Mega CRM | SaaS Comercial Multi-Tenant AI-First</title>
   <meta name="description" content="CRM + Omnichannel + IA + Automação + Recuperação de Clientes + Analytics. A IA que encontra oportunidades, atende, vende e recupera clientes perdidos.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 2L2 22h20L12 2z'/></svg>">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MegaCRM">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -291,10 +296,13 @@
             </h1>
             <p class="text-xs text-slate-400">Histórico completo de interações, negócios vinculados, diagnósticos de IA e dados cadastrais.</p>
           </div>
-          <button onclick="openNewLeadModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition self-start">
-            <i data-lucide="user-plus" class="h-4 w-4"></i>
-            <span>Cadastrar Lead</span>
-          </button>
+          <div class="flex items-center gap-2 self-start sm:self-auto">
+            <input type="text" id="leads-search" oninput="filterLeads()" placeholder="Buscar por nome, empresa ou telefone..." class="px-3 py-1.5 text-xs rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 w-48 sm:w-64">
+            <button onclick="openNewLeadModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition">
+              <i data-lucide="user-plus" class="h-4 w-4"></i>
+              <span>Cadastrar Lead</span>
+            </button>
+          </div>
         </div>
 
         <!-- Leads Table Glass Card -->
@@ -699,12 +707,18 @@
       <!-- VIEW 10: GESTÃO & RANKING DE VENDEDORES -->
       <!-- ============================================== -->
       <section id="view-sellers" class="hidden space-y-6">
-        <div>
-          <h1 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
-            <i data-lucide="award" class="h-6 w-6 text-yellow-400"></i>
-            <span>Ranking & Performance Comercial</span>
-          </h1>
-          <p class="text-xs text-slate-400">Desempenho individual, faturamento fechado e taxas de conversão de cada vendedor da equipe.</p>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h1 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              <i data-lucide="award" class="h-6 w-6 text-yellow-400"></i>
+              <span>Ranking & Performance Comercial</span>
+            </h1>
+            <p class="text-xs text-slate-400">Desempenho individual, faturamento fechado e taxas de conversão de cada vendedor da equipe.</p>
+          </div>
+          <button onclick="openNewSellerModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 hover:brightness-110 text-slate-950 font-bold transition self-start sm:self-auto shadow-md shadow-yellow-500/20">
+            <i data-lucide="user-plus" class="h-4 w-4"></i>
+            <span>Convidar Vendedor</span>
+          </button>
         </div>
 
         <div id="sellers-ranking-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -845,6 +859,39 @@
                 <button id="pix-whatsapp-btn" onclick="sendPixWhatsApp()" class="flex-1 py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition hidden">WhatsApp</button>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Histórico de Propostas & Cobranças PIX Emitidas -->
+        <div class="glass-card p-5 rounded-2xl border border-emerald-500/20 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="receipt" class="h-4 w-4 text-emerald-400"></i>
+                <span>Histórico de Propostas & Cobranças PIX</span>
+              </h3>
+              <p class="text-[11px] text-slate-400">Acompanhe as propostas enviadas aos clientes e confirme a baixa com avanço automático para Venda Fechada (Ganho).</p>
+            </div>
+            <button onclick="loadProposals()" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="h-3 w-3"></i> Atualizar
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-900/80 text-slate-400 font-semibold border-b border-slate-800">
+                <tr>
+                  <th class="p-3">Oportunidade / Título</th>
+                  <th class="p-3">Cliente / Contato</th>
+                  <th class="p-3">Valor</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3">Data</th>
+                  <th class="p-3 text-right">Ações Financeiras</th>
+                </tr>
+              </thead>
+              <tbody id="proposals-table-body" class="divide-y divide-slate-800/60">
+                <!-- Preenchido via app.js -->
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -1214,9 +1261,54 @@
     </div>
   </div>
 
+  <!-- MODAL: NOVO VENDEDOR / MEMBRO DA EQUIPE -->
+  <div id="modal-new-seller" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
+    <div class="glass-panel p-5 rounded-3xl max-w-md w-full border border-yellow-500/30 space-y-4 bg-slate-950">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="user-plus" class="h-4 w-4 text-yellow-400"></i>
+          <span>Adicionar Membro à Equipe Comercial</span>
+        </h3>
+        <button onclick="closeModal('modal-new-seller')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+      <form onsubmit="submitNewSeller(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">Nome Completo do Vendedor</label>
+          <input type="text" id="seller-name" required placeholder="Ex: Gabriel Souza" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">E-mail Corporativo</label>
+          <input type="email" id="seller-email" required placeholder="gabriel@empresa.com.br" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Papel / Função</label>
+            <select id="seller-role" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
+              <option value="VENDEDOR">Vendedor</option>
+              <option value="GERENTE">Gerente Comercial</option>
+              <option value="ATENDENTE">Atendente SDR</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">WhatsApp / Telefone</label>
+            <input type="text" id="seller-phone" placeholder="11999998888" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Senha Inicial de Acesso</label>
+          <input type="password" id="seller-password" placeholder="Mudar@1234 (opcional)" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-new-seller')" class="px-3 py-2 rounded-xl bg-slate-800 text-slate-300">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold transition">Cadastrar Vendedor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- MODAL: CONFIGURAÇÕES & CONECTORES -->
   <div id="modal-settings" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
-    <div class="glass-panel p-5 rounded-3xl max-w-md w-full border border-blue-500/30 space-y-4 bg-slate-950">
+    <div class="glass-panel p-5 rounded-3xl max-w-md w-full border border-blue-500/30 space-y-4 bg-slate-950 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
         <h3 class="text-sm font-bold text-white flex items-center gap-2">
           <i data-lucide="settings" class="h-4 w-4 text-blue-400"></i>
@@ -1237,7 +1329,30 @@
           <label class="block text-slate-400 mb-1">Chave Anthropic API (Opcional - Já operamos com motor nativo)</label>
           <input type="password" id="set-apikey" placeholder="sk-ant-api..." class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
         </div>
-        <div class="flex justify-end gap-2 pt-2">
+
+        <!-- Seção LGPD, Privacidade & Backup -->
+        <div class="pt-3 border-t border-slate-800 space-y-2.5">
+          <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>
+            <span>Privacidade, LGPD & Contingência</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="exportLgpdData()" class="py-2 px-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-200 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="download" class="h-3.5 w-3.5 text-blue-400"></i>
+              <span>Exportar LGPD</span>
+            </button>
+            <button type="button" onclick="downloadTenantBackup()" class="py-2 px-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-200 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="database" class="h-3.5 w-3.5 text-emerald-400"></i>
+              <span>Backup Geral</span>
+            </button>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+            <a href="/termos" target="_blank" class="hover:text-blue-400 underline">Termos de Uso</a>
+            <a href="/privacidade" target="_blank" class="hover:text-emerald-400 underline">Política de Privacidade (LGPD)</a>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
           <button type="button" onclick="closeModal('modal-settings')" class="px-3 py-2 rounded-xl bg-slate-800 text-slate-300">Fechar</button>
           <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold">Salvar Configurações</button>
         </div>
@@ -1245,7 +1360,31 @@
     </div>
   </div>
 
-  <!-- Scripts do App -->
+  <!-- BANNER DISCRETO DE CONSENTIMENTO DE COOKIES & LGPD -->
+  <div id="cookie-consent-banner" class="fixed bottom-3 left-3 right-3 md:left-auto md:right-6 md:max-w-md z-50 glass-card p-4 rounded-2xl border border-blue-500/30 shadow-2xl bg-slate-950/95 flex flex-col gap-2.5 hidden">
+    <div class="flex items-start gap-2.5">
+      <div class="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 shrink-0 mt-0.5">
+        <i data-lucide="cookie" class="h-4 w-4"></i>
+      </div>
+      <div class="text-xs text-slate-300 leading-relaxed">
+        <strong>Privacidade & Cookies (LGPD)</strong>: Utilizamos dados essenciais para personalizar sua experiência, autenticar sessões e garantir a segurança operacional. Ao continuar, você concorda com nossos <a href="/termos" target="_blank" class="text-blue-400 underline">Termos de Uso</a> e <a href="/privacidade" target="_blank" class="text-emerald-400 underline">Política de Privacidade</a>.
+      </div>
+    </div>
+    <div class="flex justify-end gap-2 pt-1">
+      <button onclick="acceptCookieConsent()" class="px-3.5 py-1.5 text-xs font-bold rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition">
+        Aceitar e Continuar
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts do App e Registro de Service Worker PWA -->
   <script src="/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.log('PWA SW:', err.message));
+      });
+    }
+  </script>
 </body>
 </html>
