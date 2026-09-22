@@ -1710,6 +1710,17 @@ const server = http.createServer(async (req, res) => {
     
     const oldStage = deal.stage;
     const newStage = body.stage;
+
+    // Regra de Negócio: Avanço para 'ganho' requer liquidação financeira legítima ou permissão de gestor/financeiro
+    if (newStage === 'ganho' && oldStage !== 'ganho' && !hasPermission(ctx.role, 'PROPOSALS_CONFIRM')) {
+      return sendJson(res, 403, { error: 'Avanço para estágio ganho requer liquidação financeira legítima ou permissão de gestor/financeiro.' });
+    }
+
+    // Regra de Negócio: Venda já fechada e liquidada ('ganho') não pode ser revertida por vendedor sem permissão financeira
+    if (oldStage === 'ganho' && newStage !== 'ganho' && !hasPermission(ctx.role, 'PROPOSALS_CONFIRM')) {
+      return sendJson(res, 403, { error: 'Uma venda ganha/liquidada não pode ser revertida para estágios anteriores sem autorização financeira/gestão.' });
+    }
+
     const updated = dealsDB.update(id, { stage: newStage });
 
     // Workflow automático e registro de atividade
@@ -1773,6 +1784,9 @@ const server = http.createServer(async (req, res) => {
       const val = Number(body.value);
       if (isNaN(val) || val < 0) {
         return sendJson(res, 400, { error: 'O valor da oportunidade não pode ser negativo.' });
+      }
+      if (deal.stage === 'ganho' && val !== Number(deal.value) && !hasPermission(ctx.role, 'PROPOSALS_CONFIRM')) {
+        return sendJson(res, 403, { error: 'O valor de uma venda fechada e liquidada não pode ser alterado por vendedores.' });
       }
     }
 
@@ -2016,6 +2030,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname === '/api/knowledge-base' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'AI_CONFIG') && !hasPermission(ctx.role, 'SETTINGS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão de gestão de IA/Configurações necessária para criar itens na Base de Conhecimento.' });
+    }
     const body = await parseRequestBody(req);
     if (!body.title || !body.content) {
       return sendJson(res, 400, { error: 'Título e conteúdo são obrigatórios.' });
@@ -2037,6 +2054,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/knowledge-base/') && (method === 'PUT' || method === 'PATCH')) {
+    if (!hasPermission(ctx.role, 'AI_CONFIG') && !hasPermission(ctx.role, 'SETTINGS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão de gestão de IA/Configurações necessária para editar a Base de Conhecimento.' });
+    }
     const id = pathname.split('/')[3];
     const existing = knowledgeBaseDB.findById(id);
     if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
@@ -2063,6 +2083,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pathname.startsWith('/api/knowledge-base/') && method === 'DELETE') {
+    if (!hasPermission(ctx.role, 'AI_CONFIG') && !hasPermission(ctx.role, 'SETTINGS_MANAGE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão de gestão de IA/Configurações necessária para excluir da Base de Conhecimento.' });
+    }
     const id = pathname.split('/')[3];
     const existing = knowledgeBaseDB.findById(id);
     if (!existing || (existing.tenantId && existing.tenantId !== tenantId)) {
