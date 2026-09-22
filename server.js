@@ -34,7 +34,8 @@ const {
   aiConversationsDB,
   workflowRunsDB,
   paymentsDB,
-  consentsDB
+  consentsDB,
+  conversionEventsDB
 } = require('./database/db');
 
 const { 
@@ -753,6 +754,30 @@ const server = http.createServer(async (req, res) => {
         }
       }
 
+      // V4: Se proposta for de assinatura SaaS, ativa o plano no tenant
+      if (currentProposal.planTarget) {
+        try {
+          upgradeTenantPlan(currentProposal.tenantId, currentProposal.planTarget);
+          conversionEventsDB.insert({
+            tenantId: currentProposal.tenantId,
+            event: 'PLAN_ACTIVATED',
+            plan: currentProposal.planTarget,
+            amount: currentProposal.amount,
+            proposalId: currentProposal.id,
+            timestamp: new Date().toISOString()
+          });
+          conversionEventsDB.insert({
+            tenantId: currentProposal.tenantId,
+            event: 'PAYMENT_CONFIRMED',
+            amount: currentProposal.amount,
+            proposalId: currentProposal.id,
+            timestamp: new Date().toISOString()
+          });
+        } catch (e) {
+          console.error('[Billing] Erro ao ativar plano após webhook:', e.message);
+        }
+      }
+
       activitiesDB.insert({
         tenantId: currentProposal.tenantId,
         leadId: currentProposal.leadId,
@@ -942,6 +967,18 @@ const server = http.createServer(async (req, res) => {
     try {
       const result = registerTenant(body);
       seedSegmentAutomations(result.tenant.id, body.segment || 'Geral');
+      conversionEventsDB.insert({
+        tenantId: result.tenant.id,
+        userId: result.user.id,
+        event: 'SIGNUP',
+        timestamp: new Date().toISOString()
+      });
+      conversionEventsDB.insert({
+        tenantId: result.tenant.id,
+        userId: result.user.id,
+        event: 'TRIAL_STARTED',
+        timestamp: new Date().toISOString()
+      });
       return sendJson(res, 201, { success: true, data: result });
     } catch (err) {
       return sendJson(res, 400, { error: err.message });
@@ -1268,10 +1305,10 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { success: true, data: metrics });
   }
 
-  // 3. ONBOARDING GUIADO (FASE 3)
+  // 3. ONBOARDING GUIADO (FASE 3 & V4)
   if (pathname === '/api/onboarding/complete' && method === 'POST') {
     const body = await parseRequestBody(req);
-    tenantsDB.update(tenantId, {
+    const updatedTenant = tenantsDB.update(tenantId, {
       segment: body.segment || 'Geral',
       teamSize: body.teamSize || '1-5',
       leadSources: body.leadSources || ['WhatsApp', 'Site'],
@@ -1279,7 +1316,20 @@ const server = http.createServer(async (req, res) => {
       onboardingCompleted: true
     });
     seedSegmentAutomations(tenantId, body.segment);
-    return sendJson(res, 200, { success: true, message: 'Configuração do negócio concluída com sucesso.' });
+    conversionEventsDB.insert({
+      tenantId,
+      userId: ctx.userId,
+      event: 'ONBOARDING_COMPLETED',
+      segment: body.segment,
+      teamSize: body.teamSize,
+      primaryGoal: body.primaryGoal,
+      timestamp: new Date().toISOString()
+    });
+    return sendJson(res, 200, { 
+      success: true, 
+      message: 'Configuração do negócio concluída com sucesso.',
+      data: { tenant: updatedTenant }
+    });
   }
 
   // 3.1 EMPRESAS & CLIENTES PJ (CRM 360°)
@@ -1353,7 +1403,17 @@ const server = http.createServer(async (req, res) => {
     const cleanBody = Object.assign({}, body);
     delete cleanBody.id;
     delete cleanBody.tenantId;
+    const isFirstLead = leadsDB.countByTenant(tenantId) === 0;
     const lead = leadsDB.insert({ ...cleanBody, tenantId });
+    if (isFirstLead) {
+      conversionEventsDB.insert({
+        tenantId,
+        userId: ctx.userId,
+        event: 'FIRST_LEAD',
+        leadId: lead.id,
+        timestamp: new Date().toISOString()
+      });
+    }
     await triggerWorkflows('novo_lead', { leadId: lead.id, name: lead.name, phone: lead.phone }, tenantId);
     return sendJson(res, 201, { success: true, data: lead });
   }
@@ -1670,6 +1730,7 @@ const server = http.createServer(async (req, res) => {
     delete cleanBody.tenantId;
     const initialScore = calculateAiDealScore({ ...cleanBody, value: val, stage: cleanBody.stage || 'prospeccao' }, lead, [], [], []);
 
+    const isFirstDeal = dealsDB.countByTenant(tenantId) === 0;
     const deal = dealsDB.insert({
       stage: cleanBody.stage || 'prospeccao',
       value: val,
@@ -1683,6 +1744,16 @@ const server = http.createServer(async (req, res) => {
       aiScoreColor: initialScore.color,
       aiScoreRationale: initialScore.rationale
     });
+
+    if (isFirstDeal) {
+      conversionEventsDB.insert({
+        tenantId,
+        userId: ctx.userId,
+        event: 'FIRST_DEAL',
+        dealId: deal.id,
+        timestamp: new Date().toISOString()
+      });
+    }
 
     activitiesDB.insert({
       tenantId,
@@ -2098,6 +2169,15 @@ const server = http.createServer(async (req, res) => {
   // 9. RECUPERAIA (RECUPERAÇÃO DE VENDAS - FASE 9)
   if (pathname === '/api/recovery/scan' && method === 'GET') {
     const audit = scanRecoverableOpportunities(tenantId);
+    if (conversionEventsDB.countByTenant(tenantId, e => e.event === 'FIRST_AI_ACTION') === 0) {
+      conversionEventsDB.insert({
+        tenantId,
+        userId: ctx.userId,
+        event: 'FIRST_AI_ACTION',
+        action: 'RECUPERA_IA_SCAN',
+        timestamp: new Date().toISOString()
+      });
+    }
     return sendJson(res, 200, { success: true, data: audit });
   }
 
@@ -2182,6 +2262,7 @@ const server = http.createServer(async (req, res) => {
     const limitCheck = checkResourceLimit(tenantId, 'automations');
     if (!limitCheck.allowed) return sendJson(res, 403, { error: limitCheck.error });
 
+    const isFirstAuto = automationsDB.countByTenant(tenantId) === 0 || conversionEventsDB.countByTenant(tenantId, e => e.event === 'FIRST_AUTOMATION') === 0;
     const auto = automationsDB.insert({
       tenantId,
       name: body.name,
@@ -2190,6 +2271,15 @@ const server = http.createServer(async (req, res) => {
       action: body.action,
       active: body.active !== undefined ? Boolean(body.active) : true
     });
+    if (isFirstAuto) {
+      conversionEventsDB.insert({
+        tenantId,
+        userId: ctx.userId,
+        event: 'FIRST_AUTOMATION',
+        automationId: auto.id,
+        timestamp: new Date().toISOString()
+      });
+    }
     return sendJson(res, 201, { success: true, data: auto });
   }
 
@@ -2317,6 +2407,85 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
+  // 12.2 CHECKOUT DE ASSINATURA SAAS COM PIX BACEN OFICIAL (V4)
+  if (pathname === '/api/billing/checkout' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'BILLING_MANAGE') && !hasPermission(ctx.role, 'FINANCIAL_VIEW') && ctx.role !== 'PROPRIETARIO' && ctx.role !== 'ADMINISTRADOR') {
+      return sendJson(res, 403, { error: 'Permissão negada. Apenas Proprietários, Administradores ou Financeiro podem iniciar checkout de planos.' });
+    }
+    const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
+    const targetPlanKey = (body.plan || body.targetPlan || 'starter').toLowerCase();
+    const planObj = PLANS[targetPlanKey];
+    if (!planObj) {
+      return sendJson(res, 400, { error: `Plano '${targetPlanKey}' inválido. Planos disponíveis: ${Object.keys(PLANS).join(', ')}` });
+    }
+
+    const txid = `SUB${Date.now().toString().slice(-10)}`;
+    const pixPayload = generatePixPayload({
+      amount: planObj.price,
+      txid,
+      description: `Assinatura Agentise ${planObj.name}`
+    });
+
+    const proposal = proposalsDB.insert({
+      tenantId,
+      title: `Assinatura Plano ${planObj.name}`,
+      planTarget: targetPlanKey,
+      amount: planObj.price,
+      status: 'enviada',
+      paymentMethod: 'PIX',
+      publicToken: crypto.randomBytes(16).toString('hex'),
+      txId: txid,
+      items: [
+        {
+          description: `Assinatura Mensal - Plano ${planObj.name} (${planObj.maxUsers} usuários, ${planObj.monthlyAiCredits} cr IA)`,
+          quantity: 1,
+          unitPrice: planObj.price,
+          total: planObj.price
+        }
+      ],
+      notes: `Assinatura comercial V4. Ativação automática mediante liquidação via PIX Bacen.`
+    });
+
+    conversionEventsDB.insert({
+      tenantId,
+      userId: ctx.userId,
+      event: 'CHECKOUT_STARTED',
+      plan: targetPlanKey,
+      amount: planObj.price,
+      proposalId: proposal.id,
+      timestamp: new Date().toISOString()
+    });
+
+    conversionEventsDB.insert({
+      tenantId,
+      userId: ctx.userId,
+      event: 'PAYMENT_PENDING',
+      plan: targetPlanKey,
+      amount: planObj.price,
+      proposalId: proposal.id,
+      timestamp: new Date().toISOString()
+    });
+
+    return sendJson(res, 201, {
+      success: true,
+      message: `Checkout iniciado com sucesso para o plano ${planObj.name}!`,
+      data: {
+        proposalId: proposal.id,
+        publicToken: proposal.publicToken,
+        plan: targetPlanKey,
+        planName: planObj.name,
+        price: planObj.price,
+        pix: {
+          payload: pixPayload,
+          qrCodeUrl: getPixQrCodeUrl(pixPayload),
+          amount: planObj.price,
+          txid
+        }
+      }
+    });
+  }
+
   // 12.1 WORKSPACE E GOVERNANÇA MULTI-TENANT (FASE 13)
   if (pathname === '/api/workspace' && method === 'GET') {
     const tenant = tenantsDB.findById(tenantId);
@@ -2404,6 +2573,16 @@ const server = http.createServer(async (req, res) => {
       tenantId,
       userId: ctx.userId
     });
+
+    if (conversionEventsDB.countByTenant(tenantId, e => e.event === 'FIRST_AI_ACTION') === 0) {
+      conversionEventsDB.insert({
+        tenantId,
+        userId: ctx.userId,
+        event: 'FIRST_AI_ACTION',
+        action: 'AI_CHAT',
+        timestamp: new Date().toISOString()
+      });
+    }
 
     return sendJson(res, 200, { success: true, ...aiResponse });
   }
@@ -2774,6 +2953,30 @@ const server = http.createServer(async (req, res) => {
         }
       }
 
+      // V4: Se proposta for de assinatura SaaS, ativa o plano no tenant
+      if (currentProposal.planTarget) {
+        try {
+          upgradeTenantPlan(currentProposal.tenantId || tenantId, currentProposal.planTarget);
+          conversionEventsDB.insert({
+            tenantId: currentProposal.tenantId || tenantId,
+            event: 'PLAN_ACTIVATED',
+            plan: currentProposal.planTarget,
+            amount: currentProposal.amount,
+            proposalId: currentProposal.id,
+            timestamp: new Date().toISOString()
+          });
+          conversionEventsDB.insert({
+            tenantId: currentProposal.tenantId || tenantId,
+            event: 'PAYMENT_CONFIRMED',
+            amount: currentProposal.amount,
+            proposalId: currentProposal.id,
+            timestamp: new Date().toISOString()
+          });
+        } catch (e) {
+          console.error('[Billing] Erro ao ativar plano após confirmação manual:', e.message);
+        }
+      }
+
       logAudit({
         tenantId: currentProposal.tenantId || tenantId,
         userId: ctx.userId,
@@ -2885,6 +3088,12 @@ const server = http.createServer(async (req, res) => {
       };
     }).sort((a, b) => b.revenue - a.revenue);
 
+    // V4: Métricas Reais de Receita Recuperada e Em Risco (Sem inventar números)
+    const recoveredDeals = deals.filter(d => d.stage === 'ganho' && (d.origin === 'RecuperaIA' || d.recoveredVia === 'RecuperaIA' || d.recovered === true));
+    const recoveredRevenue = recoveredDeals.reduce((sum, d) => sum + Number(d.value || 0), 0);
+    const atRiskDeals = deals.filter(d => d.stage !== 'ganho' && d.stage !== 'perdido' && (d.atRisk || d.daysStalled >= 5));
+    const atRiskRevenue = atRiskDeals.reduce((sum, d) => sum + Number(d.value || 0), 0);
+
     return sendJson(res, 200, {
       success: true,
       data: {
@@ -2895,12 +3104,178 @@ const server = http.createServer(async (req, res) => {
         totalLeads: leads.length,
         activeDeals: deals.length - wonDeals.length - lostDeals.length,
         pendingTasks: tasks.filter(t => !t.completed).length,
+        recoveredRevenue,
+        atRiskRevenue,
+        recoveredDealsCount: recoveredDeals.length,
+        atRiskDealsCount: atRiskDeals.length,
         stageBreakdown,
         aiAlerts,
         sellersPerformance,
         bi: bi.kpis,
         channelPerformance: bi.channelPerformance,
         aiUsageSummary: bi.aiUsageSummary
+      }
+    });
+  }
+
+  // 16.1 ATIVAÇÃO & CHECKLIST DE PRIMEIRO VALOR (V4)
+  if (pathname === '/api/tenant/activation-status' && method === 'GET') {
+    const hasLead = leadsDB.countByTenant(tenantId) > 0;
+    const hasDeal = dealsDB.countByTenant(tenantId) > 0;
+    const hasPipeline = pipelinesDB.countByTenant(tenantId) > 0;
+    const hasSeller = usersDB.findByTenant(tenantId).some(u => u.role === 'VENDEDOR' || u.role === 'SDR') || usersDB.countByTenant(tenantId) > 1;
+    const hasAutomation = automationsDB.countByTenant(tenantId) > 0;
+    const hasCopilot = aiUsageDB.countByTenant(tenantId) > 0 || (aiConversationsDB && aiConversationsDB.countByTenant(tenantId) > 0) || conversionEventsDB.countByTenant(tenantId, e => e.event === 'FIRST_AI_ACTION') > 0;
+    const hasRecuperaIA = campaignsDB.countByTenant(tenantId) > 0 || conversionEventsDB.countByTenant(tenantId, e => e.action === 'RECUPERA_IA_SCAN') > 0;
+
+    const checklist = [
+      { id: 'first_lead', title: 'Criar primeiro lead', completed: hasLead, step: 1 },
+      { id: 'first_deal', title: 'Criar primeira oportunidade', completed: hasDeal, step: 2 },
+      { id: 'config_pipeline', title: 'Configurar pipeline', completed: hasPipeline, step: 3 },
+      { id: 'add_seller', title: 'Adicionar vendedor', completed: hasSeller, step: 4 },
+      { id: 'first_automation', title: 'Criar primeira automação', completed: hasAutomation, step: 5 },
+      { id: 'test_copilot', title: 'Testar Copiloto IA', completed: hasCopilot, step: 6 },
+      { id: 'run_recuperaia', title: 'Executar primeira análise RecuperaIA', completed: hasRecuperaIA, step: 7 }
+    ];
+
+    const completedCount = checklist.filter(c => c.completed).length;
+    const score = Math.round((completedCount / checklist.length) * 100);
+
+    return sendJson(res, 200, {
+      success: true,
+      data: {
+        score,
+        completedCount,
+        totalSteps: checklist.length,
+        isFullyActivated: completedCount === checklist.length,
+        checklist
+      }
+    });
+  }
+
+  // 16.2 INGESTÃO DE EVENTOS DO FUNIL DE CONVERSÃO (V4)
+  if (pathname === '/api/analytics/events' && method === 'POST') {
+    const body = await parseRequestBody(req);
+    if (body._error) return sendJson(res, 413, { error: body._error });
+    if (!body.event) return sendJson(res, 400, { error: 'O nome do evento é obrigatório.' });
+
+    const allowedEvents = [
+      'LANDING_VIEW',
+      'SIGNUP',
+      'TRIAL_STARTED',
+      'ONBOARDING_STARTED',
+      'ONBOARDING_COMPLETED',
+      'FIRST_LEAD',
+      'FIRST_DEAL',
+      'FIRST_AI_ACTION',
+      'FIRST_AUTOMATION',
+      'CHECKOUT_STARTED',
+      'PAYMENT_PENDING',
+      'PAYMENT_CONFIRMED',
+      'PLAN_ACTIVATED'
+    ];
+
+    if (!allowedEvents.includes(body.event)) {
+      return sendJson(res, 400, { error: `Evento '${body.event}' não reconhecido.` });
+    }
+
+    const eventTenantId = (ctx.isAuthenticated && tenantId) ? tenantId : (body.tenantId || 'public_visitor');
+    const recorded = conversionEventsDB.insert({
+      tenantId: eventTenantId,
+      userId: ctx.userId || null,
+      event: body.event,
+      metadata: body.metadata || {},
+      ip: clientIp,
+      timestamp: new Date().toISOString()
+    });
+
+    return sendJson(res, 201, { success: true, data: recorded });
+  }
+
+  // 16.3 MÉTRICAS ADMINISTRATIVAS SAAS & FUNIL COMERCIAL (V4)
+  if (pathname === '/api/admin/saas-metrics' && method === 'GET') {
+    if (!ctx.isAuthenticated) {
+      return sendJson(res, 401, { error: 'Autenticação necessária.' });
+    }
+    if (!hasPermission(ctx.role, 'SETTINGS_MANAGE') && ctx.role !== 'PROPRIETARIO' && ctx.role !== 'ADMINISTRADOR') {
+      return sendJson(res, 403, { error: 'Acesso negado: visão administrativa de SaaS restrita a administradores e proprietários.' });
+    }
+
+    const allTenants = tenantsDB.findAll();
+    const now = new Date();
+
+    const plansDistribution = { starter: 0, professional: 0, business: 0, agency: 0 };
+    let mrr = 0;
+    let activeTrials = 0;
+
+    allTenants.forEach(t => {
+      const planKey = (t.plan || 'starter').toLowerCase();
+      const planConfig = PLANS[planKey] || PLANS.starter;
+      if (plansDistribution[planKey] !== undefined) {
+        plansDistribution[planKey]++;
+      } else {
+        plansDistribution.starter++;
+      }
+      mrr += planConfig.price;
+
+      if (t.trialEndsAt && new Date(t.trialEndsAt) > now) {
+        activeTrials++;
+      }
+    });
+
+    const allPayments = paymentsDB.findAll(p => p.status === 'pago');
+    const totalPixRevenue = allPayments.reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
+
+    const allAiUsage = aiUsageDB.findAll();
+    const totalAiCreditsUsed = allAiUsage.reduce((sum, r) => sum + (Number(r.cost || r.credits || r.costCredits) || 0), 0);
+
+    const allEvents = conversionEventsDB.findAll();
+    const funnelMetrics = {
+      landingViews: allEvents.filter(e => e.event === 'LANDING_VIEW').length,
+      signups: allEvents.filter(e => e.event === 'SIGNUP').length,
+      trials: allEvents.filter(e => e.event === 'TRIAL_STARTED').length,
+      onboardings: allEvents.filter(e => e.event === 'ONBOARDING_COMPLETED').length,
+      activatedUsers: allEvents.filter(e => e.event === 'FIRST_LEAD' || e.event === 'FIRST_DEAL').length,
+      checkouts: allEvents.filter(e => e.event === 'CHECKOUT_STARTED').length,
+      payments: allEvents.filter(e => e.event === 'PAYMENT_CONFIRMED').length,
+      plansActivated: allEvents.filter(e => e.event === 'PLAN_ACTIVATED').length
+    };
+
+    return sendJson(res, 200, {
+      success: true,
+      data: {
+        activeTenants: allTenants.length,
+        activeTrials,
+        totalUsers: usersDB.count(),
+        plansDistribution,
+        mrr,
+        totalPixRevenue,
+        totalAiCreditsUsed,
+        funnelMetrics,
+        updatedAt: new Date().toISOString()
+      }
+    });
+  }
+
+  if (pathname === '/api/admin/conversion-funnel' && method === 'GET') {
+    if (!ctx.isAuthenticated) {
+      return sendJson(res, 401, { error: 'Autenticação necessária.' });
+    }
+    if (!hasPermission(ctx.role, 'SETTINGS_MANAGE') && ctx.role !== 'PROPRIETARIO' && ctx.role !== 'ADMINISTRADOR') {
+      return sendJson(res, 403, { error: 'Acesso negado: visão do funil restrita a administradores e proprietários.' });
+    }
+
+    const events = conversionEventsDB.findAll();
+    const eventCounts = {};
+    events.forEach(e => {
+      eventCounts[e.event] = (eventCounts[e.event] || 0) + 1;
+    });
+
+    return sendJson(res, 200, {
+      success: true,
+      data: {
+        counts: eventCounts,
+        recentEvents: events.slice(-30).reverse()
       }
     });
   }

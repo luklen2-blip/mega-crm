@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planos & Preços | Agentise Mega CRM</title>
+  <meta name="description" content="Escolha o plano ideal para sua operação comercial. Todos os planos incluem Copiloto IA, emissão de PIX oficial Bacen e 7 dias de trial sem compromisso.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 2L2 22h20L12 2z'/></svg>">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#07090e">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            },
+            dark: {
+              main: '#07090e',
+              surface: '#0e131f',
+              card: '#141b2d',
+              border: 'rgba(59, 130, 246, 0.15)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+
+  <!-- NAVBAR PÚBLICA -->
+  <header class="glass-panel border-b border-blue-500/15 sticky top-0 z-50 px-4 lg:px-8 py-3.5 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="/landing" class="flex items-center gap-3 group">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
+          <i data-lucide="zap" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <span class="font-extrabold text-base tracking-tight text-white">AGENTISE <span class="text-blue-400">MEGA CRM</span></span>
+          <span class="hidden sm:inline-block ml-2 text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300">Planos & Preços</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-300">
+        <a href="/landing" class="hover:text-blue-400 transition">Visão Geral</a>
+        <a href="/landing#problema" class="hover:text-blue-400 transition">O Problema</a>
+        <a href="/landing#recuperaia" class="hover:text-blue-400 transition">RecuperaIA</a>
+        <a href="#tabela" class="hover:text-blue-400 transition">Comparativo</a>
+        <a href="#faq" class="hover:text-blue-400 transition">Dúvidas</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/landing" class="hidden sm:inline-flex px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/80 transition">
+          Voltar à Landing
+        </a>
+        <a href="/" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition flex items-center gap-1.5">
+          <span>Acessar CRM</span>
+          <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO PLANOS -->
+  <section class="pt-14 pb-12 text-center max-w-4xl mx-auto px-4 space-y-4">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-bold">
+      <i data-lucide="sparkles" class="h-3.5 w-3.5 text-blue-400"></i>
+      <span>Transparência Total · Sem Pegadinhas</span>
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+      Planos que crescem com sua equipe comercial.
+    </h1>
+    <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
+      Comece com 7 dias de teste completo gratuito. Se preferir contratar agora via PIX com baixa imediata, escolha seu plano abaixo.
+    </p>
+  </section>
+
+  <!-- CARDS DE PLANOS -->
+  <section class="max-w-7xl mx-auto px-4 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- PLANO STARTER -->
+      <div class="glass-card p-6 rounded-3xl border border-slate-800 bg-slate-900/80 flex flex-col justify-between space-y-6 hover:border-slate-700 transition">
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider text-slate-400">Pequenas Equipes</span>
+            <h3 class="text-xl font-black text-white">Starter</h3>
+            <p class="text-xs text-slate-400 mt-1">O essencial para estruturar seu funil e parar de perder leads.</p>
+          </div>
+          <div class="pt-2">
+            <span class="text-3xl font-black text-white">R$ 97</span>
+            <span class="text-xs text-slate-400">/mês</span>
+          </div>
+
+          <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>2 usuários</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>500 leads</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>1 Pipeline Comercial</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>3 Regras de Automação</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>1.000 créditos IA/mês</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>PIX Oficial com QR Code</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/?plan=starter" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
+          Testar Grátis 7 Dias
+        </a>
+      </div>
+
+      <!-- PLANO PROFESSIONAL -->
+      <div class="glass-card p-6 rounded-3xl border border-blue-500/30 bg-slate-900/90 flex flex-col justify-between space-y-6 hover:border-blue-500/50 transition">
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider text-blue-400">Crescimento Rápido</span>
+            <h3 class="text-xl font-black text-white">Professional</h3>
+            <p class="text-xs text-slate-400 mt-1">Para operações que precisam de RecuperaIA e automações ativas.</p>
+          </div>
+          <div class="pt-2">
+            <span class="text-3xl font-black text-white">R$ 197</span>
+            <span class="text-xs text-slate-400">/mês</span>
+          </div>
+
+          <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>5 usuários</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>2.500 leads</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>3 Pipelines Customizados</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>10 Regras de Automação</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>5.000 créditos IA/mês</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span><strong>Módulo RecuperaIA Ativo</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Central Omnichannel</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/?plan=professional" class="w-full py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs text-center transition block shadow-lg shadow-blue-600/30">
+          Escolher Professional
+        </a>
+      </div>
+
+      <!-- PLANO BUSINESS (DESTACADO) -->
+      <div class="glass-panel p-6 rounded-3xl border-2 border-indigo-500 bg-slate-950/95 flex flex-col justify-between space-y-6 shadow-2xl shadow-indigo-500/20 relative">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider shadow">
+          Mais Escolhido
+        </div>
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider text-indigo-400">Escala Comercial</span>
+            <h3 class="text-xl font-black text-white">Business</h3>
+            <p class="text-xs text-slate-400 mt-1">Multi-funis, inteligência executiva de BI e Copiloto completo.</p>
+          </div>
+          <div class="pt-2">
+            <span class="text-3xl font-black text-white">R$ 397</span>
+            <span class="text-xs text-slate-400">/mês</span>
+          </div>
+
+          <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>15 usuários</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>10.000 leads</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>10 Pipelines Customizados</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>50 Regras de Automação</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>20.000 créditos IA/mês</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Vertical Agentise Auto</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Analista IA & BI Executivo</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>API REST Aberta</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/?plan=business" class="w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-black text-xs text-center transition block shadow-xl">
+          Contratar Plano Business
+        </a>
+      </div>
+
+      <!-- PLANO AGENCY ENTERPRISE -->
+      <div class="glass-card p-6 rounded-3xl border border-slate-800 bg-slate-900/80 flex flex-col justify-between space-y-6 hover:border-slate-700 transition">
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider text-slate-400">Grandes Operações</span>
+            <h3 class="text-xl font-black text-white">Agency Enterprise</h3>
+            <p class="text-xs text-slate-400 mt-1">Multi-empresas, limites massivos e suporte corporativo prioritário.</p>
+          </div>
+          <div class="pt-2">
+            <span class="text-3xl font-black text-white">R$ 897</span>
+            <span class="text-xs text-slate-400">/mês</span>
+          </div>
+
+          <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>50 usuários</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Até <strong>50.000 leads</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>50 Pipelines Customizados</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>200 Regras de Automação</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>60.000 créditos IA/mês</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Multi-Empresas Filiais</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+              <span>Suporte Prioritário 24/7</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/?plan=agency" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
+          Contratar Enterprise
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TABELA COMPARATIVA DETALHADA -->
+  <section id="tabela" class="py-14 bg-slate-950/60 border-y border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 space-y-8">
+      <div class="text-center space-y-2">
+        <h2 class="text-xl sm:text-3xl font-black text-white">Comparativo Completo de Recursos</h2>
+        <p class="text-xs text-slate-400">Compare limites, capacidade de IA e recursos técnicos de cada plano.</p>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60">
+        <table class="w-full text-xs text-left text-slate-300 min-w-[650px]">
+          <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <tr>
+              <th class="p-3.5">Recurso / Limite</th>
+              <th class="p-3.5 text-center">Starter (R$ 97)</th>
+              <th class="p-3.5 text-center text-blue-400">Professional (R$ 197)</th>
+              <th class="p-3.5 text-center text-indigo-400">Business (R$ 397)</th>
+              <th class="p-3.5 text-center">Agency (R$ 897)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60">
+            <tr>
+              <td class="p-3.5 font-bold text-white">Usuários da Equipe</td>
+              <td class="p-3.5 text-center">2</td>
+              <td class="p-3.5 text-center font-bold text-blue-300">5</td>
+              <td class="p-3.5 text-center font-bold text-indigo-300">15</td>
+              <td class="p-3.5 text-center">50</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Capacidade de Leads</td>
+              <td class="p-3.5 text-center">500</td>
+              <td class="p-3.5 text-center">2.500</td>
+              <td class="p-3.5 text-center font-bold text-indigo-300">10.000</td>
+              <td class="p-3.5 text-center">50.000</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Pipelines e Funis</td>
+              <td class="p-3.5 text-center">1</td>
+              <td class="p-3.5 text-center">3</td>
+              <td class="p-3.5 text-center">10</td>
+              <td class="p-3.5 text-center">50</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Regras de Automação</td>
+              <td class="p-3.5 text-center">3</td>
+              <td class="p-3.5 text-center">10</td>
+              <td class="p-3.5 text-center">50</td>
+              <td class="p-3.5 text-center">200</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Créditos de IA / Mês</td>
+              <td class="p-3.5 text-center">1.000</td>
+              <td class="p-3.5 text-center">5.000</td>
+              <td class="p-3.5 text-center">20.000</td>
+              <td class="p-3.5 text-center">60.000</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Módulo RecuperaIA</td>
+              <td class="p-3.5 text-center text-slate-500">—</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Central Omnichannel</td>
+              <td class="p-3.5 text-center text-slate-500">—</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Analista IA para Gestores</td>
+              <td class="p-3.5 text-center text-slate-500">—</td>
+              <td class="p-3.5 text-center text-slate-500">—</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-white">Cálculo PIX Bacen com QR Code</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+              <td class="p-3.5 text-center text-emerald-400 font-bold">Sim</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ DE PREÇOS -->
+  <section id="faq" class="py-14 max-w-4xl mx-auto px-4 space-y-8">
+    <div class="text-center space-y-2">
+      <h2 class="text-xl sm:text-3xl font-black text-white">Dúvidas sobre Assinaturas</h2>
+    </div>
+
+    <div class="space-y-3 text-xs">
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+        <strong class="text-white block font-bold">Como funciona a contratação via PIX?</strong>
+        <p class="text-slate-400">Ao clicar para contratar, o sistema gera o QR Code e o Copia-e-Cola PIX oficial pelo padrão Banco Central. Assim que seu banco confirma o pagamento, o plano é ativado automaticamente no seu workspace.</p>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+        <strong class="text-white block font-bold">Posso mudar de plano depois?</strong>
+        <p class="text-slate-400">Sim. Você pode fazer upgrade a qualquer momento nas configurações de faturamento do seu painel e a capacidade de usuários, leads e IA é atualizada imediatamente.</p>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+        <strong class="text-white block font-bold">O que acontece se eu ultrapassar a cota de leads ou usuários?</strong>
+        <p class="text-slate-400">O sistema emite um aviso claro orientando o upgrade sem corromper ou apagar nenhum dado existente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-slate-800 py-8 px-4 text-xs text-slate-500 bg-slate-950">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-slate-400">
+        <div class="h-6 w-6 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center">
+          <i data-lucide="shield" class="h-3.5 w-3.5"></i>
+        </div>
+        <span><strong>Agentise Mega CRM</strong> · Planos Comerciais Transparentes</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="/landing" class="hover:text-blue-400 transition">Landing Page</a>
+        <a href="/termos" class="hover:text-blue-400 transition">Termos de Uso</a>
+        <a href="/privacidade" class="hover:text-blue-400 transition">Privacidade (LGPD)</a>
+        <a href="/" class="hover:text-blue-400 transition">Painel do CRM</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -43,5 +43,23 @@
     "createdAt": "2026-09-18T15:59:24.411Z",
     "id": "pip_1789747164411_m4xf",
     "updatedAt": "2026-09-18T15:59:24.411Z"
+  },
+  {
+    "tenantId": "ten_1790112139513_zsrl",
+    "name": "Funil Expansão Enterprise",
+    "description": "Vendas consultivas high ticket",
+    "isDefault": false,
+    "createdAt": "2026-09-22T21:22:19.684Z",
+    "id": "pip_1790112139684_yjcb",
+    "updatedAt": "2026-09-22T21:22:19.684Z"
+  },
+  {
+    "tenantId": "ten_1790112146833_q7ob",
+    "name": "Funil Expansão Enterprise",
+    "description": "Vendas consultivas high ticket",
+    "isDefault": false,
+    "createdAt": "2026-09-22T21:22:26.999Z",
+    "id": "pip_1790112146999_vj5u",
+    "updatedAt": "2026-09-22T21:22:26.999Z"
   }
 ]

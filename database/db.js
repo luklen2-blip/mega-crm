@@ -160,6 +160,7 @@ const vehiclesDB = new JsonDB('vehicles');
 const auditLogsDB = new JsonDB('audit_logs');
 const consentsDB = new JsonDB('consents');
 const settingsDB = new JsonDB('settings');
+const conversionEventsDB = new JsonDB('conversion_events');
 
 module.exports = {
   JsonDB,
@@ -189,5 +190,6 @@ module.exports = {
   vehiclesDB,
   auditLogsDB,
   consentsDB,
-  settingsDB
+  settingsDB,
+  conversionEventsDB
 };

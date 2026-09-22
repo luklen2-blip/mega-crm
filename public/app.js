@@ -111,7 +111,8 @@ async function initApp() {
     loadAutomations(),
     loadAutoVehicles(),
     loadBilling(),
-    loadProposals()
+    loadProposals(),
+    loadActivationStatus()
   ]);
   checkCookieConsent();
   if (window.lucide) lucide.createIcons();
@@ -130,6 +131,10 @@ async function loadCurrentContext() {
       const sel = document.getElementById('header-tenant-selector');
       if (sel && tenant) {
         sel.value = tenant.id;
+      }
+
+      if (tenant) {
+        updateTrialCountdown(tenant);
       }
     }
   } catch (e) {}
@@ -1952,8 +1957,73 @@ async function deleteTask(id) {
   }
 }
 
-// 16. ONBOARDING (FASE 3)
+// =========================================================================
+// CAMADA COMERCIAL V4: TRIAL, ATIVAÇÃO, ONBOARDING & CHECKOUT
+// =========================================================================
+
+// 1. Contagem Regressiva e Alertas do Período de Teste (Trial)
+function updateTrialCountdown(tenant) {
+  if (!tenant) return;
+  const trialBanner = document.getElementById('trial-banner');
+  const trialDaysLeftEl = document.getElementById('trial-days-left');
+  const trialTextEl = document.getElementById('trial-banner-text');
+
+  if (tenant.trialEndsAt) {
+    const diffMs = new Date(tenant.trialEndsAt) - new Date();
+    const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    if (daysLeft > 0) {
+      if (trialDaysLeftEl) trialDaysLeftEl.innerText = `${daysLeft} ${daysLeft === 1 ? 'dia' : 'dias'}`;
+      if (trialTextEl) trialTextEl.innerHTML = `<strong>Período de Testes:</strong> Seu teste gratuito termina em <span class="font-bold text-amber-300">${daysLeft} ${daysLeft === 1 ? 'dia' : 'dias'}</span>.`;
+      if (trialBanner) trialBanner.classList.remove('hidden');
+    } else {
+      if (trialTextEl) trialTextEl.innerHTML = `<strong>Período de Testes:</strong> Seu teste gratuito de 7 dias encerrou. <span class="text-amber-300 font-semibold">Escolha um plano para manter todas as integrações ativas.</span>`;
+      if (trialBanner) trialBanner.classList.remove('hidden');
+    }
+  }
+}
+
+// 2. Checklist de Ativação & Primeiro Valor (Activation Score 0-100%)
+async function loadActivationStatus() {
+  try {
+    const res = await fetch('/api/tenant/activation-status', { headers: authHeaders() });
+    const json = await res.json();
+    if (json.success && json.data) {
+      const { score, completedCount, totalSteps, checklist } = json.data;
+      const badge = document.getElementById('activation-score-badge');
+      const bar = document.getElementById('activation-progress-bar');
+      const list = document.getElementById('activation-steps-list');
+
+      if (badge) badge.innerText = `${score}% Concluído (${completedCount}/${totalSteps})`;
+      if (bar) bar.style.width = `${score}%`;
+
+      if (list) {
+        list.innerHTML = checklist.map(item => `
+          <div class="flex items-center gap-2 p-2 rounded-xl border ${item.completed ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-400'} text-xs">
+            <i data-lucide="${item.completed ? 'check-circle-2' : 'circle'}" class="h-4 w-4 shrink-0 ${item.completed ? 'text-emerald-400' : 'text-slate-500'}"></i>
+            <span class="truncate ${item.completed ? 'font-semibold text-slate-200' : ''}">${item.title}</span>
+          </div>
+        `).join('');
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+  } catch (e) {}
+}
+
+let activationChecklistOpen = true;
+function toggleActivationChecklist() {
+  activationChecklistOpen = !activationChecklistOpen;
+  const list = document.getElementById('activation-steps-list');
+  const icon = document.getElementById('activation-toggle-icon');
+  if (list) list.classList.toggle('hidden', !activationChecklistOpen);
+  if (icon) {
+    icon.setAttribute('data-lucide', activationChecklistOpen ? 'chevron-up' : 'chevron-down');
+    if (window.lucide) lucide.createIcons();
+  }
+}
+
+// 3. Onboarding Inteligente V4 (3 Etapas: Negócio, Equipe e Objetivo)
 function openOnboardingModal() {
+  nextOnboardingStep(1);
   openModal('modal-onboarding');
 }
 
@@ -1968,18 +2038,19 @@ function selectOnboardingTeam(size) {
 }
 
 function nextOnboardingStep(step) {
-  [1, 2, 3, 4].forEach(s => {
+  [1, 2, 3].forEach(s => {
     const el = document.getElementById(`onboarding-step-${s}`);
     if (el) el.classList.toggle('hidden', s !== step);
   });
   const titles = {
-    1: 'Etapa 1: Qual é o seu segmento?',
+    1: 'Etapa 1: Qual é o seu negócio?',
     2: 'Etapa 2: Equipe Comercial',
-    3: 'Etapa 3: Canais de Entrada',
-    4: 'Etapa 4: Objetivo Principal'
+    3: 'Etapa 3: Objetivo Principal'
   };
-  document.getElementById('onboarding-step-title').innerText = titles[step];
-  document.getElementById('onboarding-step-badge').innerText = `${step}/4`;
+  const titleEl = document.getElementById('onboarding-step-title');
+  const badgeEl = document.getElementById('onboarding-step-badge');
+  if (titleEl && titles[step]) titleEl.innerText = titles[step];
+  if (badgeEl) badgeEl.innerText = `${step}/3`;
 }
 
 async function finishOnboarding(goal) {
@@ -1991,12 +2062,163 @@ async function finishOnboarding(goal) {
       body: JSON.stringify(currentOnboardingData)
     });
     if (res.ok) {
-      showToast('Configuração do negócio concluída! Pipeline inicial ativado.', 'success');
+      showToast('Configuração do negócio concluída! Pipeline e IA adaptados com sucesso.', 'success');
       closeModal('modal-onboarding');
       await initApp();
+      await loadActivationStatus();
     }
   } catch (err) {
     showToast('Erro ao concluir onboarding.', 'error');
+  }
+}
+
+// 4. Checkout PIX Oficial V4
+let currentCheckoutProposalId = null;
+let currentCheckoutPlan = 'professional';
+
+const PLAN_INFO = {
+  starter: { name: 'Starter', price: 97, users: 'Até 2 usuários da equipe', leads: 'Até 500 leads & clientes 360°', credits: '1.000 créditos de IA mensais' },
+  professional: { name: 'Professional', price: 197, users: 'Até 5 usuários da equipe', leads: 'Até 2.500 leads & clientes 360°', credits: '5.000 créditos de IA mensais' },
+  business: { name: 'Business', price: 397, users: 'Até 15 usuários da equipe', leads: 'Até 10.000 leads & clientes 360°', credits: '20.000 créditos de IA mensais' },
+  agency: { name: 'Agency Enterprise', price: 897, users: 'Até 50 usuários da equipe', leads: 'Até 50.000 leads & clientes 360°', credits: '60.000 créditos de IA mensais' }
+};
+
+function openCheckoutModal(planKey = 'professional') {
+  currentCheckoutPlan = planKey.toLowerCase();
+  const info = PLAN_INFO[currentCheckoutPlan] || PLAN_INFO.professional;
+
+  const planNameEl = document.getElementById('checkout-plan-name');
+  const planPriceEl = document.getElementById('checkout-plan-price');
+  const planUsersEl = document.getElementById('checkout-plan-users');
+  const planLeadsEl = document.getElementById('checkout-plan-leads');
+  const planCreditsEl = document.getElementById('checkout-plan-credits');
+
+  if (planNameEl) planNameEl.innerText = info.name;
+  if (planPriceEl) planPriceEl.innerText = formatBRL(info.price);
+  if (planUsersEl) planUsersEl.innerText = info.users;
+  if (planLeadsEl) planLeadsEl.innerText = info.leads;
+  if (planCreditsEl) planCreditsEl.innerText = info.credits;
+
+  const pixArea = document.getElementById('checkout-pix-area');
+  const actionArea = document.getElementById('checkout-action-area');
+  const btn = document.getElementById('btn-generate-checkout');
+
+  if (pixArea) pixArea.classList.add('hidden');
+  if (actionArea) actionArea.classList.remove('hidden');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = `<i data-lucide="qr-code" class="h-4 w-4"></i><span>Gerar Cobrança PIX Oficial</span>`;
+  }
+
+  openModal('modal-checkout');
+  if (window.lucide) lucide.createIcons();
+}
+
+async function generateCheckoutPix() {
+  try {
+    const btn = document.getElementById('btn-generate-checkout');
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="h-4 w-4 animate-spin"></i><span>Gerando Cobrança PIX Oficial...</span>`;
+      if (window.lucide) lucide.createIcons();
+    }
+
+    const res = await fetch('/api/billing/checkout', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ plan: currentCheckoutPlan })
+    });
+
+    const json = await res.json();
+    if (json.success && json.data) {
+      currentCheckoutProposalId = json.data.proposalId;
+      const pix = json.data.pix;
+
+      const qrEl = document.getElementById('checkout-pix-qrcode');
+      const codeEl = document.getElementById('checkout-pix-code');
+      const pixArea = document.getElementById('checkout-pix-area');
+      const actionArea = document.getElementById('checkout-action-area');
+
+      if (qrEl) qrEl.src = pix.qrCodeUrl;
+      if (codeEl) codeEl.value = pix.payload;
+      if (pixArea) pixArea.classList.remove('hidden');
+      if (actionArea) actionArea.classList.add('hidden');
+
+      showToast(`Cobrança PIX gerada com sucesso para o plano ${json.data.planName}!`, 'info');
+      if (window.lucide) lucide.createIcons();
+    } else {
+      showToast(json.error || 'Erro ao gerar checkout.', 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="qr-code" class="h-4 w-4"></i><span>Gerar Cobrança PIX Oficial</span>`;
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+  } catch (err) {
+    showToast('Erro de comunicação no checkout.', 'error');
+  }
+}
+
+async function verifyCheckoutProposalStatus() {
+  if (!currentCheckoutProposalId) return;
+  try {
+    const res = await fetch(`/api/proposals/${currentCheckoutProposalId}`, { headers: authHeaders() });
+    const json = await res.json();
+    if (json.success && json.data) {
+      if (json.data.status === 'paga') {
+        showToast('🎉 Pagamento PIX Confirmado com Sucesso! Seu plano foi ativado.', 'success');
+        closeModal('modal-checkout');
+        await initApp();
+      } else {
+        showToast('Pagamento ainda em processamento pelo Banco Central. Aguarde alguns instantes.', 'warning');
+      }
+    }
+  } catch (e) {
+    showToast('Erro ao checar status do pagamento.', 'error');
+  }
+}
+
+function copyCheckoutPixCode() {
+  const codeEl = document.getElementById('checkout-pix-code');
+  if (codeEl && codeEl.value) {
+    navigator.clipboard.writeText(codeEl.value);
+    showToast('Código PIX Copia-e-Cola copiado para a área de transferência!', 'success');
+  }
+}
+
+// 5. Métricas Administrativas SaaS & Funil Comercial V4
+async function openSaasAdminModal() {
+  try {
+    const res = await fetch('/api/admin/saas-metrics', { headers: authHeaders() });
+    const json = await res.json();
+    if (json.success && json.data) {
+      const d = json.data;
+      if (document.getElementById('saas-mrr')) document.getElementById('saas-mrr').innerText = formatBRL(d.mrr);
+      if (document.getElementById('saas-tenants')) document.getElementById('saas-tenants').innerText = d.activeTenants;
+      if (document.getElementById('saas-trials')) document.getElementById('saas-trials').innerText = d.activeTrials;
+      if (document.getElementById('saas-pix-total')) document.getElementById('saas-pix-total').innerText = formatBRL(d.totalPixRevenue);
+
+      const grid = document.getElementById('saas-funnel-grid');
+      if (grid && d.funnelMetrics) {
+        const fm = d.funnelMetrics;
+        grid.innerHTML = `
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">1. Visualizações</span><strong class="text-white">${fm.landingViews}</strong></div>
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">2. Cadastros</span><strong class="text-white">${fm.signups}</strong></div>
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">3. Trials Ativos</span><strong class="text-amber-400">${fm.trials}</strong></div>
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">4. Onboardings</span><strong class="text-blue-400">${fm.onboardings}</strong></div>
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">5. Ativados</span><strong class="text-indigo-400">${fm.activatedUsers}</strong></div>
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">6. Checkouts</span><strong class="text-white">${fm.checkouts}</strong></div>
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">7. Pagamentos</span><strong class="text-emerald-400">${fm.payments}</strong></div>
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800"><span class="text-slate-400 block text-[10px]">8. Planos Ativos</span><strong class="text-emerald-400">${fm.plansActivated}</strong></div>
+        `;
+      }
+      openModal('modal-saas-admin');
+      if (window.lucide) lucide.createIcons();
+    } else {
+      showToast(json.error || 'Acesso restrito à gestão de SaaS.', 'error');
+    }
+  } catch (err) {
+    showToast('Erro ao carregar métricas SaaS.', 'error');
   }
 }
 

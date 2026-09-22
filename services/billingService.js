@@ -12,7 +12,7 @@ const PLANS = {
     maxUsers: 2,
     maxPipelines: 1,
     maxLeads: 500,
-    maxAutomations: 3,
+    maxAutomations: 5,
     monthlyAiCredits: 1000,
     features: ['Kanban Comercial', 'Leads 360°', 'PIX Oficial EMV', 'Claude Copilot Básico']
   },

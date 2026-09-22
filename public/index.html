@@ -119,6 +119,27 @@
     </div>
   </header>
 
+  <!-- BANNER DE TRIAL ATIVO & AVISO DE CONVERSÃO (V4) -->
+  <div id="trial-banner" class="bg-gradient-to-r from-blue-950/90 via-indigo-950/90 to-slate-900/95 border-b border-blue-500/20 px-3 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2.5 text-slate-200">
+    <div class="flex items-center gap-2">
+      <span class="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+      <span id="trial-banner-text"><strong>Período de Testes:</strong> Seu teste gratuito de 7 dias termina em <span id="trial-days-left" class="font-bold text-amber-300">7 dias</span>.</span>
+      <span class="text-[10px] text-slate-400 hidden lg:inline">| Acesse todas as funções, Copiloto IA e automações sem travas.</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="openCheckoutModal('professional')" class="px-3 py-1 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1">
+        <i data-lucide="sparkles" class="h-3 w-3"></i>
+        <span>Continuar com o Agentise</span>
+      </button>
+      <a href="/planos" target="_blank" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition hidden sm:inline-block">
+        Ver Planos
+      </a>
+      <a href="/landing" target="_blank" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-400 text-[11px] font-semibold transition hidden sm:inline-block">
+        Página Comercial
+      </a>
+    </div>
+  </div>
+
   <!-- BODY CONTENT (SIDEBAR + MAIN) -->
   <div class="flex-1 flex overflow-hidden">
     
@@ -202,10 +223,26 @@
           <span class="hidden lg:inline">Planos & Créditos</span>
         </button>
 
+        <button onclick="openSaasAdminModal()" id="nav-saas-admin" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-emerald-400 hover:bg-emerald-500/10 transition">
+          <i data-lucide="trending-up" class="h-4 w-4 shrink-0 text-emerald-400"></i>
+          <span class="hidden lg:inline">Métricas SaaS (Admin)</span>
+        </button>
+
         <button onclick="openSettingsModal()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
           <i data-lucide="settings" class="h-4 w-4 shrink-0"></i>
           <span class="hidden lg:inline">Configurações & APIs</span>
         </button>
+
+        <div class="pt-2 border-t border-slate-800/60 hidden lg:block">
+          <a href="/landing" target="_blank" class="w-full flex items-center gap-3 px-3 py-1.5 rounded-xl text-xs font-medium text-blue-400 hover:bg-blue-500/10 transition">
+            <i data-lucide="external-link" class="h-3.5 w-3.5 shrink-0"></i>
+            <span>Ver Landing Page</span>
+          </a>
+          <a href="/planos" target="_blank" class="w-full flex items-center gap-3 px-3 py-1.5 rounded-xl text-xs font-medium text-indigo-400 hover:bg-indigo-500/10 transition">
+            <i data-lucide="tag" class="h-3.5 w-3.5 shrink-0"></i>
+            <span>Ver Preços (/planos)</span>
+          </a>
+        </div>
       </nav>
 
       <!-- Bottom Compliance Links & Info -->
@@ -253,6 +290,32 @@
 
     <!-- MAIN VIEW CONTAINER -->
     <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-6">
+
+      <!-- CHECKLIST DE PRIMEIRO VALOR / ACTIVATION SCORE (V4) -->
+      <div id="activation-card" class="glass-panel p-4 sm:p-5 rounded-2xl border border-blue-500/30 bg-slate-900/80 shadow-lg space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div>
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-[10px] font-black uppercase text-blue-400 tracking-wider">Ativação Comercial</span>
+              <span id="activation-score-badge" class="px-2 py-0.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 font-extrabold text-[10px]">0% Concluído</span>
+            </div>
+            <h2 class="text-sm sm:text-base font-black text-white">Vamos colocar seu comercial para funcionar</h2>
+            <p class="text-[11px] text-slate-400">Complete os 7 passos essenciais para extrair o máximo de receita e inteligência do seu CRM.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-32 sm:w-44 bg-slate-800 rounded-full h-2.5 overflow-hidden border border-slate-700">
+              <div id="activation-progress-bar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <button onclick="toggleActivationChecklist()" class="text-xs text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800 border border-slate-700">
+              <i id="activation-toggle-icon" data-lucide="chevron-up" class="h-4 w-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="activation-steps-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-1">
+          <!-- Renderizado dinamicamente via app.js -->
+        </div>
+      </div>
 
       <!-- ============================================== -->
       <!-- VIEW 1: FUNIL DE VENDAS (KANBAN) -->
@@ -1144,74 +1207,188 @@
   <!-- MODAIS DO SISTEMA -->
   <!-- ============================================== -->
 
-  <!-- MODAL: ONBOARDING GUIADO (FASE 3) -->
+  <!-- MODAL: ONBOARDING INTELIGENTE V4 -->
   <div id="modal-onboarding" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
-    <div class="glass-panel p-6 rounded-3xl max-w-lg w-full border border-blue-500/30 space-y-5 bg-slate-950">
+    <div class="glass-panel p-6 rounded-3xl max-w-lg w-full border border-blue-500/30 space-y-5 bg-slate-950 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div>
-          <span class="text-[10px] font-black uppercase text-blue-400 tracking-wider">Setup Inteligente</span>
-          <h2 class="text-lg font-black text-white" id="onboarding-step-title">Etapa 1: Qual é o seu segmento?</h2>
+          <span class="text-[10px] font-black uppercase text-blue-400 tracking-wider">Setup Comercial Inteligente</span>
+          <h2 class="text-lg font-black text-white" id="onboarding-step-title">Etapa 1: Qual é o seu negócio?</h2>
         </div>
-        <span class="text-xs text-slate-400 font-bold" id="onboarding-step-badge">1/4</span>
+        <span class="text-xs text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20 font-extrabold" id="onboarding-step-badge">1/3</span>
       </div>
 
-      <!-- Step 1: Segmento -->
+      <!-- Step 1: Qual é o seu negócio? (10 Opções) -->
       <div id="onboarding-step-1" class="space-y-2.5">
-        <p class="text-xs text-slate-300">Selecione o nicho principal da sua empresa para configurarmos o pipeline ideal:</p>
+        <p class="text-xs text-slate-300">Selecione o segmento principal para adaptarmos pipeline, campos e sugestões da IA:</p>
         <div class="grid grid-cols-2 gap-2 text-xs">
-          <button type="button" onclick="selectOnboardingSegment('Automotivo')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🚗 Automotivo</button>
+          <button type="button" onclick="selectOnboardingSegment('Serviços')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">💼 Serviços</button>
+          <button type="button" onclick="selectOnboardingSegment('Comércio')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🏪 Comércio</button>
+          <button type="button" onclick="selectOnboardingSegment('E-commerce')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">📦 E-commerce</button>
           <button type="button" onclick="selectOnboardingSegment('Imobiliário')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🏢 Imobiliário</button>
-          <button type="button" onclick="selectOnboardingSegment('Clínica')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🏥 Clínica / Saúde</button>
-          <button type="button" onclick="selectOnboardingSegment('Agência')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🚀 Agência / Tech</button>
-          <button type="button" onclick="selectOnboardingSegment('Serviços')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">💼 Serviços & B2B</button>
-          <button type="button" onclick="selectOnboardingSegment('Loja / Varejo')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🛍️ Loja / Varejo</button>
+          <button type="button" onclick="selectOnboardingSegment('Automotivo')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🚗 Automotivo</button>
+          <button type="button" onclick="selectOnboardingSegment('Educação')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🎓 Educação</button>
+          <button type="button" onclick="selectOnboardingSegment('Saúde')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">🏥 Saúde</button>
+          <button type="button" onclick="selectOnboardingSegment('Tecnologia')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">💻 Tecnologia</button>
+          <button type="button" onclick="selectOnboardingSegment('Consultoria')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">📊 Consultoria</button>
+          <button type="button" onclick="selectOnboardingSegment('Outro')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left transition font-semibold text-slate-200">✨ Outro</button>
         </div>
       </div>
 
-      <!-- Step 2: Tamanho da Equipe -->
+      <!-- Step 2: Quantas pessoas fazem parte da sua equipe comercial? -->
       <div id="onboarding-step-2" class="hidden space-y-2.5">
-        <p class="text-xs text-slate-300">Quantas pessoas trabalham na sua equipe comercial?</p>
+        <p class="text-xs text-slate-300">Quantas pessoas fazem parte da sua equipe comercial?</p>
         <div class="grid grid-cols-2 gap-2 text-xs">
           <button type="button" onclick="selectOnboardingTeam('1-5')" class="p-3 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-center font-semibold text-slate-200">1 a 5 pessoas</button>
           <button type="button" onclick="selectOnboardingTeam('6-15')" class="p-3 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-center font-semibold text-slate-200">6 a 15 pessoas</button>
           <button type="button" onclick="selectOnboardingTeam('16-50')" class="p-3 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-center font-semibold text-slate-200">16 a 50 pessoas</button>
-          <button type="button" onclick="selectOnboardingTeam('50+')" class="p-3 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-center font-semibold text-slate-200">Mais de 50</button>
+          <button type="button" onclick="selectOnboardingTeam('50+')" class="p-3 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-center font-semibold text-slate-200">Mais de 50 pessoas</button>
         </div>
       </div>
 
-      <!-- Step 3: Canais de Entrada -->
+      <!-- Step 3: Qual é seu principal objetivo? (6 Opções) -->
       <div id="onboarding-step-3" class="hidden space-y-2.5">
-        <p class="text-xs text-slate-300">Como os clientes chegam até você? (Selecione os principais):</p>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <label class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="onb-channel" value="WhatsApp" checked class="rounded text-blue-600">
-            <span>WhatsApp</span>
-          </label>
-          <label class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="onb-channel" value="Instagram" checked class="rounded text-blue-600">
-            <span>Instagram Direct</span>
-          </label>
-          <label class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="onb-channel" value="Site" checked class="rounded text-blue-600">
-            <span>Site / Webchat</span>
-          </label>
-          <label class="p-2.5 rounded-xl border border-slate-700 bg-slate-900 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="onb-channel" value="Indicação" checked class="rounded text-blue-600">
-            <span>Indicação / Networking</span>
-          </label>
+        <p class="text-xs text-slate-300">Qual é o seu principal objetivo com o Agentise?</p>
+        <div class="space-y-2 text-xs">
+          <button type="button" onclick="finishOnboarding('vender mais')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">📈 Vender mais e acelerar conversão</button>
+          <button type="button" onclick="finishOnboarding('recuperar oportunidades')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">🔄 Recuperar oportunidades esquecidas com IA</button>
+          <button type="button" onclick="finishOnboarding('organizar equipe')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">👥 Organizar equipe e processos comerciais</button>
+          <button type="button" onclick="finishOnboarding('automatizar follow-ups')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">⚡ Automatizar follow-ups e tarefas repetitivas</button>
+          <button type="button" onclick="finishOnboarding('acompanhar vendedores')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">📊 Acompanhar metas e desempenho dos vendedores</button>
+          <button type="button" onclick="finishOnboarding('centralizar atendimento')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">💬 Centralizar atendimento e conversas em um só lugar</button>
         </div>
-        <button onclick="nextOnboardingStep(4)" class="w-full mt-3 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CHECKOUT PIX OFICIAL (V4) -->
+  <div id="modal-checkout" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
+    <div class="glass-panel p-6 rounded-3xl max-w-lg w-full border border-blue-500/30 space-y-4 bg-slate-950 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="h-8 w-8 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="h-4 w-4"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">Checkout de Assinatura</h3>
+            <p class="text-[10px] text-slate-400">Pagamento oficial com liquidação automática via Banco Central</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-checkout')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
       </div>
 
-      <!-- Step 4: Objetivo Principal -->
-      <div id="onboarding-step-4" class="hidden space-y-2.5">
-        <p class="text-xs text-slate-300">Qual o seu principal objetivo com o Mega CRM?</p>
-        <div class="space-y-2 text-xs">
-          <button type="button" onclick="finishOnboarding('Aumentar vendas e faturamento')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">📈 Aumentar vendas e ticket médio</button>
-          <button type="button" onclick="finishOnboarding('Recuperar clientes perdidos com IA')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">🔄 Recuperar propostas e clientes perdidos</button>
-          <button type="button" onclick="finishOnboarding('Automatizar atendimento e qualificação')" class="w-full p-2.5 rounded-xl border border-slate-700 bg-slate-900 hover:border-blue-500 text-left font-semibold text-slate-200">⚡ Automatizar atendimento com IA 24/7</button>
-          <button type="button" onclick="finishOnboarding('Tudo isso de forma integrada')" class="w-full p-2.5 rounded-xl border border-blue-500/40 bg-blue-900/20 hover:border-blue-400 text-left font-bold text-blue-300">🚀 Tudo isso (Solução Completa)</button>
+      <!-- Resumo do Plano Selecionado -->
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-black uppercase text-blue-400" id="checkout-plan-label">Plano Selecionado</span>
+            <h4 class="text-base font-black text-white" id="checkout-plan-name">Professional</h4>
+          </div>
+          <div class="text-right">
+            <span class="text-xl font-black text-emerald-400" id="checkout-plan-price">R$ 197,00</span>
+            <span class="text-[10px] text-slate-400 block">/mês via PIX</span>
+          </div>
         </div>
+        <div class="text-xs text-slate-300 space-y-1 pt-2 border-t border-slate-800/80" id="checkout-plan-features">
+          <p class="flex items-center gap-1.5"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> <span id="checkout-plan-users">Até 5 usuários da equipe</span></p>
+          <p class="flex items-center gap-1.5"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> <span id="checkout-plan-leads">Até 2.500 leads & clientes 360°</span></p>
+          <p class="flex items-center gap-1.5"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> <span id="checkout-plan-credits">5.000 créditos de IA mensais</span></p>
+        </div>
+      </div>
+
+      <!-- Área do PIX Gerado -->
+      <div id="checkout-pix-area" class="hidden space-y-3">
+        <div class="flex flex-col items-center justify-center p-3 rounded-2xl bg-white text-slate-900 max-w-[180px] mx-auto shadow-xl">
+          <img id="checkout-pix-qrcode" src="" alt="QR Code PIX" class="w-36 h-36">
+          <span class="text-[9px] font-bold uppercase tracking-wider text-slate-600 mt-1">PIX Oficial Banco Central</span>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-300 mb-1">Código Copia-e-Cola (EMV):</label>
+          <div class="flex gap-1.5">
+            <input type="text" id="checkout-pix-code" readonly class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-[11px] text-slate-300 font-mono">
+            <button onclick="copyCheckoutPixCode()" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shrink-0 transition flex items-center gap-1">
+              <i data-lucide="copy" class="h-3.5 w-3.5"></i>
+              <span>Copiar</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-amber-400 animate-ping shrink-0"></span>
+          <span>Aguardando liquidação bancária. A ativação ocorre automaticamente após o pagamento.</span>
+        </div>
+
+        <button onclick="verifyCheckoutProposalStatus()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-lg">
+          <i data-lucide="refresh-cw" class="h-3.5 w-3.5"></i>
+          <span>Já paguei! Verificar Confirmação</span>
+        </button>
+      </div>
+
+      <!-- Botão Inicial para Iniciar Checkout -->
+      <div id="checkout-action-area">
+        <button onclick="generateCheckoutPix()" id="btn-generate-checkout" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
+          <i data-lucide="qr-code" class="h-4 w-4"></i>
+          <span>Gerar Cobrança PIX Oficial</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MÉTRICAS SAAS & ADMIN COMERCIAL (V4) -->
+  <div id="modal-saas-admin" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
+    <div class="glass-panel p-6 rounded-3xl max-w-2xl w-full border border-emerald-500/30 space-y-4 bg-slate-950 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="h-8 w-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <i data-lucide="trending-up" class="h-4 w-4"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">Métricas Comerciais SaaS (Visão Geral)</h3>
+            <p class="text-[10px] text-slate-400">MRR, assinaturas, trials, conversão do funil e receita via PIX</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-saas-admin')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800">
+          <span class="text-lg font-black text-emerald-400" id="saas-mrr">R$ 0,00</span>
+          <p class="text-[10px] text-slate-400">MRR Ativo</p>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800">
+          <span class="text-lg font-black text-blue-400" id="saas-tenants">0</span>
+          <p class="text-[10px] text-slate-400">Workspaces Ativos</p>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800">
+          <span class="text-lg font-black text-amber-400" id="saas-trials">0</span>
+          <p class="text-[10px] text-slate-400">Trials em Andamento</p>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800">
+          <span class="text-lg font-black text-indigo-400" id="saas-pix-total">R$ 0,00</span>
+          <p class="text-[10px] text-slate-400">Receita PIX Liquidada</p>
+        </div>
+      </div>
+
+      <!-- Funil Comercial -->
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2.5">
+        <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+          <i data-lucide="filter" class="h-3.5 w-3.5 text-blue-400"></i>
+          <span>Funil Comercial de Conversão (Eventos Reais)</span>
+        </h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-slate-300" id="saas-funnel-grid">
+          <!-- Preenchido via app.js -->
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-1">
+        <button onclick="closeModal('modal-saas-admin')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold">
+          Fechar
+        </button>
       </div>
     </div>
   </div>

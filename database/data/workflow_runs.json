@@ -1294,5 +1294,221 @@
     "id": "wor_1789759384315_ucxn",
     "createdAt": "2026-09-18T19:23:04.315Z",
     "updatedAt": "2026-09-18T19:23:04.315Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "automationId": "aut_1790112070129_gza9",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112070178_jc51",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112070185_l6xc"
+      }
+    ],
+    "executedAt": "2026-09-22T21:21:10.195Z",
+    "id": "wor_1790112070195_x930",
+    "createdAt": "2026-09-22T21:21:10.195Z",
+    "updatedAt": "2026-09-22T21:21:10.195Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "automationId": "aut_1790112070152_6cmt",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112070178_jc51",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112070198_jqq1"
+      }
+    ],
+    "executedAt": "2026-09-22T21:21:10.209Z",
+    "id": "wor_1790112070209_ilsl",
+    "createdAt": "2026-09-22T21:21:10.209Z",
+    "updatedAt": "2026-09-22T21:21:10.209Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "automationId": "aut_1790112102879_l6fp",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112102931_2k9x",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112102939_cuca"
+      }
+    ],
+    "executedAt": "2026-09-22T21:21:42.947Z",
+    "id": "wor_1790112102947_xzn6",
+    "createdAt": "2026-09-22T21:21:42.947Z",
+    "updatedAt": "2026-09-22T21:21:42.947Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "automationId": "aut_1790112102912_8ht7",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112102931_2k9x",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112102950_yvdi"
+      }
+    ],
+    "executedAt": "2026-09-22T21:21:42.961Z",
+    "id": "wor_1790112102961_ds12",
+    "createdAt": "2026-09-22T21:21:42.961Z",
+    "updatedAt": "2026-09-22T21:21:42.961Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "automationId": "aut_1790112116052_x88j",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112116102_hjb9",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112116109_ibl0"
+      }
+    ],
+    "executedAt": "2026-09-22T21:21:56.121Z",
+    "id": "wor_1790112116121_fo8j",
+    "createdAt": "2026-09-22T21:21:56.121Z",
+    "updatedAt": "2026-09-22T21:21:56.121Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "automationId": "aut_1790112116077_zlqj",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112116102_hjb9",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112116124_9idt"
+      }
+    ],
+    "executedAt": "2026-09-22T21:21:56.136Z",
+    "id": "wor_1790112116136_ezol",
+    "createdAt": "2026-09-22T21:21:56.136Z",
+    "updatedAt": "2026-09-22T21:21:56.136Z"
+  },
+  {
+    "tenantId": "ten_1790112139513_zsrl",
+    "automationId": "aut_1790112139535_ur2k",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112139574_qlms",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112139582_woco"
+      }
+    ],
+    "executedAt": "2026-09-22T21:22:19.590Z",
+    "id": "wor_1790112139590_exsf",
+    "createdAt": "2026-09-22T21:22:19.590Z",
+    "updatedAt": "2026-09-22T21:22:19.590Z"
+  },
+  {
+    "tenantId": "ten_1790112146833_q7ob",
+    "automationId": "aut_1790112146857_s0ye",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790112146892_g1bk",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112146899_hqus"
+      }
+    ],
+    "executedAt": "2026-09-22T21:22:26.906Z",
+    "id": "wor_1790112146906_kef3",
+    "createdAt": "2026-09-22T21:22:26.906Z",
+    "updatedAt": "2026-09-22T21:22:26.906Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1790112170561_q2uw",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112170569_dbkt"
+      }
+    ],
+    "executedAt": "2026-09-22T21:22:50.582Z",
+    "id": "wor_1790112170582_fyat",
+    "createdAt": "2026-09-22T21:22:50.582Z",
+    "updatedAt": "2026-09-22T21:22:50.582Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": null,
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112170741_4fr4"
+      }
+    ],
+    "executedAt": "2026-09-22T21:22:50.752Z",
+    "id": "wor_1790112170752_hfmv",
+    "createdAt": "2026-09-22T21:22:50.752Z",
+    "updatedAt": "2026-09-22T21:22:50.752Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1790112171124_6q8r",
+    "automationName": "Alerta Deal VIP Score Alto",
+    "triggerType": "deal_score_alto",
+    "contextId": "lea_1790112170157_k9h8",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "alert_created",
+        "taskId": "tas_1790112171130_gj78"
+      }
+    ],
+    "executedAt": "2026-09-22T21:22:51.139Z",
+    "id": "wor_1790112171139_zxxn",
+    "createdAt": "2026-09-22T21:22:51.139Z",
+    "updatedAt": "2026-09-22T21:22:51.139Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1790112171158_vdfh",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790112171166_uoc7"
+      }
+    ],
+    "executedAt": "2026-09-22T21:22:51.178Z",
+    "id": "wor_1790112171178_5qey",
+    "createdAt": "2026-09-22T21:22:51.178Z",
+    "updatedAt": "2026-09-22T21:22:51.178Z"
   }
 ]

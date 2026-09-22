@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentise — Seu Time Comercial com IA Trabalhando Junto com Você</title>
+  <meta name="description" content="Encontre oportunidades esquecidas, identifique vendas em risco, automatize follow-ups e transforme os dados do seu CRM em ações comerciais.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 2L2 22h20L12 2z'/></svg>">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#07090e">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            },
+            dark: {
+              main: '#07090e',
+              surface: '#0e131f',
+              card: '#141b2d',
+              border: 'rgba(59, 130, 246, 0.15)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+
+  <!-- NAVBAR PÚBLICA -->
+  <header class="glass-panel border-b border-blue-500/15 sticky top-0 z-50 px-4 lg:px-8 py-3.5 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
+          <i data-lucide="zap" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <span class="font-extrabold text-base tracking-tight text-white">AGENTISE <span class="text-blue-400">MEGA CRM</span></span>
+          <span class="hidden sm:inline-block ml-2 text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300">SaaS Comercial V4</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-300">
+        <a href="#problema" class="hover:text-blue-400 transition">O Problema</a>
+        <a href="#recuperaia" class="hover:text-blue-400 transition">RecuperaIA</a>
+        <a href="#agente" class="hover:text-blue-400 transition">Agente IA</a>
+        <a href="#automacoes" class="hover:text-blue-400 transition">Automações</a>
+        <a href="#crm360" class="hover:text-blue-400 transition">CRM 360°</a>
+        <a href="/planos" class="text-blue-400 hover:text-blue-300 transition">Planos & Preços</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/planos" class="hidden sm:inline-flex px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/80 transition">
+          Ver Planos
+        </a>
+        <a href="/" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition flex items-center gap-1.5">
+          <span>Acessar CRM</span>
+          <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. HERO SECTION -->
+  <section class="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(37,99,235,0.25),rgba(255,255,255,0))] pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 text-center relative z-10 space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-bold tracking-wide">
+        <i data-lucide="sparkles" class="h-3.5 w-3.5 text-blue-400"></i>
+        <span>Agentise — seu time comercial com IA trabalhando junto com você</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight">
+        Pare de perder vendas que já estão <br class="hidden sm:block">
+        <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-blue-500 bg-clip-text text-transparent">dentro do seu CRM.</span>
+      </h1>
+
+      <p class="text-sm sm:text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        O Agentise usa inteligência artificial para identificar oportunidades em risco, recuperar negócios esquecidos, automatizar tarefas comerciais e ajudar sua equipe a agir no momento certo.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+        <a href="/" onclick="trackLandingEvent('TRIAL_STARTED')" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-sm shadow-xl shadow-blue-500/25 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+          <i data-lucide="zap" class="h-4 w-4"></i>
+          <span>Começar teste grátis</span>
+        </a>
+        <a href="#problema" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-sm transition flex items-center justify-center gap-2">
+          <i data-lucide="info" class="h-4 w-4 text-slate-400"></i>
+          <span>Conhecer o Agentise</span>
+        </a>
+      </div>
+
+      <div class="pt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 font-medium">
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="check" class="h-4 w-4 text-emerald-400"></i>
+          <span>7 dias de teste completo</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="check" class="h-4 w-4 text-emerald-400"></i>
+          <span>Sem necessidade de cartão de crédito</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="check" class="h-4 w-4 text-emerald-400"></i>
+          <span>Isolamento estrito multi-tenant</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. O PROBLEMA NO PIPELINE -->
+  <section id="problema" class="py-16 md:py-20 bg-slate-950/60 border-y border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 space-y-12">
+      <div class="text-center space-y-3 max-w-3xl mx-auto">
+        <span class="text-xs font-black uppercase tracking-wider text-rose-400">Diagnóstico Comercial</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          Quanto dinheiro pode estar parado no seu pipeline?
+        </h2>
+        <p class="text-sm text-slate-400">
+          A maioria dos times comerciais perde negócios não pela falta de clientes, mas pela perda de tempo e ausência de contato na hora decisiva.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-card p-5 rounded-2xl border border-rose-500/20 bg-slate-900/70 space-y-2">
+          <div class="h-9 w-9 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
+            <i data-lucide="user-x" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white">Leads sem follow-up</h3>
+          <p class="text-xs text-slate-400">Contatos qualificados esfriam porque ninguém retornou a mensagem a tempo.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-rose-500/20 bg-slate-900/70 space-y-2">
+          <div class="h-9 w-9 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
+            <i data-lucide="clock" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white">Oportunidades esquecidas</h3>
+          <p class="text-xs text-slate-400">Propostas enviadas que ficam semanas sem posicionamento nem nova tentativa.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-rose-500/20 bg-slate-900/70 space-y-2">
+          <div class="h-9 w-9 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
+            <i data-lucide="list-todo" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white">Vendedores sem prioridade</h3>
+          <p class="text-xs text-slate-400">Equipe gasta energia em leads frios e perde de vista quem tem real intenção de compra.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-rose-500/20 bg-slate-900/70 space-y-2">
+          <div class="h-9 w-9 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
+            <i data-lucide="layers" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white">Dados espalhados</h3>
+          <p class="text-xs text-slate-400">Histórico de conversas, valores e status soltos em planilhas e cadernos.</p>
+        </div>
+      </div>
+
+      <!-- MENSAGEM CHAVE -->
+      <div class="max-w-2xl mx-auto p-6 rounded-3xl bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border border-blue-500/30 text-center space-y-2">
+        <i data-lucide="alert-circle" class="h-6 w-6 text-blue-400 mx-auto"></i>
+        <h4 class="text-base font-black text-white">
+          "O problema nem sempre é falta de leads. Muitas vezes é falta de ação no momento certo."
+        </h4>
+        <p class="text-xs text-slate-300">
+          O Agentise foi construído exatamente para colocar a inteligência artificial a serviço da ação comercial imediata.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. RECUPERAIA EM DESTAQUE -->
+  <section id="recuperaia" class="py-16 md:py-24 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div class="space-y-5">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+          <i data-lucide="refresh-cw" class="h-3.5 w-3.5"></i>
+          <span>Diferencial Exclusivo</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
+          RecuperaIA — encontre oportunidades que estão escapando.
+        </h2>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          O módulo RecuperaIA realiza uma varredura profunda no histórico real do seu pipeline, identificando negociações que pararam por falta de contato e orientando os vendedores a retomá-las.
+        </p>
+
+        <div class="space-y-3 pt-2 text-xs">
+          <div class="flex items-start gap-3">
+            <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="h-3.5 w-3.5"></i>
+            </div>
+            <div>
+              <strong class="text-white block font-bold">Identifica negócios parados:</strong>
+              <span class="text-slate-400">Varre propostas e conversas com mais de 5 a 15 dias sem atividade.</span>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="h-3.5 w-3.5"></i>
+            </div>
+            <div>
+              <strong class="text-white block font-bold">Analisa sinais de perda:</strong>
+              <span class="text-slate-400">Mapeia motivo da desaceleração e classifica o nível de risco da perda da venda.</span>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="h-3.5 w-3.5"></i>
+            </div>
+            <div>
+              <strong class="text-white block font-bold">Gera campanhas de reativação:</strong>
+              <span class="text-slate-400">Cria abordagens personalizadas com argumentos consultivos para reatar contato.</span>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="h-3.5 w-3.5"></i>
+            </div>
+            <div>
+              <strong class="text-white block font-bold">Métricas 100% reais:</strong>
+              <span class="text-slate-400">Apenas valores reais fechados pelo sistema são contabilizados como recuperados.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Ilustrativo RecuperaIA -->
+      <div class="glass-panel p-6 rounded-3xl border border-emerald-500/30 bg-slate-950/80 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="h-8 w-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <i data-lucide="radar" class="h-4 w-4"></i>
+            </div>
+            <span class="text-xs font-bold text-white">Varredura de Pipeline</span>
+          </div>
+          <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Análise Real</span>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+            <div>
+              <p class="font-bold text-white">Proposta Sistema ERP Empresarial</p>
+              <p class="text-[10px] text-slate-400">Parada há 8 dias em Negociação</p>
+            </div>
+            <span class="font-extrabold text-amber-400">R$ 18.500</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+            <div>
+              <p class="font-bold text-white">Frota de Veículos Comerciais</p>
+              <p class="text-[10px] text-slate-400">Sem retorno após envio de cotação</p>
+            </div>
+            <span class="font-extrabold text-amber-400">R$ 145.000</span>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300">
+          <p class="font-bold flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="h-3.5 w-3.5 text-emerald-400"></i>
+            <span>Ação Sugerida pela IA:</span>
+          </p>
+          <p class="text-[11px] text-slate-300 mt-1">
+            "Enviar mensagem destacando condição comercial especial de fechamento no WhatsApp do decisor."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. AGENTE COMERCIAL IA & COPILOTO -->
+  <section id="agente" class="py-16 md:py-20 bg-slate-950/60 border-y border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 space-y-12">
+      <div class="text-center space-y-3 max-w-3xl mx-auto">
+        <span class="text-xs font-black uppercase tracking-wider text-blue-400">Copiloto Integrado</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          "Seu agente comercial não dorme."
+        </h2>
+        <p class="text-sm text-slate-400">
+          Converse com o seu CRM e obtenha respostas imediatas sobre cada cliente, oportunidade e desempenho.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-card p-6 rounded-3xl border border-blue-500/20 bg-slate-900/60 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+              <i data-lucide="bot" class="h-5 w-5"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white">Assistência Comercial Ativa</h3>
+              <p class="text-xs text-slate-400">Qualificação BANT, análise de objeções e pitch de vendas</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            O agente analisa o contexto de cada oportunidade cadastrada, avalia a autoridade do decisor, o orçamento estimado e sugere os melhores argumentos comerciais.
+          </p>
+          <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300">
+            <strong class="font-bold block text-white mb-0.5">Controle com Aprovação Humana:</strong>
+            Nenhuma mensagem ou proposta é despachada para o cliente sem a confirmação expressa do vendedor responsável.
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl border border-indigo-500/20 bg-slate-900/60 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center">
+              <i data-lucide="message-square-code" class="h-5 w-5"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white">Pergunte ao seu CRM</h3>
+              <p class="text-xs text-slate-400">Consultas executivas em linguagem natural</p>
+            </div>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-300 flex items-center gap-2">
+              <i data-lucide="help-circle" class="h-3.5 w-3.5 text-blue-400 shrink-0"></i>
+              <span>"Quais oportunidades estão paradas há mais de uma semana?"</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-300 flex items-center gap-2">
+              <i data-lucide="help-circle" class="h-3.5 w-3.5 text-blue-400 shrink-0"></i>
+              <span>"Quais clientes precisam de follow-up prioritário hoje?"</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-300 flex items-center gap-2">
+              <i data-lucide="help-circle" class="h-3.5 w-3.5 text-blue-400 shrink-0"></i>
+              <span>"Onde estamos perdendo mais vendas no funil comercial?"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. AUTOMAÇÕES VISUAIS: QUANDO -> SE -> ENTÃO -->
+  <section id="automacoes" class="py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4 space-y-12">
+      <div class="text-center space-y-3 max-w-3xl mx-auto">
+        <span class="text-xs font-black uppercase tracking-wider text-amber-400">Motor de Automação</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          Elimine o trabalho manual repetitivo.
+        </h2>
+        <p class="text-sm text-slate-400">
+          Crie fluxos lógicos automáticos com o construtor QUANDO → SE → ENTÃO em segundos.
+        </p>
+      </div>
+
+      <div class="max-w-3xl mx-auto glass-panel p-6 md:p-8 rounded-3xl border border-amber-500/20 bg-slate-950/80 shadow-2xl space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+            <span class="text-[10px] font-black uppercase text-amber-400 tracking-wider">1. Gatilho (QUANDO)</span>
+            <p class="text-xs font-bold text-white">Deal ficar 5 dias sem nova interação</p>
+            <p class="text-[10px] text-slate-400">Monitoramento contínuo de ociosidade no funil.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+            <span class="text-[10px] font-black uppercase text-blue-400 tracking-wider">2. Condição (SE)</span>
+            <p class="text-xs font-bold text-white">Valor da oportunidade > R$ 1.000</p>
+            <p class="text-[10px] text-slate-400">Filtra negócios de alto impacto comercial.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+            <span class="text-[10px] font-black uppercase text-emerald-400 tracking-wider">3. Ação (ENTÃO)</span>
+            <p class="text-xs font-bold text-white">Criar tarefa + Notificar + Sugerir texto</p>
+            <p class="text-[10px] text-slate-400">Executa as três ações no mesmo segundo.</p>
+          </div>
+        </div>
+
+        <div class="pt-3 text-center">
+          <span class="text-xs text-slate-400">Sem escrever uma única linha de código. Configure e deixe o CRM trabalhar.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CRM 360° & OMNICHANNEL TRANSPARENTE -->
+  <section id="crm360" class="py-16 md:py-20 bg-slate-950/60 border-y border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 space-y-12">
+      <div class="text-center space-y-3 max-w-3xl mx-auto">
+        <span class="text-xs font-black uppercase tracking-wider text-blue-400">Operação Unificada</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          Tudo que sua equipe precisa em um só lugar.
+        </h2>
+        <p class="text-sm text-slate-400">
+          Chega de trocar de abas. Acompanhe a jornada completa da prospecção até o pagamento confirmado.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center">
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+          <i data-lucide="users" class="h-5 w-5 text-blue-400 mx-auto"></i>
+          <h4 class="text-xs font-bold text-white">Leads & Contatos</h4>
+          <p class="text-[10px] text-slate-400">Timeline de 10 estágios</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+          <i data-lucide="trello" class="h-5 w-5 text-blue-400 mx-auto"></i>
+          <h4 class="text-xs font-bold text-white">Multi-Pipelines</h4>
+          <p class="text-[10px] text-slate-400">Kanban com AI Score</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+          <i data-lucide="check-square" class="h-5 w-5 text-blue-400 mx-auto"></i>
+          <h4 class="text-xs font-bold text-white">Tarefas & Follow-up</h4>
+          <p class="text-[10px] text-slate-400">Agenda inteligente</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+          <i data-lucide="file-text" class="h-5 w-5 text-blue-400 mx-auto"></i>
+          <h4 class="text-xs font-bold text-white">Propostas & PIX</h4>
+          <p class="text-[10px] text-slate-400">Checkout com baixa automática</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+          <i data-lucide="bar-chart-3" class="h-5 w-5 text-blue-400 mx-auto"></i>
+          <h4 class="text-xs font-bold text-white">Analytics & BI</h4>
+          <p class="text-[10px] text-slate-400">LTV, CAC e Conversão</p>
+        </div>
+      </div>
+
+      <!-- AVISO ÉTICO OMNICHANNEL -->
+      <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
+            <i data-lucide="message-circle" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-white">Canais Omnichannel Oficiais (WhatsApp, Instagram e Webchat)</h4>
+            <p class="text-[11px] text-slate-400">
+              Disponíveis após a inserção dos seus tokens oficiais de integração nas configurações do workspace.
+            </p>
+          </div>
+        </div>
+        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 whitespace-nowrap">
+          Sem simulações falsas
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PROVA SOCIAL TÉCNICA E SEGURANÇA -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 space-y-10">
+      <div class="text-center space-y-3 max-w-3xl mx-auto">
+        <span class="text-xs font-black uppercase tracking-wider text-emerald-400">Engenharia e Governança</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          Tecnologia construída para operações comerciais modernas.
+        </h2>
+        <p class="text-sm text-slate-400">
+          Sem depoimentos inventados. Evidências técnicas concretas de segurança, isolamento e confiabilidade.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+        <div class="glass-card p-5 rounded-2xl border border-blue-500/20 bg-slate-900/60 space-y-1">
+          <span class="text-2xl font-black text-blue-400">116 / 116</span>
+          <p class="text-xs font-bold text-white">Asserções de Segurança</p>
+          <p class="text-[10px] text-slate-400">Pentest V3, Anti-IDOR e RBAC 100% aprovados.</p>
+        </div>
+        <div class="glass-card p-5 rounded-2xl border border-blue-500/20 bg-slate-900/60 space-y-1">
+          <span class="text-2xl font-black text-blue-400">Bacen Oficial</span>
+          <p class="text-xs font-bold text-white">PIX EMV com CRC-16</p>
+          <p class="text-[10px] text-slate-400">Cálculo matemático estrito e concorrência Mutex.</p>
+        </div>
+        <div class="glass-card p-5 rounded-2xl border border-blue-500/20 bg-slate-900/60 space-y-1">
+          <span class="text-2xl font-black text-blue-400">Multi-Tenant</span>
+          <p class="text-xs font-bold text-white">Isolamento Criptográfico</p>
+          <p class="text-[10px] text-slate-400">Dados do Tenant A nunca acessíveis pelo Tenant B.</p>
+        </div>
+        <div class="glass-card p-5 rounded-2xl border border-blue-500/20 bg-slate-900/60 space-y-1">
+          <span class="text-2xl font-black text-blue-400">LGPD Art. 18</span>
+          <p class="text-xs font-bold text-white">Privacidade por Design</p>
+          <p class="text-[10px] text-slate-400">Anonimização nativa e trilha de auditoria delta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FAQ REAL E CLARO -->
+  <section class="py-16 md:py-20 bg-slate-950/60 border-t border-slate-800/80">
+    <div class="max-w-4xl mx-auto px-4 space-y-10">
+      <div class="text-center space-y-3">
+        <span class="text-xs font-black uppercase tracking-wider text-blue-400">Dúvidas Frequentes</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-white">Respostas claras sobre o Agentise</h2>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <details class="group glass-card p-4 rounded-2xl border border-slate-800 bg-slate-900/70 cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between">
+            <span>Preciso instalar alguma coisa no meu computador?</span>
+            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 mt-2.5 leading-relaxed">
+            Não. O Agentise é 100% web e opera 24/7 na nuvem. Você pode acessar do computador, tablet ou smartphone através de qualquer navegador moderno, além de poder instalar como Progressive Web App (PWA).
+          </p>
+        </details>
+
+        <details class="group glass-card p-4 rounded-2xl border border-slate-800 bg-slate-900/70 cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between">
+            <span>Posso testar antes de contratar?</span>
+            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 mt-2.5 leading-relaxed">
+            Sim! Todo novo cadastro recebe 7 dias de trial completo com acesso a todas as funcionalidades essenciais, Copiloto IA e automações sem compromisso e sem necessidade de cartão de crédito.
+          </p>
+        </details>
+
+        <details class="group glass-card p-4 rounded-2xl border border-slate-800 bg-slate-900/70 cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between">
+            <span>Meus dados e clientes ficam separados de outras empresas?</span>
+            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 mt-2.5 leading-relaxed">
+            Absolutamente. O Agentise utiliza isolamento estrito multi-tenant. Cada requisição é autenticada e vinculada exclusivamente ao seu workspace. Foram executados 12 testes específicos de penetração comprovando que nenhum dado é cruzado.
+          </p>
+        </details>
+
+        <details class="group glass-card p-4 rounded-2xl border border-slate-800 bg-slate-900/70 cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between">
+            <span>A inteligência artificial tem acesso a dados confidenciais?</span>
+            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 mt-2.5 leading-relaxed">
+            A IA só consulta o contexto autorizado do seu próprio workspace e as diretrizes que você cadastrar no Cérebro da Empresa. O sistema conta com firewall de guardrail que bloqueia injeções de prompt e vazamento de segredos de ambiente.
+          </p>
+        </details>
+
+        <details class="group glass-card p-4 rounded-2xl border border-slate-800 bg-slate-900/70 cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between">
+            <span>Como funciona o cancelamento?</span>
+            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 mt-2.5 leading-relaxed">
+            Não há carência, fidelidade ou multas rescisórias. Se decidir cancelar, sua assinatura simplesmente não será renovada e você pode exportar seus dados em conformidade com a LGPD a qualquer momento.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CTA FINAL DE CONVERSÃO -->
+  <section class="py-16 md:py-24 text-center relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-4 space-y-6 relative z-10">
+      <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+        Pronto para transformar sua operação comercial?
+      </h2>
+      <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
+        Comece seu teste gratuito de 7 dias agora mesmo e coloque a IA para trabalhar com a sua equipe.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <a href="/" onclick="trackLandingEvent('TRIAL_STARTED')" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-sm shadow-xl shadow-blue-500/30 transition flex items-center justify-center gap-2">
+          <i data-lucide="zap" class="h-4 w-4"></i>
+          <span>Começar teste gratuito</span>
+        </a>
+        <a href="/planos" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-sm transition">
+          Ver todos os planos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-slate-800 py-8 px-4 text-xs text-slate-500 bg-slate-950">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-slate-400">
+        <div class="h-6 w-6 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center">
+          <i data-lucide="shield" class="h-3.5 w-3.5"></i>
+        </div>
+        <span><strong>Agentise Mega CRM</strong> · SaaS Comercial Multi-Tenant AI-First</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="/planos" class="hover:text-blue-400 transition">Planos</a>
+        <a href="/termos" class="hover:text-blue-400 transition">Termos de Uso</a>
+        <a href="/privacidade" class="hover:text-blue-400 transition">Privacidade (LGPD)</a>
+        <a href="/" class="hover:text-blue-400 transition">Painel do CRM</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    // Ingestão segura de evento da landing
+    async function trackLandingEvent(eventName) {
+      try {
+        await fetch('/api/analytics/events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: eventName, metadata: { source: 'landing_page' } })
+        });
+      } catch (e) {}
+    }
+
+    // Registra visualização de landing page
+    window.addEventListener('DOMContentLoaded', () => {
+      trackLandingEvent('LANDING_VIEW');
+    });
+  </script>
+</body>
+</html>

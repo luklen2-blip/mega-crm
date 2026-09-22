@@ -808,5 +808,513 @@
     "id": "aut_1789759192852_e341",
     "createdAt": "2026-09-18T19:19:52.852Z",
     "updatedAt": "2026-09-18T19:19:52.852Z"
+  },
+  {
+    "tenantId": "ten_1790112032760_a8mi",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112032789_qr86",
+    "createdAt": "2026-09-22T21:20:32.789Z",
+    "updatedAt": "2026-09-22T21:20:32.789Z"
+  },
+  {
+    "tenantId": "ten_1790112032760_a8mi",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112032792_dez5",
+    "createdAt": "2026-09-22T21:20:32.792Z",
+    "updatedAt": "2026-09-22T21:20:32.792Z"
+  },
+  {
+    "tenantId": "ten_1790112032760_a8mi",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112032795_saxf",
+    "createdAt": "2026-09-22T21:20:32.795Z",
+    "updatedAt": "2026-09-22T21:20:32.795Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112070129_gza9",
+    "createdAt": "2026-09-22T21:21:10.129Z",
+    "updatedAt": "2026-09-22T21:21:10.129Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112070132_7vwl",
+    "createdAt": "2026-09-22T21:21:10.132Z",
+    "updatedAt": "2026-09-22T21:21:10.132Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112070135_h8xu",
+    "createdAt": "2026-09-22T21:21:10.135Z",
+    "updatedAt": "2026-09-22T21:21:10.135Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112070152_6cmt",
+    "createdAt": "2026-09-22T21:21:10.152Z",
+    "updatedAt": "2026-09-22T21:21:10.152Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112070155_nkiu",
+    "createdAt": "2026-09-22T21:21:10.155Z",
+    "updatedAt": "2026-09-22T21:21:10.155Z"
+  },
+  {
+    "tenantId": "ten_1790112070106_wt1d",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112070162_a75q",
+    "createdAt": "2026-09-22T21:21:10.162Z",
+    "updatedAt": "2026-09-22T21:21:10.162Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112102879_l6fp",
+    "createdAt": "2026-09-22T21:21:42.879Z",
+    "updatedAt": "2026-09-22T21:21:42.879Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112102882_p69r",
+    "createdAt": "2026-09-22T21:21:42.882Z",
+    "updatedAt": "2026-09-22T21:21:42.882Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112102887_dnqr",
+    "createdAt": "2026-09-22T21:21:42.887Z",
+    "updatedAt": "2026-09-22T21:21:42.887Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112102912_8ht7",
+    "createdAt": "2026-09-22T21:21:42.912Z",
+    "updatedAt": "2026-09-22T21:21:42.912Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112102914_f0zc",
+    "createdAt": "2026-09-22T21:21:42.914Z",
+    "updatedAt": "2026-09-22T21:21:42.914Z"
+  },
+  {
+    "tenantId": "ten_1790112102856_pvs0",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112102916_evb7",
+    "createdAt": "2026-09-22T21:21:42.916Z",
+    "updatedAt": "2026-09-22T21:21:42.916Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112116052_x88j",
+    "createdAt": "2026-09-22T21:21:56.052Z",
+    "updatedAt": "2026-09-22T21:21:56.052Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112116055_m3jz",
+    "createdAt": "2026-09-22T21:21:56.055Z",
+    "updatedAt": "2026-09-22T21:21:56.055Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112116058_mlqe",
+    "createdAt": "2026-09-22T21:21:56.058Z",
+    "updatedAt": "2026-09-22T21:21:56.058Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112116077_zlqj",
+    "createdAt": "2026-09-22T21:21:56.077Z",
+    "updatedAt": "2026-09-22T21:21:56.077Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112116080_bnqj",
+    "createdAt": "2026-09-22T21:21:56.080Z",
+    "updatedAt": "2026-09-22T21:21:56.080Z"
+  },
+  {
+    "tenantId": "ten_1790112116024_tykj",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112116085_x7rt",
+    "createdAt": "2026-09-22T21:21:56.085Z",
+    "updatedAt": "2026-09-22T21:21:56.085Z"
+  },
+  {
+    "tenantId": "ten_1790112139513_zsrl",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112139535_ur2k",
+    "createdAt": "2026-09-22T21:22:19.535Z",
+    "updatedAt": "2026-09-22T21:22:19.535Z"
+  },
+  {
+    "tenantId": "ten_1790112139513_zsrl",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112139538_ocuy",
+    "createdAt": "2026-09-22T21:22:19.538Z",
+    "updatedAt": "2026-09-22T21:22:19.538Z"
+  },
+  {
+    "tenantId": "ten_1790112139513_zsrl",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112139541_919n",
+    "createdAt": "2026-09-22T21:22:19.541Z",
+    "updatedAt": "2026-09-22T21:22:19.541Z"
+  },
+  {
+    "tenantId": "ten_1790112139513_zsrl",
+    "name": "Auto Boas Vindas Comercial",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": "enviar_whatsapp",
+    "active": true,
+    "id": "aut_1790112139654_1xjy",
+    "createdAt": "2026-09-22T21:22:19.654Z",
+    "updatedAt": "2026-09-22T21:22:19.654Z"
+  },
+  {
+    "tenantId": "ten_1790112146833_q7ob",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790112146857_s0ye",
+    "createdAt": "2026-09-22T21:22:26.857Z",
+    "updatedAt": "2026-09-22T21:22:26.857Z"
+  },
+  {
+    "tenantId": "ten_1790112146833_q7ob",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790112146861_feo6",
+    "createdAt": "2026-09-22T21:22:26.861Z",
+    "updatedAt": "2026-09-22T21:22:26.861Z"
+  },
+  {
+    "tenantId": "ten_1790112146833_q7ob",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790112146864_pnmz",
+    "createdAt": "2026-09-22T21:22:26.864Z",
+    "updatedAt": "2026-09-22T21:22:26.864Z"
+  },
+  {
+    "tenantId": "ten_1790112146833_q7ob",
+    "name": "Auto Boas Vindas Comercial",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": "enviar_whatsapp",
+    "active": true,
+    "id": "aut_1790112146970_tfys",
+    "createdAt": "2026-09-22T21:22:26.970Z",
+    "updatedAt": "2026-09-22T21:22:26.970Z"
   }
 ]

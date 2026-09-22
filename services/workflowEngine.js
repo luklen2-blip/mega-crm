@@ -169,6 +169,9 @@ async function triggerWorkflows(triggerType, context = {}, tenantId) {
 
 // Cria automações recomendadas de acordo com o segmento (Onboarding)
 function seedSegmentAutomations(tenantId, segment) {
+  if (automationsDB.countByTenant && automationsDB.countByTenant(tenantId) > 0) {
+    return;
+  }
   const defaultList = [
     {
       tenantId,

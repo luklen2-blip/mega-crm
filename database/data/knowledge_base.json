@@ -160,5 +160,32 @@
     "id": "kno_1789759378312_iuh1",
     "createdAt": "2026-09-18T19:22:58.312Z",
     "updatedAt": "2026-09-18T19:22:58.312Z"
+  },
+  {
+    "tenantId": "ten_1790112150732_vy17",
+    "category": "Segredos",
+    "title": "Segredo Industrial Ultraconfidencial",
+    "content": "Margem de lucro de 85% e lista de fornecedores secretos",
+    "id": "kno_1790112150735_bg8v",
+    "createdAt": "2026-09-22T21:22:30.735Z",
+    "updatedAt": "2026-09-22T21:22:30.735Z"
+  },
+  {
+    "tenantId": "ten_1790112154486_2s70",
+    "category": "Estratégia",
+    "title": "Segredo Industrial da Alpha",
+    "content": "Fórmula de precificação secreta R$ 10.000",
+    "version": 1,
+    "history": [
+      {
+        "version": 1,
+        "title": "Segredo Industrial da Alpha",
+        "content": "Fórmula de precificação secreta R$ 10.000",
+        "updatedAt": "2026-09-22T21:22:34.655Z"
+      }
+    ],
+    "id": "kno_1790112154655_aofr",
+    "createdAt": "2026-09-22T21:22:34.655Z",
+    "updatedAt": "2026-09-22T21:22:34.655Z"
   }
 ]
