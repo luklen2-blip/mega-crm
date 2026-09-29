@@ -3191,5 +3191,126 @@
     "id": "tas_1790721326551_fy75",
     "createdAt": "2026-09-29T22:35:26.551Z",
     "updatedAt": "2026-09-29T22:35:26.551Z"
+  },
+  {
+    "title": "Tarefa de Teste Automatizado",
+    "priority": "alta",
+    "completed": false,
+    "tenantId": "ten_demo_agentise",
+    "id": "tas_1790722295162_j8sk",
+    "createdAt": "2026-09-29T22:51:35.162Z",
+    "updatedAt": "2026-09-29T22:51:35.162Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1790722295489",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-29T22:51:35.489Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-29T22:51:35.489Z",
+    "updatedAt": "2026-09-29T22:51:35.553Z"
+  },
+  {
+    "title": "Tarefa de Teste Automatizado",
+    "priority": "alta",
+    "completed": false,
+    "tenantId": "ten_demo_agentise",
+    "id": "tas_1790722310317_jnco",
+    "createdAt": "2026-09-29T22:51:50.317Z",
+    "updatedAt": "2026-09-29T22:51:50.317Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1790722310659",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-09-29T22:51:50.659Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-09-29T22:51:50.659Z",
+    "updatedAt": "2026-09-29T22:51:50.705Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1790722311334_avfn",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-30T22:51:51.350Z",
+    "completed": false,
+    "id": "tas_1790722311350_xjft",
+    "createdAt": "2026-09-29T22:51:51.350Z",
+    "updatedAt": "2026-09-29T22:51:51.350Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-30T22:51:51.487Z",
+    "completed": false,
+    "id": "tas_1790722311487_aafv",
+    "createdAt": "2026-09-29T22:51:51.487Z",
+    "updatedAt": "2026-09-29T22:51:51.487Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1790722310617_hnz4",
+    "dealId": null,
+    "title": "🚨 TRANSBORDO HUMANO: Lead Confidencial A",
+    "description": "Motivo: Cliente solicitou transbordo humano explícito (termo identificado: \"humano\"). Última mensagem: \"Quero falar com um atendente humano urgente, não quero falar com robô.\"",
+    "priority": "urgente",
+    "completed": false,
+    "assignedTo": "Equipe Comercial",
+    "createdAt": "2026-09-29T22:51:51.938Z",
+    "id": "tas_1790722311938_ji91",
+    "updatedAt": "2026-09-29T22:51:51.938Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1790722310617_hnz4",
+    "dealId": "dea_1790722311963_w78v",
+    "title": "🚨 TRANSBORDO HUMANO: Lead Confidencial A",
+    "description": "Motivo: Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000). Última mensagem: \"Podemos fechar o contrato no valor total?\"",
+    "priority": "urgente",
+    "completed": false,
+    "assignedTo": "Equipe Comercial",
+    "createdAt": "2026-09-29T22:51:51.970Z",
+    "id": "tas_1790722311970_j6ls",
+    "updatedAt": "2026-09-29T22:51:51.970Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1790722310617_hnz4",
+    "title": "⚠️ [Alerta Gestão] Alerta Deal VIP Score Alto: Expansão Enterprise Corp",
+    "priority": "urgente",
+    "deadline": "2026-09-30T02:51:52.132Z",
+    "completed": false,
+    "id": "tas_1790722312132_gktc",
+    "createdAt": "2026-09-29T22:51:52.132Z",
+    "updatedAt": "2026-09-29T22:51:52.132Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1790722310617_hnz4",
+    "dealId": "dea_1790722312188_mugb",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-09-30T22:51:52.208Z",
+    "completed": false,
+    "id": "tas_1790722312208_665x",
+    "createdAt": "2026-09-29T22:51:52.208Z",
+    "updatedAt": "2026-09-29T22:51:52.208Z"
+  },
+  {
+    "tenantId": "ten_1790722317746_ijbh",
+    "leadId": "lea_1790722317870_4y0w",
+    "title": "Primeiro contato rápido (meta: < 15 min)",
+    "priority": "urgente",
+    "deadline": "2026-09-29T23:51:57.883Z",
+    "completed": false,
+    "id": "tas_1790722317883_bjic",
+    "createdAt": "2026-09-29T22:51:57.883Z",
+    "updatedAt": "2026-09-29T22:51:57.883Z"
   }
 ]

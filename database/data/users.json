@@ -1408,5 +1408,43 @@
     "id": "use_1790721334734_r2dy",
     "createdAt": "2026-09-29T22:35:34.734Z",
     "updatedAt": "2026-09-29T22:35:34.734Z"
+  },
+  {
+    "tenantId": "ten_1790722295226_2lj9",
+    "name": "Eduardo Silveira",
+    "email": "empresa_1790722295226@teste.com",
+    "passwordHash": "a4e3abe5055896506bb9458b5884cd6f:3285aaf2c42323da7d787ce19dd14297529278694c818f89ec8564e94ca794ed7816397c9653a0c768bd2659268bb31721db88473b5dc3ea847cf0413944486c",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo%20Silveira",
+    "id": "use_1790722295261_outa",
+    "createdAt": "2026-09-29T22:51:35.261Z",
+    "updatedAt": "2026-09-29T22:51:35.261Z"
+  },
+  {
+    "tenantId": "ten_1790722317746_ijbh",
+    "name": "Carlos Fundador",
+    "email": "fundador_1790722317668@empresaalfa.com.br",
+    "passwordHash": "a2e8a5e5de18aae03a25c6823121f92c:00aab45248662d15b04f1a9c3a4818896f7990e1e1269ccc1fe3607f92ac2d0fced130c0ec1fec558aad595438ec7dc2212df91107ab3618387e1f6a33c74cd5",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos%20Fundador",
+    "id": "use_1790722317780_kge2",
+    "createdAt": "2026-09-29T22:51:57.780Z",
+    "updatedAt": "2026-09-29T22:51:57.780Z"
+  },
+  {
+    "tenantId": "ten_1790722317746_ijbh",
+    "name": "Juliana Vendedora",
+    "email": "juliana_1790722317668@empresaalfa.com.br",
+    "role": "VENDEDOR",
+    "phone": "",
+    "passwordHash": "a1d81dce184468048839d4e7982d4ce8:cafcf307f6ac221681e9b1b76df87f32978a8ac91c406c6cd8e8346da1501e6769166ee83d6d4069e9454e013c8b17da5ce69b566843d2329ffdca63f4e927bd",
+    "mustChangePassword": false,
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Juliana%20Vendedora",
+    "id": "use_1790722318054_7kco",
+    "createdAt": "2026-09-29T22:51:58.054Z",
+    "updatedAt": "2026-09-29T22:51:58.054Z"
   }
 ]

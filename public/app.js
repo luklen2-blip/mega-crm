@@ -90,8 +90,47 @@ function authHeaders() {
   return headers;
 }
 
+const CURRENT_APP_BUILD = '2.2.0-guia-2026';
+
+function checkClientBuildVersion() {
+  const lastBuild = localStorage.getItem('agentise_app_build');
+  if (lastBuild && lastBuild !== CURRENT_APP_BUILD) {
+    console.log('[App] Nova versão detectada:', CURRENT_APP_BUILD, 'anterior:', lastBuild);
+    localStorage.setItem('agentise_app_build', CURRENT_APP_BUILD);
+    if ('caches' in window) {
+      caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))));
+    }
+  } else {
+    localStorage.setItem('agentise_app_build', CURRENT_APP_BUILD);
+  }
+}
+
+async function forceAppUpdate() {
+  try {
+    showToast('Atualizando aplicação e limpando cache...', 'info');
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const reg of registrations) {
+        await reg.unregister();
+      }
+    }
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      for (const k of keys) {
+        await caches.delete(k);
+      }
+    }
+    setTimeout(() => {
+      window.location.href = window.location.origin + window.location.pathname + '?update=' + Date.now();
+    }, 350);
+  } catch (e) {
+    window.location.reload(true);
+  }
+}
+
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
+  checkClientBuildVersion();
   initApp();
   setInterval(checkHealth, 10000);
 });

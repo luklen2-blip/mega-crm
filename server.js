@@ -278,14 +278,29 @@ function serveStatic(req, res, targetFile) {
   if (filePath) {
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-    res.writeHead(200, {
+    
+    // Configura headers anti-cache para sw.js, manifest.json e páginas HTML para garantir atualização imediata no celular
+    const isAntiCache = baseName === 'sw.js' || ext === '.html' || baseName === 'manifest.json';
+    const cacheControlHeader = isAntiCache 
+      ? 'no-cache, no-store, must-revalidate, max-age=0' 
+      : 'public, max-age=3600';
+
+    const headers = {
       'Content-Type': contentType,
+      'Cache-Control': cacheControlHeader,
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'SAMEORIGIN',
       'X-XSS-Protection': '1; mode=block',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
-    });
+    };
+
+    if (isAntiCache) {
+      headers['Pragma'] = 'no-cache';
+      headers['Expires'] = '0';
+    }
+
+    res.writeHead(200, headers);
     fs.createReadStream(filePath).pipe(res);
     return true;
   }

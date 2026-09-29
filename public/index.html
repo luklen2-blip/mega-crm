@@ -46,7 +46,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?v=2.2.0">
 </head>
 <body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col pb-16 md:pb-0 overflow-x-hidden w-full max-w-full">
 
@@ -112,7 +112,7 @@
       <div class="flex items-center gap-1.5 shrink-0">
         <button onclick="openUserGuideModal()" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 transition shrink-0" title="Guia Passo a Passo Oficial do CRM">
           <i data-lucide="book-open" class="h-3.5 w-3.5"></i>
-          <span class="hidden sm:inline">Guia</span>
+          <span class="inline">Guia</span>
         </button>
         <button onclick="openNewLeadModal()" class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
           <i data-lucide="user-plus" class="h-3.5 w-3.5"></i>
@@ -293,9 +293,9 @@
         <i data-lucide="rotate-ccw" class="h-5 w-5"></i>
         <span>Recupera</span>
       </button>
-      <button onclick="switchView('copilot')" class="flex flex-col items-center text-[10px] text-slate-400 hover:text-blue-400">
-        <i data-lucide="bot" class="h-5 w-5"></i>
-        <span>IA</span>
+      <button onclick="openUserGuideModal()" class="flex flex-col items-center text-[10px] text-emerald-400 hover:text-emerald-300 font-semibold">
+        <i data-lucide="book-open" class="h-5 w-5"></i>
+        <span>Guia</span>
       </button>
       <button onclick="openMobileMenuModal()" class="flex flex-col items-center text-[10px] text-slate-400 hover:text-blue-400">
         <i data-lucide="menu" class="h-5 w-5"></i>
@@ -2158,14 +2158,20 @@
         </button>
       </div>
 
-      <!-- Links Legais & Onboarding -->
-      <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-        <button onclick="closeModal('modal-mobile-menu'); openOnboardingModal();" class="text-blue-400 font-semibold hover:underline">
-          Reconfigurar Negócio
+      <!-- Links Legais, Onboarding & Botão de Atualização Forçada -->
+      <div class="pt-2 border-t border-slate-800 flex flex-col gap-2.5">
+        <div class="flex items-center justify-between text-[11px] text-slate-400">
+          <button onclick="closeModal('modal-mobile-menu'); openOnboardingModal();" class="text-blue-400 font-semibold hover:underline">
+            Reconfigurar Negócio
+          </button>
+          <a href="/guia" target="_blank" class="text-emerald-400 font-semibold hover:underline">
+            Manual Completo (/guia)
+          </a>
+        </div>
+        <button onclick="forceAppUpdate()" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center justify-center gap-2 hover:bg-slate-800 transition">
+          <i data-lucide="refresh-cw" class="h-3.5 w-3.5"></i>
+          <span>Atualizar App / Limpar Cache Mobile</span>
         </button>
-        <a href="/guia" target="_blank" class="text-emerald-400 font-semibold hover:underline">
-          Manual Completo (/guia)
-        </a>
       </div>
     </div>
   </div>
@@ -2187,12 +2193,46 @@
     </div>
   </div>
 
-  <!-- Scripts do App e Registro de Service Worker PWA -->
-  <script src="/app.js"></script>
+  <!-- Scripts do App e Registro de Service Worker PWA com Atualização Ativa -->
+  <script src="/app.js?v=2.2.0"></script>
   <script>
     if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(err => console.log('PWA SW:', err.message));
+        navigator.serviceWorker.register('/sw.js').then((reg) => {
+          // Busca atualização imediata no servidor
+          reg.update();
+
+          // Se encontrar nova versão aguardando, avisa o worker para ativar
+          if (reg.waiting) {
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                }
+              });
+            }
+          });
+
+          // Re-checa sempre que a aba ou tela do celular for reativada
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+              reg.update();
+            }
+          });
+        }).catch(err => console.log('PWA SW:', err.message));
+
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
+        });
       });
     }
   </script>
