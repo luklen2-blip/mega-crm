@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Guia Passo a Passo Oficial | Agentise Mega CRM</title>
+  <meta name="description" content="Manual de uso completo e passo a passo do Agentise Mega CRM: aprenda como cadastrar leads, gerenciar o funil, emitir PIX oficial Bacen e usar IA para recuperar vendas.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 2L2 22h20L12 2z'/></svg>">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#07090e">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            },
+            dark: {
+              main: '#07090e',
+              surface: '#0e131f',
+              card: '#141b2d',
+              border: 'rgba(59, 130, 246, 0.15)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    .guide-step-card {
+      background: rgba(14, 19, 31, 0.7);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      transition: all 0.3s ease;
+    }
+    .guide-step-card:hover {
+      border-color: rgba(59, 130, 246, 0.35);
+      box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden w-full max-w-full">
+
+  <!-- NAVBAR PÚBLICA -->
+  <header class="glass-panel border-b border-blue-500/15 sticky top-0 z-50 px-4 lg:px-8 py-3.5 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
+          <i data-lucide="zap" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <span class="font-extrabold text-base tracking-tight text-white">AGENTISE <span class="text-blue-400">MEGA CRM</span></span>
+          <span class="hidden sm:inline-block ml-2 text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300">Manual Oficial de Uso</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <a href="/" class="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110 text-white font-bold text-xs shadow-md shadow-blue-600/30 transition flex items-center gap-1.5">
+          <i data-lucide="layout-dashboard" class="h-4 w-4"></i>
+          <span>Acessar o CRM</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO HEADER DO GUIA -->
+  <section class="relative py-12 lg:py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80 bg-gradient-to-b from-blue-950/20 via-transparent to-transparent">
+    <div class="max-w-5xl mx-auto text-center space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-wider">
+        <i data-lucide="book-open" class="h-4 w-4"></i>
+        <span>Documentação e Treinamento Comercial</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+        Manual Passo a Passo do <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400">Agentise Mega CRM</span>
+      </h1>
+      <p class="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        Domine o fluxo comercial completo: desde o cadastro de leads e acompanhamento de negócios no funil, até a emissão de cobranças PIX oficiais do Banco Central e o resgate de vendas paradas com IA.
+      </p>
+
+      <!-- ATALHOS RÁPIDOS DE NAVEGAÇÃO -->
+      <div class="pt-6 flex flex-wrap justify-center gap-2 text-xs">
+        <a href="#etapa-1" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">1. Primeiro Acesso</a>
+        <a href="#etapa-2" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">2. Leads 360°</a>
+        <a href="#etapa-3" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">3. Funil & Deals</a>
+        <a href="#etapa-4" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">4. Propostas & PIX</a>
+        <a href="#etapa-5" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">5. Omnichannel</a>
+        <a href="#etapa-6" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">6. RecuperaIA</a>
+        <a href="#etapa-7" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">7. Automações</a>
+        <a href="#etapa-8" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">8. Cérebro IA</a>
+        <a href="#etapa-9" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-500 text-slate-300 transition">9. Analista BI</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEÚDO PRINCIPAL DO MANUAL -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+    <!-- ETAPA 1 -->
+    <section id="etapa-1" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-blue-500/20 text-blue-400 font-black text-sm flex items-center justify-center border border-blue-500/30">1</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Primeiro Acesso e Configuração em 3 Passos (Onboarding)</h2>
+          <p class="text-xs text-slate-400">Tempo estimado: 2 minutos</p>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        Ao acessar o sistema pela primeira vez ou registrar sua conta corporativa, você terá acesso imediato a <strong>7 dias de teste gratuito</strong> com todas as funções liberadas.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5 text-xs">
+          <div class="font-bold text-blue-400 flex items-center gap-1.5"><i data-lucide="layers" class="h-4 w-4"></i> Passo 1: Segmento</div>
+          <p class="text-slate-400 text-[11px]">Escolha seu mercado (ex: B2B, Concessionária, Imobiliário). O CRM personaliza seus funis e regras de negócio na hora.</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5 text-xs">
+          <div class="font-bold text-indigo-400 flex items-center gap-1.5"><i data-lucide="users" class="h-4 w-4"></i> Passo 2: Equipe</div>
+          <p class="text-slate-400 text-[11px]">Indique o porte da equipe (vendedor solo, 2 a 5, até 15+). O CRM ajusta cotas de distribuição de leads.</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5 text-xs">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5"><i data-lucide="target" class="h-4 w-4"></i> Passo 3: Meta</div>
+          <p class="text-slate-400 text-[11px]">Defina sua prioridade (aumentar fechamentos, resgatar perdidos ou automatizar tarefas).</p>
+        </div>
+      </div>
+      <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 flex items-center gap-2">
+        <i data-lucide="check-circle-2" class="h-4 w-4 shrink-0 text-blue-400"></i>
+        <span><strong>Checklist de Ativação:</strong> Acompanhe no topo da tela o progresso de 0% a 100% conforme executa suas primeiras ações reais.</span>
+      </div>
+    </section>
+
+    <!-- ETAPA 2 -->
+    <section id="etapa-2" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-blue-500/20 text-blue-400 font-black text-sm flex items-center justify-center border border-blue-500/30">2</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Gestão de Contatos e Leads 360°</h2>
+          <p class="text-xs text-slate-400">Organize cadastros completos, canais de contato e histórico</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          1. <strong>Cadastrar um Lead:</strong> Clique no botão <code>+ Lead</code> no topo do sistema ou acesse a aba <em>Leads & Contatos 360°</em>.
+        </p>
+        <p>
+          2. <strong>Campos Essenciais:</strong> Informe Nome, Empresa, Telefone com DDD (WhatsApp), E-mail, Origem da Prospecção e Orçamento Estimado.
+        </p>
+        <p>
+          3. <strong>Visão 360°:</strong> Na tabela de leads, clique em <strong>Ações 360°</strong> para ver a Linha do Tempo de 10 estágios do cliente, probabilidade preditiva de compra e botão de clique direto para <strong>Chamar no WhatsApp</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ETAPA 3 -->
+    <section id="etapa-3" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-blue-500/20 text-blue-400 font-black text-sm flex items-center justify-center border border-blue-500/30">3</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Funil de Vendas Kanban & AI Deal Score BANT</h2>
+          <p class="text-xs text-slate-400">Visualize todas as negociações em andamento com apoio da IA</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          1. <strong>Criar Nova Oportunidade:</strong> Clique no botão azul <code>Nova Oportunidade</code> no cabeçalho. Selecione o Lead, digite o título da venda, o valor em R$ e a fase inicial.
+        </p>
+        <p>
+          2. <strong>Arrastar e Soltar (Drag & Drop):</strong> Conforme a negociação evolui, arraste o cartão de uma coluna para outra:
+        </p>
+        <div class="p-3 rounded-xl bg-slate-950 font-mono text-[11px] text-blue-300 overflow-x-auto">
+          Prospecção ➔ Qualificação ➔ Apresentação ➔ Proposta Enviada ➔ Negociação ➔ Fechado / Ganho
+        </div>
+        <p>
+          3. <strong>Score BANT Explicável:</strong> Clique em qualquer oportunidade para abrir o diagnóstico preditivo da IA. O CRM calcula a propensão de compra de 0 a 100 baseada em <em>Orçamento, Decisor, Urgência e Necessidade</em>, apontando alertas de risco antes que você perca o negócio.
+        </p>
+      </div>
+    </section>
+
+    <!-- ETAPA 4 -->
+    <section id="etapa-4" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-sm flex items-center justify-center border border-emerald-500/30">4</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Emissão de Propostas Comerciais & Cobrança PIX Bacen</h2>
+          <p class="text-xs text-slate-400">Liquidação imediata com baixa atômica sem duplicidades</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          1. <strong>Criar Proposta com Itens:</strong> Acesse o menu <em>Propostas & Cobranças PIX</em> ou clique em <em>Emitir PIX</em> direto na visualização do cliente.
+        </p>
+        <p>
+          2. <strong>Detalhamento Financeiro:</strong> Adicione produtos ou serviços, quantidade, valor unitário e desconto. O sistema valida os cálculos matematicamente.
+        </p>
+        <p>
+          3. <strong>PIX Banco Central Oficial:</strong> Ao salvar, o CRM gera instantaneamente o código <strong>Copia-e-Cola (padrão EMV oficial)</strong> e o <strong>QR Code dinâmico</strong> certificado com checksum CRC-16.
+        </p>
+        <p>
+          4. <strong>Baixa Automática:</strong> Quando o cliente realiza o pagamento (seja por confirmação manual ou via Webhook automático), o sistema:
+        </p>
+        <ul class="list-disc pl-5 space-y-1 text-slate-400 text-xs">
+          <li>Marca a proposta como <strong>Paga</strong>.</li>
+          <li>Move o negócio automaticamente para o estágio <strong>Ganho</strong> no funil.</li>
+          <li>Dispara automações de pós-venda configuradas.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ETAPA 5 -->
+    <section id="etapa-5" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-sm flex items-center justify-center border border-emerald-500/30">5</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Central Omnichannel & Inbox com Copiloto IA</h2>
+          <p class="text-xs text-slate-400">WhatsApp Oficial Cloud API, Instagram e Webchat em tela única</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          No menu <em>Central Omnichannel</em>, você gerencia todas as conversas dos clientes em tempo real:
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-1">
+            <div class="font-bold text-blue-400">🤖 Modo Autônomo</div>
+            <p class="text-slate-400 text-[11px]">A IA responde e qualifica o cliente 24/7 com base no Cérebro da Empresa.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-1">
+            <div class="font-bold text-indigo-400">👥 Modo Copiloto</div>
+            <p class="text-slate-400 text-[11px]">A IA analisa o histórico e gera sugestões de resposta para o vendedor aprovar em 1 clique.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-1">
+            <div class="font-bold text-amber-400">👤 Modo Humano</div>
+            <p class="text-slate-400 text-[11px]">Atendimento totalmente manual quando o cliente solicita falar com o vendedor.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ETAPA 6 -->
+    <section id="etapa-6" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-rose-500/20 text-rose-400 font-black text-sm flex items-center justify-center border border-rose-500/30">6</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">RecuperaIA: Resgate de Vendas e Dinheiro Parado</h2>
+          <p class="text-xs text-slate-400">Varredura automática de propostas paradas e clientes esquecidos</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          O diferencial exclusivo do Agentise: o CRM não espera você perder a venda para agir.
+        </p>
+        <p>
+          1. <strong>Varredura do Pipeline:</strong> Acesse a aba <em>RecuperaIA</em> para ver o painel com:
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          <div class="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 font-bold">Valor Total em Risco</div>
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 font-bold">Propostas (+48h)</div>
+          <div class="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 font-bold">Negócios Travados (+5d)</div>
+          <div class="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 font-bold">Leads Inativos (+7d)</div>
+        </div>
+        <p>
+          2. <strong>Gerar Campanha com IA:</strong> Clique no botão <code>Gerar Campanha com IA</code> para produzir mensagens de reengajamento consultivo personalizadas para cada oportunidade estagnada.
+        </p>
+      </div>
+    </section>
+
+    <!-- ETAPA 7 -->
+    <section id="etapa-7" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-amber-500/20 text-amber-400 font-black text-sm flex items-center justify-center border border-amber-500/30">7</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Motor de Automações Visuais (QUANDO ➔ SE ➔ ENTÃO)</h2>
+          <p class="text-xs text-slate-400">Configure regras para eliminar tarefas manuais da equipe</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          Acesse a aba <em>Automações</em> e clique em <code>Nova Automação</code>:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs text-slate-300">
+          <li><strong>QUANDO (Gatilho):</strong> Novo Lead cadastrado, Proposta PIX criada, Oportunidade perdida, Venda fechada.</li>
+          <li><strong>SE (Condição):</strong> Se o valor for acima de R$ 5.000, ou se o estágio for qualificação.</li>
+          <li><strong>ENTÃO (Ação):</strong> Criar tarefa urgente com meta de resposta menor que 15 min, enviar WhatsApp automático, ou agendar follow-up.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ETAPA 8 -->
+    <section id="etapa-8" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-purple-500/20 text-purple-400 font-black text-sm flex items-center justify-center border border-purple-500/30">8</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Cérebro da Empresa (Base de Conhecimento RAG)</h2>
+          <p class="text-xs text-slate-400">Ensine a IA sobre seus produtos, diferenciais e tabelas de preço</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          Acesse <em>Cérebro da Empresa</em> e cadastre manuais, tabelas e perguntas frequentes. O firewall de IA do CRM consulta estritamente esse repositório, garantindo que o Copiloto e o Agente de Atendimento respondam somente com informações verdadeiras da sua empresa.
+        </p>
+      </div>
+    </section>
+
+    <!-- ETAPA 9 -->
+    <section id="etapa-9" class="guide-step-card space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-xl bg-cyan-500/20 text-cyan-400 font-black text-sm flex items-center justify-center border border-cyan-500/30">9</span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Analista IA para Gestores & Business Intelligence</h2>
+          <p class="text-xs text-slate-400">Faça perguntas sobre seu faturamento em linguagem natural</p>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p>
+          Acesse a aba <em>Analista IA (Gestor)</em> e digite perguntas como:
+        </p>
+        <div class="p-3 rounded-xl bg-slate-950 font-mono text-xs text-cyan-300 space-y-1">
+          <div>> "Quais vendedores estão abaixo da meta este mês?"</div>
+          <div>> "Quanto temos previsto para fechar nos próximos 15 dias?"</div>
+          <div>> "Quais oportunidades de alto valor estão travadas há mais de 5 dias?"</div>
+        </div>
+        <p>
+          O analista processa as informações em segundos e exibe a resposta acompanhada dos dados operacionais reais que fundamentam o diagnóstico.
+        </p>
+      </div>
+    </section>
+
+    <!-- DICA MOBILE PWA -->
+    <div class="p-6 rounded-3xl bg-gradient-to-r from-blue-900/30 via-indigo-900/20 to-purple-900/30 border border-blue-500/30 space-y-3">
+      <div class="flex items-center gap-2 text-white font-bold text-sm">
+        <i data-lucide="smartphone" class="h-5 w-5 text-blue-400"></i>
+        <span>Como Instalar no Celular (iPhone e Android)</span>
+      </div>
+      <p class="text-xs text-slate-300 leading-relaxed">
+        O Agentise Mega CRM é um <strong>Progressive Web App (PWA)</strong> otimizado para celulares. Para instalar como aplicativo nativo sem ocupar espaço na memória:
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+          <strong class="text-blue-300">No iPhone (Safari):</strong> Toque no ícone de Compartilhar (quadrado com seta para cima) e selecione <em>"Adicionar à Tela de Início"</em>.
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+          <strong class="text-emerald-300">No Android (Chrome):</strong> Toque no menu de 3 pontinhos no canto superior e selecione <em>"Instalar aplicativo"</em>.
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div class="text-center py-6 space-y-3">
+      <a href="/" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 hover:brightness-110 text-white font-bold text-sm shadow-xl shadow-blue-600/30 transition">
+        <i data-lucide="zap" class="h-4 w-4"></i>
+        <span>Começar a Usar o Agentise Mega CRM Agora</span>
+      </a>
+      <div>
+        <a href="/planos" class="text-xs text-slate-400 hover:text-white underline">Ver Tabela Completa de Planos & Preços</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 py-8 px-4 text-center text-xs text-slate-500 space-y-2">
+    <div>Agentise Mega CRM • Padrão de Engenharia de Nível Empresarial</div>
+    <div class="flex justify-center gap-4 text-[11px]">
+      <a href="/" class="hover:text-blue-400">Painel do CRM</a>
+      <a href="/landing" class="hover:text-blue-400">Página Comercial</a>
+      <a href="/planos" class="hover:text-blue-400">Planos & Preços</a>
+      <a href="/termos" class="hover:text-blue-400">Termos de Uso</a>
+      <a href="/privacidade" class="hover:text-blue-400">Privacidade (LGPD)</a>
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

@@ -1464,6 +1464,15 @@
     "updatedAt": "2026-09-29T21:31:07.070Z"
   },
   {
+    "tenantId": "ten_demo_agentise",
+    "title": "Auditoria de Delta Deal #382",
+    "value": 7500,
+    "stage": "proposta",
+    "id": "dea_1790717476094_njho",
+    "createdAt": "2026-09-29T21:31:16.094Z",
+    "updatedAt": "2026-09-29T21:31:16.102Z"
+  },
+  {
     "id": "deal_autoprime_bmw_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "leadId": "lead_autoprime_51_villasboas",
@@ -1473,16 +1482,83 @@
     "assignedTo": "Fernanda Lima",
     "probability": 100,
     "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
-    "createdAt": "2026-09-29T21:31:14.845Z",
-    "updatedAt": "2026-09-29T21:31:14.869Z"
+    "createdAt": "2026-09-29T22:35:21.444Z",
+    "updatedAt": "2026-09-29T22:35:21.462Z"
   },
   {
     "tenantId": "ten_demo_agentise",
     "title": "Auditoria de Delta Deal #382",
     "value": 7500,
     "stage": "proposta",
-    "id": "dea_1790717476094_njho",
-    "createdAt": "2026-09-29T21:31:16.094Z",
-    "updatedAt": "2026-09-29T21:31:16.102Z"
+    "id": "dea_1790721322311_e6ll",
+    "createdAt": "2026-09-29T22:35:22.311Z",
+    "updatedAt": "2026-09-29T22:35:22.318Z"
+  },
+  {
+    "stage": "qualificacao",
+    "value": 12500,
+    "probability": 20,
+    "priority": "media",
+    "assignedTo": "Carlos Fundador",
+    "title": "Consultoria Estratégica Q4",
+    "leadId": "lea_1790721326536_ekeh",
+    "tenantId": "ten_1790721326419_jn4u",
+    "aiDealScore": 60,
+    "aiScoreClassification": "Média Propensão",
+    "aiScoreColor": "#0ea5e9",
+    "aiScoreRationale": "Score 60/100 (Média Propensão). Pontos fortes: Avanço no funil (QUALIFICACAO +15pts); Orçamento mapeado: R$ 12.500 (+5pts). Atenção recomendada: Contato não identificado como decisor; Nenhuma interação comercial registrada no histórico (-10pts).",
+    "id": "dea_1790721326655_fn9q",
+    "createdAt": "2026-09-29T22:35:26.655Z",
+    "updatedAt": "2026-09-29T22:35:26.655Z"
+  },
+  {
+    "tenantId": "ten_1790721334055_lfqv",
+    "leadId": "lea_1790721334195_8gt8",
+    "title": "Oportunidade 1",
+    "value": 5000,
+    "stage": "prospeccao",
+    "id": "dea_1790721334215_ljo3",
+    "createdAt": "2026-09-29T22:35:34.215Z",
+    "updatedAt": "2026-09-29T22:35:34.215Z"
+  },
+  {
+    "tenantId": "ten_1790721334055_lfqv",
+    "leadId": "lea_1790721334195_8gt8",
+    "title": "Deal Modificado com Segurança",
+    "value": 1000,
+    "id": "dea_1790721334281_vwek",
+    "createdAt": "2026-09-29T22:35:34.281Z",
+    "updatedAt": "2026-09-29T22:35:34.506Z",
+    "isPaid": true,
+    "status": "paga",
+    "stage": "ganho",
+    "probability": 100,
+    "closedAt": "2026-09-29T22:35:34.506Z"
+  },
+  {
+    "stage": "prospeccao",
+    "value": 2000,
+    "probability": 20,
+    "priority": "media",
+    "title": "Deal Spoof",
+    "leadId": "lea_1790721334195_8gt8",
+    "tenantId": "ten_1790721334055_lfqv",
+    "aiDealScore": 50,
+    "aiScoreClassification": "Média Propensão",
+    "aiScoreColor": "#0ea5e9",
+    "aiScoreRationale": "Score 50/100 (Média Propensão). Pontos fortes: Avanço no funil (PROSPECCAO +5pts); Orçamento mapeado: R$ 2.000 (+5pts). Atenção recomendada: Contato não identificado como decisor; Nenhuma interação comercial registrada no histórico (-10pts).",
+    "id": "dea_1790721334377_g1c6",
+    "createdAt": "2026-09-29T22:35:34.377Z",
+    "updatedAt": "2026-09-29T22:35:34.377Z"
+  },
+  {
+    "tenantId": "ten_1790721334055_lfqv",
+    "leadId": "lea_1790721334195_8gt8",
+    "title": "Venda Fechada",
+    "value": 8000,
+    "stage": "ganho",
+    "id": "dea_1790721334427_ly06",
+    "createdAt": "2026-09-29T22:35:34.427Z",
+    "updatedAt": "2026-09-29T22:35:34.427Z"
   }
 ]

@@ -2237,7 +2237,8 @@ function openNewLeadModal() { openModal('modal-new-lead'); }
 function openNewDealModal() { openModal('modal-new-deal'); }
 function openNewTaskModal() { openModal('modal-new-task'); }
 function openSettingsModal() { openModal('modal-settings'); }
-function openMobileMenuModal() { showToast('Navegue pelas opções da barra superior ou selecione as abas.', 'info'); }
+function openUserGuideModal() { openModal('modal-user-guide'); }
+function openMobileMenuModal() { openModal('modal-mobile-menu'); }
 
 async function submitNewLead(e) {
   e.preventDefault();

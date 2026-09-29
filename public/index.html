@@ -108,8 +108,12 @@
         </div>
       </div>
 
-      <!-- Quick Action Buttons -->
-      <div class="flex items-center gap-1 shrink-0">
+      <!-- Quick Action Buttons & Guia Passo a Passo -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button onclick="openUserGuideModal()" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 transition shrink-0" title="Guia Passo a Passo Oficial do CRM">
+          <i data-lucide="book-open" class="h-3.5 w-3.5"></i>
+          <span class="hidden sm:inline">Guia</span>
+        </button>
         <button onclick="openNewLeadModal()" class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
           <i data-lucide="user-plus" class="h-3.5 w-3.5"></i>
           <span>Lead</span>
@@ -236,7 +240,15 @@
           <span class="hidden lg:inline">Configurações & APIs</span>
         </button>
 
-        <div class="pt-2 border-t border-slate-800/60 hidden lg:block">
+        <div class="pt-2 border-t border-slate-800/60 hidden lg:block space-y-1">
+          <button type="button" onclick="openUserGuideModal()" class="w-full flex items-center gap-3 px-3 py-1.5 rounded-xl text-xs font-semibold text-emerald-400 hover:bg-emerald-500/10 transition text-left">
+            <i data-lucide="book-open" class="h-3.5 w-3.5 shrink-0"></i>
+            <span>Guia Passo a Passo</span>
+          </button>
+          <a href="/guia" target="_blank" class="w-full flex items-center gap-3 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-emerald-300 hover:bg-emerald-500/10 transition">
+            <i data-lucide="file-text" class="h-3.5 w-3.5 shrink-0"></i>
+            <span>Manual Completo (/guia)</span>
+          </a>
           <a href="/landing" target="_blank" class="w-full flex items-center gap-3 px-3 py-1.5 rounded-xl text-xs font-medium text-blue-400 hover:bg-blue-500/10 transition">
             <i data-lucide="external-link" class="h-3.5 w-3.5 shrink-0"></i>
             <span>Ver Landing Page</span>
@@ -298,9 +310,13 @@
       <div id="activation-card" class="glass-panel p-4 sm:p-5 rounded-2xl border border-blue-500/30 bg-slate-900/80 shadow-lg space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
           <div>
-            <div class="flex items-center gap-2 mb-0.5">
+            <div class="flex items-center gap-2 mb-0.5 flex-wrap">
               <span class="text-[10px] font-black uppercase text-blue-400 tracking-wider">Ativação Comercial</span>
               <span id="activation-score-badge" class="px-2 py-0.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 font-extrabold text-[10px]">0% Concluído</span>
+              <button onclick="openUserGuideModal()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-500/25 transition">
+                <i data-lucide="book-open" class="h-3 w-3"></i>
+                <span>Ver Guia Passo a Passo</span>
+              </button>
             </div>
             <h2 class="text-sm sm:text-base font-black text-white">Vamos colocar seu comercial para funcionar</h2>
             <p class="text-[11px] text-slate-400">Complete os 7 passos essenciais para extrair o máximo de receita e inteligência do seu CRM.</p>
@@ -1920,6 +1936,236 @@
       <div class="flex gap-3 pt-1">
         <button onclick="closeModal('modal-plan-upgrade')" class="flex-1 py-2.5 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:bg-slate-900 transition">Cancelar</button>
         <button id="modal-upgrade-confirm-btn" onclick="confirmPlanUpgrade()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold hover:brightness-110 transition shadow-lg shadow-emerald-600/20">Ativar Plano Agora</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GUIA PASSO A PASSO OFICIAL DO CRM -->
+  <div id="modal-user-guide" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-panel w-full max-w-3xl max-h-[92vh] flex flex-col rounded-3xl border border-emerald-500/30 bg-slate-950/95 shadow-2xl overflow-hidden">
+      <!-- Header do Modal -->
+      <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between shrink-0 bg-slate-900/60">
+        <div class="flex items-center gap-2.5">
+          <div class="h-9 w-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+            <i data-lucide="book-open" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-black text-white">Guia Passo a Passo Oficial do CRM</h3>
+            <p class="text-[11px] text-slate-400">Instruções práticas para operar todas as ferramentas do Agentise</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/guia" target="_blank" class="px-2.5 py-1 text-[11px] font-semibold text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/25 rounded-lg transition flex items-center gap-1">
+            <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+            <span class="hidden sm:inline">Abrir em Nova Aba</span>
+          </a>
+          <button onclick="closeModal('modal-user-guide')" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+            <i data-lucide="x" class="h-5 w-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Conteúdo do Guia (Scrollável) -->
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-300">
+        <!-- Passo 1 -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="h-6 w-6 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs">1</span>
+              Primeiro Acesso & Onboarding
+            </span>
+            <button onclick="closeModal('modal-user-guide'); openOnboardingModal();" class="text-[11px] text-blue-400 hover:underline font-semibold">Configurar Agora ➔</button>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Seu CRM já começa configurado com <strong>7 dias de teste gratuito</strong>. Acesse o Onboarding para personalizar seu segmento de atuação (ex: B2B, Concessionária, Imobiliária), porte da equipe e meta comercial.
+          </p>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="h-6 w-6 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs">2</span>
+              Cadastro & Gestão de Leads 360°
+            </span>
+            <button onclick="closeModal('modal-user-guide'); openNewLeadModal();" class="text-[11px] text-indigo-400 hover:underline font-semibold">+ Criar Lead ➔</button>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Cadastre novos contatos com nome, telefone/WhatsApp, e-mail e orçamento estimado. Na aba <strong>Leads 360°</strong>, clique em <em>Ações 360°</em> para ver a linha do tempo completa e chamar o cliente no WhatsApp com um clique.
+          </p>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">3</span>
+              Funil de Vendas Kanban & AI Deal Score
+            </span>
+            <button onclick="closeModal('modal-user-guide'); switchView('pipeline');" class="text-[11px] text-emerald-400 hover:underline font-semibold">Ver Funil ➔</button>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Crie oportunidades clicando no botão azul <code>Nova Oportunidade</code> e arraste os cartões entre as colunas (Prospecção ➔ Qualificação ➔ Proposta ➔ Fechado). A IA avalia cada oportunidade com base no método BANT (0 a 100) para indicar chances reais de fechamento.
+          </p>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="h-6 w-6 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs">4</span>
+              Propostas & Cobrança PIX Oficial Bacen
+            </span>
+            <button onclick="closeModal('modal-user-guide'); switchView('pix');" class="text-[11px] text-amber-400 hover:underline font-semibold">Emitir Proposta ➔</button>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Gere propostas detalhadas com itens, valores e descontos. O sistema cria automaticamente o <strong>PIX Copia-e-Cola e QR Code dinâmico do Banco Central</strong>. Ao receber o pagamento, a oportunidade move sozinha para <strong>Ganho</strong>.
+          </p>
+        </div>
+
+        <!-- Passo 5 -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="h-6 w-6 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs">5</span>
+              RecuperaIA: Resgate de Vendas Perdidas
+            </span>
+            <button onclick="closeModal('modal-user-guide'); switchView('recuperaia');" class="text-[11px] text-rose-400 hover:underline font-semibold">Executar Varredura ➔</button>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            O módulo exclusivo que analisa propostas paradas há mais de 48h e clientes sem contato há 7 dias. Com o botão <strong>Gerar Campanha com IA</strong>, o sistema cria mensagens consultivas para reverter desistências e resgatar dinheiro parado.
+          </p>
+        </div>
+
+        <!-- Passo 6 -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="h-6 w-6 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">6</span>
+              Central Omnichannel & Copiloto IA
+            </span>
+            <button onclick="closeModal('modal-user-guide'); switchView('omnichannel');" class="text-[11px] text-purple-400 hover:underline font-semibold">Ver Mensagens ➔</button>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Atenda clientes no WhatsApp e chat. Use o modo <strong>Copiloto</strong> para que a IA analise a conversa e gere sugestões inteligentes de resposta em 1 clique para o vendedor enviar.
+          </p>
+        </div>
+
+        <!-- Passo 7 -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="h-6 w-6 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">7</span>
+              Analista IA para Gestores & BI
+            </span>
+            <button onclick="closeModal('modal-user-guide'); switchView('analyst');" class="text-[11px] text-cyan-400 hover:underline font-semibold">Consultar Analista ➔</button>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Pergunte em linguagem natural: <em>"Quais vendedores estão abaixo da meta?"</em> ou <em>"Quanto temos para fechar este mês?"</em>. O analista responde com números auditados direto do banco de dados.
+          </p>
+        </div>
+      </div>
+
+      <!-- Rodapé do Modal -->
+      <div class="p-4 border-t border-slate-800 flex items-center justify-between shrink-0 bg-slate-900/60">
+        <a href="/guia" target="_blank" class="text-xs text-emerald-400 hover:underline flex items-center gap-1 font-semibold">
+          <i data-lucide="book" class="h-3.5 w-3.5"></i>
+          <span>Ler Manual Completo com Imagens (/guia)</span>
+        </a>
+        <button onclick="closeModal('modal-user-guide')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition">
+          Fechar Guia
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MENU MOBILE COMPLETO COM TODAS AS FERRAMENTAS & GUIA -->
+  <div id="modal-mobile-menu" class="fixed inset-0 z-50 modal-backdrop hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="glass-panel w-full sm:max-w-md max-h-[85vh] rounded-t-3xl sm:rounded-3xl border border-blue-500/30 bg-slate-950 p-5 space-y-4 overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white">
+            <i data-lucide="menu" class="h-4 w-4"></i>
+          </div>
+          <span class="font-bold text-white text-sm">Todas as Ferramentas</span>
+        </div>
+        <button onclick="closeModal('modal-mobile-menu')" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Destaque para o Guia Passo a Passo -->
+      <button onclick="closeModal('modal-mobile-menu'); openUserGuideModal();" class="w-full p-3 rounded-2xl bg-gradient-to-r from-emerald-950/60 to-slate-900 border border-emerald-500/30 text-left flex items-center gap-3 group">
+        <div class="h-9 w-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
+          <i data-lucide="book-open" class="h-5 w-5"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="font-bold text-emerald-300 text-xs">📖 Guia Passo a Passo do CRM</div>
+          <div class="text-[10px] text-slate-400 truncate">Aprenda a cadastrar leads, funil, PIX e IA</div>
+        </div>
+        <i data-lucide="chevron-right" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+      </button>
+
+      <!-- Grade de Navegação das Ferramentas -->
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <button onclick="closeModal('modal-mobile-menu'); switchView('pipeline');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="kanban" class="h-4 w-4 text-blue-400 shrink-0"></i>
+          <span>Funil Kanban</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('leads');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="users" class="h-4 w-4 text-blue-400 shrink-0"></i>
+          <span>Leads 360°</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('pix');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="qr-code" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+          <span>Propostas & PIX</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('recuperaia');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-rose-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="rotate-ccw" class="h-4 w-4 text-rose-400 shrink-0"></i>
+          <span>RecuperaIA</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('omnichannel');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="message-square" class="h-4 w-4 text-emerald-400 shrink-0"></i>
+          <span>Omnichannel</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('copilot');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="bot" class="h-4 w-4 text-blue-400 shrink-0"></i>
+          <span>Agente IA</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('automations');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-amber-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="workflow" class="h-4 w-4 text-amber-400 shrink-0"></i>
+          <span>Automações</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('cerebro');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="brain" class="h-4 w-4 text-purple-400 shrink-0"></i>
+          <span>Cérebro IA</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('analyst');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="trending-up" class="h-4 w-4 text-cyan-400 shrink-0"></i>
+          <span>Analista Gestor</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('analytics');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="bar-chart-3" class="h-4 w-4 text-blue-400 shrink-0"></i>
+          <span>Analytics BI</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); switchView('billing');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/40 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="sparkles" class="h-4 w-4 text-indigo-400 shrink-0"></i>
+          <span>Planos & Cotas</span>
+        </button>
+        <button onclick="closeModal('modal-mobile-menu'); openSettingsModal();" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-600 text-left flex items-center gap-2 text-slate-200">
+          <i data-lucide="settings" class="h-4 w-4 text-slate-400 shrink-0"></i>
+          <span>Configurações</span>
+        </button>
+      </div>
+
+      <!-- Links Legais & Onboarding -->
+      <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+        <button onclick="closeModal('modal-mobile-menu'); openOnboardingModal();" class="text-blue-400 font-semibold hover:underline">
+          Reconfigurar Negócio
+        </button>
+        <a href="/guia" target="_blank" class="text-emerald-400 font-semibold hover:underline">
+          Manual Completo (/guia)
+        </a>
       </div>
     </div>
   </div>

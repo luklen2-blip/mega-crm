@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 4550,
+    "aiCreditsUsed": 4640,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,7 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-29T21:31:16.599Z"
+    "updatedAt": "2026-09-29T22:35:22.705Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -1334,5 +1334,72 @@
     ],
     "primaryGoal": "aumentar_conversao",
     "onboardingCompleted": true
+  },
+  {
+    "name": "Empresa Alfa 1790721326322",
+    "segment": "servicos_b2b",
+    "teamSize": "6_15",
+    "plan": "business",
+    "trialEndsAt": "2026-10-06T22:35:26.419Z",
+    "status": "active",
+    "aiCredits": 20000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1790721326419_jn4u",
+    "createdAt": "2026-09-29T22:35:26.419Z",
+    "updatedAt": "2026-09-29T22:35:26.810Z",
+    "leadSources": [
+      "WhatsApp",
+      "Site"
+    ],
+    "primaryGoal": "aumentar_conversao",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Pentest Corp 1790721334052",
+    "segment": "tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-10-06T22:35:34.053Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1790721334055_lfqv",
+    "createdAt": "2026-09-29T22:35:34.055Z",
+    "updatedAt": "2026-09-29T22:35:34.700Z",
+    "pixWebhookSecret": "secret_pentest_1790721334052"
+  },
+  {
+    "name": "Tenant Vítima",
+    "status": "active",
+    "id": "ten_1790721334685_dxdg",
+    "createdAt": "2026-09-29T22:35:34.685Z",
+    "updatedAt": "2026-09-29T22:35:34.685Z"
+  },
+  {
+    "name": "Starter Corp 1790721334052",
+    "plan": "starter",
+    "status": "active",
+    "id": "ten_1790721334714_utla",
+    "createdAt": "2026-09-29T22:35:34.714Z",
+    "updatedAt": "2026-09-29T22:35:34.714Z"
+  },
+  {
+    "name": "Empresa Privada B2B",
+    "isDemo": false,
+    "id": "ten_1790721334768_bq87",
+    "createdAt": "2026-09-29T22:35:34.768Z",
+    "updatedAt": "2026-09-29T22:35:34.768Z"
   }
 ]

@@ -1600,5 +1600,95 @@
     "id": "wor_1790717476796_hqp1",
     "createdAt": "2026-09-29T21:31:16.796Z",
     "updatedAt": "2026-09-29T21:31:16.796Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1790721322092_9kyl",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790721322107_nlks"
+      }
+    ],
+    "executedAt": "2026-09-29T22:35:22.122Z",
+    "id": "wor_1790721322123_akpf",
+    "createdAt": "2026-09-29T22:35:22.123Z",
+    "updatedAt": "2026-09-29T22:35:22.123Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": null,
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790721322230_w5z2"
+      }
+    ],
+    "executedAt": "2026-09-29T22:35:22.248Z",
+    "id": "wor_1790721322248_ig0g",
+    "createdAt": "2026-09-29T22:35:22.248Z",
+    "updatedAt": "2026-09-29T22:35:22.248Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1790721322796_ri3f",
+    "automationName": "Alerta Deal VIP Score Alto",
+    "triggerType": "deal_score_alto",
+    "contextId": "lea_1790721321383_yebo",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "alert_created",
+        "taskId": "tas_1790721322807_s47n"
+      }
+    ],
+    "executedAt": "2026-09-29T22:35:22.826Z",
+    "id": "wor_1790721322826_1vn6",
+    "createdAt": "2026-09-29T22:35:22.826Z",
+    "updatedAt": "2026-09-29T22:35:22.826Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1790721322870_0t9k",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790721322885_6mx1"
+      }
+    ],
+    "executedAt": "2026-09-29T22:35:22.903Z",
+    "id": "wor_1790721322903_rhsa",
+    "createdAt": "2026-09-29T22:35:22.903Z",
+    "updatedAt": "2026-09-29T22:35:22.903Z"
+  },
+  {
+    "tenantId": "ten_1790721326419_jn4u",
+    "automationId": "aut_1790721326472_mrfb",
+    "automationName": "Boas-Vindas & Follow-up de Novo Lead",
+    "triggerType": "novo_lead",
+    "contextId": "lea_1790721326536_ekeh",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1790721326551_fy75"
+      }
+    ],
+    "executedAt": "2026-09-29T22:35:26.575Z",
+    "id": "wor_1790721326575_8fcs",
+    "createdAt": "2026-09-29T22:35:26.575Z",
+    "updatedAt": "2026-09-29T22:35:26.575Z"
   }
 ]

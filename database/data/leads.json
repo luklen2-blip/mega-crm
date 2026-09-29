@@ -1727,7 +1727,33 @@
       "WhatsApp"
     ],
     "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-09-29T21:31:14.803Z",
-    "updatedAt": "2026-09-29T21:31:14.832Z"
+    "createdAt": "2026-09-29T22:35:21.406Z",
+    "updatedAt": "2026-09-29T22:35:21.434Z"
+  },
+  {
+    "name": "Doutor Roberto Consultoria",
+    "email": "roberto_1790721326322@consultoria.com.br",
+    "phone": "11988887777",
+    "origin": "Campanha Google",
+    "tenantId": "ten_1790721326419_jn4u",
+    "id": "lea_1790721326536_ekeh",
+    "createdAt": "2026-09-29T22:35:26.536Z",
+    "updatedAt": "2026-09-29T22:35:26.536Z"
+  },
+  {
+    "tenantId": "ten_1790721334055_lfqv",
+    "name": "Lead Teste Exclusão",
+    "email": "alvo@teste.com",
+    "id": "lea_1790721334195_8gt8",
+    "createdAt": "2026-09-29T22:35:34.195Z",
+    "updatedAt": "2026-09-29T22:35:34.195Z"
+  },
+  {
+    "name": "Lead Injetado",
+    "email": "inj@test.com",
+    "tenantId": "ten_1790721334055_lfqv",
+    "id": "lea_1790721334304_vgph",
+    "createdAt": "2026-09-29T22:35:34.304Z",
+    "updatedAt": "2026-09-29T22:35:34.304Z"
   }
 ]

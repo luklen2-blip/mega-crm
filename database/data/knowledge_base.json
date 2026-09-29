@@ -187,5 +187,14 @@
     "id": "kno_1790112154655_aofr",
     "createdAt": "2026-09-22T21:22:34.655Z",
     "updatedAt": "2026-09-22T21:22:34.655Z"
+  },
+  {
+    "tenantId": "ten_1790721334685_dxdg",
+    "category": "Segredos",
+    "title": "Segredo Industrial Ultraconfidencial",
+    "content": "Margem de lucro de 85% e lista de fornecedores secretos",
+    "id": "kno_1790721334691_l204",
+    "createdAt": "2026-09-29T22:35:34.691Z",
+    "updatedAt": "2026-09-29T22:35:34.691Z"
   }
 ]
