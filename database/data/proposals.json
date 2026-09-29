@@ -1603,20 +1603,6 @@
     "paidAt": "2026-09-22T21:22:44.495Z"
   },
   {
-    "id": "prop_autoprime_bmw_11",
-    "tenantId": "ten_autoprime_veiculos",
-    "dealId": "deal_autoprime_bmw_villasboas",
-    "leadId": "lead_autoprime_51_villasboas",
-    "amount": 340000,
-    "pixKey": "financeiro@autoprime.com.br",
-    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
-    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
-    "status": "enviada",
-    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
-    "createdAt": "2026-09-22T21:22:50.207Z",
-    "updatedAt": "2026-09-22T21:22:50.207Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "dealId": null,
     "leadId": null,
@@ -1644,5 +1630,71 @@
     "createdAt": "2026-09-22T21:22:50.735Z",
     "updatedAt": "2026-09-22T21:22:50.767Z",
     "paidAt": "2026-09-22T21:22:50.767Z"
+  },
+  {
+    "tenantId": "ten_1790717466482_ix1x",
+    "title": "Assinatura Plano Business",
+    "planTarget": "business",
+    "amount": 397,
+    "status": "paga",
+    "paymentMethod": "PIX",
+    "publicToken": "d6f7f7dfbe58f87e894ec7986ab54911",
+    "txId": "SUB0717467185",
+    "items": [
+      {
+        "description": "Assinatura Mensal - Plano Business (15 usuários, 20000 cr IA)",
+        "quantity": 1,
+        "unitPrice": 397,
+        "total": 397
+      }
+    ],
+    "notes": "Assinatura comercial V4. Ativação automática mediante liquidação via PIX Bacen.",
+    "id": "pro_1790717467186_txhz",
+    "createdAt": "2026-09-29T21:31:07.186Z",
+    "updatedAt": "2026-09-29T21:31:07.213Z",
+    "paidAt": "2026-09-29T21:31:07.213Z"
+  },
+  {
+    "id": "prop_autoprime_bmw_11",
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "amount": 340000,
+    "pixKey": "financeiro@autoprime.com.br",
+    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
+    "status": "enviada",
+    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
+    "createdAt": "2026-09-29T21:31:14.863Z",
+    "updatedAt": "2026-09-29T21:31:14.863Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-10-06T21:31:15.839Z",
+    "publicToken": "4b3fe2a7a2baca152401ba76586bb9cc",
+    "checkoutUrl": "/p/4b3fe2a7a2baca152401ba76586bb9cc",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM4758396304CB1D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM4758396304CB1D",
+    "status": "paga",
+    "txId": "CRM475839",
+    "id": "pro_1790717475840_jkwa",
+    "createdAt": "2026-09-29T21:31:15.840Z",
+    "updatedAt": "2026-09-29T21:31:15.882Z",
+    "paidAt": "2026-09-29T21:31:15.881Z"
   }
 ]

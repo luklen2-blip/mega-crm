@@ -8,7 +8,7 @@
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
     "aiCredits": 20000,
-    "aiCreditsUsed": 4460,
+    "aiCreditsUsed": 4550,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,7 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-09-22T21:22:51.077Z"
+    "updatedAt": "2026-09-29T21:31:16.599Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -1309,5 +1309,30 @@
     "status": "active",
     "createdAt": "2026-09-22T21:22:44.163Z",
     "updatedAt": "2026-09-22T21:22:44.163Z"
+  },
+  {
+    "name": "Empresa Alfa 1790717466387",
+    "segment": "servicos_b2b",
+    "teamSize": "6_15",
+    "plan": "business",
+    "trialEndsAt": "2026-10-06T21:31:06.481Z",
+    "status": "active",
+    "aiCredits": 20000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1790717466482_ix1x",
+    "createdAt": "2026-09-29T21:31:06.482Z",
+    "updatedAt": "2026-09-29T21:31:07.224Z",
+    "leadSources": [
+      "WhatsApp",
+      "Site"
+    ],
+    "primaryGoal": "aumentar_conversao",
+    "onboardingCompleted": true
   }
 ]

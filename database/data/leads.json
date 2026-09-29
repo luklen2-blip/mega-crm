@@ -1700,6 +1700,16 @@
     "updatedAt": "2026-09-22T21:22:38.979Z"
   },
   {
+    "name": "Doutor Roberto Consultoria",
+    "email": "roberto_1790717466387@consultoria.com.br",
+    "phone": "11988887777",
+    "origin": "Campanha Google",
+    "tenantId": "ten_1790717466482_ix1x",
+    "id": "lea_1790717466673_6g5h",
+    "createdAt": "2026-09-29T21:31:06.673Z",
+    "updatedAt": "2026-09-29T21:31:06.673Z"
+  },
+  {
     "id": "lead_autoprime_51_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "name": "Dr. André Villas-Bôas",
@@ -1717,7 +1727,7 @@
       "WhatsApp"
     ],
     "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-09-22T21:22:50.168Z",
-    "updatedAt": "2026-09-22T21:22:50.193Z"
+    "createdAt": "2026-09-29T21:31:14.803Z",
+    "updatedAt": "2026-09-29T21:31:14.832Z"
   }
 ]

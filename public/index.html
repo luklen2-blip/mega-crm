@@ -2,7 +2,7 @@
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>Agentise Mega CRM | SaaS Comercial Multi-Tenant AI-First</title>
   <meta name="description" content="CRM + Omnichannel + IA + Automação + Recuperação de Clientes + Analytics. A IA que encontra oportunidades, atende, vende e recupera clientes perdidos.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 2L2 22h20L12 2z'/></svg>">
@@ -19,6 +19,9 @@
       darkMode: 'class',
       theme: {
         extend: {
+          screens: {
+            'xs': '420px'
+          },
           colors: {
             brand: {
               50: '#eff6ff',
@@ -45,59 +48,59 @@
   <!-- Estilos Customizados -->
   <link rel="stylesheet" href="/style.css">
 </head>
-<body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col pb-16 md:pb-0">
+<body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col pb-16 md:pb-0 overflow-x-hidden w-full max-w-full">
 
   <!-- TOAST CONTAINER -->
   <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
 
   <!-- TOPBAR -->
-  <header class="glass-panel border-b border-blue-500/15 sticky top-0 z-40 px-3 lg:px-6 py-2.5 flex items-center justify-between">
-    <div class="flex items-center gap-3">
+  <header class="glass-panel border-b border-blue-500/15 sticky top-0 z-40 px-2.5 sm:px-4 lg:px-6 py-2 sm:py-2.5 flex items-center justify-between gap-2 w-full max-w-full overflow-hidden">
+    <div class="flex items-center gap-2 sm:gap-3 shrink min-w-0">
       <!-- Logo Agentise Mega CRM -->
-      <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchView('pipeline')">
-        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
-          <i data-lucide="zap" class="h-5 w-5"></i>
+      <div class="flex items-center gap-2 cursor-pointer shrink min-w-0" onclick="switchView('pipeline')">
+        <div class="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 shrink-0">
+          <i data-lucide="zap" class="h-4 w-4 sm:h-5 sm:w-5"></i>
         </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-extrabold text-sm sm:text-base tracking-tight text-white">AGENTISE <span class="text-blue-400">MEGA CRM</span></span>
-            <span class="text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300">SaaS Multi-Tenant</span>
+        <div class="truncate">
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <span class="font-extrabold text-xs sm:text-base tracking-tight text-white whitespace-nowrap">AGENTISE <span class="text-blue-400 hidden xs:inline">MEGA CRM</span></span>
+            <span class="text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 hidden md:inline-block">SaaS Multi-Tenant</span>
           </div>
-          <p class="text-[10px] text-slate-400 hidden sm:block">CRM · Omnichannel · IA · RecuperaIA · Automações</p>
+          <p class="text-[10px] text-slate-400 hidden sm:block truncate">CRM · Omnichannel · IA · RecuperaIA · Automações</p>
         </div>
       </div>
     </div>
 
     <!-- Tenant & User Context + Cloud Live Status -->
-    <div class="flex items-center gap-3 sm:gap-4">
+    <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
       <div class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400">
         <span class="h-2 w-2 rounded-full bg-emerald-400 status-dot"></span>
         <span>Nuvem 24/7 Ativa (<span id="health-uptime">0s</span>)</span>
       </div>
 
       <!-- Seletor de Empresa / Tenant Switcher -->
-      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-slate-300">
+      <div class="flex items-center gap-1 px-1.5 sm:px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-slate-300 max-w-[125px] sm:max-w-[190px] md:max-w-none">
         <i data-lucide="building-2" class="h-3.5 w-3.5 text-blue-400 shrink-0"></i>
-        <select id="header-tenant-selector" onchange="switchDemoTenant(this.value)" class="bg-transparent text-xs text-white font-semibold focus:outline-none cursor-pointer pr-1">
+        <select id="header-tenant-selector" onchange="switchDemoTenant(this.value)" class="bg-transparent text-[11px] sm:text-xs text-white font-semibold focus:outline-none cursor-pointer pr-1 w-full truncate">
           <option value="ten_demo_agentise" class="bg-slate-900 text-slate-200">🏢 Agentise Soluções (B2B)</option>
           <option value="ten_autoprime_veiculos" class="bg-slate-900 text-slate-200">🚗 Auto Prime Veículos (Concessionária)</option>
         </select>
       </div>
 
       <!-- Trial / Plan Badge -->
-      <div id="topbar-plan-badge" onclick="switchView('billing')" class="cursor-pointer hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-xs text-indigo-300 hover:bg-indigo-500/25 transition">
+      <div id="topbar-plan-badge" onclick="switchView('billing')" class="cursor-pointer hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-xs text-indigo-300 hover:bg-indigo-500/25 transition shrink-0">
         <i data-lucide="sparkles" class="h-3.5 w-3.5 text-indigo-400"></i>
         <span id="tenant-plan-label">Plano Business (7d Trial)</span>
       </div>
 
-      <!-- AI Credits Pill -->
-      <div onclick="switchView('billing')" class="cursor-pointer flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 hover:bg-blue-500/20 transition">
+      <!-- AI Credits Pill (visível a partir de sm para economizar espaço em mobile) -->
+      <div onclick="switchView('billing')" class="cursor-pointer hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 hover:bg-blue-500/20 transition shrink-0">
         <i data-lucide="cpu" class="h-3.5 w-3.5 text-blue-400"></i>
         <span id="ai-credits-pill">18.550 cr</span>
       </div>
 
       <!-- User Profile Badge -->
-      <div class="flex items-center gap-2 pl-2 border-l border-slate-800">
+      <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-800 shrink-0">
         <img id="user-avatar" src="https://api.dicebear.com/7.x/initials/svg?seed=Luciano" alt="User" class="h-7 w-7 rounded-full bg-slate-800 border border-slate-700">
         <div class="hidden lg:block text-left">
           <div class="text-xs font-semibold text-white leading-tight" id="user-name">Luciano</div>
@@ -106,13 +109,13 @@
       </div>
 
       <!-- Quick Action Buttons -->
-      <div class="flex items-center gap-1.5">
+      <div class="flex items-center gap-1 shrink-0">
         <button onclick="openNewLeadModal()" class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
           <i data-lucide="user-plus" class="h-3.5 w-3.5"></i>
           <span>Lead</span>
         </button>
-        <button onclick="openNewDealModal()" class="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110 text-white shadow-md shadow-blue-600/30 transition">
-          <i data-lucide="plus-circle" class="h-3.5 w-3.5"></i>
+        <button onclick="openNewDealModal()" class="flex items-center gap-1 p-1.5 sm:px-3 sm:py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110 text-white shadow-md shadow-blue-600/30 transition shrink-0" title="Nova Oportunidade">
+          <i data-lucide="plus-circle" class="h-4 w-4 sm:h-3.5 sm:w-3.5"></i>
           <span class="hidden sm:inline">Nova Oportunidade</span>
         </button>
       </div>
@@ -120,7 +123,7 @@
   </header>
 
   <!-- BANNER DE TRIAL ATIVO & AVISO DE CONVERSÃO (V4) -->
-  <div id="trial-banner" class="bg-gradient-to-r from-blue-950/90 via-indigo-950/90 to-slate-900/95 border-b border-blue-500/20 px-3 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2.5 text-slate-200">
+  <div id="trial-banner" class="bg-gradient-to-r from-blue-950/90 via-indigo-950/90 to-slate-900/95 border-b border-blue-500/20 px-3 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2.5 text-slate-200 w-full max-w-full overflow-hidden">
     <div class="flex items-center gap-2">
       <span class="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
       <span id="trial-banner-text"><strong>Período de Testes:</strong> Seu teste gratuito de 7 dias termina em <span id="trial-days-left" class="font-bold text-amber-300">7 dias</span>.</span>
@@ -141,7 +144,7 @@
   </div>
 
   <!-- BODY CONTENT (SIDEBAR + MAIN) -->
-  <div class="flex-1 flex overflow-hidden">
+  <div class="flex-1 flex overflow-hidden w-full max-w-full">
     
     <!-- SIDEBAR (DESKTOP) -->
     <aside class="w-16 lg:w-64 glass-panel border-r border-blue-500/15 hidden md:flex flex-col justify-between p-2.5 shrink-0 overflow-y-auto">
@@ -289,7 +292,7 @@
     </nav>
 
     <!-- MAIN VIEW CONTAINER -->
-    <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-6">
+    <main class="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 lg:p-6 space-y-6 w-full max-w-full min-w-0">
 
       <!-- CHECKLIST DE PRIMEIRO VALOR / ACTIVATION SCORE (V4) -->
       <div id="activation-card" class="glass-panel p-4 sm:p-5 rounded-2xl border border-blue-500/30 bg-slate-900/80 shadow-lg space-y-3">

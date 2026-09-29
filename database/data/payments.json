@@ -823,5 +823,46 @@
     "id": "pay_1790112170771_m5ho",
     "createdAt": "2026-09-22T21:22:50.771Z",
     "updatedAt": "2026-09-22T21:22:50.771Z"
+  },
+  {
+    "tenantId": "ten_1790717466482_ix1x",
+    "proposalId": "pro_1790717467186_txhz",
+    "amount": 397,
+    "method": "PIX",
+    "txId": "SUB0717467185",
+    "endToEndId": "E1790717467207BACENOFICIAL",
+    "status": "pago",
+    "paidAt": "2026-09-29T21:31:07.218Z",
+    "id": "pay_1790717467218_jkox",
+    "createdAt": "2026-09-29T21:31:07.218Z",
+    "updatedAt": "2026-09-29T21:31:07.218Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "proposalId": "pro_1790717475663_eam9",
+    "dealId": "dea_1790717475656_zf4y",
+    "amount": 50000,
+    "method": "PIX",
+    "txId": "CRM475663",
+    "endToEndId": "E1790717475712MANUAL",
+    "status": "pago",
+    "paidAt": "2026-09-29T21:31:15.712Z",
+    "id": "pay_1790717475713_m575",
+    "createdAt": "2026-09-29T21:31:15.713Z",
+    "updatedAt": "2026-09-29T21:31:15.713Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "proposalId": "pro_1790717475840_jkwa",
+    "dealId": null,
+    "amount": 15000,
+    "method": "PIX",
+    "txId": "CRM475839",
+    "endToEndId": "E1790717475888MANUAL",
+    "status": "pago",
+    "paidAt": "2026-09-29T21:31:15.888Z",
+    "id": "pay_1790717475888_x0a4",
+    "createdAt": "2026-09-29T21:31:15.888Z",
+    "updatedAt": "2026-09-29T21:31:15.888Z"
   }
 ]

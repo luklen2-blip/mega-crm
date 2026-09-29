@@ -1438,6 +1438,32 @@
     "updatedAt": "2026-09-22T21:22:39.033Z"
   },
   {
+    "tenantId": "ten_demo_agentise",
+    "title": "Auditoria de Delta Deal #382",
+    "value": 7500,
+    "stage": "proposta",
+    "id": "dea_1790112170812_cxzu",
+    "createdAt": "2026-09-22T21:22:50.812Z",
+    "updatedAt": "2026-09-22T21:22:50.816Z"
+  },
+  {
+    "stage": "qualificacao",
+    "value": 12500,
+    "probability": 20,
+    "priority": "media",
+    "assignedTo": "Carlos Fundador",
+    "title": "Consultoria Estratégica Q4",
+    "leadId": "lea_1790717466673_6g5h",
+    "tenantId": "ten_1790717466482_ix1x",
+    "aiDealScore": 60,
+    "aiScoreClassification": "Média Propensão",
+    "aiScoreColor": "#0ea5e9",
+    "aiScoreRationale": "Score 60/100 (Média Propensão). Pontos fortes: Avanço no funil (QUALIFICACAO +15pts); Orçamento mapeado: R$ 12.500 (+5pts). Atenção recomendada: Contato não identificado como decisor; Nenhuma interação comercial registrada no histórico (-10pts).",
+    "id": "dea_1790717467070_dmwq",
+    "createdAt": "2026-09-29T21:31:07.070Z",
+    "updatedAt": "2026-09-29T21:31:07.070Z"
+  },
+  {
     "id": "deal_autoprime_bmw_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "leadId": "lead_autoprime_51_villasboas",
@@ -1447,16 +1473,16 @@
     "assignedTo": "Fernanda Lima",
     "probability": 100,
     "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
-    "createdAt": "2026-09-22T21:22:50.199Z",
-    "updatedAt": "2026-09-22T21:22:50.210Z"
+    "createdAt": "2026-09-29T21:31:14.845Z",
+    "updatedAt": "2026-09-29T21:31:14.869Z"
   },
   {
     "tenantId": "ten_demo_agentise",
     "title": "Auditoria de Delta Deal #382",
     "value": 7500,
     "stage": "proposta",
-    "id": "dea_1790112170812_cxzu",
-    "createdAt": "2026-09-22T21:22:50.812Z",
-    "updatedAt": "2026-09-22T21:22:50.816Z"
+    "id": "dea_1790717476094_njho",
+    "createdAt": "2026-09-29T21:31:16.094Z",
+    "updatedAt": "2026-09-29T21:31:16.102Z"
   }
 ]
