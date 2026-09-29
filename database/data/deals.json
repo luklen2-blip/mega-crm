@@ -1549,19 +1549,6 @@
     "updatedAt": "2026-09-29T22:35:34.427Z"
   },
   {
-    "id": "deal_autoprime_bmw_villasboas",
-    "tenantId": "ten_autoprime_veiculos",
-    "leadId": "lead_autoprime_51_villasboas",
-    "title": "Oportunidade BMW 320i M Sport 2024 - Dr. André Villas-Bôas",
-    "value": 340000,
-    "stage": "ganho",
-    "assignedTo": "Fernanda Lima",
-    "probability": 100,
-    "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
-    "createdAt": "2026-09-29T22:51:50.679Z",
-    "updatedAt": "2026-09-29T22:51:50.699Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "title": "Auditoria de Delta Deal #382",
     "value": 7500,
@@ -1586,5 +1573,44 @@
     "id": "dea_1790722317979_iikq",
     "createdAt": "2026-09-29T22:51:57.979Z",
     "updatedAt": "2026-09-29T22:51:57.979Z"
+  },
+  {
+    "id": "deal_autoprime_bmw_villasboas",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Oportunidade BMW 320i M Sport 2024 - Dr. André Villas-Bôas",
+    "value": 340000,
+    "stage": "ganho",
+    "assignedTo": "Fernanda Lima",
+    "probability": 100,
+    "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
+    "createdAt": "2026-09-29T23:07:45.213Z",
+    "updatedAt": "2026-09-29T23:07:45.231Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Auditoria de Delta Deal #382",
+    "value": 7500,
+    "stage": "proposta",
+    "id": "dea_1790723266202_izkt",
+    "createdAt": "2026-09-29T23:07:46.202Z",
+    "updatedAt": "2026-09-29T23:07:46.212Z"
+  },
+  {
+    "stage": "qualificacao",
+    "value": 12500,
+    "probability": 20,
+    "priority": "media",
+    "assignedTo": "Carlos Fundador",
+    "title": "Consultoria Estratégica Q4",
+    "leadId": "lea_1790723274592_ym50",
+    "tenantId": "ten_1790723274482_shxs",
+    "aiDealScore": 60,
+    "aiScoreClassification": "Média Propensão",
+    "aiScoreColor": "#0ea5e9",
+    "aiScoreRationale": "Score 60/100 (Média Propensão). Pontos fortes: Avanço no funil (QUALIFICACAO +15pts); Orçamento mapeado: R$ 12.500 (+5pts). Atenção recomendada: Contato não identificado como decisor; Nenhuma interação comercial registrada no histórico (-10pts).",
+    "id": "dea_1790723274715_n0e0",
+    "createdAt": "2026-09-29T23:07:54.715Z",
+    "updatedAt": "2026-09-29T23:07:54.715Z"
   }
 ]

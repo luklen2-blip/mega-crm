@@ -1565,5 +1565,70 @@
     "id": "aut_1790722318016_0qqc",
     "createdAt": "2026-09-29T22:51:58.016Z",
     "updatedAt": "2026-09-29T22:51:58.016Z"
+  },
+  {
+    "tenantId": "ten_1790723274482_shxs",
+    "name": "Boas-Vindas & Follow-up de Novo Lead",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Primeiro contato rápido (meta: < 15 min)",
+        "priority": "urgente",
+        "delayHours": 1
+      }
+    },
+    "active": true,
+    "id": "aut_1790723274536_9vm7",
+    "createdAt": "2026-09-29T23:07:54.536Z",
+    "updatedAt": "2026-09-29T23:07:54.536Z"
+  },
+  {
+    "tenantId": "ten_1790723274482_shxs",
+    "name": "Aceleração de Proposta PIX Aberta",
+    "trigger": "proposta_criada",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+        "priority": "alta",
+        "delayHours": 24
+      }
+    },
+    "active": true,
+    "id": "aut_1790723274541_30bs",
+    "createdAt": "2026-09-29T23:07:54.541Z",
+    "updatedAt": "2026-09-29T23:07:54.541Z"
+  },
+  {
+    "tenantId": "ten_1790723274482_shxs",
+    "name": "Reativação de Oportunidade Perdida",
+    "trigger": "lead_perdido",
+    "condition": null,
+    "action": {
+      "type": "criar_tarefa",
+      "params": {
+        "title": "Agendar contato de reativação para 15 dias",
+        "priority": "media",
+        "delayHours": 360
+      }
+    },
+    "active": true,
+    "id": "aut_1790723274545_78et",
+    "createdAt": "2026-09-29T23:07:54.545Z",
+    "updatedAt": "2026-09-29T23:07:54.545Z"
+  },
+  {
+    "tenantId": "ten_1790723274482_shxs",
+    "name": "Auto Boas Vindas Comercial",
+    "trigger": "novo_lead",
+    "condition": null,
+    "action": "enviar_whatsapp",
+    "active": true,
+    "id": "aut_1790723274754_tf1k",
+    "createdAt": "2026-09-29T23:07:54.754Z",
+    "updatedAt": "2026-09-29T23:07:54.754Z"
   }
 ]

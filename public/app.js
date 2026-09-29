@@ -240,7 +240,7 @@ async function checkHealth() {
 function switchView(viewName) {
   activeView = viewName;
   const allViews = [
-    'pipeline', 'leads', 'omnichannel', 'recuperaia', 'copilot',
+    'pipeline', 'guia', 'leads', 'omnichannel', 'recuperaia', 'copilot',
     'cerebro', 'automations', 'analyst', 'auto', 'sellers', 'pix',
     'analytics', 'tasks', 'billing'
   ];
@@ -251,7 +251,7 @@ function switchView(viewName) {
     if (el) el.classList.toggle('hidden', v !== viewName);
     if (nav) {
       if (v === viewName) {
-        nav.className = 'nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-blue-300 bg-blue-500/15 border border-blue-500/30 transition';
+        nav.className = 'nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-emerald-300 bg-emerald-500/20 border border-emerald-500/40 transition shadow-sm';
       } else {
         nav.className = 'nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition';
       }

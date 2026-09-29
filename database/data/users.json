@@ -1446,5 +1446,31 @@
     "id": "use_1790722318054_7kco",
     "createdAt": "2026-09-29T22:51:58.054Z",
     "updatedAt": "2026-09-29T22:51:58.054Z"
+  },
+  {
+    "tenantId": "ten_1790723274482_shxs",
+    "name": "Carlos Fundador",
+    "email": "fundador_1790723274399@empresaalfa.com.br",
+    "passwordHash": "9bf5201533bd7304fa5386209c09c438:f8e112eb9d3002f363ca2ac72eb18be7f5f2c3aa9c102ddf290c162d8e02f70e86c352846846ceee00eaa871e4c615ef3fc361a113c07eed61e8fa7cef0a27f8",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos%20Fundador",
+    "id": "use_1790723274514_ihch",
+    "createdAt": "2026-09-29T23:07:54.514Z",
+    "updatedAt": "2026-09-29T23:07:54.514Z"
+  },
+  {
+    "tenantId": "ten_1790723274482_shxs",
+    "name": "Juliana Vendedora",
+    "email": "juliana_1790723274399@empresaalfa.com.br",
+    "role": "VENDEDOR",
+    "phone": "",
+    "passwordHash": "95e59c815b2d0fe426cdd475a29b9dd8:91bc6e868cf0b569b83b46c76b1f58c1b7d12197b351867546d301089c2b597ab4f2b8c02050d4b19f0e8144f75cc39c5fa90f84494a860f1d6dc8220a36d868",
+    "mustChangePassword": false,
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Juliana%20Vendedora",
+    "id": "use_1790723274789_uxvp",
+    "createdAt": "2026-09-29T23:07:54.789Z",
+    "updatedAt": "2026-09-29T23:07:54.789Z"
   }
 ]
