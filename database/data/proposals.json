@@ -1854,20 +1854,6 @@
     "paidAt": "2026-09-29T22:51:58.136Z"
   },
   {
-    "id": "prop_autoprime_bmw_11",
-    "tenantId": "ten_autoprime_veiculos",
-    "dealId": "deal_autoprime_bmw_villasboas",
-    "leadId": "lead_autoprime_51_villasboas",
-    "amount": 340000,
-    "pixKey": "financeiro@autoprime.com.br",
-    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
-    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
-    "status": "enviada",
-    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
-    "createdAt": "2026-09-29T23:07:45.224Z",
-    "updatedAt": "2026-09-29T23:07:45.224Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "dealId": null,
     "leadId": null,
@@ -1918,5 +1904,255 @@
     "createdAt": "2026-09-29T23:07:54.840Z",
     "updatedAt": "2026-09-29T23:07:54.871Z",
     "paidAt": "2026-09-29T23:07:54.870Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-10-19T12:27:12.779Z",
+    "publicToken": "de927653ee8b5f885bc0895c332e87a5",
+    "checkoutUrl": "/p/de927653ee8b5f885bc0895c332e87a5",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM03277863041BC6",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM03277863041BC6",
+    "status": "paga",
+    "txId": "CRM032778",
+    "id": "pro_1791808032779_7ujq",
+    "createdAt": "2026-10-12T12:27:12.779Z",
+    "updatedAt": "2026-10-12T12:27:12.795Z",
+    "paidAt": "2026-10-12T12:27:12.795Z"
+  },
+  {
+    "tenantId": "ten_1791808043502_ic49",
+    "title": "Assinatura Plano Business",
+    "planTarget": "business",
+    "amount": 397,
+    "status": "paga",
+    "paymentMethod": "PIX",
+    "publicToken": "0b5caa7fd2ec9d4060d0cfeb588c9f04",
+    "txId": "SUB1808043685",
+    "items": [
+      {
+        "description": "Assinatura Mensal - Plano Business (15 usuários, 20000 cr IA)",
+        "quantity": 1,
+        "unitPrice": 397,
+        "total": 397
+      }
+    ],
+    "notes": "Assinatura comercial V4. Ativação automática mediante liquidação via PIX Bacen.",
+    "id": "pro_1791808043686_8d54",
+    "createdAt": "2026-10-12T12:27:23.686Z",
+    "updatedAt": "2026-10-12T12:27:23.697Z",
+    "paidAt": "2026-10-12T12:27:23.697Z"
+  },
+  {
+    "tenantId": "ten_1791808062335_bahx",
+    "dealId": "dea_1791808062464_qjro",
+    "leadId": null,
+    "items": [
+      {
+        "description": "Consultoria de Segurança",
+        "unitPrice": 1500,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 1500,
+    "discount": 100,
+    "amount": 1400,
+    "notes": "",
+    "validUntil": "2026-10-19T12:27:42.564Z",
+    "publicToken": "5a9313376c101a638af8c8e8420d34d9",
+    "checkoutUrl": "/p/5a9313376c101a638af8c8e8420d34d9",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com52040000530398654071400.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM06256263044048",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com52040000530398654071400.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM06256263044048",
+    "status": "paga",
+    "txId": "CRM062562",
+    "id": "pro_1791808062564_d67j",
+    "createdAt": "2026-10-12T12:27:42.564Z",
+    "updatedAt": "2026-10-12T12:27:42.584Z",
+    "paidAt": "2026-10-12T12:27:42.584Z"
+  },
+  {
+    "tenantId": "ten_1791808062335_bahx",
+    "amount": 1000,
+    "status": "cancelada",
+    "id": "pro_1791808062569_curj",
+    "createdAt": "2026-10-12T12:27:42.569Z",
+    "updatedAt": "2026-10-12T12:27:42.569Z"
+  },
+  {
+    "tenantId": "ten_1791808062335_bahx",
+    "amount": 1400,
+    "status": "paga",
+    "txId": "TX_WH_1791808062332",
+    "publicToken": "wh_token_1791808062332",
+    "id": "pro_1791808062607_kbeu",
+    "createdAt": "2026-10-12T12:27:42.607Z",
+    "updatedAt": "2026-10-12T12:27:42.613Z",
+    "paidAt": "2026-10-12T12:27:42.612Z"
+  },
+  {
+    "tenantId": "ten_1791808062335_bahx",
+    "amount": 99.9,
+    "status": "pendente",
+    "txId": "TX_MIS_1791808062332",
+    "publicToken": "mis_token_1791808062332",
+    "id": "pro_1791808062636_n62t",
+    "createdAt": "2026-10-12T12:27:42.636Z",
+    "updatedAt": "2026-10-12T12:27:42.636Z"
+  },
+  {
+    "tenantId": "ten_1791808062335_bahx",
+    "amount": 2500,
+    "status": "paga",
+    "id": "pro_1791808062668_jk0x",
+    "createdAt": "2026-10-12T12:27:42.668Z",
+    "updatedAt": "2026-10-12T12:27:42.675Z",
+    "paidAt": "2026-10-12T12:27:42.675Z"
+  },
+  {
+    "id": "prop_autoprime_bmw_11",
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "amount": 340000,
+    "pixKey": "financeiro@autoprime.com.br",
+    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
+    "status": "enviada",
+    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
+    "createdAt": "2026-10-12T12:38:03.153Z",
+    "updatedAt": "2026-10-12T12:38:03.153Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-10-19T12:38:03.637Z",
+    "publicToken": "8c76ab48c56deddd7678998112cb7e3e",
+    "checkoutUrl": "/p/8c76ab48c56deddd7678998112cb7e3e",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM6836376304F028",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM6836376304F028",
+    "status": "paga",
+    "txId": "CRM683637",
+    "id": "pro_1791808683637_o3lm",
+    "createdAt": "2026-10-12T12:38:03.637Z",
+    "updatedAt": "2026-10-12T12:38:03.659Z",
+    "paidAt": "2026-10-12T12:38:03.659Z"
+  },
+  {
+    "tenantId": "ten_1791808697211_hspd",
+    "title": "Assinatura Plano Business",
+    "planTarget": "business",
+    "amount": 397,
+    "status": "paga",
+    "paymentMethod": "PIX",
+    "publicToken": "312ec3bf5edfb80c71dec856322fc6e8",
+    "txId": "SUB1808697403",
+    "items": [
+      {
+        "description": "Assinatura Mensal - Plano Business (15 usuários, 20000 cr IA)",
+        "quantity": 1,
+        "unitPrice": 397,
+        "total": 397
+      }
+    ],
+    "notes": "Assinatura comercial V4. Ativação automática mediante liquidação via PIX Bacen.",
+    "id": "pro_1791808697403_pi6o",
+    "createdAt": "2026-10-12T12:38:17.403Z",
+    "updatedAt": "2026-10-12T12:38:17.418Z",
+    "paidAt": "2026-10-12T12:38:17.418Z"
+  },
+  {
+    "tenantId": "ten_1791808700988_ylod",
+    "dealId": "dea_1791808701197_y73m",
+    "leadId": null,
+    "items": [
+      {
+        "description": "Consultoria de Segurança",
+        "unitPrice": 1500,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 1500,
+    "discount": 100,
+    "amount": 1400,
+    "notes": "",
+    "validUntil": "2026-10-19T12:38:21.302Z",
+    "publicToken": "74877c4c67eb5aad241924b235eb75cf",
+    "checkoutUrl": "/p/74877c4c67eb5aad241924b235eb75cf",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com52040000530398654071400.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM70130163040C59",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com52040000530398654071400.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM70130163040C59",
+    "status": "paga",
+    "txId": "CRM701301",
+    "id": "pro_1791808701302_xx6b",
+    "createdAt": "2026-10-12T12:38:21.302Z",
+    "updatedAt": "2026-10-12T12:38:21.323Z",
+    "paidAt": "2026-10-12T12:38:21.323Z"
+  },
+  {
+    "tenantId": "ten_1791808700988_ylod",
+    "amount": 1000,
+    "status": "cancelada",
+    "id": "pro_1791808701310_z4p7",
+    "createdAt": "2026-10-12T12:38:21.310Z",
+    "updatedAt": "2026-10-12T12:38:21.310Z"
+  },
+  {
+    "tenantId": "ten_1791808700988_ylod",
+    "amount": 1400,
+    "status": "paga",
+    "txId": "TX_WH_1791808700986",
+    "publicToken": "wh_token_1791808700986",
+    "id": "pro_1791808701351_ces3",
+    "createdAt": "2026-10-12T12:38:21.351Z",
+    "updatedAt": "2026-10-12T12:38:21.358Z",
+    "paidAt": "2026-10-12T12:38:21.358Z"
+  },
+  {
+    "tenantId": "ten_1791808700988_ylod",
+    "amount": 99.9,
+    "status": "pendente",
+    "txId": "TX_MIS_1791808700986",
+    "publicToken": "mis_token_1791808700986",
+    "id": "pro_1791808701383_ylp8",
+    "createdAt": "2026-10-12T12:38:21.383Z",
+    "updatedAt": "2026-10-12T12:38:21.383Z"
+  },
+  {
+    "tenantId": "ten_1791808700988_ylod",
+    "amount": 2500,
+    "status": "paga",
+    "id": "pro_1791808701421_rkup",
+    "createdAt": "2026-10-12T12:38:21.421Z",
+    "updatedAt": "2026-10-12T12:38:21.429Z",
+    "paidAt": "2026-10-12T12:38:21.429Z"
   }
 ]

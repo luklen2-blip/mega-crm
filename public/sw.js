@@ -1,12 +1,12 @@
-// Service Worker Oficial para Agentise Mega CRM (PWA 24/7) - V4 Guia Atualizado
-const CACHE_NAME = 'agentise-crm-cache-v4-guia-2026';
+// Service Worker Oficial para Agentise Mega CRM (PWA 24/7) - V4 Tour Interativo
+const CACHE_NAME = 'agentise-crm-cache-v4-tour-2026';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/guia',
   '/guia.html',
-  '/style.css?v=2.2.0',
-  '/app.js?v=2.2.0',
+  '/style.css?v=2.3.0',
+  '/app.js?v=2.3.0',
   '/manifest.json',
   '/termos',
   '/privacidade'

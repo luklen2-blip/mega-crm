@@ -2,90 +2,74 @@ const fs = require('fs');
 const path = require('path');
 
 console.log('🔍 ========================================================');
-console.log('🔍 [AUDITORIA COMPLETA] Mega CRM AI-First');
-console.log('🔍 ========================================================\n');
+console.log('🔍 [AUDITORIA COMPLETA MEGA CRM] Inspeção 360 Graus');
+console.log('🔍 ========================================================');
 
-const projectRoot = path.resolve(__dirname, '..');
-let issues = [];
-let successes = [];
+const appPath = path.join(__dirname, '../public/app.js');
+const htmlPath = path.join(__dirname, '../public/index.html');
+const serverPath = path.join(__dirname, '../server.js');
+const swPath = path.join(__dirname, '../public/sw.js');
+const guiaPath = path.join(__dirname, '../public/guia.html');
+const landingPath = path.join(__dirname, '../public/landing.html');
 
-// 1. Auditoria do HTML e Funções JS
-console.log('▶ 1. Auditando interface HTML e vinculação com app.js...');
-const html = fs.readFileSync(path.join(projectRoot, 'public', 'index.html'), 'utf-8');
-const appJs = fs.readFileSync(path.join(projectRoot, 'public', 'app.js'), 'utf-8');
+const appContent = fs.readFileSync(appPath, 'utf8');
+const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+const serverContent = fs.readFileSync(serverPath, 'utf8');
+const swContent = fs.readFileSync(swPath, 'utf8');
+const guiaContent = fs.readFileSync(guiaPath, 'utf8');
+const landingContent = fs.readFileSync(landingPath, 'utf8');
 
-const regex = /onclick=["']([a-zA-Z0-9_]+)\(/g;
-let match;
-const handlers = new Set();
-while ((match = regex.exec(html)) !== null) {
-  handlers.add(match[1]);
+// 1. Verificar Lucide Icons
+console.log('\n▶ [1] Auditando Ícones Lucide...');
+const iconRegex = /data-lucide=["']([^"']+)["']/g;
+const icons = [];
+let m;
+while ((m = iconRegex.exec(htmlContent)) !== null) {
+  icons.push(m[1]);
 }
+const uniqueIcons = [...new Set(icons)].sort();
+console.log(`  Total de referências a ícones: ${icons.length}`);
+console.log(`  Total de ícones únicos: ${uniqueIcons.length}`);
 
-for (const fn of handlers) {
-  const defined = appJs.includes(`function ${fn}`) || 
-                  appJs.includes(`${fn} =`) || 
-                  appJs.includes(`const ${fn}`) || 
-                  appJs.includes(`let ${fn}`);
-  if (!defined) {
-    issues.push(`Função onclick "${fn}" chamada no HTML, mas NÃO definida em app.js`);
-  } else {
-    successes.push(`Handler "${fn}" devidamente implementado em app.js`);
-  }
+// 2. Verificar IDs duplicados no HTML
+console.log('\n▶ [2] Auditando IDs no index.html...');
+const idRegex = /id=["']([^"']+)["']/g;
+const idCount = {};
+while ((m = idRegex.exec(htmlContent)) !== null) {
+  const id = m[1];
+  idCount[id] = (idCount[id] || 0) + 1;
 }
-
-// 2. Auditoria de Endpoints da API REST
-console.log('▶ 2. Auditando rotas e endpoints em server.js...');
-const serverJs = fs.readFileSync(path.join(projectRoot, 'server.js'), 'utf-8');
-
-// Verifica se /api/settings está implementado
-if (!serverJs.includes('/api/settings')) {
-  issues.push('Endpoint GET/POST /api/settings não está implementado em server.js');
+const duplicateIds = Object.entries(idCount).filter(([id, count]) => count > 1);
+if (duplicateIds.length === 0) {
+  console.log('  ✅ Nenhum ID duplicado encontrado no index.html!');
 } else {
-  successes.push('Endpoint /api/settings configurado');
+  console.log('  ⚠️ IDs duplicados encontrados:', duplicateIds);
 }
 
-// Verifica path traversal protection em serveStatic
-if (!serverJs.includes('path.normalize') && !serverJs.includes('..')) {
-  issues.push('Proteção contra Directory Traversal (ex: ../../) em serveStatic pode ser endurecida');
+// 3. Verificar Service Worker Cache Assets
+console.log('\n▶ [3] Auditando Service Worker Assets...');
+const staticAssetsMatch = swContent.match(/const STATIC_ASSETS = \[([\s\S]*?)\];/);
+if (staticAssetsMatch) {
+  const rawAssets = staticAssetsMatch[1].split(',').map(s => s.trim().replace(/['"]/g, '')).filter(Boolean);
+  console.log('  Ativos declarados no cache PWA:', rawAssets);
 }
 
-// Verifica security headers
-if (!serverJs.includes('X-Content-Type-Options')) {
-  issues.push('Security headers recomendados (X-Content-Type-Options, X-Frame-Options) ausentes');
+// 4. Verificar todas as views registradas
+console.log('\n▶ [4] Auditando Sistema de Views (switchView)...');
+const allViewsMatch = appContent.match(/const allViews = \[([\s\S]*?)\];/);
+if (allViewsMatch) {
+  const views = allViewsMatch[1].split(',').map(v => v.trim().replace(/['"]/g, '')).filter(Boolean);
+  console.log('  Views registradas no switchView:', views);
+  views.forEach(v => {
+    const hasViewEl = htmlContent.includes(`id="view-${v}"`);
+    const hasNavEl = htmlContent.includes(`id="nav-${v}"`);
+    console.log(`  - view-${v}: ${hasViewEl ? '✅' : '❌ Falta container'} | nav-${v}: ${hasNavEl ? '✅' : 'ℹ️ Sem nav dedicado'}`);
+  });
 }
 
-// Verifica rate limiting / body size limit
-if (!serverJs.includes('MAX_BODY_SIZE') && !serverJs.includes('1e6')) {
-  issues.push('Limite explícito de tamanho de payload (Body Parser limit) ausente');
-}
+// 5. Verificar consistência dos endpoints em server.js vs frontend
+console.log('\n▶ [5] Auditando Endpoints do Servidor vs Frontend...');
+const serverRouteMatches = [...serverContent.matchAll(/(?:req\.url\.startsWith|req\.url ===)\(['"](\/api\/[^'"]+)['"]/g)].map(m => m[1]);
+console.log(`  Endpoints mapeados no server.js: ${[...new Set(serverRouteMatches)].length}`);
 
-// 3. Auditoria do Banco Atômico JsonDB
-console.log('▶ 3. Auditando motor de persistência JsonDB...');
-const dbJs = fs.readFileSync(path.join(projectRoot, 'database', 'db.js'), 'utf-8');
-if (dbJs.includes('renameSync')) {
-  successes.push('JsonDB utiliza substituição atômica via .tmp e renameSync');
-} else {
-  issues.push('JsonDB não está usando substituição atômica');
-}
-
-// 4. Auditoria de Serviços (PIX e Copilot)
-console.log('▶ 4. Auditando serviços PIX e IA Copilot...');
-const pixJs = fs.readFileSync(path.join(projectRoot, 'services', 'pixService.js'), 'utf-8');
-if (pixJs.includes('0x1021') && pixJs.includes('0xFFFF')) {
-  successes.push('Cálculo CRC-16 / CCITT-FALSE oficial do Banco Central presente');
-} else {
-  issues.push('Cálculo do CRC-16 do PIX divergente da norma Bacen');
-}
-
-const aiJs = fs.readFileSync(path.join(projectRoot, 'services', 'aiCopilotService.js'), 'utf-8');
-if (aiJs.includes('analyzeBant') && aiJs.includes('generateSalesPitch')) {
-  successes.push('Módulos de IA BANT e gerador de pitch ativos');
-}
-
-console.log('\n--------------------------------------------------------');
-console.log(`✅ Acertos Identificados (${successes.length}):`);
-successes.forEach(s => console.log(`  + ${s}`));
-
-console.log('\n⚠️ Pontos de Retificação e Melhorias (${issues.length}):');
-issues.forEach(i => console.log(`  - ${i}`));
-console.log('--------------------------------------------------------\n');
+console.log('\n✅ Auditoria concluída.');

@@ -90,7 +90,7 @@ function authHeaders() {
   return headers;
 }
 
-const CURRENT_APP_BUILD = '2.2.0-guia-2026';
+const CURRENT_APP_BUILD = '2.3.0-tour-2026';
 
 function checkClientBuildVersion() {
   const lastBuild = localStorage.getItem('agentise_app_build');
@@ -155,6 +155,11 @@ async function initApp() {
   ]);
   checkCookieConsent();
   if (window.lucide) lucide.createIcons();
+  setTimeout(() => {
+    if (!localStorage.getItem('agentise_tour_completed')) {
+      startInteractiveTour();
+    }
+  }, 1000);
 }
 
 async function loadCurrentContext() {
@@ -2593,3 +2598,73 @@ function acceptCookieConsent() {
   }
   showToast('Preferências de privacidade salvas.', 'info');
 }
+
+// 21. TOUR INTERATIVO GUIADO PASSO A PASSO (V4)
+let currentTourStep = 1;
+const TOTAL_TOUR_STEPS = 6;
+
+function startInteractiveTour() {
+  currentTourStep = 1;
+  openModal('modal-interactive-tour');
+  goToTourStep(1);
+}
+
+function goToTourStep(step) {
+  currentTourStep = Math.max(1, Math.min(step, TOTAL_TOUR_STEPS));
+  for (let i = 1; i <= TOTAL_TOUR_STEPS; i++) {
+    const el = document.getElementById(`tour-step-${i}`);
+    const dot = document.getElementById(`tour-dot-${i}`);
+    if (el) el.classList.toggle('hidden', i !== currentTourStep);
+    if (dot) {
+      if (i === currentTourStep) {
+        dot.className = 'text-emerald-400 font-extrabold transition';
+      } else if (i < currentTourStep) {
+        dot.className = 'text-slate-300 font-semibold transition';
+      } else {
+        dot.className = 'text-slate-500 font-normal hover:text-white transition';
+      }
+    }
+  }
+  const progressBar = document.getElementById('tour-progress-bar');
+  if (progressBar) progressBar.style.width = `${(currentTourStep / TOTAL_TOUR_STEPS) * 100}%`;
+  const badge = document.getElementById('tour-badge-step');
+  if (badge) badge.innerText = `Passo ${currentTourStep} de ${TOTAL_TOUR_STEPS}`;
+  const counter = document.getElementById('tour-step-counter');
+  if (counter) counter.innerText = `Passo ${currentTourStep} de ${TOTAL_TOUR_STEPS}`;
+
+  const prevBtn = document.getElementById('tour-btn-prev');
+  if (prevBtn) prevBtn.disabled = currentTourStep === 1;
+
+  const nextBtn = document.getElementById('tour-btn-next');
+  if (nextBtn) {
+    if (currentTourStep === TOTAL_TOUR_STEPS) {
+      nextBtn.innerHTML = '<span>Concluir Tour 🎉</span><i data-lucide="check" class="h-3.5 w-3.5"></i>';
+      nextBtn.className = 'px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:brightness-110 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-lg shadow-emerald-600/30';
+    } else {
+      nextBtn.innerHTML = '<span>Próximo Passo</span><i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>';
+      nextBtn.className = 'px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-lg shadow-emerald-600/25';
+    }
+  }
+  if (window.lucide) lucide.createIcons();
+}
+
+function nextTourStep() {
+  if (currentTourStep >= TOTAL_TOUR_STEPS) {
+    finishInteractiveTour();
+  } else {
+    goToTourStep(currentTourStep + 1);
+  }
+}
+
+function prevTourStep() {
+  if (currentTourStep > 1) {
+    goToTourStep(currentTourStep - 1);
+  }
+}
+
+function finishInteractiveTour() {
+  closeModal('modal-interactive-tour');
+  localStorage.setItem('agentise_tour_completed', 'true');
+  showToast('Parabéns! Tour concluído com sucesso. Aproveite o Mega CRM!', 'success');
+}
+
