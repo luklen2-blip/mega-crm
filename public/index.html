@@ -134,15 +134,15 @@
       <span class="text-[10px] text-slate-400 hidden lg:inline">| Acesse todas as funções, Copiloto IA e automações sem travas.</span>
     </div>
     <div class="flex items-center gap-2">
-      <button onclick="openCheckoutModal('professional')" class="px-3 py-1 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1">
-        <i data-lucide="sparkles" class="h-3 w-3"></i>
-        <span>Continuar com o Agentise</span>
-      </button>
-      <a href="/planos" target="_blank" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition hidden sm:inline-block">
-        Ver Planos
+      <a href="https://pay.kiwify.com.br/nh5KO0Y" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-md shadow-emerald-600/30 transition flex items-center gap-1.5 shrink-0 border border-emerald-400/40">
+        <i data-lucide="zap" class="h-3.5 w-3.5 text-amber-300"></i>
+        <span>Garantir Licença Vitalícia (R$ 67)</span>
       </a>
-      <a href="/landing" target="_blank" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-400 text-[11px] font-semibold transition hidden sm:inline-block">
-        Página Comercial
+      <a href="https://pay.kiwify.com.br/nh5KO0Y" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 text-[11px] font-bold transition hidden sm:inline-block border border-slate-700">
+        Comprar Vitalício (R$ 67)
+      </a>
+      <a href="/guia-instalacao" target="_blank" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition hidden sm:inline-block">
+        Guia de Instalação
       </a>
     </div>
   </div>
@@ -1608,10 +1608,14 @@
       </div>
 
       <!-- Botão Inicial para Iniciar Checkout -->
-      <div id="checkout-action-area">
-        <button onclick="generateCheckoutPix()" id="btn-generate-checkout" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
-          <i data-lucide="qr-code" class="h-4 w-4"></i>
-          <span>Gerar Cobrança PIX Oficial</span>
+      <div id="checkout-action-area" class="space-y-2">
+        <a href="https://pay.kiwify.com.br/nh5KO0Y" target="_blank" rel="noopener noreferrer" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2 border border-emerald-400/40">
+          <i data-lucide="zap" class="h-4 w-4 text-amber-300"></i>
+          <span>Comprar Licença Vitalícia na Kiwify (R$ 67,00)</span>
+        </a>
+        <button onclick="generateCheckoutPix()" id="btn-generate-checkout" class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold text-xs border border-slate-700 transition flex items-center justify-center gap-2">
+          <i data-lucide="qr-code" class="h-4 w-4 text-blue-400"></i>
+          <span>Ou Gerar Cobrança PIX Oficial do Plano</span>
         </button>
       </div>
     </div>
@@ -2367,9 +2371,14 @@
         </div>
       </div>
 
+      <a href="https://pay.kiwify.com.br/nh5KO0Y" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-black hover:brightness-110 transition shadow-lg shadow-emerald-600/20 text-center flex items-center justify-center gap-1.5 border border-emerald-400/40">
+        <i data-lucide="zap" class="h-3.5 w-3.5 text-amber-300"></i>
+        <span>Ou Adquira Licença Vitalícia por R$ 67 na Kiwify</span>
+      </a>
+
       <div class="flex gap-3 pt-1">
         <button onclick="closeModal('modal-plan-upgrade')" class="flex-1 py-2.5 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:bg-slate-900 transition">Cancelar</button>
-        <button id="modal-upgrade-confirm-btn" onclick="confirmPlanUpgrade()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold hover:brightness-110 transition shadow-lg shadow-emerald-600/20">Ativar Plano Agora</button>
+        <button id="modal-upgrade-confirm-btn" onclick="confirmPlanUpgrade()" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">Ativar Plano PIX</button>
       </div>
     </div>
   </div>
@@ -2918,7 +2927,10 @@
       <div class="space-y-1">
         <div class="text-slate-300 font-semibold flex items-center justify-center md:justify-start gap-1.5">
           <span>Agentise Mega CRM • Self-Hosted & White-Label Edition</span>
-          <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">Licença Perpétua R$ 67,00</span>
+          <a href="https://pay.kiwify.com.br/nh5KO0Y" target="_blank" rel="noopener noreferrer" class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 hover:text-white text-[10px] font-bold border border-emerald-500/30 transition flex items-center gap-1 shadow-sm">
+            <i data-lucide="zap" class="h-3 w-3 text-amber-300"></i>
+            <span>Licença Perpétua R$ 67,00 (Comprar na Kiwify)</span>
+          </a>
         </div>
         <p class="text-[10px] text-slate-400 max-w-3xl leading-relaxed">
           Licença de uso de software comercial perpétua em modalidade 'as-is' (no estado em que se encontra). A aquisição pelo valor promocional de R$ 67,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada.

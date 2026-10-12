@@ -2134,5 +2134,135 @@
     "id": "use_1791812713899_b217",
     "createdAt": "2026-10-12T13:45:13.899Z",
     "updatedAt": "2026-10-12T13:45:13.899Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "name": "Carlos Fundador",
+    "email": "fundador_1791813379005@empresaalfa.com.br",
+    "passwordHash": "c01bfc7a71212183ca8c52e3bde57c27:e884ca0d433dbcf5dcfb88af5d550d9772a2810e19fa66d685588dbe4e286953f9f34997b14af326c8c1dd995bbaee019ee39a6209e9df4e12ae1b4e6985bafd",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos%20Fundador",
+    "id": "use_1791813379056_08gj",
+    "createdAt": "2026-10-12T13:56:19.056Z",
+    "updatedAt": "2026-10-12T13:56:19.056Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "name": "Juliana Vendedora",
+    "email": "juliana_1791813379005@empresaalfa.com.br",
+    "role": "VENDEDOR",
+    "phone": "",
+    "passwordHash": "31dff8a845a8a74033b53817bc6b3d57:54a694cd01b982090ab2b9d0a5150af6509dec8c08ff83ee6d37c3ceadf555703f8f509938664d11ff18460e3ed48b3d463cd437078dee207a924b79c772eac8",
+    "mustChangePassword": false,
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Juliana%20Vendedora",
+    "id": "use_1791813379214_fy0u",
+    "createdAt": "2026-10-12T13:56:19.214Z",
+    "updatedAt": "2026-10-12T13:56:19.214Z"
+  },
+  {
+    "tenantId": "ten_1791813386741_z0wd",
+    "email": "owner_1791813386740@pentest.com",
+    "passwordHash": "75caf9f789fd46df3da40c653adc2620:4aa2f898c37c1228ff6d59394aee6ca5d572f33cad16298e0c2a5f6f014ed76ed83c5b5c092071da67ff6265832ccfa08a2405a2316964d3a32595788e2611d7",
+    "role": "PROPRIETARIO",
+    "status": "active",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=undefined",
+    "id": "use_1791813386753_vgay",
+    "createdAt": "2026-10-12T13:56:26.753Z",
+    "updatedAt": "2026-10-12T13:56:26.765Z"
+  },
+  {
+    "tenantId": "ten_1791813386741_z0wd",
+    "name": "Alice Admin",
+    "email": "admin_1791813386740@pentest.com",
+    "passwordHash": "hash_test_123",
+    "role": "ADMINISTRADOR",
+    "status": "active",
+    "id": "use_1791813386772_ex6n",
+    "createdAt": "2026-10-12T13:56:26.772Z",
+    "updatedAt": "2026-10-12T13:56:26.772Z"
+  },
+  {
+    "tenantId": "ten_1791813386741_z0wd",
+    "name": "Gustavo Gerente",
+    "email": "gerente_1791813386740@pentest.com",
+    "passwordHash": "hash_test_123",
+    "role": "GERENTE",
+    "status": "active",
+    "id": "use_1791813386775_nj3g",
+    "createdAt": "2026-10-12T13:56:26.775Z",
+    "updatedAt": "2026-10-12T13:56:26.775Z"
+  },
+  {
+    "tenantId": "ten_1791813386741_z0wd",
+    "name": "Victor Vendedor",
+    "email": "vendedor_1791813386740@pentest.com",
+    "passwordHash": "hash_test_123",
+    "role": "VENDEDOR",
+    "status": "active",
+    "id": "use_1791813386778_tp18",
+    "createdAt": "2026-10-12T13:56:26.778Z",
+    "updatedAt": "2026-10-12T13:56:26.778Z"
+  },
+  {
+    "tenantId": "ten_1791813386741_z0wd",
+    "name": "Arthur Atendente",
+    "email": "atendente_1791813386740@pentest.com",
+    "passwordHash": "hash_test_123",
+    "role": "ATENDENTE",
+    "status": "active",
+    "id": "use_1791813386781_ayn0",
+    "createdAt": "2026-10-12T13:56:26.781Z",
+    "updatedAt": "2026-10-12T13:56:26.781Z"
+  },
+  {
+    "tenantId": "ten_1791813386741_z0wd",
+    "name": "Fabiana Financeiro",
+    "email": "financeiro_1791813386740@pentest.com",
+    "passwordHash": "hash_test_123",
+    "role": "FINANCEIRO",
+    "status": "active",
+    "id": "use_1791813386786_8eys",
+    "createdAt": "2026-10-12T13:56:26.786Z",
+    "updatedAt": "2026-10-12T13:56:26.786Z"
+  },
+  {
+    "tenantId": "ten_1791813386741_z0wd",
+    "name": "Lucas Leitura",
+    "email": "leitura_1791813386740@pentest.com",
+    "passwordHash": "hash_test_123",
+    "role": "LEITURA",
+    "status": "active",
+    "id": "use_1791813386788_k8y7",
+    "createdAt": "2026-10-12T13:56:26.788Z",
+    "updatedAt": "2026-10-12T13:56:26.788Z"
+  },
+  {
+    "tenantId": "ten_1791813387155_3ge1",
+    "name": "User 1",
+    "email": "u1_1791813386740@starter.com",
+    "role": "VENDEDOR",
+    "id": "use_1791813387158_7468",
+    "createdAt": "2026-10-12T13:56:27.158Z",
+    "updatedAt": "2026-10-12T13:56:27.158Z"
+  },
+  {
+    "tenantId": "ten_1791813387155_3ge1",
+    "name": "User 2",
+    "email": "u2_1791813386740@starter.com",
+    "role": "VENDEDOR",
+    "id": "use_1791813387161_o2cz",
+    "createdAt": "2026-10-12T13:56:27.161Z",
+    "updatedAt": "2026-10-12T13:56:27.161Z"
+  },
+  {
+    "tenantId": "ten_1791813387155_3ge1",
+    "name": "User 3",
+    "email": "u3_1791813386740@starter.com",
+    "role": "VENDEDOR",
+    "id": "use_1791813387164_krmv",
+    "createdAt": "2026-10-12T13:56:27.164Z",
+    "updatedAt": "2026-10-12T13:56:27.164Z"
   }
 ]

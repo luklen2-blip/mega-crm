@@ -43,10 +43,10 @@ async function run() {
 
   // 2. /guia-instalacao route
   const guiaRes = await makeRequest({ host: '127.0.0.1', port: TEST_PORT, path: '/guia-instalacao', method: 'GET' });
-  if (guiaRes.status !== 200 || !guiaRes.body.includes('Como Instalar o Agentise Mega CRM')) {
-    throw new Error(`Falha em /guia-instalacao: status ${guiaRes.status}`);
+  if (guiaRes.status !== 200 || !guiaRes.body.includes('Como Instalar o Agentise Mega CRM') || !guiaRes.body.includes('https://pay.kiwify.com.br/nh5KO0Y')) {
+    throw new Error(`Falha em /guia-instalacao: status ${guiaRes.status} ou link Kiwify ausente`);
   }
-  console.log('  ✅ /guia-instalacao: 200 OK com layout interativo');
+  console.log('  ✅ /guia-instalacao: 200 OK com link de checkout Kiwify');
 
   // 3. /termos route includes Section 6 and R$ 67,00 pricing
   const termosRes = await makeRequest({ host: '127.0.0.1', port: TEST_PORT, path: '/termos', method: 'GET' });
@@ -94,6 +94,13 @@ async function run() {
     throw new Error(`Falha em /api/settings/credits-governance: ${JSON.stringify(govRes.json)}`);
   }
   console.log('  ✅ /api/settings/credits-governance validado com sucesso');
+
+  // 7. Test Kiwify checkout link in root index.html
+  const rootRes = await makeRequest({ host: '127.0.0.1', port: TEST_PORT, path: '/', method: 'GET' });
+  if (rootRes.status !== 200 || !rootRes.body.includes('https://pay.kiwify.com.br/nh5KO0Y')) {
+    throw new Error(`Falha em /: link de checkout Kiwify ausente no template principal`);
+  }
+  console.log('  ✅ / (index.html): link oficial de checkout Kiwify integrado');
 
   console.log('\n🎉 SUCESSO: Todos os testes específicos da Edição Self-Hosted foram APROVADOS (100%)!\n');
   server.close();

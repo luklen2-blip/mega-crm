@@ -142,5 +142,14 @@
     "createdAt": "2026-10-12T13:45:06.170Z",
     "id": "pip_1791812706170_52ve",
     "updatedAt": "2026-10-12T13:45:06.170Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "name": "Funil Expansão Enterprise",
+    "description": "Vendas consultivas high ticket",
+    "isDefault": false,
+    "createdAt": "2026-10-12T13:56:19.228Z",
+    "id": "pip_1791813379228_quok",
+    "updatedAt": "2026-10-12T13:56:19.228Z"
   }
 ]

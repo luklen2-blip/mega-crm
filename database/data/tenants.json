@@ -16,8 +16,8 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-10-12T13:44:57.458Z",
-    "aiCreditsResetAt": "2026-10-12T13:44:42.223Z"
+    "updatedAt": "2026-10-12T13:56:03.166Z",
+    "aiCreditsResetAt": "2026-10-12T13:55:54.694Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -1812,5 +1812,72 @@
     "id": "ten_1791812713918_by9t",
     "createdAt": "2026-10-12T13:45:13.918Z",
     "updatedAt": "2026-10-12T13:45:13.918Z"
+  },
+  {
+    "name": "Empresa Alfa 1791813379005",
+    "segment": "servicos_b2b",
+    "teamSize": "6_15",
+    "plan": "business",
+    "trialEndsAt": "2026-10-19T13:56:19.044Z",
+    "status": "active",
+    "aiCredits": 20000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1791813379044_ovzs",
+    "createdAt": "2026-10-12T13:56:19.044Z",
+    "updatedAt": "2026-10-12T13:56:19.271Z",
+    "leadSources": [
+      "WhatsApp",
+      "Site"
+    ],
+    "primaryGoal": "aumentar_conversao",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Pentest Corp 1791813386740",
+    "segment": "tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-10-19T13:56:26.740Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1791813386741_z0wd",
+    "createdAt": "2026-10-12T13:56:26.741Z",
+    "updatedAt": "2026-10-12T13:56:27.145Z",
+    "pixWebhookSecret": "secret_pentest_1791813386740"
+  },
+  {
+    "name": "Tenant Vítima",
+    "status": "active",
+    "id": "ten_1791813387138_fetk",
+    "createdAt": "2026-10-12T13:56:27.138Z",
+    "updatedAt": "2026-10-12T13:56:27.138Z"
+  },
+  {
+    "name": "Starter Corp 1791813386740",
+    "plan": "starter",
+    "status": "active",
+    "id": "ten_1791813387155_3ge1",
+    "createdAt": "2026-10-12T13:56:27.155Z",
+    "updatedAt": "2026-10-12T13:56:27.155Z"
+  },
+  {
+    "name": "Empresa Privada B2B",
+    "isDemo": false,
+    "id": "ten_1791813387185_6us6",
+    "createdAt": "2026-10-12T13:56:27.185Z",
+    "updatedAt": "2026-10-12T13:56:27.185Z"
   }
 ]

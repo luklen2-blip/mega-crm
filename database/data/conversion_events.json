@@ -1898,5 +1898,147 @@
     "id": "con_1791812706213_3ymg",
     "createdAt": "2026-10-12T13:45:06.213Z",
     "updatedAt": "2026-10-12T13:45:06.213Z"
+  },
+  {
+    "tenantId": "ten_1791813362186_n4bq",
+    "userId": "use_1791813362199_7lvr",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-10-12T13:56:02.251Z",
+    "id": "con_1791813362252_shr1",
+    "createdAt": "2026-10-12T13:56:02.252Z",
+    "updatedAt": "2026-10-12T13:56:02.252Z"
+  },
+  {
+    "tenantId": "public_visitor",
+    "userId": "usr_demo_luciano",
+    "event": "LANDING_VIEW",
+    "metadata": {
+      "source": "google_organic",
+      "campaign": "crm_ia_brasil",
+      "page": "/landing"
+    },
+    "ip": "127.0.0.1",
+    "timestamp": "2026-10-12T13:56:19.030Z",
+    "id": "con_1791813379031_b7qy",
+    "createdAt": "2026-10-12T13:56:19.031Z",
+    "updatedAt": "2026-10-12T13:56:19.031Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "SIGNUP",
+    "timestamp": "2026-10-12T13:56:19.079Z",
+    "id": "con_1791813379079_ftfx",
+    "createdAt": "2026-10-12T13:56:19.079Z",
+    "updatedAt": "2026-10-12T13:56:19.079Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "TRIAL_STARTED",
+    "timestamp": "2026-10-12T13:56:19.082Z",
+    "id": "con_1791813379082_i2w5",
+    "createdAt": "2026-10-12T13:56:19.082Z",
+    "updatedAt": "2026-10-12T13:56:19.082Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "servicos_b2b",
+    "teamSize": "6_15",
+    "primaryGoal": "aumentar_conversao",
+    "timestamp": "2026-10-12T13:56:19.094Z",
+    "id": "con_1791813379094_pkp9",
+    "createdAt": "2026-10-12T13:56:19.094Z",
+    "updatedAt": "2026-10-12T13:56:19.094Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "FIRST_LEAD",
+    "leadId": "lea_1791813379107_eq4w",
+    "timestamp": "2026-10-12T13:56:19.110Z",
+    "id": "con_1791813379110_2vsp",
+    "createdAt": "2026-10-12T13:56:19.110Z",
+    "updatedAt": "2026-10-12T13:56:19.110Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "FIRST_DEAL",
+    "dealId": "dea_1791813379171_uokb",
+    "timestamp": "2026-10-12T13:56:19.173Z",
+    "id": "con_1791813379173_6d8g",
+    "createdAt": "2026-10-12T13:56:19.173Z",
+    "updatedAt": "2026-10-12T13:56:19.173Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "FIRST_AI_ACTION",
+    "action": "RECUPERA_IA_SCAN",
+    "timestamp": "2026-10-12T13:56:19.188Z",
+    "id": "con_1791813379188_ytzc",
+    "createdAt": "2026-10-12T13:56:19.188Z",
+    "updatedAt": "2026-10-12T13:56:19.188Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "FIRST_AUTOMATION",
+    "automationId": "aut_1791813379195_av37",
+    "timestamp": "2026-10-12T13:56:19.198Z",
+    "id": "con_1791813379198_9bht",
+    "createdAt": "2026-10-12T13:56:19.198Z",
+    "updatedAt": "2026-10-12T13:56:19.198Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "CHECKOUT_STARTED",
+    "plan": "business",
+    "amount": 397,
+    "proposalId": "pro_1791813379246_hqlz",
+    "timestamp": "2026-10-12T13:56:19.251Z",
+    "id": "con_1791813379251_42fb",
+    "createdAt": "2026-10-12T13:56:19.252Z",
+    "updatedAt": "2026-10-12T13:56:19.252Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "userId": "use_1791813379056_08gj",
+    "event": "PAYMENT_PENDING",
+    "plan": "business",
+    "amount": 397,
+    "proposalId": "pro_1791813379246_hqlz",
+    "timestamp": "2026-10-12T13:56:19.255Z",
+    "id": "con_1791813379255_utj4",
+    "createdAt": "2026-10-12T13:56:19.255Z",
+    "updatedAt": "2026-10-12T13:56:19.255Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "event": "PLAN_ACTIVATED",
+    "plan": "business",
+    "amount": 397,
+    "proposalId": "pro_1791813379246_hqlz",
+    "timestamp": "2026-10-12T13:56:19.274Z",
+    "id": "con_1791813379274_jtxx",
+    "createdAt": "2026-10-12T13:56:19.274Z",
+    "updatedAt": "2026-10-12T13:56:19.274Z"
+  },
+  {
+    "tenantId": "ten_1791813379044_ovzs",
+    "event": "PAYMENT_CONFIRMED",
+    "amount": 397,
+    "proposalId": "pro_1791813379246_hqlz",
+    "timestamp": "2026-10-12T13:56:19.277Z",
+    "id": "con_1791813379277_i5by",
+    "createdAt": "2026-10-12T13:56:19.277Z",
+    "updatedAt": "2026-10-12T13:56:19.277Z"
   }
 ]
