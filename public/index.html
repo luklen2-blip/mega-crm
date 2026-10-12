@@ -87,17 +87,13 @@
         </select>
       </div>
 
-      <!-- Trial / Plan Badge -->
-      <div id="topbar-plan-badge" onclick="switchView('billing')" class="cursor-pointer hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-xs text-indigo-300 hover:bg-indigo-500/25 transition shrink-0">
-        <i data-lucide="sparkles" class="h-3.5 w-3.5 text-indigo-400"></i>
-        <span id="tenant-plan-label">Plano Business (7d Trial)</span>
+      <!-- Licença Perpétua Ativa Badge (Self-Hosted / BYOK) -->
+      <div id="topbar-plan-badge" class="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-xs text-emerald-300 transition shrink-0">
+        <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>
+        <span id="tenant-plan-label">Licença Perpétua Ativa</span>
       </div>
-
-      <!-- AI Credits Pill (visível a partir de sm para economizar espaço em mobile) -->
-      <div onclick="switchView('billing')" class="cursor-pointer hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 hover:bg-blue-500/20 transition shrink-0">
-        <i data-lucide="cpu" class="h-3.5 w-3.5 text-blue-400"></i>
-        <span id="ai-credits-pill">18.550 cr</span>
-      </div>
+      <!-- Elemento oculto para integridade sem exibição visual de moeda interna -->
+      <span id="ai-credits-pill" class="hidden"></span>
 
       <!-- User Profile Badge -->
       <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-800 shrink-0">
@@ -126,8 +122,8 @@
     </div>
   </header>
 
-  <!-- BANNER DE TRIAL ATIVO & AVISO DE CONVERSÃO (V4) -->
-  <div id="trial-banner" class="bg-gradient-to-r from-blue-950/90 via-indigo-950/90 to-slate-900/95 border-b border-blue-500/20 px-3 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2.5 text-slate-200 w-full max-w-full overflow-hidden">
+  <!-- BANNER DE TRIAL ATIVO & AVISO DE CONVERSÃO (OCULTO NA VERSÃO PERPÉTUA SELF-HOSTED) -->
+  <div id="trial-banner" class="hidden bg-gradient-to-r from-blue-950/90 via-indigo-950/90 to-slate-900/95 border-b border-blue-500/20 px-3 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2.5 text-slate-200 w-full max-w-full overflow-hidden">
     <div class="flex items-center gap-2">
       <span class="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
       <span id="trial-banner-text"><strong>Período de Testes:</strong> Seu teste gratuito de 7 dias termina em <span id="trial-days-left" class="font-bold text-amber-300">7 dias</span>.</span>
@@ -264,19 +260,14 @@
             <span>⚙️ Ajustes & Conta</span>
           </div>
 
-          <button onclick="switchView('billing')" id="nav-billing" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
-            <i data-lucide="credit-card" class="h-4 w-4 shrink-0 text-indigo-400"></i>
-            <span class="hidden lg:inline">Planos & Créditos</span>
+          <button onclick="openSettingsModal()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+            <i data-lucide="settings" class="h-4 w-4 shrink-0"></i>
+            <span class="hidden lg:inline">Configurações & APIs</span>
           </button>
 
           <button onclick="openSaasAdminModal()" id="nav-saas-admin" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-emerald-400 hover:bg-emerald-500/10 transition">
             <i data-lucide="trending-up" class="h-4 w-4 shrink-0 text-emerald-400"></i>
-            <span class="hidden lg:inline">Métricas SaaS (Admin)</span>
-          </button>
-
-          <button onclick="openSettingsModal()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
-            <i data-lucide="settings" class="h-4 w-4 shrink-0"></i>
-            <span class="hidden lg:inline">Configurações & APIs</span>
+            <span class="hidden lg:inline">Métricas do Sistema</span>
           </button>
         </div>
 
@@ -1125,164 +1116,57 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- VIEW 11: PLANOS & CRÉDITOS DE IA -->
+      <!-- VIEW 11: LICENÇA PERPÉTUA & GOVERNANÇA (BYOK) -->
       <!-- ============================================== -->
       <section id="view-billing" class="hidden space-y-6">
-        <!-- Trial Status Banner -->
-        <div class="glass-panel p-5 rounded-2xl border border-indigo-500/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Período de Demonstração Comercial</span>
-            <h2 id="billing-trial-title" class="text-xl font-black text-white pt-1">Você está no período de 7 Dias Grátis</h2>
-            <p class="text-xs text-slate-400">Aproveite todas as funcionalidades com total isolamento multi-tenant e segurança operacional.</p>
+        <!-- Perpetual License Status Banner -->
+        <div class="glass-panel p-5 rounded-2xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/30 via-slate-900 to-slate-950 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 uppercase tracking-wider">
+                <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>
+                <span id="billing-plan-badge">Licença Perpétua Ativa</span>
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">Self-Hosted / BYOK</span>
+            </div>
+            <h2 id="billing-trial-title" class="text-xl font-black text-white pt-1">Instalação Proprietária Vitalícia</h2>
+            <p class="text-xs text-slate-300">Software operando em infraestrutura autônoma com suas próprias chaves de IA (BYOK) sem cobrança de mensalidades ou travas de créditos.</p>
           </div>
           <div class="text-right">
-            <div class="text-xs text-slate-400">Créditos de IA Disponíveis:</div>
-            <div class="text-2xl font-black text-blue-400" id="billing-credits-val">20.000 / 20.000</div>
+            <div class="text-xs text-slate-400">Consumo de IA:</div>
+            <div class="text-xl font-black text-emerald-400" id="billing-credits-val">Ilimitado (BYOK)</div>
+            <span class="text-[10px] text-slate-400">Direto nos seus provedores</span>
           </div>
         </div>
 
-        <!-- Quotas de Consumo em Tempo Real (Fase 13) -->
-        <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <i data-lucide="gauge" class="h-4 w-4 text-indigo-400"></i>
-              <span>Consumo e Quotas do Workspace em Tempo Real</span>
-            </h3>
-            <span id="billing-plan-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Plano Ativo</span>
+        <!-- Painel de Arquitetura Self-Hosted & BYOK -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
+            <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs">
+              <i data-lucide="infinity" class="h-4 w-4"></i>
+              <span>Sem Mensalidades</span>
+            </div>
+            <p class="text-xs text-slate-300">A licença adquirida é perpétua. Não há faturas mensais, assinaturas recorrentes ou cobranças adicionais pelo criador do software.</p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 pt-2">
-            <!-- Leads -->
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-2">
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="users" class="h-3.5 w-3.5 text-blue-400"></i> Leads</span>
-                <span id="quota-leads-text" class="font-bold text-white">0 / 500</span>
-              </div>
-              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div id="quota-leads-bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-              </div>
-              <div id="quota-leads-pct" class="text-[10px] text-slate-400 text-right">0% utilizado</div>
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
+            <div class="flex items-center gap-2 text-blue-400 font-bold text-xs">
+              <i data-lucide="key" class="h-4 w-4"></i>
+              <span>Bring Your Own Key (BYOK)</span>
             </div>
-
-            <!-- Usuários -->
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-2">
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="user-check" class="h-3.5 w-3.5 text-emerald-400"></i> Usuários</span>
-                <span id="quota-users-text" class="font-bold text-white">1 / 2</span>
-              </div>
-              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div id="quota-users-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 50%"></div>
-              </div>
-              <div id="quota-users-pct" class="text-[10px] text-slate-400 text-right">50% utilizado</div>
-            </div>
-
-            <!-- Pipelines / Funis -->
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-2">
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="git-branch" class="h-3.5 w-3.5 text-purple-400"></i> Funis</span>
-                <span id="quota-pipelines-text" class="font-bold text-white">1 / 1</span>
-              </div>
-              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div id="quota-pipelines-bar" class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 100%"></div>
-              </div>
-              <div id="quota-pipelines-pct" class="text-[10px] text-slate-400 text-right">100% utilizado</div>
-            </div>
-
-            <!-- Automações -->
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-2">
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="zap" class="h-3.5 w-3.5 text-amber-400"></i> Automações</span>
-                <span id="quota-automations-text" class="font-bold text-white">0 / 3</span>
-              </div>
-              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div id="quota-automations-bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-              </div>
-              <div id="quota-automations-pct" class="text-[10px] text-slate-400 text-right">0% utilizado</div>
-            </div>
-
-            <!-- Créditos IA -->
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-2">
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="sparkles" class="h-3.5 w-3.5 text-indigo-400"></i> IA Copilot</span>
-                <span id="quota-credits-text" class="font-bold text-white">0 / 1.000</span>
-              </div>
-              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div id="quota-credits-bar" class="bg-indigo-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-              </div>
-              <div id="quota-credits-pct" class="text-[10px] text-slate-400 text-right">0% utilizado</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4 Tiers SaaS Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <!-- Starter -->
-          <div id="card-plan-starter" class="glass-card p-5 rounded-2xl border border-slate-700 flex flex-col justify-between">
-            <div class="space-y-3">
-              <div class="text-xs font-bold uppercase text-slate-400">Starter</div>
-              <div class="text-2xl font-black text-white">R$ 97<span class="text-xs font-normal text-slate-400">/mês</span></div>
-              <p class="text-xs text-slate-400">Para profissionais autônomos e pequenas operações.</p>
-              <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> 1 Funil de Vendas</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> Até 2 Usuários</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> Até 500 Leads</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> 1.000 Créditos IA/mês</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> PIX Oficial EMV</li>
-              </ul>
-            </div>
-            <button id="btn-upgrade-starter" onclick="openPlanUpgradeModal('starter', 'Starter', 97)" class="w-full mt-5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition">Selecionar Starter</button>
+            <p class="text-xs text-slate-300">Conecte suas credenciais oficiais da OpenAI, Google Gemini e WhatsApp Cloud API com autonomia total e custo direto de provedor.</p>
+            <button onclick="openSettingsModal()" class="mt-2 text-xs text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1">
+              <span>Configurar Chaves</span>
+              <i data-lucide="arrow-right" class="h-3 w-3"></i>
+            </button>
           </div>
 
-          <!-- Professional -->
-          <div id="card-plan-professional" class="glass-card p-5 rounded-2xl border border-blue-500/30 flex flex-col justify-between relative">
-            <div class="space-y-3">
-              <div class="text-xs font-bold uppercase text-blue-400">Professional</div>
-              <div class="text-2xl font-black text-white">R$ 197<span class="text-xs font-normal text-slate-400">/mês</span></div>
-              <p class="text-xs text-slate-400">Para equipes em expansão com foco em automação.</p>
-              <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> 3 Funis de Vendas</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> Até 5 Usuários</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> Até 2.500 Leads</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> 5.000 Créditos IA/mês</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-blue-400"></i> Central Omnichannel & IA</li>
-              </ul>
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
+            <div class="flex items-center gap-2 text-purple-400 font-bold text-xs">
+              <i data-lucide="database" class="h-4 w-4"></i>
+              <span>Soberania de Dados & LGPD</span>
             </div>
-            <button id="btn-upgrade-professional" onclick="openPlanUpgradeModal('professional', 'Professional', 197)" class="w-full mt-5 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition">Selecionar Professional</button>
-          </div>
-
-          <!-- Business (Popular) -->
-          <div id="card-plan-business" class="glass-card p-5 rounded-2xl border border-indigo-500 shadow-xl shadow-indigo-500/10 flex flex-col justify-between relative bg-indigo-950/20">
-            <div class="absolute -top-3 right-4 px-2 py-0.5 rounded-full bg-indigo-500 text-[10px] font-black text-white uppercase tracking-wider">Mais Escolhido</div>
-            <div class="space-y-3">
-              <div class="text-xs font-bold uppercase text-indigo-400">Business</div>
-              <div class="text-2xl font-black text-white">R$ 397<span class="text-xs font-normal text-slate-400">/mês</span></div>
-              <p class="text-xs text-slate-400">Escala comercial completa e verticais de negócio.</p>
-              <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> 10 Funis de Vendas</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> Até 15 Usuários</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> Até 10.000 Leads</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> 20.000 Créditos IA/mês</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i> Vertical Automotivo Ativo</li>
-              </ul>
-            </div>
-            <button id="btn-upgrade-business" onclick="openPlanUpgradeModal('business', 'Business', 397)" class="w-full mt-5 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg transition">Selecionar Business</button>
-          </div>
-
-          <!-- Agency Enterprise -->
-          <div id="card-plan-enterprise" class="glass-card p-5 rounded-2xl border border-purple-500/30 flex flex-col justify-between">
-            <div class="space-y-3">
-              <div class="text-xs font-bold uppercase text-purple-400">Agency Enterprise</div>
-              <div class="text-2xl font-black text-white">R$ 897<span class="text-xs font-normal text-slate-400">/mês</span></div>
-              <p class="text-xs text-slate-400">Para agências, holdings e redes de franquias.</p>
-              <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-purple-400"></i> 50 Funis de Vendas</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-purple-400"></i> Até 50 Usuários</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-purple-400"></i> 50.000 Leads</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-purple-400"></i> 60.000 Créditos IA/mês</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="h-3.5 w-3.5 text-purple-400"></i> Multi-Empresas e Auditoria</li>
-              </ul>
-            </div>
-            <button id="btn-upgrade-enterprise" onclick="openPlanUpgradeModal('enterprise', 'Agency Enterprise', 897)" class="w-full mt-5 py-2 text-xs font-semibold rounded-xl bg-purple-600 hover:bg-purple-500 text-white transition">Selecionar Enterprise</button>
+            <p class="text-xs text-slate-300">Todos os dados de leads, funis e conversas residem no seu próprio banco de dados, em total conformidade com a LGPD e privacidade.</p>
           </div>
         </div>
 
@@ -2636,14 +2520,10 @@
       <!-- 4. AJUSTES & CONTA -->
       <div class="space-y-1.5">
         <div class="text-[10px] font-black uppercase text-slate-400 tracking-wider px-1">⚙️ Ajustes & Conta</div>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <button onclick="closeModal('modal-mobile-menu'); switchView('billing');" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/40 text-left flex items-center gap-2 text-slate-200">
-            <i data-lucide="sparkles" class="h-4 w-4 text-indigo-400 shrink-0"></i>
-            <span>Planos & Cotas</span>
-          </button>
+        <div class="grid grid-cols-1 gap-2 text-xs">
           <button onclick="closeModal('modal-mobile-menu'); openSettingsModal();" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-600 text-left flex items-center gap-2 text-slate-200">
             <i data-lucide="settings" class="h-4 w-4 text-slate-400 shrink-0"></i>
-            <span>Configurações</span>
+            <span>Configurações & Chaves de API (BYOK)</span>
           </button>
         </div>
       </div>

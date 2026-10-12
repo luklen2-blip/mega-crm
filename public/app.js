@@ -1674,21 +1674,20 @@ async function loadBilling() {
     if (!d) return;
 
     if (document.getElementById('tenant-plan-label')) {
-      document.getElementById('tenant-plan-label').innerText = `${d.plan.name} (${d.daysLeftTrial}d Trial)`;
+      document.getElementById('tenant-plan-label').innerText = 'Licença Perpétua Ativa';
     }
-    if (document.getElementById('ai-credits-pill')) {
-      document.getElementById('ai-credits-pill').innerText = `${d.aiCreditsRemaining} cr`;
+    const aiCreditsPill = document.getElementById('ai-credits-pill');
+    if (aiCreditsPill) {
+      aiCreditsPill.classList.add('hidden');
     }
     if (document.getElementById('billing-credits-val')) {
-      document.getElementById('billing-credits-val').innerText = `${d.aiCreditsRemaining} / ${d.aiCredits}`;
+      document.getElementById('billing-credits-val').innerText = 'Ilimitado (BYOK)';
     }
     if (document.getElementById('billing-plan-badge')) {
-      document.getElementById('billing-plan-badge').innerText = `Plano ${d.plan.name} (${d.daysLeftTrial}d restantes)`;
+      document.getElementById('billing-plan-badge').innerText = 'Licença Perpétua Ativa';
     }
     if (document.getElementById('billing-trial-title')) {
-      document.getElementById('billing-trial-title').innerText = d.isTrialActive 
-        ? `Você está no período de Demonstração (${d.daysLeftTrial} dias restantes)` 
-        : `Plano Ativo: ${d.plan.name}`;
+      document.getElementById('billing-trial-title').innerText = 'Instalação Proprietária Vitalícia (Self-Hosted)';
     }
 
     // Atualiza Quotas Visuais
@@ -2005,25 +2004,11 @@ async function deleteTask(id) {
 // CAMADA COMERCIAL V4: TRIAL, ATIVAÇÃO, ONBOARDING & CHECKOUT
 // =========================================================================
 
-// 1. Contagem Regressiva e Alertas do Período de Teste (Trial)
+// 1. Contagem Regressiva e Alertas do Período de Teste (Trial - Desativado para Licença Perpétua)
 function updateTrialCountdown(tenant) {
-  if (!tenant) return;
+  // Na versão Self-Hosted com Licença Perpétua, o banner de trial permanece oculto
   const trialBanner = document.getElementById('trial-banner');
-  const trialDaysLeftEl = document.getElementById('trial-days-left');
-  const trialTextEl = document.getElementById('trial-banner-text');
-
-  if (tenant.trialEndsAt) {
-    const diffMs = new Date(tenant.trialEndsAt) - new Date();
-    const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-    if (daysLeft > 0) {
-      if (trialDaysLeftEl) trialDaysLeftEl.innerText = `${daysLeft} ${daysLeft === 1 ? 'dia' : 'dias'}`;
-      if (trialTextEl) trialTextEl.innerHTML = `<strong>Período de Testes:</strong> Seu teste gratuito termina em <span class="font-bold text-amber-300">${daysLeft} ${daysLeft === 1 ? 'dia' : 'dias'}</span>.`;
-      if (trialBanner) trialBanner.classList.remove('hidden');
-    } else {
-      if (trialTextEl) trialTextEl.innerHTML = `<strong>Período de Testes:</strong> Seu teste gratuito de 7 dias encerrou. <span class="text-amber-300 font-semibold">Escolha um plano para manter todas as integrações ativas.</span>`;
-      if (trialBanner) trialBanner.classList.remove('hidden');
-    }
-  }
+  if (trialBanner) trialBanner.classList.add('hidden');
 }
 
 // 2. Checklist de Ativação & Primeiro Valor (Activation Score 0-100%)
