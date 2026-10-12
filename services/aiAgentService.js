@@ -185,11 +185,15 @@ async function processAgentInteraction({
   // Monta contexto com base no Cérebro da Empresa (Knowledge Base)
   const kbItems = knowledgeBaseDB.findByTenant(tenantId);
   const kbContext = kbItems.map(k => `[${k.category}] ${k.title}: ${k.content}`).join('\n\n');
+  const tenantSettings = (typeof settingsDB !== 'undefined' && settingsDB) 
+    ? (settingsDB.findById(`settings_${tenantId}`) || settingsDB.findById('general_settings') || {}) 
+    : {};
+  const currentPixKey = tenantSettings.pixKey || process.env.PIX_CHAVE || 'oficial cadastrada no sistema';
 
   const systemPrompt = `${agent.systemPrompt}\n\n` +
     `Informações Oficiais do Cérebro da Empresa:\n${kbContext || 'Empresa especializada em soluções comerciais de alta performance.'}\n\n` +
     `Dados do Lead:\nNome: ${lead.name}\nEmpresa: ${lead.company || '-'}\nCargo: ${lead.role || '-'}\nOrçamento Estimado: R$ ${Number(lead.estimatedBudget || deal.value || 0).toLocaleString('pt-BR')}\n\n` +
-    `Regras de Atendimento:\n• Seja direto, profissional, acolhedor e focado em resolver a necessidade do cliente.\n• Se o cliente pedir proposta ou PIX, explique as condições e informe que a chave oficial é luklen2@gmail.com.\n• Não invente preços fora das políticas da empresa.`;
+    `Regras de Atendimento:\n• Seja direto, profissional, acolhedor e focado em resolver a necessidade do cliente.\n• Se o cliente pedir proposta ou PIX, explique as condições e informe que a chave oficial é ${currentPixKey}.\n• Não invente preços fora das políticas da empresa.`;
 
   // Chama o AI Gateway
   const aiResult = await generateAIResponse({

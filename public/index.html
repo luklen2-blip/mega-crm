@@ -1949,55 +1949,228 @@
     </div>
   </div>
 
-  <!-- MODAL: CONFIGURAÇÕES & CONECTORES -->
-  <div id="modal-settings" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
-    <div class="glass-panel p-5 rounded-3xl max-w-md w-full border border-blue-500/30 space-y-4 bg-slate-950 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
-        <h3 class="text-sm font-bold text-white flex items-center gap-2">
-          <i data-lucide="settings" class="h-4 w-4 text-blue-400"></i>
-          <span>Configurações & Chaves de API</span>
-        </h3>
-        <button onclick="closeModal('modal-settings')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="h-4 w-4"></i></button>
+  <!-- MODAL: CONFIGURAÇÕES & CONECTORES (BYOK / SELF-HOSTED EDITION) -->
+  <div id="modal-settings" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-panel p-5 sm:p-6 rounded-3xl max-w-2xl w-full border border-blue-500/30 space-y-4 bg-slate-950 max-h-[92vh] overflow-y-auto shadow-2xl">
+      <!-- Header do Modal -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="h-9 w-9 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+            <i data-lucide="sliders" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-black text-white">Configurações do Sistema & APIs</h3>
+            <p class="text-[11px] text-slate-400">Edição Self-Hosted • Bring Your Own Key (BYOK) • Governança Local</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-settings')" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
       </div>
-      <form onsubmit="submitSettings(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block text-slate-400 mb-1">Nome da Empresa</label>
-          <input type="text" id="set-company" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
-        </div>
-        <div>
-          <label class="block text-slate-400 mb-1">Chave PIX Oficial (Recebimentos)</label>
-          <input type="text" id="set-pixkey" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
-        </div>
-        <div>
-          <label class="block text-slate-400 mb-1">Chave Anthropic API (Opcional - Já operamos com motor nativo)</label>
-          <input type="password" id="set-apikey" placeholder="sk-ant-api..." class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
+
+      <!-- Abas de Navegação das Configurações -->
+      <div class="flex flex-wrap gap-1 p-1 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold">
+        <button type="button" id="tab-btn-set-empresa" onclick="switchSettingsTab('empresa')" class="flex-1 py-1.5 px-2.5 rounded-lg bg-blue-600 text-white transition flex items-center justify-center gap-1.5">
+          <i data-lucide="building" class="h-3.5 w-3.5"></i>
+          <span>Empresa & PIX</span>
+        </button>
+        <button type="button" id="tab-btn-set-apis" onclick="switchSettingsTab('apis')" class="flex-1 py-1.5 px-2.5 rounded-lg text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5">
+          <i data-lucide="key" class="h-3.5 w-3.5"></i>
+          <span>Conexões & APIs</span>
+        </button>
+        <button type="button" id="tab-btn-set-governance" onclick="switchSettingsTab('governance')" class="flex-1 py-1.5 px-2.5 rounded-lg text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5">
+          <i data-lucide="shield" class="h-3.5 w-3.5"></i>
+          <span>Governança IA</span>
+        </button>
+        <button type="button" id="tab-btn-set-lgpd" onclick="switchSettingsTab('lgpd')" class="flex-1 py-1.5 px-2.5 rounded-lg text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5">
+          <i data-lucide="database" class="h-3.5 w-3.5"></i>
+          <span>Dados & LGPD</span>
+        </button>
+      </div>
+
+      <form onsubmit="submitSettings(event)" class="space-y-4 text-xs">
+        <!-- ABA 1: EMPRESA & PIX OFICIAL -->
+        <div id="tab-content-set-empresa" class="space-y-3">
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Nome da Empresa (Workspace)</label>
+            <input type="text" id="set-company" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-blue-500">
+            <p class="text-[10px] text-slate-500 mt-0.5">Exibido nos cabeçalhos, propostas comerciais e no portal do cliente.</p>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="qr-code" class="h-3.5 w-3.5"></i>
+                <span>Recebimento PIX Oficial Bacen (Conta Própria)</span>
+              </span>
+              <button type="button" onclick="testApiConnection('pix')" class="px-2.5 py-1 text-[10px] font-bold rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition flex items-center gap-1 border border-amber-500/30">
+                <i data-lucide="check" class="h-3 w-3"></i> Testar Chave PIX
+              </button>
+            </div>
+
+            <div>
+              <label class="block text-slate-400 mb-1">Chave PIX da Empresa (E-mail, CNPJ, Telefone ou Aleatória)</label>
+              <input type="text" id="set-pixkey" placeholder="suaempresa@pix.com.br" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div>
+                <label class="block text-slate-400 mb-1">Nome do Titular / Beneficiário (Até 25 chars)</label>
+                <input type="text" id="set-pixname" placeholder="SUA EMPRESA LTDA" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white uppercase font-mono">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Cidade do Beneficiário (Até 15 chars)</label>
+                <input type="text" id="set-pixcity" placeholder="SAO PAULO" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white uppercase font-mono">
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Seção LGPD, Privacidade & Backup -->
-        <div class="pt-3 border-t border-slate-800 space-y-2.5">
-          <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-            <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>
-            <span>Privacidade, LGPD & Contingência</span>
+        <!-- ABA 2: CONEXÕES & APIS (BYOK - BRING YOUR OWN KEY) -->
+        <div id="tab-content-set-apis" class="space-y-3 hidden">
+          <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-[11px] leading-relaxed">
+            <strong>Arquitetura BYOK (Bring Your Own Key):</strong> Insira suas próprias chaves de API. As chamadas de IA e mensageria vão direto da sua infraestrutura para os provedores, eliminando intermediários e custos adicionais.
           </div>
-          <div class="grid grid-cols-2 gap-2">
-            <button type="button" onclick="exportLgpdData()" class="py-2 px-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-200 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition">
-              <i data-lucide="download" class="h-3.5 w-3.5 text-blue-400"></i>
-              <span>Exportar LGPD</span>
-            </button>
-            <button type="button" onclick="downloadTenantBackup()" class="py-2 px-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-200 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition">
-              <i data-lucide="database" class="h-3.5 w-3.5 text-emerald-400"></i>
-              <span>Backup Geral</span>
+
+          <!-- OpenAI -->
+          <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <label class="text-slate-300 font-semibold flex items-center gap-1.5">
+                <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                <span>OpenAI API Key (GPT-4o / GPT-4o Mini)</span>
+              </label>
+              <button type="button" onclick="testApiConnection('openai')" class="px-2 py-0.5 text-[10px] rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold transition">Testar</button>
+            </div>
+            <input type="password" id="set-openai-key" placeholder="sk-..." class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs">
+          </div>
+
+          <!-- Google Gemini -->
+          <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <label class="text-slate-300 font-semibold flex items-center gap-1.5">
+                <span class="h-2 w-2 rounded-full bg-blue-400"></span>
+                <span>Google Gemini API Key (Gemini 1.5 Flash)</span>
+              </label>
+              <button type="button" onclick="testApiConnection('gemini')" class="px-2 py-0.5 text-[10px] rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold transition">Testar</button>
+            </div>
+            <input type="password" id="set-gemini-key" placeholder="AIzaSy..." class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs">
+          </div>
+
+          <!-- Anthropic Claude -->
+          <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <label class="text-slate-300 font-semibold flex items-center gap-1.5">
+                <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+                <span>Anthropic Claude API Key (Claude 3.5 Sonnet)</span>
+              </label>
+              <button type="button" onclick="testApiConnection('anthropic')" class="px-2 py-0.5 text-[10px] rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold transition">Testar</button>
+            </div>
+            <input type="password" id="set-apikey" placeholder="sk-ant-api..." class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs">
+          </div>
+
+          <!-- WhatsApp Cloud API -->
+          <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="text-slate-300 font-semibold flex items-center gap-1.5">
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span>WhatsApp Cloud API Oficial (Meta)</span>
+              </label>
+              <button type="button" onclick="testApiConnection('whatsapp')" class="px-2 py-0.5 text-[10px] rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold transition">Validar</button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input type="password" id="set-meta-token" placeholder="Meta Graph Bearer Token..." class="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs">
+              <input type="text" id="set-meta-phone-id" placeholder="Phone Number ID (Meta)..." class="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 3: GOVERNANÇA DE CRÉDITOS IA (INTERNA / LOCAL) -->
+        <div id="tab-content-set-governance" class="space-y-3.5 hidden">
+          <div class="p-3.5 rounded-2xl bg-purple-950/30 border border-purple-500/30 space-y-2">
+            <div class="font-bold text-purple-300 text-xs flex items-center gap-2">
+              <i data-lucide="shield-check" class="h-4 w-4"></i>
+              <span>Governança Interna e Proteção de Custos</span>
+            </div>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+              No modelo Self-Hosted, não há cobrança externa de créditos pelo criador. Este painel permite que você, como administrador, defina um <strong>teto de consumo mensal</strong> para sua equipe comercial, evitando gastos excessivos nas suas chaves de API.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+              <span class="text-[10px] text-slate-400 block">Consumo Atual no Mês</span>
+              <strong id="governance-credits-used" class="text-sm font-bold text-amber-400">0 cr</strong>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+              <span class="text-[10px] text-slate-400 block">Teto Mensal da Equipe</span>
+              <strong id="governance-credits-limit-display" class="text-sm font-bold text-emerald-400">50.000 cr</strong>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Definir Novo Limite Mensal (Créditos)</label>
+            <div class="flex gap-2">
+              <input type="number" id="set-credits-limit" value="50000" min="1000" step="5000" class="flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-xs">
+              <button type="button" onclick="updateCreditsLimit()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition">
+                Atualizar Teto
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
+            <span class="text-[11px] text-slate-400">Quer reiniciar a contagem deste mês?</span>
+            <button type="button" onclick="resetTeamAiCredits()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-500/20 hover:text-rose-300 text-slate-300 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5">
+              <i data-lucide="rotate-ccw" class="h-3.5 w-3.5"></i>
+              <span>Reiniciar Contador Mensal</span>
             </button>
           </div>
+        </div>
+
+        <!-- ABA 4: DADOS, BACKUP & LGPD -->
+        <div id="tab-content-set-lgpd" class="space-y-3 hidden">
+          <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+            <div class="text-[11px] font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>
+              <span>Direitos do Titular de Dados & Contingência</span>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              Exporte todos os dados cadastrados em formato JSON auditado de acordo com o Art. 18 da LGPD ou baixe um backup consolidado de contingência.
+            </p>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button type="button" onclick="exportLgpdData()" class="py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-700 hover:bg-slate-800 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="download" class="h-3.5 w-3.5 text-blue-400"></i>
+                <span>Exportar Dados (Art. 18)</span>
+              </button>
+              <button type="button" onclick="downloadTenantBackup()" class="py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-700 hover:bg-slate-800 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="database" class="h-3.5 w-3.5 text-emerald-400"></i>
+                <span>Backup do Banco</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Manual de Implantação:</span>
+            <a href="/guia-instalacao" target="_blank" class="text-emerald-400 font-bold hover:underline flex items-center gap-1">
+              <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+              <span>Abrir Guia de Instalação</span>
+            </a>
+          </div>
+
           <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1">
             <a href="/termos" target="_blank" class="hover:text-blue-400 underline">Termos de Uso</a>
             <a href="/privacidade" target="_blank" class="hover:text-emerald-400 underline">Política de Privacidade (LGPD)</a>
           </div>
         </div>
 
-        <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
-          <button type="button" onclick="closeModal('modal-settings')" class="px-3 py-2 rounded-xl bg-slate-800 text-slate-300">Fechar</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold">Salvar Configurações</button>
+        <!-- Botões de Ação do Modal -->
+        <div class="flex justify-between items-center pt-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-settings')" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white text-xs font-bold transition">
+            Fechar
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110 text-white font-bold text-xs transition shadow-lg shadow-blue-500/25 flex items-center gap-1.5">
+            <i data-lucide="save" class="h-3.5 w-3.5"></i>
+            <span>Salvar Configurações</span>
+          </button>
         </div>
       </form>
     </div>
@@ -2190,7 +2363,7 @@
         </div>
         <div class="text-[11px] text-slate-400 flex items-center justify-center gap-1.5 pt-1">
           <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>
-          <span>Favorecido: <strong>LUCIANO SANT ANNA</strong> • Pagamento Oficial Banco Central</span>
+          <span>Favorecido: <strong id="modal-upgrade-beneficiary">SUA EMPRESA</strong> • Pagamento Oficial Banco Central</span>
         </div>
       </div>
 
@@ -2738,6 +2911,28 @@
       </button>
     </div>
   </div>
+
+  <!-- RODAPÉ INSTITUCIONAL & LICENÇA COMERCIAL SELF-HOSTED -->
+  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/90 text-[11px] text-slate-500 py-4 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+      <div class="space-y-1">
+        <div class="text-slate-300 font-semibold flex items-center justify-center md:justify-start gap-1.5">
+          <span>Agentise Mega CRM • Self-Hosted & White-Label Edition</span>
+          <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">Licença Perpétua R$ 900,00</span>
+        </div>
+        <p class="text-[10px] text-slate-400 max-w-3xl leading-relaxed">
+          Licença de uso de software comercial perpétua em modalidade 'as-is' (no estado em que se encontra). A aquisição pelo valor único promocional de R$ 900,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0 text-slate-400">
+        <a href="/guia-instalacao" target="_blank" class="hover:text-emerald-400 underline font-medium">Guia de Instalação</a>
+        <span>•</span>
+        <a href="/termos" target="_blank" class="hover:text-blue-400 underline">Termos</a>
+        <span>•</span>
+        <a href="/privacidade" target="_blank" class="hover:text-blue-400 underline">Privacidade</a>
+      </div>
+    </div>
+  </footer>
 
   <!-- Scripts do App e Registro de Service Worker PWA com Atualização Ativa -->
   <script src="/app.js?v=2.3.0"></script>

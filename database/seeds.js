@@ -23,6 +23,22 @@ function runSeeds(force = false) {
     seedAutoPrimeVeiculos();
   }
 
+  // Garante que o administrador padrão Self-Hosted (admin@crm.com) exista
+  const existingCrmAdmin = usersDB.findOne(u => u.email === 'admin@crm.com');
+  if (!existingCrmAdmin) {
+    const targetTenantId = tenantsDB.findById('ten_demo_agentise') ? 'ten_demo_agentise' : (tenantsDB.findAll()[0]?.id || 'ten_default');
+    usersDB.insert({
+      id: 'usr_admin_crm',
+      tenantId: targetTenantId,
+      name: 'Administrador Mega CRM',
+      email: 'admin@crm.com',
+      passwordHash: hashPassword('Admin@1234'),
+      role: 'PROPRIETARIO',
+      status: 'active',
+      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Admin'
+    });
+  }
+
   if (!force && tenantsDB.count() > 1) {
     console.log('⚡ [Seeds] Base de dados multi-tenant já populada. Pulando sementes.');
     return;
@@ -118,14 +134,14 @@ function runSeeds(force = false) {
     avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Beatriz'
   });
 
-  // 3. Configurações Globais / PIX
+  // 3. Configurações Globais / PIX (com suporte a variáveis de ambiente BYOK)
   settingsDB.insert({
     id: 'general_settings',
     tenantId,
-    companyName: 'Agentise Soluções Comerciais',
-    pixKey: 'luklen2@gmail.com',
-    pixName: 'LUCIANO SANT ANNA',
-    pixCity: 'SAO PAULO',
+    companyName: process.env.APP_NAME || 'Agentise Soluções Comerciais',
+    pixKey: process.env.PIX_CHAVE || 'luklen2@gmail.com',
+    pixName: process.env.PIX_BENEFICIARIO || 'LUCIANO SANT ANNA',
+    pixCity: process.env.PIX_CIDADE || 'SAO PAULO',
     currency: 'BRL',
     language: 'pt-BR',
     aiModel: 'Claude 3.7 Sonnet / Claude Code Engine'

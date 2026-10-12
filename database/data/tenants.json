@@ -7,8 +7,8 @@
     "plan": "business",
     "status": "active",
     "trialEndsAt": "2026-10-12T20:43:09.426Z",
-    "aiCredits": 20000,
-    "aiCreditsUsed": 5035,
+    "aiCredits": 75000,
+    "aiCreditsUsed": 90,
     "settings": {
       "currency": "BRL",
       "timezone": "America/Sao_Paulo",
@@ -16,7 +16,8 @@
       "autoRecoveryEnabled": true
     },
     "createdAt": "2026-09-12T20:43:09.426Z",
-    "updatedAt": "2026-10-12T12:38:04.001Z"
+    "updatedAt": "2026-10-12T13:33:35.879Z",
+    "aiCreditsResetAt": "2026-10-12T13:33:17.166Z"
   },
   {
     "id": "ten_autoprime_veiculos",
@@ -1610,5 +1611,139 @@
     "id": "ten_1791808701513_m7u0",
     "createdAt": "2026-10-12T12:38:21.513Z",
     "updatedAt": "2026-10-12T12:38:21.513Z"
+  },
+  {
+    "name": "Empresa Alfa 1791811535754",
+    "segment": "servicos_b2b",
+    "teamSize": "6_15",
+    "plan": "business",
+    "trialEndsAt": "2026-10-19T13:25:35.793Z",
+    "status": "active",
+    "aiCredits": 20000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1791811535793_3xon",
+    "createdAt": "2026-10-12T13:25:35.793Z",
+    "updatedAt": "2026-10-12T13:25:36.135Z",
+    "leadSources": [
+      "WhatsApp",
+      "Site"
+    ],
+    "primaryGoal": "aumentar_conversao",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Pentest Corp 1791811541671",
+    "segment": "tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-10-19T13:25:41.672Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1791811541673_nj2o",
+    "createdAt": "2026-10-12T13:25:41.673Z",
+    "updatedAt": "2026-10-12T13:25:42.059Z",
+    "pixWebhookSecret": "secret_pentest_1791811541671"
+  },
+  {
+    "name": "Tenant Vítima",
+    "status": "active",
+    "id": "ten_1791811542049_7d41",
+    "createdAt": "2026-10-12T13:25:42.049Z",
+    "updatedAt": "2026-10-12T13:25:42.049Z"
+  },
+  {
+    "name": "Starter Corp 1791811541671",
+    "plan": "starter",
+    "status": "active",
+    "id": "ten_1791811542065_bb7e",
+    "createdAt": "2026-10-12T13:25:42.065Z",
+    "updatedAt": "2026-10-12T13:25:42.065Z"
+  },
+  {
+    "name": "Empresa Privada B2B",
+    "isDemo": false,
+    "id": "ten_1791811542102_zjv9",
+    "createdAt": "2026-10-12T13:25:42.102Z",
+    "updatedAt": "2026-10-12T13:25:42.102Z"
+  },
+  {
+    "name": "Empresa Alfa 1791812028412",
+    "segment": "servicos_b2b",
+    "teamSize": "6_15",
+    "plan": "business",
+    "trialEndsAt": "2026-10-19T13:33:48.450Z",
+    "status": "active",
+    "aiCredits": 20000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1791812028450_4mgc",
+    "createdAt": "2026-10-12T13:33:48.450Z",
+    "updatedAt": "2026-10-12T13:33:48.680Z",
+    "leadSources": [
+      "WhatsApp",
+      "Site"
+    ],
+    "primaryGoal": "aumentar_conversao",
+    "onboardingCompleted": true
+  },
+  {
+    "name": "Pentest Corp 1791812051153",
+    "segment": "tecnologia",
+    "teamSize": "1-5",
+    "plan": "starter",
+    "trialEndsAt": "2026-10-19T13:34:11.154Z",
+    "status": "active",
+    "aiCredits": 1000,
+    "aiCreditsUsed": 0,
+    "settings": {
+      "currency": "BRL",
+      "timezone": "America/Sao_Paulo",
+      "aiLevel": "copiloto",
+      "autoRecoveryEnabled": true
+    },
+    "id": "ten_1791812051155_vwci",
+    "createdAt": "2026-10-12T13:34:11.155Z",
+    "updatedAt": "2026-10-12T13:34:11.560Z",
+    "pixWebhookSecret": "secret_pentest_1791812051153"
+  },
+  {
+    "name": "Tenant Vítima",
+    "status": "active",
+    "id": "ten_1791812051551_ptii",
+    "createdAt": "2026-10-12T13:34:11.551Z",
+    "updatedAt": "2026-10-12T13:34:11.551Z"
+  },
+  {
+    "name": "Starter Corp 1791812051153",
+    "plan": "starter",
+    "status": "active",
+    "id": "ten_1791812051566_50n0",
+    "createdAt": "2026-10-12T13:34:11.566Z",
+    "updatedAt": "2026-10-12T13:34:11.566Z"
+  },
+  {
+    "name": "Empresa Privada B2B",
+    "isDemo": false,
+    "id": "ten_1791812051594_j3q1",
+    "createdAt": "2026-10-12T13:34:11.594Z",
+    "updatedAt": "2026-10-12T13:34:11.594Z"
   }
 ]

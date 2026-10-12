@@ -10,13 +10,13 @@ function generatePixPayload({ pixKey, name, city = 'SAO PAULO', amount, txId = '
     return `${id}${len}${str}`;
   };
 
-  const cleanPixKey = (pixKey || 'luklen2@gmail.com').trim();
-  const cleanName = (name || 'LUCIANO SANT ANNA')
+  const cleanPixKey = (pixKey || process.env.PIX_CHAVE || 'empresa@pix.com.br').trim();
+  const cleanName = (name || process.env.PIX_BENEFICIARIO || 'EMPRESA BENEFICIARIA')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toUpperCase()
     .slice(0, 25);
-  const cleanCity = (city || 'SAO PAULO')
+  const cleanCity = (city || process.env.PIX_CIDADE || 'SAO PAULO')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toUpperCase()

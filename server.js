@@ -114,7 +114,9 @@ const {
   getTenantSubscription, 
   checkResourceLimit, 
   consumeAiCredits,
-  upgradeTenantPlan
+  upgradeTenantPlan,
+  setTenantCreditsLimit,
+  resetTenantCreditsUsage
 } = require('./services/billingService');
 
 const { 
@@ -604,7 +606,7 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
         <div class="text-[11px] text-slate-500 pt-2">
-          Chave PIX: <b class="text-slate-400">${(proposal.pixKey || process.env.PIX_KEY || 'luklen2@gmail.com').replace(/(.{3})(.*)(@.*)/, '$1***$3')}</b> • Titular: <b class="text-slate-400">LUCIANO SANT ANNA</b>
+          Chave PIX: <b class="text-slate-400">${(proposal.pixKey || process.env.PIX_CHAVE || process.env.PIX_KEY || 'empresa@pix.com.br').replace(/(.{3})(.*)(@.*)/, '$1***$3')}</b> • Titular: <b class="text-slate-400">${escapeHtml(proposal.pixName || process.env.PIX_BENEFICIARIO || (tenant && tenant.name) || 'EMPRESA BENEFICIARIA')}</b>
         </div>
       </div>
     ` : `
@@ -865,6 +867,9 @@ const server = http.createServer(async (req, res) => {
 
       <h2 class="text-sm font-bold text-white uppercase tracking-wider">4. Foro e Legislação Aplicável</h2>
       <p>Estes Termos são regidos exclusivamente pelas Leis da República Federativa do Brasil, elegendo-se o Foro da Comarca de São Paulo/SP para dirimir quaisquer controvérsias.</p>
+
+      <h2 class="text-sm font-bold text-white uppercase tracking-wider">5. Licença Comercial Perpétua (Self-Hosted)</h2>
+      <p>Licença de uso de software comercial perpétua em modalidade "as-is" (no estado em que se encontra). A aquisição pelo valor único promocional de R$ 900,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada.</p>
     </div>
 
     <div class="pt-6 border-t border-slate-800 text-center text-[11px] text-slate-500">
@@ -2728,11 +2733,11 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 403, { error: 'Acesso negado: permissão PROPOSALS_CREATE necessária.' });
     }
     const body = await parseRequestBody(req);
-    const settings = settingsDB.findById('general_settings') || {};
+    const tenantSettings = settingsDB.findById(`settings_${tenantId}`) || settingsDB.findById('general_settings') || {};
 
-    const pixKey = body.pixKey || settings.pixKey || 'luklen2@gmail.com';
-    const name = body.name || settings.pixName || 'LUCIANO SANT ANNA';
-    const city = body.city || settings.pixCity || 'SAO PAULO';
+    const pixKey = body.pixKey || tenantSettings.pixKey || process.env.PIX_CHAVE || 'luklen2@gmail.com';
+    const name = body.name || tenantSettings.pixName || process.env.PIX_BENEFICIARIO || 'LUCIANO SANT ANNA';
+    const city = body.city || tenantSettings.pixCity || process.env.PIX_CIDADE || 'SAO PAULO';
     
     // Validação estrita de itens e cálculo de valor final
     const rawItems = Array.isArray(body.items) && body.items.length > 0 ? body.items : null;
@@ -3380,6 +3385,127 @@ const server = http.createServer(async (req, res) => {
     }
 
     return sendJson(res, 200, { success: true, data: safeResponse });
+  }
+
+  // 17.1 TESTE DE CONEXÃO E VALIDAÇÃO DE CHAVES DE API (BYOK)
+  if (pathname === '/api/settings/test-connection' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'SETTINGS_EDIT')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão SETTINGS_EDIT necessária para testar chaves de conexão.' });
+    }
+    const body = await parseRequestBody(req);
+    const type = (body.type || '').toLowerCase();
+    const key = (body.key || '').trim();
+
+    if (!type) {
+      return sendJson(res, 400, { error: 'Tipo de conexão não informado.' });
+    }
+
+    if (type === 'openai') {
+      if (!key) return sendJson(res, 400, { error: 'Chave de API OpenAI não informada.' });
+      if (!key.startsWith('sk-') && !key.startsWith('sk-proj-')) {
+        return sendJson(res, 400, { error: 'Formato inválido para chave OpenAI. Ela deve começar com sk- ou sk-proj-.' });
+      }
+      return sendJson(res, 200, { success: true, message: 'Chave OpenAI com formato válido e pronta para uso!' });
+    }
+
+    if (type === 'gemini') {
+      if (!key) return sendJson(res, 400, { error: 'Chave de API Google Gemini não informada.' });
+      if (!key.startsWith('AIza') || key.length < 25) {
+        return sendJson(res, 400, { error: 'Formato inválido para chave Google Gemini. Ela deve começar com AIza e possuir tamanho adequado.' });
+      }
+      return sendJson(res, 200, { success: true, message: 'Chave Google Gemini com formato válido e pronta para uso!' });
+    }
+
+    if (type === 'anthropic') {
+      if (!key) return sendJson(res, 400, { error: 'Chave de API Anthropic Claude não informada.' });
+      if (!key.startsWith('sk-ant-') || key.length < 30) {
+        return sendJson(res, 400, { error: 'Formato inválido para chave Anthropic. Ela deve começar com sk-ant-.' });
+      }
+      return sendJson(res, 200, { success: true, message: 'Chave Anthropic Claude com formato válido e pronta para uso!' });
+    }
+
+    if (type === 'pix') {
+      const pixKey = key || body.pixKey;
+      if (!pixKey) return sendJson(res, 400, { error: 'Chave PIX não informada.' });
+      try {
+        const testPayload = generatePixPayload({
+          pixKey,
+          name: body.name || 'TESTE CONEXAO',
+          city: body.city || 'SAO PAULO',
+          amount: 1.00,
+          txId: 'TESTEPIX'
+        });
+        if (testPayload && testPayload.startsWith('000201')) {
+          return sendJson(res, 200, { 
+            success: true, 
+            message: 'Chave PIX e cálculo CRC16 Bacen validados com sucesso!', 
+            testPayload, 
+            qrCodeUrl: getPixQrCodeUrl(testPayload) 
+          });
+        }
+      } catch (err) {
+        return sendJson(res, 400, { error: `Erro na validação da chave PIX: ${err.message}` });
+      }
+    }
+
+    if (type === 'whatsapp') {
+      if (!key) return sendJson(res, 400, { error: 'Token do WhatsApp Cloud API não informado.' });
+      if (!body.phoneNumberId) return sendJson(res, 400, { error: 'Phone Number ID da Meta é obrigatório para integração.' });
+      return sendJson(res, 200, { success: true, message: 'Parâmetros do WhatsApp Cloud API formatados corretamente!' });
+    }
+
+    return sendJson(res, 400, { error: `Tipo de conexão desconhecido: ${type}` });
+  }
+
+  // 17.2 GOVERNANÇA DE CRÉDITOS DE IA (INTERNA / LOCAL)
+  if (pathname === '/api/settings/credits-governance' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'SETTINGS_EDIT')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão de administrador necessária.' });
+    }
+    const body = await parseRequestBody(req);
+    let updatedTenant = null;
+    let limitRes = null;
+    let resetRes = null;
+    if (body.limit !== undefined) {
+      limitRes = setTenantCreditsLimit(tenantId, body.limit);
+      updatedTenant = limitRes.tenant;
+      logAudit({
+        tenantId,
+        userId: ctx.userId,
+        userName: ctx.name,
+        action: 'CREDITS_LIMIT_UPDATED',
+        resource: 'billing',
+        ip: clientIp,
+        description: `${ctx.name} alterou o teto de governança de créditos de IA para ${limitRes.aiCredits}.`
+      });
+    }
+    if (body.reset) {
+      resetRes = resetTenantCreditsUsage(tenantId);
+      updatedTenant = resetRes.tenant;
+      logAudit({
+        tenantId,
+        userId: ctx.userId,
+        userName: ctx.name,
+        action: 'CREDITS_RESET',
+        resource: 'billing',
+        ip: clientIp,
+        description: `${ctx.name} reiniciou o contador mensal de créditos de IA da equipe.`
+      });
+    }
+    if (!limitRes && !resetRes) {
+      return sendJson(res, 400, { error: 'Informe "reset: true" ou um novo "limit".' });
+    }
+    return sendJson(res, 200, {
+      success: true,
+      message: 'Governança de créditos atualizada com sucesso!',
+      data: {
+        aiCredits: updatedTenant ? updatedTenant.aiCredits : 50000,
+        aiCreditsUsed: updatedTenant ? (updatedTenant.aiCreditsUsed || 0) : 0,
+        creditsLimit: updatedTenant ? updatedTenant.aiCredits : 50000,
+        creditsUsed: updatedTenant ? (updatedTenant.aiCreditsUsed || 0) : 0,
+        tenant: updatedTenant
+      }
+    });
   }
 
   // 18. LGPD

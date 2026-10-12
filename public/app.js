@@ -2280,7 +2280,43 @@ function closeModal(id) {
 function openNewLeadModal() { openModal('modal-new-lead'); }
 function openNewDealModal() { openModal('modal-new-deal'); }
 function openNewTaskModal() { openModal('modal-new-task'); }
-function openSettingsModal() { openModal('modal-settings'); }
+async function openSettingsModal() {
+  switchSettingsTab('empresa');
+  openModal('modal-settings');
+  try {
+    const [setRes, billRes] = await Promise.all([
+      fetch('/api/settings', { headers: authHeaders() }),
+      fetch('/api/billing/subscription', { headers: authHeaders() })
+    ]);
+    const setData = (await setRes.json()).data;
+    const billData = (await billRes.json()).data;
+
+    if (setData) {
+      if (document.getElementById('set-company') && setData.companyName) document.getElementById('set-company').value = setData.companyName;
+      if (document.getElementById('set-pixkey') && setData.pixKey) document.getElementById('set-pixkey').value = setData.pixKey;
+      if (document.getElementById('set-pixname') && setData.pixName) document.getElementById('set-pixname').value = setData.pixName;
+      if (document.getElementById('set-pixcity') && setData.pixCity) document.getElementById('set-pixcity').value = setData.pixCity;
+      if (document.getElementById('set-apikey') && setData.anthropicApiKey) document.getElementById('set-apikey').value = setData.anthropicApiKey;
+      if (document.getElementById('set-openai-key') && setData.openaiApiKey) document.getElementById('set-openai-key').value = setData.openaiApiKey;
+      if (document.getElementById('set-gemini-key') && setData.geminiApiKey) document.getElementById('set-gemini-key').value = setData.geminiApiKey;
+      if (document.getElementById('set-meta-token') && setData.metaToken) document.getElementById('set-meta-token').value = setData.metaToken;
+      if (document.getElementById('set-meta-phone-id') && setData.metaPhoneNumberId) document.getElementById('set-meta-phone-id').value = setData.metaPhoneNumberId;
+    }
+
+    if (billData) {
+      if (document.getElementById('governance-credits-used')) {
+        document.getElementById('governance-credits-used').innerText = `${(billData.aiCreditsUsed || 0).toLocaleString('pt-BR')} cr`;
+      }
+      if (document.getElementById('governance-credits-limit-display')) {
+        document.getElementById('governance-credits-limit-display').innerText = `${(billData.aiCredits || 50000).toLocaleString('pt-BR')} cr`;
+      }
+      if (document.getElementById('set-credits-limit')) {
+        document.getElementById('set-credits-limit').value = billData.aiCredits || 50000;
+      }
+    }
+  } catch (e) {}
+  if (window.lucide) lucide.createIcons();
+}
 function openUserGuideModal() { openModal('modal-user-guide'); }
 function openMobileMenuModal() { openModal('modal-mobile-menu'); }
 
@@ -2354,21 +2390,154 @@ async function submitNewTask(e) {
   }
 }
 
-async function submitSettings(e) {
-  e.preventDefault();
-  const companyName = document.getElementById('set-company').value;
-  const pixKey = document.getElementById('set-pixkey').value;
-  const apiKey = document.getElementById('set-apikey').value;
+function switchSettingsTab(tab) {
+  const tabs = ['empresa', 'apis', 'governance', 'lgpd'];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`tab-btn-set-${t}`);
+    const content = document.getElementById(`tab-content-set-${t}`);
+    if (btn) {
+      if (t === tab) {
+        btn.className = 'flex-1 py-1.5 px-2.5 rounded-lg bg-blue-600 text-white transition flex items-center justify-center gap-1.5 shadow-sm';
+      } else {
+        btn.className = 'flex-1 py-1.5 px-2.5 rounded-lg text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5';
+      }
+    }
+    if (content) {
+      content.classList.toggle('hidden', t !== tab);
+    }
+  });
+  if (window.lucide) lucide.createIcons();
+}
+
+async function testApiConnection(type) {
+  let key = '';
+  let extra = {};
+
+  if (type === 'openai') {
+    key = document.getElementById('set-openai-key')?.value;
+    if (!key) return showToast('Digite a OpenAI API Key para testar.', 'warning');
+  } else if (type === 'gemini') {
+    key = document.getElementById('set-gemini-key')?.value;
+    if (!key) return showToast('Digite a Google Gemini API Key para testar.', 'warning');
+  } else if (type === 'anthropic') {
+    key = document.getElementById('set-apikey')?.value;
+    if (!key) return showToast('Digite a Anthropic Claude API Key para testar.', 'warning');
+  } else if (type === 'pix') {
+    key = document.getElementById('set-pixkey')?.value;
+    extra.name = document.getElementById('set-pixname')?.value || 'EMPRESA TESTE';
+    extra.city = document.getElementById('set-pixcity')?.value || 'SAO PAULO';
+    if (!key) return showToast('Digite a Chave PIX para testar.', 'warning');
+  } else if (type === 'whatsapp') {
+    key = document.getElementById('set-meta-token')?.value;
+    extra.phoneNumberId = document.getElementById('set-meta-phone-id')?.value;
+    if (!key || !extra.phoneNumberId) return showToast('Preencha o Token e o Phone Number ID do WhatsApp para testar.', 'warning');
+  }
 
   try {
+    showToast(`Testando validação da conexão ${type.toUpperCase()}...`, 'info');
+    const res = await fetch('/api/settings/test-connection', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ type, key, ...extra })
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast(json.message || 'Conexão validada com sucesso!', 'success');
+    } else {
+      showToast(json.error || 'Erro ao validar conexão.', 'error');
+    }
+  } catch (err) {
+    showToast('Falha na comunicação ao testar conexão.', 'error');
+  }
+}
+
+async function updateCreditsLimit() {
+  const limit = parseInt(document.getElementById('set-credits-limit')?.value, 10);
+  if (!limit || limit < 100) return showToast('Informe um teto de créditos válido (mínimo 100).', 'warning');
+
+  try {
+    const res = await fetch('/api/settings/credits-governance', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ limit })
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast(json.message || 'Teto de créditos atualizado com sucesso!', 'success');
+      if (document.getElementById('governance-credits-limit-display')) {
+        document.getElementById('governance-credits-limit-display').innerText = `${limit.toLocaleString('pt-BR')} cr`;
+      }
+      await loadBilling();
+    } else {
+      showToast(json.error || 'Erro ao atualizar teto.', 'error');
+    }
+  } catch (err) {
+    showToast('Erro de comunicação ao atualizar governança.', 'error');
+  }
+}
+
+async function resetTeamAiCredits() {
+  if (!confirm('Deseja realmente zerar o consumo de créditos deste mês da equipe?')) return;
+  try {
+    const res = await fetch('/api/settings/credits-governance', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ reset: true })
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast('Contador mensal de créditos reiniciado com sucesso!', 'success');
+      if (document.getElementById('governance-credits-used')) {
+        document.getElementById('governance-credits-used').innerText = '0 cr';
+      }
+      await loadBilling();
+    } else {
+      showToast(json.error || 'Erro ao reiniciar contador.', 'error');
+    }
+  } catch (err) {
+    showToast('Erro de comunicação ao resetar créditos.', 'error');
+  }
+}
+
+async function submitSettings(e) {
+  e.preventDefault();
+  const companyName = document.getElementById('set-company')?.value;
+  const pixKey = document.getElementById('set-pixkey')?.value;
+  const pixName = document.getElementById('set-pixname')?.value;
+  const pixCity = document.getElementById('set-pixcity')?.value;
+  const apiKey = document.getElementById('set-apikey')?.value;
+  const openaiApiKey = document.getElementById('set-openai-key')?.value;
+  const geminiApiKey = document.getElementById('set-gemini-key')?.value;
+  const metaToken = document.getElementById('set-meta-token')?.value;
+  const metaPhoneNumberId = document.getElementById('set-meta-phone-id')?.value;
+
+  try {
+    const payload = {
+      companyName,
+      pixKey,
+      pixName: pixName || undefined,
+      pixCity: pixCity || undefined,
+      apiKey: apiKey || undefined,
+      anthropicApiKey: apiKey || undefined,
+      openaiApiKey: openaiApiKey || undefined,
+      geminiApiKey: geminiApiKey || undefined,
+      metaToken: metaToken || undefined,
+      metaPhoneNumberId: metaPhoneNumberId || undefined
+    };
+
     const res = await fetch('/api/settings', {
       method: 'POST',
       headers: authHeaders(),
-      body: JSON.stringify({ companyName, pixKey, apiKey: apiKey || undefined })
+      body: JSON.stringify(payload)
     });
     if (res.ok) {
-      showToast('Configurações salvas com sucesso!', 'success');
+      showToast('Configurações e conexões salvas com sucesso!', 'success');
       closeModal('modal-settings');
+      await loadWorkspaceSettings();
+      await loadBilling();
+    } else {
+      const json = await res.json();
+      showToast(json.error || 'Erro ao salvar configurações.', 'error');
     }
   } catch (err) {
     showToast('Erro ao salvar configurações.', 'error');

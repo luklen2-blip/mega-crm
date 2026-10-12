@@ -1,0 +1,64 @@
+version: '3.8'
+
+# ==============================================================================
+# AGENTISE MEGA CRM - SELF-HOSTED DOCKER COMPOSE DEPLOYMENT
+# Ideal para VPS (Hostinger, Hetzner, DigitalOcean, AWS, Linode)
+# ==============================================================================
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agentise-mega-crm-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - APP_NAME=Agentise Mega CRM
+      - DATABASE_URL=postgresql://megacrm:megacrm_secret_pwd@db:5432/megacrm_prod?sslmode=disable
+      - SECRET_KEY=defina_uma_chave_jwt_muito_segura_aqui_12345
+      # Insira suas chaves BYOK ou configure pelo painel:
+      - OPENAI_API_KEY=
+      - GEMINI_API_KEY=
+      - ANTHROPIC_API_KEY=
+      - PIX_CHAVE=suaempresa@pix.com.br
+      - PIX_BENEFICIARIO=SUA EMPRESA LTDA
+      - PIX_CIDADE=SAO PAULO
+      - META_WA_TOKEN=
+      - META_WA_PHONE_NUMBER_ID=
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - app_data:/usr/src/app/database/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  db:
+    image: postgres:16-alpine
+    container_name: agentise-mega-crm-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: megacrm
+      POSTGRES_PASSWORD: megacrm_secret_pwd
+      POSTGRES_DB: megacrm_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U megacrm -d megacrm_prod"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  app_data:
+  postgres_data:

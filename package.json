@@ -9,7 +9,11 @@
     "dev": "node server.js",
     "build": "node tests/run_all.js",
     "test": "node tests/run_all.js",
+    "test:commercial": "node tests/test_v4_commercial.js",
+    "test:pentest": "node tests/test_pentest_v3.js",
+    "test:selfhosted": "node tests/test_v5_selfhosted.js",
     "test:live": "node tests/test_cloud_live.js",
+    "db:migrate": "node database/migrate_postgres.js",
     "pack": "node scripts/pack_desktop.js"
   },
   "keywords": [
@@ -22,5 +26,5 @@
     "saas"
   ],
   "author": "Luciano",
-  "license": "MIT"
+  "license": "Commercial / Perpetual (Self-Hosted)"
 }

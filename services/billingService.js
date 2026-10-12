@@ -177,11 +177,29 @@ function getAiUsage(tenantId, limit = 50) {
   return aiUsageDB.findByTenant(tenantId).slice(-limit).reverse();
 }
 
+function setTenantCreditsLimit(tenantId, newLimit) {
+  const limit = Math.max(100, parseInt(newLimit, 10) || 50000);
+  const updated = tenantsDB.update(tenantId, {
+    aiCredits: limit
+  });
+  return { success: true, aiCredits: limit, tenant: updated };
+}
+
+function resetTenantCreditsUsage(tenantId) {
+  const updated = tenantsDB.update(tenantId, {
+    aiCreditsUsed: 0,
+    aiCreditsResetAt: new Date().toISOString()
+  });
+  return { success: true, aiCreditsUsed: 0, tenant: updated };
+}
+
 module.exports = {
   PLANS,
   getTenantSubscription,
   checkResourceLimit,
   consumeAiCredits,
   getAiUsage,
-  upgradeTenantPlan
+  upgradeTenantPlan,
+  setTenantCreditsLimit,
+  resetTenantCreditsUsage
 };

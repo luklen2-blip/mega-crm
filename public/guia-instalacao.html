@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Guia de Instalação Self-Hosted | Agentise Mega CRM</title>
+  <meta name="description" content="Manual de implantação rápida em 5 passos para a licença Self-Hosted do Agentise Mega CRM. Como rodar no Render, Supabase, VPS Docker ou Local.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 2L2 22h20L12 2z'/></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/style.css?v=2.3.0">
+  <style>
+    html { scroll-behavior: smooth; }
+    .step-card {
+      background: rgba(14, 19, 31, 0.75);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      transition: all 0.3s ease;
+    }
+    .step-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden w-full max-w-full">
+
+  <!-- TOPBAR -->
+  <header class="glass-panel border-b border-blue-500/15 sticky top-0 z-50 px-4 lg:px-8 py-3.5 backdrop-blur-xl">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
+          <i data-lucide="zap" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <span class="font-extrabold text-sm sm:text-base tracking-tight text-white flex items-center gap-2">
+            AGENTISE <span class="text-blue-400">MEGA CRM</span>
+            <span class="text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300">Self-Hosted</span>
+          </span>
+          <p class="text-[10px] text-slate-400">Manual de Implantação e Deploy Rápido (BYOK)</p>
+        </div>
+      </a>
+      <div class="flex items-center gap-2">
+        <a href="/" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:bg-slate-800 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5">
+          <i data-lucide="arrow-left" class="h-3.5 w-3.5"></i>
+          <span>Voltar ao CRM</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8 sm:py-12 space-y-8">
+    
+    <!-- Hero Banner -->
+    <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-blue-950/40 via-slate-900 to-slate-950 border border-blue-500/25 space-y-4 shadow-2xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-xs font-bold uppercase tracking-wider">
+        <i data-lucide="rocket" class="h-3.5 w-3.5"></i> Manual À Prova de Leigos
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+        Como Instalar o Agentise Mega CRM na Sua Própria Infraestrutura
+      </h1>
+      <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
+        Parabéns pela aquisição da licença perpétua! Este guia orienta você em <strong>5 passos simples</strong> para subir sua aplicação em nuvem (Render / Supabase / VPS) ou rodar localmente com 100% de autonomia e privacidade, sem nenhuma dependência externa do criador.
+      </p>
+      <div class="flex flex-wrap gap-3 pt-2 text-xs">
+        <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center gap-2">
+          <i data-lucide="shield-check" class="h-4 w-4 text-emerald-400"></i>
+          <span>100% dos dados sob seu controle</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center gap-2">
+          <i data-lucide="key" class="h-4 w-4 text-amber-400"></i>
+          <span>Bring Your Own Key (BYOK)</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center gap-2">
+          <i data-lucide="cpu" class="h-4 w-4 text-blue-400"></i>
+          <span>Deploy 24/7 em 1 Clique</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1 -->
+    <div class="step-card space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-black text-base border border-blue-500/30">1</div>
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-white">Criar Contas Gratuitas no Render e Supabase (ou usar VPS)</h2>
+          <span class="text-xs text-slate-400">Tempo estimado: 3 minutos</span>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        Você pode hospedar o Mega CRM no plano gratuito do <strong>Render</strong> para a aplicação web e no <strong>Supabase / Neon</strong> para o banco de dados PostgreSQL. Caso prefira uma VPS (Hostinger, Hetzner, DigitalOcean), você pode utilizar o <code class="text-blue-400">docker-compose.yml</code> incluído.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs">
+        <a href="https://render.com" target="_blank" class="p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 flex items-center justify-between text-slate-200 transition">
+          <span class="font-bold flex items-center gap-2"><i data-lucide="server" class="h-4 w-4 text-blue-400"></i> Criar Conta no Render.com</span>
+          <i data-lucide="external-link" class="h-3.5 w-3.5 text-slate-500"></i>
+        </a>
+        <a href="https://supabase.com" target="_blank" class="p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 flex items-center justify-between text-slate-200 transition">
+          <span class="font-bold flex items-center gap-2"><i data-lucide="database" class="h-4 w-4 text-emerald-400"></i> Criar Banco no Supabase</span>
+          <i data-lucide="external-link" class="h-3.5 w-3.5 text-slate-500"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- PASSO 2 -->
+    <div class="step-card space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-black text-base border border-indigo-500/30">2</div>
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-white">Importar o Repositório ou Fazer Upload dos Arquivos</h2>
+          <span class="text-xs text-slate-400">Deploy automatizado com render.yaml</span>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        Suba o código para um repositório privado no seu <strong>GitHub</strong> ou <strong>GitLab</strong>. No painel do Render, clique em <strong>"New +" ➔ "Blueprint"</strong> e selecione o seu repositório. O arquivo <code class="text-indigo-400">render.yaml</code> configurará automaticamente o serviço web, portas e comandos de inicialização.
+      </p>
+      <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-1 text-xs font-mono text-slate-300">
+        <div class="text-slate-500"># Se preferir rodar em VPS com Docker Compose:</div>
+        <div>docker compose up -d --build</div>
+      </div>
+    </div>
+
+    <!-- PASSO 3 -->
+    <div class="step-card space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-amber-600/20 text-amber-400 flex items-center justify-center font-black text-base border border-amber-500/30">3</div>
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-white">Configurar Variáveis no .env ou no Painel Administrativo</h2>
+          <span class="text-xs text-slate-400">Chave PIX e Chaves de Inteligência Artificial</span>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        No painel do Render (aba <strong>Environment</strong>) ou no seu arquivo <code class="text-amber-400">.env</code>, preencha as variáveis da sua empresa. Você também pode cadastrá-las visualmente depois pelo botão de engrenagem no topo do CRM:
+      </p>
+      <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs font-mono text-slate-300 overflow-x-auto">
+        <div class="text-emerald-400"># Chave PIX da sua empresa para faturamento direto na sua conta:</div>
+        <div>PIX_CHAVE="suaempresa@pix.com.br"</div>
+        <div>PIX_BENEFICIARIO="SUA EMPRESA LTDA"</div>
+        <div>PIX_CIDADE="SAO PAULO"</div>
+        <div class="pt-2 text-blue-400"># Suas chaves de IA (OpenAI, Gemini ou Anthropic):</div>
+        <div>OPENAI_API_KEY="sk-..."</div>
+        <div>GEMINI_API_KEY="AIzaSy..."</div>
+      </div>
+    </div>
+
+    <!-- PASSO 4 -->
+    <div class="step-card space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center font-black text-base border border-emerald-500/30">4</div>
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-white">Acessar a Aplicação e Efetuar Login de Administrador</h2>
+          <span class="text-xs text-slate-400">Primeiro acesso e início da operação</span>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        Assim que o build for concluído, abra a URL fornecida pelo Render (ou seu domínio customizado). O sistema já vem com a base inicial pronta para uso imediato com as credenciais administrativas padrão:
+      </p>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div>
+          <span class="text-slate-400 block text-[10px] uppercase font-bold">E-mail Administrativo</span>
+          <code class="font-mono text-white text-sm">admin@crm.com</code>
+        </div>
+        <div>
+          <span class="text-slate-400 block text-[10px] uppercase font-bold">Senha Padrão</span>
+          <code class="font-mono text-white text-sm">Admin@1234</code>
+        </div>
+      </div>
+      <p class="text-[11px] text-amber-300">
+        💡 <strong>Recomendação de Segurança:</strong> Após o primeiro login, acesse a aba "Equipe / Vendedores" e altere a senha do administrador para sua segurança.
+      </p>
+    </div>
+
+    <!-- PASSO 5 -->
+    <div class="step-card space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center font-black text-base border border-purple-500/30">5</div>
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-white">Instalação no Celular (Android & iPhone / iOS via PWA)</h2>
+          <span class="text-xs text-slate-400">Funciona como aplicativo nativo sem loja</span>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        O Agentise Mega CRM possui suporte completo a <strong>Progressive Web App (PWA)</strong>. Para instalar no celular dos seus vendedores:
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+        <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5"><i data-lucide="smartphone" class="h-4 w-4"></i> No Android (Chrome)</div>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            Abra o CRM no navegador Chrome, toque nos <strong>3 pontinhos</strong> no canto superior direito e selecione <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.
+          </p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
+          <div class="font-bold text-blue-400 flex items-center gap-1.5"><i data-lucide="apple" class="h-4 w-4"></i> No iPhone (Safari)</div>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            Abra o CRM no Safari, toque no botão <strong>Compartilhar</strong> (quadradinho com seta para cima) e selecione <strong>"Adicionar à Tela de Início"</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cláusula Legal de Licença -->
+    <div class="p-5 rounded-3xl bg-slate-950 border border-slate-800 space-y-2 text-xs text-slate-400 leading-relaxed">
+      <div class="font-bold text-white text-xs flex items-center gap-2">
+        <i data-lucide="file-text" class="h-4 w-4 text-slate-400"></i>
+        <span>Termo de Licença Comercial e Isenção Técnica</span>
+      </div>
+      <p class="text-[11px]">
+        Licença de uso de software comercial perpétua em modalidade 'as-is' (no estado em que se encontra). A aquisição pelo valor único promocional de R$ 900,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>Agentise Mega CRM • Self-Hosted Edition 2026</div>
+      <div class="flex items-center gap-3">
+        <a href="/" class="hover:text-blue-400 underline">Acessar CRM</a>
+        <span>•</span>
+        <a href="/termos" target="_blank" class="hover:text-blue-400 underline">Termos de Uso</a>
+        <span>•</span>
+        <a href="/privacidade" target="_blank" class="hover:text-blue-400 underline">Privacidade LGPD</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>

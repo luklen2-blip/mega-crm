@@ -214,5 +214,23 @@
     "id": "kno_1791808701461_qror",
     "createdAt": "2026-10-12T12:38:21.461Z",
     "updatedAt": "2026-10-12T12:38:21.461Z"
+  },
+  {
+    "tenantId": "ten_1791811542049_7d41",
+    "category": "Segredos",
+    "title": "Segredo Industrial Ultraconfidencial",
+    "content": "Margem de lucro de 85% e lista de fornecedores secretos",
+    "id": "kno_1791811542052_6jc6",
+    "createdAt": "2026-10-12T13:25:42.052Z",
+    "updatedAt": "2026-10-12T13:25:42.052Z"
+  },
+  {
+    "tenantId": "ten_1791812051551_ptii",
+    "category": "Segredos",
+    "title": "Segredo Industrial Ultraconfidencial",
+    "content": "Margem de lucro de 85% e lista de fornecedores secretos",
+    "id": "kno_1791812051554_4exr",
+    "createdAt": "2026-10-12T13:34:11.554Z",
+    "updatedAt": "2026-10-12T13:34:11.554Z"
   }
 ]

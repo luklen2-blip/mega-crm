@@ -13,3 +13,25 @@ services:
         value: production
       - key: APP_NAME
         value: Agentise Mega CRM
+      - key: PORT
+        value: 3000
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: PIX_CHAVE
+        sync: false
+      - key: PIX_BENEFICIARIO
+        sync: false
+      - key: PIX_CIDADE
+        value: SAO PAULO
+      - key: META_WA_TOKEN
+        sync: false
+      - key: META_WA_PHONE_NUMBER_ID
+        sync: false
