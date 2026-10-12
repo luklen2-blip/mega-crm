@@ -2,13 +2,13 @@
 
 **Versão:** 2.0.0 (Self-Hosted Edition)  
 **Modalidade:** Licença de Código-Fonte Pronta para Uso Comercial ("As-Is")  
-**Valor Promocional de Aquisição:** R$ 900,00 (Pagamento Único Vitalício)
+**Valor Promocional de Aquisição:** R$ 67,00 (Pagamento Único Vitalício)
 
 ---
 
 ## 1. Concessão da Licença
 
-Pelo presente instrumento, a aquisição do código-fonte do **Agentise Mega CRM** pelo valor único e irreajustável de **R$ 900,00 (novecentos reais)** confere ao Adquirente uma licença de software perpétua, não exclusiva e irrevogável para:
+Pelo presente instrumento, a aquisição do código-fonte do **Agentise Mega CRM** pelo valor promocional de **R$ 67,00 (sessenta e sete reais)** confere ao Adquirente uma licença de software perpétua, não exclusiva e irrevogável para:
 
 1. Hospedar, implantar e executar a plataforma em infraestrutura própria, servidores dedicados, VPS (Docker / Docker Compose) ou plataformas de nuvem de sua escolha (Render, Railway, Supabase, Fly.io, AWS, DigitalOcean).
 2. Personalizar livremente marcas, logos, cores, domínios e interfaces visuais (White-Label).
@@ -18,7 +18,7 @@ Pelo presente instrumento, a aquisição do código-fonte do **Agentise Mega CRM
 
 ## 2. Cláusula de Fornecimento "As-Is" e Blindagem Operacional
 
-> *"Licença de uso de software comercial perpétua em modalidade 'as-is' (no estado em que se encontra). A aquisição pelo valor único promocional de R$ 900,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada."*
+> *"Licença de uso de software comercial perpétua em modalidade 'as-is' (no estado em que se encontra). A aquisição pelo valor promocional de R$ 67,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada."*
 
 ---
 

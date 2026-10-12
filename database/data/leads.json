@@ -1841,27 +1841,6 @@
     "updatedAt": "2026-10-12T13:25:41.810Z"
   },
   {
-    "id": "lead_autoprime_51_villasboas",
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Dr. André Villas-Bôas",
-    "company": "Villas-Bôas Sociedade de Advogados",
-    "role": "Sócio-Diretor",
-    "email": "andre.villas@advocacia.com.br",
-    "phone": "11987654321",
-    "estimatedBudget": 340000,
-    "assignedTo": "Fernanda Lima",
-    "stage": "qualificado",
-    "tags": [
-      "Automotivo",
-      "High-Ticket",
-      "BMW 320i M Sport 2024",
-      "WhatsApp"
-    ],
-    "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-10-12T13:33:34.986Z",
-    "updatedAt": "2026-10-12T13:33:35.020Z"
-  },
-  {
     "name": "Doutor Roberto Consultoria",
     "email": "roberto_1791812028412@consultoria.com.br",
     "phone": "11988887777",
@@ -1886,5 +1865,52 @@
     "id": "lea_1791812051290_97zf",
     "createdAt": "2026-10-12T13:34:11.290Z",
     "updatedAt": "2026-10-12T13:34:11.290Z"
+  },
+  {
+    "id": "lead_autoprime_51_villasboas",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Dr. André Villas-Bôas",
+    "company": "Villas-Bôas Sociedade de Advogados",
+    "role": "Sócio-Diretor",
+    "email": "andre.villas@advocacia.com.br",
+    "phone": "11987654321",
+    "estimatedBudget": 340000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "High-Ticket",
+      "BMW 320i M Sport 2024",
+      "WhatsApp"
+    ],
+    "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
+    "createdAt": "2026-10-12T13:44:56.718Z",
+    "updatedAt": "2026-10-12T13:44:56.734Z"
+  },
+  {
+    "name": "Doutor Roberto Consultoria",
+    "email": "roberto_1791812705879@consultoria.com.br",
+    "phone": "11988887777",
+    "origin": "Campanha Google",
+    "tenantId": "ten_1791812705917_mpqk",
+    "id": "lea_1791812705977_jqci",
+    "createdAt": "2026-10-12T13:45:05.977Z",
+    "updatedAt": "2026-10-12T13:45:05.977Z"
+  },
+  {
+    "tenantId": "ten_1791812713448_t7l0",
+    "name": "Lead Teste Exclusão",
+    "email": "alvo@teste.com",
+    "id": "lea_1791812713525_fxg6",
+    "createdAt": "2026-10-12T13:45:13.525Z",
+    "updatedAt": "2026-10-12T13:45:13.525Z"
+  },
+  {
+    "name": "Lead Injetado",
+    "email": "inj@test.com",
+    "tenantId": "ten_1791812713448_t7l0",
+    "id": "lea_1791812713583_lhie",
+    "createdAt": "2026-10-12T13:45:13.583Z",
+    "updatedAt": "2026-10-12T13:45:13.583Z"
   }
 ]

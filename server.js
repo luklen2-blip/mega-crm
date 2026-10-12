@@ -869,7 +869,7 @@ const server = http.createServer(async (req, res) => {
       <p>Estes Termos são regidos exclusivamente pelas Leis da República Federativa do Brasil, elegendo-se o Foro da Comarca de São Paulo/SP para dirimir quaisquer controvérsias.</p>
 
       <h2 class="text-sm font-bold text-white uppercase tracking-wider">5. Licença Comercial Perpétua (Self-Hosted)</h2>
-      <p>Licença de uso de software comercial perpétua em modalidade "as-is" (no estado em que se encontra). A aquisição pelo valor único promocional de R$ 900,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada.</p>
+      <p>Licença de uso de software comercial perpétua em modalidade "as-is" (no estado em que se encontra). A aquisição pelo valor promocional de R$ 67,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada.</p>
     </div>
 
     <div class="pt-6 border-t border-slate-800 text-center text-[11px] text-slate-500">

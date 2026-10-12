@@ -1,7 +1,7 @@
 # 🚀 Agentise Mega CRM — Self-Hosted & White-Label Edition
 
 > **Plataforma Completa de Gestão Comercial, Inteligência Artificial Multimodal, WhatsApp Cloud e Cobranças PIX do Banco Central.**  
-> **Versão:** 2.0.0 (Self-Hosted / White-Label Edition) | **Licença:** Comercial Perpétua "As-Is" (R$ 900,00)
+> **Versão:** 2.0.0 (Self-Hosted / White-Label Edition) | **Licença:** Comercial Perpétua "As-Is" (R$ 67,00)
 
 ---
 
@@ -157,6 +157,6 @@ O sistema inclui uma página interna didática e amigável para clientes e usuá
 
 Este software é comercializado sob a licença de uso perpétua "as-is":
 
-> *"Licença de uso de software comercial perpétua em modalidade 'as-is' (no estado em que se encontra). A aquisição pelo valor único promocional de R$ 900,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada."*
+> *"Licença de uso de software comercial perpétua em modalidade 'as-is' (no estado em que se encontra). A aquisição pelo valor promocional de R$ 67,00 concede o direito de uso e hospedagem em infraestrutura própria do adquirente. Custos de hospedagem em nuvem, consumo de tokens de inteligência artificial (APIs de terceiros) e taxas de mensageria são de responsabilidade integral do comprador. O produto não inclui suporte técnico contínuo, manutenção ou consultoria de implementação individualizada."*
 
 Para termos completos, consulte o arquivo [`LICENSE.md`](LICENSE.md) e [`public/termos.html`](public/termos.html).

@@ -48,12 +48,12 @@ async function run() {
   }
   console.log('  ✅ /guia-instalacao: 200 OK com layout interativo');
 
-  // 3. /termos route includes Section 6
+  // 3. /termos route includes Section 6 and R$ 67,00 pricing
   const termosRes = await makeRequest({ host: '127.0.0.1', port: TEST_PORT, path: '/termos', method: 'GET' });
-  if (termosRes.status !== 200 || !termosRes.body.includes('Licença Comercial Perpétua (Self-Hosted)')) {
-    throw new Error(`Falha em /termos: Seção 6 não encontrada`);
+  if (termosRes.status !== 200 || !termosRes.body.includes('Licença Comercial Perpétua (Self-Hosted)') || !termosRes.body.includes('R$ 67,00')) {
+    throw new Error(`Falha em /termos: Seção 6 ou valor de R$ 67,00 não encontrado`);
   }
-  console.log('  ✅ /termos: 200 OK com cláusula comercial R$ 900,00 as-is');
+  console.log('  ✅ /termos: 200 OK com cláusula comercial R$ 67,00 as-is');
 
   // 4. Login as admin
   const loginRes = await makeRequest({

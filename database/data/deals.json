@@ -1829,19 +1829,6 @@
     "updatedAt": "2026-10-12T13:25:41.886Z"
   },
   {
-    "id": "deal_autoprime_bmw_villasboas",
-    "tenantId": "ten_autoprime_veiculos",
-    "leadId": "lead_autoprime_51_villasboas",
-    "title": "Oportunidade BMW 320i M Sport 2024 - Dr. André Villas-Bôas",
-    "value": 340000,
-    "stage": "ganho",
-    "assignedTo": "Fernanda Lima",
-    "probability": 100,
-    "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
-    "createdAt": "2026-10-12T13:33:35.026Z",
-    "updatedAt": "2026-10-12T13:33:35.036Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "title": "Auditoria de Delta Deal #382",
     "value": 7500,
@@ -1916,5 +1903,94 @@
     "id": "dea_1791812051373_le09",
     "createdAt": "2026-10-12T13:34:11.373Z",
     "updatedAt": "2026-10-12T13:34:11.373Z"
+  },
+  {
+    "id": "deal_autoprime_bmw_villasboas",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Oportunidade BMW 320i M Sport 2024 - Dr. André Villas-Bôas",
+    "value": 340000,
+    "stage": "ganho",
+    "assignedTo": "Fernanda Lima",
+    "probability": 100,
+    "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
+    "createdAt": "2026-10-12T13:44:56.740Z",
+    "updatedAt": "2026-10-12T13:44:56.751Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Auditoria de Delta Deal #382",
+    "value": 7500,
+    "stage": "proposta",
+    "id": "dea_1791812697261_2en3",
+    "createdAt": "2026-10-12T13:44:57.261Z",
+    "updatedAt": "2026-10-12T13:44:57.265Z"
+  },
+  {
+    "stage": "qualificacao",
+    "value": 12500,
+    "probability": 20,
+    "priority": "media",
+    "assignedTo": "Carlos Fundador",
+    "title": "Consultoria Estratégica Q4",
+    "leadId": "lea_1791812705977_jqci",
+    "tenantId": "ten_1791812705917_mpqk",
+    "aiDealScore": 60,
+    "aiScoreClassification": "Média Propensão",
+    "aiScoreColor": "#0ea5e9",
+    "aiScoreRationale": "Score 60/100 (Média Propensão). Pontos fortes: Avanço no funil (QUALIFICACAO +15pts); Orçamento mapeado: R$ 12.500 (+5pts). Atenção recomendada: Contato não identificado como decisor; Nenhuma interação comercial registrada no histórico (-10pts).",
+    "id": "dea_1791812706046_ckom",
+    "createdAt": "2026-10-12T13:45:06.046Z",
+    "updatedAt": "2026-10-12T13:45:06.046Z"
+  },
+  {
+    "tenantId": "ten_1791812713448_t7l0",
+    "leadId": "lea_1791812713525_fxg6",
+    "title": "Oportunidade 1",
+    "value": 5000,
+    "stage": "prospeccao",
+    "id": "dea_1791812713536_83c5",
+    "createdAt": "2026-10-12T13:45:13.536Z",
+    "updatedAt": "2026-10-12T13:45:13.536Z"
+  },
+  {
+    "tenantId": "ten_1791812713448_t7l0",
+    "leadId": "lea_1791812713525_fxg6",
+    "title": "Deal Modificado com Segurança",
+    "value": 1000,
+    "id": "dea_1791812713572_bqgu",
+    "createdAt": "2026-10-12T13:45:13.572Z",
+    "updatedAt": "2026-10-12T13:45:13.697Z",
+    "isPaid": true,
+    "status": "paga",
+    "stage": "ganho",
+    "probability": 100,
+    "closedAt": "2026-10-12T13:45:13.697Z"
+  },
+  {
+    "stage": "prospeccao",
+    "value": 2000,
+    "probability": 20,
+    "priority": "media",
+    "title": "Deal Spoof",
+    "leadId": "lea_1791812713525_fxg6",
+    "tenantId": "ten_1791812713448_t7l0",
+    "aiDealScore": 50,
+    "aiScoreClassification": "Média Propensão",
+    "aiScoreColor": "#0ea5e9",
+    "aiScoreRationale": "Score 50/100 (Média Propensão). Pontos fortes: Avanço no funil (PROSPECCAO +5pts); Orçamento mapeado: R$ 2.000 (+5pts). Atenção recomendada: Contato não identificado como decisor; Nenhuma interação comercial registrada no histórico (-10pts).",
+    "id": "dea_1791812713618_ok77",
+    "createdAt": "2026-10-12T13:45:13.618Z",
+    "updatedAt": "2026-10-12T13:45:13.618Z"
+  },
+  {
+    "tenantId": "ten_1791812713448_t7l0",
+    "leadId": "lea_1791812713525_fxg6",
+    "title": "Venda Fechada",
+    "value": 8000,
+    "stage": "ganho",
+    "id": "dea_1791812713654_adc4",
+    "createdAt": "2026-10-12T13:45:13.654Z",
+    "updatedAt": "2026-10-12T13:45:13.654Z"
   }
 ]

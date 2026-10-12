@@ -232,5 +232,14 @@
     "id": "kno_1791812051554_4exr",
     "createdAt": "2026-10-12T13:34:11.554Z",
     "updatedAt": "2026-10-12T13:34:11.554Z"
+  },
+  {
+    "tenantId": "ten_1791812713876_1ry1",
+    "category": "Segredos",
+    "title": "Segredo Industrial Ultraconfidencial",
+    "content": "Margem de lucro de 85% e lista de fornecedores secretos",
+    "id": "kno_1791812713879_vxv2",
+    "createdAt": "2026-10-12T13:45:13.879Z",
+    "updatedAt": "2026-10-12T13:45:13.879Z"
   }
 ]
