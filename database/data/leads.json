@@ -1893,27 +1893,6 @@
     "updatedAt": "2026-10-12T13:45:13.583Z"
   },
   {
-    "id": "lead_autoprime_51_villasboas",
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Dr. André Villas-Bôas",
-    "company": "Villas-Bôas Sociedade de Advogados",
-    "role": "Sócio-Diretor",
-    "email": "andre.villas@advocacia.com.br",
-    "phone": "11987654321",
-    "estimatedBudget": 340000,
-    "assignedTo": "Fernanda Lima",
-    "stage": "qualificado",
-    "tags": [
-      "Automotivo",
-      "High-Ticket",
-      "BMW 320i M Sport 2024",
-      "WhatsApp"
-    ],
-    "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-10-12T13:56:02.323Z",
-    "updatedAt": "2026-10-12T13:56:02.340Z"
-  },
-  {
     "name": "Doutor Roberto Consultoria",
     "email": "roberto_1791813379005@consultoria.com.br",
     "phone": "11988887777",
@@ -1938,5 +1917,558 @@
     "id": "lea_1791813386886_xsri",
     "createdAt": "2026-10-12T13:56:26.886Z",
     "updatedAt": "2026-10-12T13:56:26.886Z"
+  },
+  {
+    "name": "Lucas Ferreira",
+    "company": "Ferreira Tech",
+    "role": "CEO",
+    "email": "lucas@ferreira.tech",
+    "phone": "11999990001",
+    "estimatedBudget": 45000,
+    "tags": [
+      "SaaS",
+      "B2B",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793635981518_acrm",
+    "createdAt": "2026-11-02T16:13:01.518Z",
+    "updatedAt": "2026-11-02T16:13:01.518Z"
+  },
+  {
+    "name": "Beatriz Lima",
+    "company": "Lima Cosméticos",
+    "role": "Gerente",
+    "email": "beatriz@lima.com.br",
+    "phone": "21988880002",
+    "estimatedBudget": 12000,
+    "tags": [
+      "Varejo",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793635981521_s7jw",
+    "createdAt": "2026-11-02T16:13:01.521Z",
+    "updatedAt": "2026-11-02T16:13:01.521Z"
+  },
+  {
+    "name": "Roberto Santos",
+    "company": "Santos Log",
+    "role": "Diretor",
+    "email": "",
+    "phone": "11977770003",
+    "estimatedBudget": 35000,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793635981532_v404",
+    "createdAt": "2026-11-02T16:13:01.532Z",
+    "updatedAt": "2026-11-02T16:13:01.532Z"
+  },
+  {
+    "name": "Hacker Spoofing",
+    "company": "Invasor Inc",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793635981546_vh5h",
+    "createdAt": "2026-11-02T16:13:01.546Z",
+    "updatedAt": "2026-11-02T16:13:01.546Z"
+  },
+  {
+    "name": "Lucas Ferreira",
+    "company": "Ferreira Tech",
+    "role": "CEO",
+    "email": "lucas@ferreira.tech",
+    "phone": "11999990001",
+    "estimatedBudget": 45000,
+    "tags": [
+      "SaaS",
+      "B2B",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637239637_a5dw",
+    "createdAt": "2026-11-02T16:33:59.637Z",
+    "updatedAt": "2026-11-02T16:33:59.637Z"
+  },
+  {
+    "name": "Beatriz Lima",
+    "company": "Lima Cosméticos",
+    "role": "Gerente",
+    "email": "beatriz@lima.com.br",
+    "phone": "21988880002",
+    "estimatedBudget": 12000,
+    "tags": [
+      "Varejo",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637239639_y9cq",
+    "createdAt": "2026-11-02T16:33:59.639Z",
+    "updatedAt": "2026-11-02T16:33:59.639Z"
+  },
+  {
+    "name": "Roberto Santos",
+    "company": "Santos Log",
+    "role": "Diretor",
+    "email": "",
+    "phone": "11977770003",
+    "estimatedBudget": 35000,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637239650_m6f8",
+    "createdAt": "2026-11-02T16:33:59.650Z",
+    "updatedAt": "2026-11-02T16:33:59.650Z"
+  },
+  {
+    "name": "Hacker Spoofing",
+    "company": "Invasor Inc",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637239662_ku0z",
+    "createdAt": "2026-11-02T16:33:59.662Z",
+    "updatedAt": "2026-11-02T16:33:59.662Z"
+  },
+  {
+    "name": "Lucas Ferreira",
+    "company": "Ferreira Tech",
+    "role": "CEO",
+    "email": "lucas@ferreira.tech",
+    "phone": "11999990001",
+    "estimatedBudget": 45000,
+    "tags": [
+      "SaaS",
+      "B2B",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637405588_e6dq",
+    "createdAt": "2026-11-02T16:36:45.588Z",
+    "updatedAt": "2026-11-02T16:36:45.588Z"
+  },
+  {
+    "name": "Beatriz Lima",
+    "company": "Lima Cosméticos",
+    "role": "Gerente",
+    "email": "beatriz@lima.com.br",
+    "phone": "21988880002",
+    "estimatedBudget": 12000,
+    "tags": [
+      "Varejo",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637405590_df2e",
+    "createdAt": "2026-11-02T16:36:45.590Z",
+    "updatedAt": "2026-11-02T16:36:45.590Z"
+  },
+  {
+    "name": "Roberto Santos",
+    "company": "Santos Log",
+    "role": "Diretor",
+    "email": "",
+    "phone": "11977770003",
+    "estimatedBudget": 35000,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637405601_izaz",
+    "createdAt": "2026-11-02T16:36:45.601Z",
+    "updatedAt": "2026-11-02T16:36:45.601Z"
+  },
+  {
+    "name": "Hacker Spoofing",
+    "company": "Invasor Inc",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793637405614_vu6o",
+    "createdAt": "2026-11-02T16:36:45.614Z",
+    "updatedAt": "2026-11-02T16:36:45.614Z"
+  },
+  {
+    "name": "Lucas Ferreira",
+    "company": "Ferreira Tech",
+    "role": "CEO",
+    "email": "lucas@ferreira.tech",
+    "phone": "11999990001",
+    "estimatedBudget": 45000,
+    "tags": [
+      "SaaS",
+      "B2B",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638392570_ohmi",
+    "createdAt": "2026-11-02T16:53:12.584Z",
+    "updatedAt": "2026-11-02T16:53:12.584Z"
+  },
+  {
+    "name": "Beatriz Lima",
+    "company": "Lima Cosméticos",
+    "role": "Gerente",
+    "email": "beatriz@lima.com.br",
+    "phone": "21988880002",
+    "estimatedBudget": 12000,
+    "tags": [
+      "Varejo",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638392589_80je",
+    "createdAt": "2026-11-02T16:53:12.589Z",
+    "updatedAt": "2026-11-02T16:53:12.589Z"
+  },
+  {
+    "name": "Roberto Santos",
+    "company": "Santos Log",
+    "role": "Diretor",
+    "email": "",
+    "phone": "11977770003",
+    "estimatedBudget": 35000,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638392619_4lzw",
+    "createdAt": "2026-11-02T16:53:12.619Z",
+    "updatedAt": "2026-11-02T16:53:12.619Z"
+  },
+  {
+    "name": "Hacker Spoofing",
+    "company": "Invasor Inc",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638392652_7ukh",
+    "createdAt": "2026-11-02T16:53:12.652Z",
+    "updatedAt": "2026-11-02T16:53:12.652Z"
+  },
+  {
+    "name": "Lucas Ferreira",
+    "company": "Ferreira Tech",
+    "role": "CEO",
+    "email": "lucas@ferreira.tech",
+    "phone": "11999990001",
+    "estimatedBudget": 45000,
+    "tags": [
+      "SaaS",
+      "B2B",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638496034_z3bk",
+    "createdAt": "2026-11-02T16:54:56.034Z",
+    "updatedAt": "2026-11-02T16:54:56.034Z"
+  },
+  {
+    "name": "Beatriz Lima",
+    "company": "Lima Cosméticos",
+    "role": "Gerente",
+    "email": "beatriz@lima.com.br",
+    "phone": "21988880002",
+    "estimatedBudget": 12000,
+    "tags": [
+      "Varejo",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638496036_4saz",
+    "createdAt": "2026-11-02T16:54:56.036Z",
+    "updatedAt": "2026-11-02T16:54:56.036Z"
+  },
+  {
+    "name": "Roberto Santos",
+    "company": "Santos Log",
+    "role": "Diretor",
+    "email": "",
+    "phone": "11977770003",
+    "estimatedBudget": 35000,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638496048_yqg5",
+    "createdAt": "2026-11-02T16:54:56.048Z",
+    "updatedAt": "2026-11-02T16:54:56.048Z"
+  },
+  {
+    "name": "Marcos Paulo",
+    "company": "São Paulo - Jardins",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "11988887777",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638496064_x9kd",
+    "createdAt": "2026-11-02T16:54:56.064Z",
+    "updatedAt": "2026-11-02T16:54:56.064Z"
+  },
+  {
+    "name": "Hacker Spoofing",
+    "company": "Invasor Inc",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793638496117_0but",
+    "createdAt": "2026-11-02T16:54:56.117Z",
+    "updatedAt": "2026-11-02T16:54:56.117Z"
+  },
+  {
+    "name": "Lucas Ferreira",
+    "company": "Ferreira Tech",
+    "role": "CEO",
+    "email": "lucas@ferreira.tech",
+    "phone": "11999990001",
+    "estimatedBudget": 45000,
+    "tags": [
+      "SaaS",
+      "B2B",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793641900196_c11c",
+    "createdAt": "2026-11-02T17:51:40.211Z",
+    "updatedAt": "2026-11-02T17:51:40.211Z"
+  },
+  {
+    "name": "Beatriz Lima",
+    "company": "Lima Cosméticos",
+    "role": "Gerente",
+    "email": "beatriz@lima.com.br",
+    "phone": "21988880002",
+    "estimatedBudget": 12000,
+    "tags": [
+      "Varejo",
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793641900216_u897",
+    "createdAt": "2026-11-02T17:51:40.216Z",
+    "updatedAt": "2026-11-02T17:51:40.216Z"
+  },
+  {
+    "name": "Roberto Santos",
+    "company": "Santos Log",
+    "role": "Diretor",
+    "email": "",
+    "phone": "11977770003",
+    "estimatedBudget": 35000,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793641900240_h6qy",
+    "createdAt": "2026-11-02T17:51:40.240Z",
+    "updatedAt": "2026-11-02T17:51:40.240Z"
+  },
+  {
+    "name": "Marcos Paulo",
+    "company": "São Paulo - Jardins",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "11988887777",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793641900251_6g2g",
+    "createdAt": "2026-11-02T17:51:40.251Z",
+    "updatedAt": "2026-11-02T17:51:40.251Z"
+  },
+  {
+    "name": "Hacker Spoofing",
+    "company": "Invasor Inc",
+    "role": "Contato Comercial",
+    "email": "",
+    "phone": "",
+    "estimatedBudget": 0,
+    "tags": [
+      "Importado CSV"
+    ],
+    "notes": "Importado via planilha CSV",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793641900288_y5rm",
+    "createdAt": "2026-11-02T17:51:40.288Z",
+    "updatedAt": "2026-11-02T17:51:40.288Z"
+  },
+  {
+    "id": "lead_autoprime_51_villasboas",
+    "tenantId": "ten_autoprime_veiculos",
+    "name": "Dr. André Villas-Bôas",
+    "company": "Villas-Bôas Sociedade de Advogados",
+    "role": "Sócio-Diretor",
+    "email": "andre.villas@advocacia.com.br",
+    "phone": "11987654321",
+    "estimatedBudget": 340000,
+    "assignedTo": "Fernanda Lima",
+    "stage": "qualificado",
+    "tags": [
+      "Automotivo",
+      "High-Ticket",
+      "BMW 320i M Sport 2024",
+      "WhatsApp"
+    ],
+    "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
+    "createdAt": "2026-11-02T17:52:00.504Z",
+    "updatedAt": "2026-11-02T17:52:00.514Z"
+  },
+  {
+    "name": "Carlos Eduardo Silveira",
+    "company": "Silveira Logística",
+    "role": "Diretor",
+    "email": "carlos@silveiralog.com.br",
+    "phone": "11987654321",
+    "estimatedBudget": 28000,
+    "tags": [
+      "Logística",
+      "B2B"
+    ],
+    "notes": "Interessado em automação",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793642381438_p4uk",
+    "createdAt": "2026-11-02T17:59:41.438Z",
+    "updatedAt": "2026-11-02T17:59:41.438Z"
+  },
+  {
+    "name": "Dra. Marina Albuquerque",
+    "company": "Albuquerque Clínicas",
+    "role": "Proprietária",
+    "email": "marina@clinica.com.br",
+    "phone": "21976543210",
+    "estimatedBudget": 15500,
+    "tags": [
+      "Saúde",
+      "High-Ticket"
+    ],
+    "notes": "Contato via WhatsApp",
+    "source": "Importação CSV",
+    "tenantId": "ten_demo_agentise",
+    "id": "lea_1793642381441_sgff",
+    "createdAt": "2026-11-02T17:59:41.441Z",
+    "updatedAt": "2026-11-02T17:59:41.441Z"
+  },
+  {
+    "name": "Carlos Eduardo Silveira",
+    "company": "Silveira Logística",
+    "role": "Diretor",
+    "email": "carlos@silveiralog.com.br",
+    "phone": "11987654321",
+    "estimatedBudget": 28000,
+    "tags": [
+      "Logística",
+      "B2B"
+    ],
+    "notes": "Interessado em automação",
+    "source": "Importação CSV",
+    "tenantId": "ten_autoprime_veiculos",
+    "id": "lea_1793642381443_nfn7",
+    "createdAt": "2026-11-02T17:59:41.443Z",
+    "updatedAt": "2026-11-02T17:59:41.443Z"
+  },
+  {
+    "name": "Dra. Marina Albuquerque",
+    "company": "Albuquerque Clínicas",
+    "role": "Proprietária",
+    "email": "marina@clinica.com.br",
+    "phone": "21976543210",
+    "estimatedBudget": 15500,
+    "tags": [
+      "Saúde",
+      "High-Ticket"
+    ],
+    "notes": "Contato via WhatsApp",
+    "source": "Importação CSV",
+    "tenantId": "ten_autoprime_veiculos",
+    "id": "lea_1793642381445_si43",
+    "createdAt": "2026-11-02T17:59:41.445Z",
+    "updatedAt": "2026-11-02T17:59:41.445Z"
   }
 ]
