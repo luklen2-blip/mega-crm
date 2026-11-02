@@ -159,3 +159,4 @@ scriptJs = scriptJs.replace("const msg = getMessageText(lead.name);", "const msg
 
 fs.writeFileSync(scriptPath, scriptJs, 'utf8');
 console.log('✅ disparo_whatsapp_lotes.js atualizado com personalização de nome e bairro!');
+

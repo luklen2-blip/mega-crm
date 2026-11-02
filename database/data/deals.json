@@ -2129,6 +2129,15 @@
     "updatedAt": "2026-11-02T19:36:36.291Z"
   },
   {
+    "tenantId": "ten_demo_agentise",
+    "title": "Auditoria de Delta Deal #382",
+    "value": 7500,
+    "stage": "proposta",
+    "id": "dea_1793648701409_qqq8",
+    "createdAt": "2026-11-02T19:45:01.409Z",
+    "updatedAt": "2026-11-02T19:45:01.415Z"
+  },
+  {
     "id": "deal_autoprime_bmw_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "leadId": "lead_autoprime_51_villasboas",
@@ -2138,16 +2147,16 @@
     "assignedTo": "Fernanda Lima",
     "probability": 100,
     "notes": "Negociação avançada de venda da BMW 320i M Sport 2024 após test-drive impecável.\n[VENDA CONCLUÍDA]: Pagamento de R$ 340.000,00 confirmado via PIX instantâneo. Veículo faturado e entregue com sucesso.",
-    "createdAt": "2026-11-02T19:45:00.436Z",
-    "updatedAt": "2026-11-02T19:45:00.449Z"
+    "createdAt": "2026-11-02T19:56:23.687Z",
+    "updatedAt": "2026-11-02T19:56:23.699Z"
   },
   {
     "tenantId": "ten_demo_agentise",
     "title": "Auditoria de Delta Deal #382",
     "value": 7500,
     "stage": "proposta",
-    "id": "dea_1793648701409_qqq8",
-    "createdAt": "2026-11-02T19:45:01.409Z",
-    "updatedAt": "2026-11-02T19:45:01.415Z"
+    "id": "dea_1793649384570_ia6p",
+    "createdAt": "2026-11-02T19:56:24.570Z",
+    "updatedAt": "2026-11-02T19:56:24.576Z"
   }
 ]

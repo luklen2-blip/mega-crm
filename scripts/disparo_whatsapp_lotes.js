@@ -87,7 +87,7 @@ function getMessageText(leadOrName) {
     name = leadOrName.name || 'Amigo';
     bairro = extractBairro(leadOrName);
   }
-  return `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em ${bairro} e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.`;
+  return `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em ${bairro}.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos pelo WhatsApp e controlar ordens de serviço:\n👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf\n\nSe quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.`;
 }
 
 function openWhatsApp(phone, text) {

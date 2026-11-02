@@ -765,5 +765,18 @@
     "id": "pip_1793648701553_610w",
     "createdAt": "2026-11-02T19:45:01.553Z",
     "updatedAt": "2026-11-02T19:45:01.553Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1793649384683_wza0",
+    "key": "stg_1793649384704",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1793649384704_yfmj",
+    "createdAt": "2026-11-02T19:56:24.704Z",
+    "updatedAt": "2026-11-02T19:56:24.704Z"
   }
 ]

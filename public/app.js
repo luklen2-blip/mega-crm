@@ -83,7 +83,7 @@ function getWhatsAppUrl(phone, leadName) {
   const waNumber = normalizeWhatsAppPhone(phone);
   if (!waNumber) return '#';
   const name = leadName || 'Amigo';
-  const text = `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.`;
+  const text = `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste.\n\nCriamos o Oficina Organizada, sistema simples para acabar com papel, enviar orçamentos pelo WhatsApp e gerenciar a oficina:\n👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf\n\nSe quiser liberar seu teste grátis de 24 horas, me avise por aqui!`;
   return `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
 }
 
@@ -3433,7 +3433,8 @@ function insertDispatcherTag(tag) {
 
 function updateDispatcherPreview() {
   const previewBox = document.getElementById('dispatcher-preview-box');
-  const tpl = document.getElementById('dispatcher-message-text')?.value || '';
+  const tpl = document.getElementById('dispatcher-message-text')?.value || 
+    `Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em {bairro}.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos pelo WhatsApp e controlar ordens de serviço:\n👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf\n\nSe quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.`;
   if (!previewBox) return;
 
   const sampleLead = (globalLeads && globalLeads.length > 0) 
