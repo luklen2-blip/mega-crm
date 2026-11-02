@@ -180,7 +180,9 @@ function runSeeds(force = false) {
   }
 
   // 5. Leads B2B Brasileiros Realistas
-  const l1 = leadsDB.insert({
+  let l1, l2, l3, l4, l5;
+  if (leadsDB.countByTenant(tenantId) === 0) {
+    l1 = leadsDB.insert({
     tenantId,
     name: 'Carlos Eduardo Silveira',
     company: 'Silveira Logística Integrada',
@@ -192,7 +194,7 @@ function runSeeds(force = false) {
     notes: 'Empresa com 45 caminhões e perda de 15% em roteirização manual. Busca automação urgente com agentes de IA.'
   });
 
-  const l2 = leadsDB.insert({
+  l2 = leadsDB.insert({
     tenantId,
     name: 'Dra. Marina Albuquerque',
     company: 'Albuquerque Clínicas Médicas',
@@ -204,7 +206,7 @@ function runSeeds(force = false) {
     notes: 'Rede com 3 unidades no Rio. Secretárias sobrecarregadas com agendamentos no WhatsApp. Deseja qualificação automática de pacientes.'
   });
 
-  const l3 = leadsDB.insert({
+  l3 = leadsDB.insert({
     tenantId,
     name: 'Fernando Rossi',
     company: 'Rossi Engenharia & Construtora',
@@ -216,7 +218,7 @@ function runSeeds(force = false) {
     notes: 'Negociando esteira comercial para lançamentos imobiliários. Ticket médio alto, ciclo de fechamento em 60 dias.'
   });
 
-  const l4 = leadsDB.insert({
+  l4 = leadsDB.insert({
     tenantId,
     name: 'Patrícia Prado',
     company: 'Prado Advocacia Previdenciária',
@@ -228,7 +230,7 @@ function runSeeds(force = false) {
     notes: 'Recebe mais de 80 mensagens/dia de consultas previdenciárias. Necessita de triagem e agendamento automático com PIX de consulta.'
   });
 
-  const l5 = leadsDB.insert({
+  l5 = leadsDB.insert({
     tenantId,
     name: 'Lucas Brandão',
     company: 'Brandão Autopeças Distribuidora',
@@ -239,6 +241,14 @@ function runSeeds(force = false) {
     tags: ['Distribuição', 'Varejo B2B', 'Recorrência'],
     notes: 'Distribuidor para 120 oficinas na região de Campinas. Vendedores gastam 3h/dia montando orçamentos manuais.'
   });
+  } else {
+    const existing = leadsDB.findByTenant(tenantId);
+    l1 = existing[0] || {};
+    l2 = existing[1] || {};
+    l3 = existing[2] || {};
+    l4 = existing[3] || {};
+    l5 = existing[4] || {};
+  }
 
   // 6. Oportunidades no Pipeline Kanban
   const d1 = dealsDB.insert({

@@ -1,182 +1,953 @@
 [
   {
-    "name": "Carlos Eduardo Silveira",
-    "company": "Silveira Logística Integrada",
-    "role": "Diretor de Operações",
-    "email": "carlos@silveiralog.com.br",
-    "phone": "11987654321",
-    "estimatedBudget": 28000,
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Viegas",
+    "company": "Oficina Viegas",
+    "role": "Recepção / Dono",
+    "phone": "5521986182829",
+    "email": "",
+    "estimatedBudget": 3500,
     "tags": [
-      "Logística",
-      "B2B",
-      "Decisor Direto"
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
     ],
-    "notes": "Empresa com 45 caminhões e perda de 15% em roteirização manual. Busca automação urgente com agentes de IA.",
-    "id": "lea_1789241666592_snnu",
-    "createdAt": "2026-09-12T19:34:26.592Z",
-    "updatedAt": "2026-09-12T21:12:18.811Z",
-    "tenantId": "ten_demo_agentise"
-  },
-  {
-    "name": "Dra. Marina Albuquerque",
-    "company": "Albuquerque Clínicas Médicas",
-    "role": "Sócia-Proprietária",
-    "email": "marina@albuquerqueclinicas.com.br",
-    "phone": "21976543210",
-    "estimatedBudget": 15500,
-    "tags": [
-      "Saúde",
-      "High-Ticket",
-      "WhatsApp"
-    ],
-    "notes": "Rede com 3 unidades no Rio. Secretárias sobrecarregadas com agendamentos no WhatsApp. Deseja qualificação automática de pacientes.",
-    "id": "lea_1789241666594_pdcr",
-    "createdAt": "2026-09-12T19:34:26.594Z",
-    "updatedAt": "2026-09-12T21:12:18.816Z",
-    "tenantId": "ten_demo_agentise"
-  },
-  {
-    "name": "Rodrigo Vasconcelos",
-    "company": "Nexus Tech Educação",
-    "role": "CEO & Fundador",
-    "email": "rodrigo@nexustech.io",
-    "phone": "31965432109",
-    "estimatedBudget": 45000,
-    "tags": [
-      "EdTech",
-      "SaaS",
-      "Escala"
-    ],
-    "notes": "Plataforma de cursos online com 12 mil alunos. Quer implementar CRM automatizado com funil de vendas integrado ao PIX nativo.",
-    "id": "lea_1789241666595_lnyp",
-    "createdAt": "2026-09-12T19:34:26.595Z",
-    "updatedAt": "2026-09-12T21:12:18.819Z",
-    "tenantId": "ten_demo_agentise"
-  },
-  {
-    "name": "Beatriz Fagundes",
-    "company": "Studio Fagundes Arquitetura",
-    "role": "Arquiteta Titular",
-    "email": "beatriz@fagundesarq.com.br",
-    "phone": "41954321098",
-    "estimatedBudget": 8500,
-    "tags": [
-      "Design",
-      "PME"
-    ],
-    "notes": "Escritório de arquitetura em expansão. Perde prazos de follow-up de orçamentos por falta de funil centralizado.",
-    "id": "lea_1789241666596_b2od",
-    "createdAt": "2026-09-12T19:34:26.596Z",
-    "updatedAt": "2026-09-12T21:12:18.821Z",
-    "tenantId": "ten_demo_agentise"
-  },
-  {
-    "name": "Felipe Fontana",
-    "company": "Fontana Distribuidora de Alimentos",
-    "role": "Gerente Comercial",
-    "email": "felipe@fontanaalimentos.com.br",
-    "phone": "19943210987",
-    "estimatedBudget": 35000,
-    "tags": [
-      "Atacado",
-      "Varejo",
-      "B2B"
-    ],
-    "notes": "Equipe externa de 12 representantes comerciais. Precisam de aplicativo ágil com pipeline e geração de propostas PIX na hora.",
-    "id": "lea_1789241666597_pc0n",
-    "createdAt": "2026-09-12T19:34:26.597Z",
-    "updatedAt": "2026-09-12T21:12:18.824Z",
-    "tenantId": "ten_demo_agentise"
+    "notes": "Local: Bangu - RJ | Especialidade: Mecânica Geral e Revisão | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.210Z",
+    "id": "lea_1793643190215_14uz",
+    "updatedAt": "2026-11-02T18:13:10.215Z"
   },
   {
     "tenantId": "ten_demo_agentise",
-    "name": "Carlos Eduardo Silveira",
-    "company": "Silveira Logística Integrada",
-    "role": "Diretor de Operações",
-    "email": "carlos@silveiralog.com.br",
-    "phone": "11987654321",
-    "estimatedBudget": 28000,
+    "name": "Oficina Mecânica Mecaneves",
+    "company": "Oficina Mecânica Mecaneves",
+    "role": "Balcão / Responsável",
+    "phone": "5521964718132",
+    "email": "",
+    "estimatedBudget": 3500,
     "tags": [
-      "Logística",
-      "B2B",
-      "Decisor Direto"
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
     ],
-    "notes": "Empresa com 45 caminhões e perda de 15% em roteirização manual. Busca automação urgente com agentes de IA.",
-    "id": "lea_1789245789550_pk1k",
-    "createdAt": "2026-09-12T20:43:09.550Z",
-    "updatedAt": "2026-09-12T20:43:09.550Z"
+    "notes": "Local: Bangu - RJ | Especialidade: Injeção Eletrônica e Motor | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.222Z",
+    "id": "lea_1793643190222_qm1q",
+    "updatedAt": "2026-11-02T18:13:10.222Z"
   },
   {
     "tenantId": "ten_demo_agentise",
-    "name": "Dra. Marina Albuquerque",
-    "company": "Albuquerque Clínicas Médicas",
-    "role": "Sócia-Proprietária",
-    "email": "marina@albuquerqueclinicas.com.br",
-    "phone": "21976543210",
-    "estimatedBudget": 15500,
+    "name": "JJ Motors",
+    "company": "JJ Motors",
+    "role": "Responsável Técnico",
+    "phone": "5521997208759",
+    "email": "",
+    "estimatedBudget": 3500,
     "tags": [
-      "Saúde",
-      "High-Ticket",
-      "WhatsApp"
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
     ],
-    "notes": "Rede com 3 unidades no Rio. Secretárias sobrecarregadas com agendamentos no WhatsApp. Deseja qualificação automática de pacientes.",
-    "id": "lea_1789245789552_z8in",
-    "createdAt": "2026-09-12T20:43:09.552Z",
-    "updatedAt": "2026-09-12T20:43:09.552Z"
+    "notes": "Local: Bangu - RJ | Especialidade: Câmbio e Mecânica | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.227Z",
+    "id": "lea_1793643190227_79yr",
+    "updatedAt": "2026-11-02T18:13:10.227Z"
   },
   {
     "tenantId": "ten_demo_agentise",
-    "name": "Fernando Rossi",
-    "company": "Rossi Engenharia & Construtora",
-    "role": "CEO & Fundador",
-    "email": "fernando@rossieng.com.br",
-    "phone": "31988776655",
-    "estimatedBudget": 45000,
+    "name": "AUTO ELETRICA BY MIRANDA",
+    "company": "AUTO ELETRICA BY MIRANDA",
+    "role": "Miranda (Proprietário)",
+    "phone": "5521966596922",
+    "email": "",
+    "estimatedBudget": 3500,
     "tags": [
-      "Construção Civil",
-      "Enterprise",
-      "Pipeline Longo"
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
     ],
-    "notes": "Negociando esteira comercial para lançamentos imobiliários. Ticket médio alto, ciclo de fechamento em 60 dias.",
-    "id": "lea_1789245789554_44xj",
-    "createdAt": "2026-09-12T20:43:09.554Z",
-    "updatedAt": "2026-09-12T20:43:09.554Z"
+    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Auto Elétrica e Arranque | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.230Z",
+    "id": "lea_1793643190230_zv4m",
+    "updatedAt": "2026-11-02T18:13:10.230Z"
   },
   {
     "tenantId": "ten_demo_agentise",
-    "name": "Patrícia Prado",
-    "company": "Prado Advocacia Previdenciária",
-    "role": "Sócia Administradora",
-    "email": "patricia@pradoadv.com.br",
-    "phone": "41977889900",
-    "estimatedBudget": 8900,
+    "name": "RJ auto eletrica",
+    "company": "RJ auto eletrica",
+    "role": "Atendimento Direto",
+    "phone": "5521989598323",
+    "email": "",
+    "estimatedBudget": 3500,
     "tags": [
-      "Jurídico",
-      "Qualificação Rápida",
-      "Atendimento"
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
     ],
-    "notes": "Recebe mais de 80 mensagens/dia de consultas previdenciárias. Necessita de triagem e agendamento automático com PIX de consulta.",
-    "id": "lea_1789245789560_m1vu",
-    "createdAt": "2026-09-12T20:43:09.560Z",
-    "updatedAt": "2026-09-12T20:43:09.560Z"
+    "notes": "Local: Santa Cruz - RJ | Especialidade: Auto Elétrica e Baterias | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.234Z",
+    "id": "lea_1793643190234_4v77",
+    "updatedAt": "2026-11-02T18:13:10.234Z"
   },
   {
     "tenantId": "ten_demo_agentise",
-    "name": "Lucas Brandão",
-    "company": "Brandão Autopeças Distribuidora",
-    "role": "Gerente Comercial",
-    "email": "lucas@brandaodistribuidora.com.br",
-    "phone": "19966554433",
-    "estimatedBudget": 19000,
+    "name": "Padrao Auto Eletrica e Mecanica",
+    "company": "Padrao Auto Eletrica e Mecanica",
+    "role": "Balcão",
+    "phone": "5521964175874",
+    "email": "",
+    "estimatedBudget": 3500,
     "tags": [
-      "Distribuição",
-      "Varejo B2B",
-      "Recorrência"
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
     ],
-    "notes": "Distribuidor para 120 oficinas na região de Campinas. Vendedores gastam 3h/dia montando orçamentos manuais.",
-    "id": "lea_1789245789563_g707",
-    "createdAt": "2026-09-12T20:43:09.563Z",
-    "updatedAt": "2026-09-12T20:43:09.563Z"
+    "notes": "Local: Santíssimo - RJ | Especialidade: Auto Elétrica e Mecânica | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.246Z",
+    "id": "lea_1793643190246_yemj",
+    "updatedAt": "2026-11-02T18:13:10.246Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "JReparos auto eletrica",
+    "company": "JReparos auto eletrica",
+    "role": "Responsável Técnico",
+    "phone": "5521975278662",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Injeção e Elétrica | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.251Z",
+    "id": "lea_1793643190251_259p",
+    "updatedAt": "2026-11-02T18:13:10.251Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Vasques Auto Center",
+    "company": "Vasques Auto Center",
+    "role": "Atendimento Oficina",
+    "phone": "5521964779051",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Bangu - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.255Z",
+    "id": "lea_1793643190255_8337",
+    "updatedAt": "2026-11-02T18:13:10.255Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Center Parada 999",
+    "company": "Auto Center Parada 999",
+    "role": "Recepção Comercial",
+    "phone": "5521995102114",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Bangu - RJ | Especialidade: Freios e Manutenção Rápida | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.259Z",
+    "id": "lea_1793643190259_8ft5",
+    "updatedAt": "2026-11-02T18:13:10.259Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "CMN Auto Center",
+    "company": "CMN Auto Center",
+    "role": "Recepção Mecânica",
+    "phone": "5521998920999",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.263Z",
+    "id": "lea_1793643190263_s418",
+    "updatedAt": "2026-11-02T18:13:10.263Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Luiz Auto Elétrica e Mecânica",
+    "company": "Oficina Luiz Auto Elétrica e Mecânica",
+    "role": "Atendimento",
+    "phone": "5521995291719",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Mecânica e Elétrica Geral | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.266Z",
+    "id": "lea_1793643190266_odcj",
+    "updatedAt": "2026-11-02T18:13:10.266Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Rodrigo Auto Elétrica",
+    "company": "Rodrigo Auto Elétrica",
+    "role": "Rodrigo (Proprietário)",
+    "phone": "5521964493177",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Auto Elétrica e Alternador | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.270Z",
+    "id": "lea_1793643190270_6kuy",
+    "updatedAt": "2026-11-02T18:13:10.270Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "AUTO ELETRICA ADRIANO",
+    "company": "AUTO ELETRICA ADRIANO",
+    "role": "Adriano (Oficina)",
+    "phone": "5521964825902",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Padre Miguel - RJ | Especialidade: Auto Elétrica e Socorro | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.274Z",
+    "id": "lea_1793643190274_bms3",
+    "updatedAt": "2026-11-02T18:13:10.274Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Dadal Auto Mecânica",
+    "company": "Dadal Auto Mecânica",
+    "role": "Dadal (Mecânico)",
+    "phone": "5521981180655",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Paciência - RJ | Especialidade: Mecânica Geral e Motor | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.277Z",
+    "id": "lea_1793643190277_unv8",
+    "updatedAt": "2026-11-02T18:13:10.277Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Center MCAR",
+    "company": "Auto Center MCAR",
+    "role": "Atendimento",
+    "phone": "5521996843126",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Padre Miguel - RJ | Especialidade: Suspensão e Troca de Óleo | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.280Z",
+    "id": "lea_1793643190280_locz",
+    "updatedAt": "2026-11-02T18:13:10.280Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Mecânica Limão Car",
+    "company": "Oficina Mecânica Limão Car",
+    "role": "Diogo (Responsável)",
+    "phone": "5521979561518",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Padre Miguel - RJ | Especialidade: Mecânica Geral e Revisão | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.284Z",
+    "id": "lea_1793643190284_zxjg",
+    "updatedAt": "2026-11-02T18:13:10.284Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "J & J Auto Técnica",
+    "company": "J & J Auto Técnica",
+    "role": "Responsável Oficina",
+    "phone": "5521964712041",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Realengo - RJ | Especialidade: Diagnóstico e Freios | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.290Z",
+    "id": "lea_1793643190290_f1ho",
+    "updatedAt": "2026-11-02T18:13:10.290Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Mecânica Irmãos Unidos",
+    "company": "Oficina Mecânica Irmãos Unidos",
+    "role": "Balcão / Dono",
+    "phone": "5521971243389",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Mecânica Geral e Suspensão | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.294Z",
+    "id": "lea_1793643190294_2xr6",
+    "updatedAt": "2026-11-02T18:13:10.294Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Center Campo Grande",
+    "company": "Auto Center Campo Grande",
+    "role": "Recepção de Serviços",
+    "phone": "5521982451102",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Freios e Alinhamento | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.297Z",
+    "id": "lea_1793643190297_n0pl",
+    "updatedAt": "2026-11-02T18:13:10.297Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Mecânica West Car",
+    "company": "Mecânica West Car",
+    "role": "Carlos / Oficina",
+    "phone": "5521964128874",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Injeção Eletrônica e Motor | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.301Z",
+    "id": "lea_1793643190301_muvn",
+    "updatedAt": "2026-11-02T18:13:10.301Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Centro Automotivo D'Avila",
+    "company": "Centro Automotivo D'Avila",
+    "role": "Setor de Orçamentos",
+    "phone": "5521993417750",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Câmbio e Diagnóstico | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.304Z",
+    "id": "lea_1793643190304_koht",
+    "updatedAt": "2026-11-02T18:13:10.304Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Garagem 21 Centro Automotivo",
+    "company": "Garagem 21 Centro Automotivo",
+    "role": "Atendimento",
+    "phone": "5521988924419",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Ar-Condicionado e Elétrica | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.307Z",
+    "id": "lea_1793643190307_uje6",
+    "updatedAt": "2026-11-02T18:13:10.307Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Especializada Zona Oeste",
+    "company": "Oficina Especializada Zona Oeste",
+    "role": "Marcelo (Oficina)",
+    "phone": "5521970335561",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.311Z",
+    "id": "lea_1793643190311_wqtt",
+    "updatedAt": "2026-11-02T18:13:10.311Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Pronto Mecânica Automotiva",
+    "company": "Pronto Mecânica Automotiva",
+    "role": "Balcão de Peças",
+    "phone": "5521965802213",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Diagnóstico Eletrônico | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.314Z",
+    "id": "lea_1793643190314_igfo",
+    "updatedAt": "2026-11-02T18:13:10.314Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Master Car Oficina & Auto Center",
+    "company": "Master Car Oficina & Auto Center",
+    "role": "Recepção",
+    "phone": "5521991846627",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.319Z",
+    "id": "lea_1793643190319_ec6e",
+    "updatedAt": "2026-11-02T18:13:10.319Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "HB AUTO CENTER",
+    "company": "HB AUTO CENTER",
+    "role": "Agendamento",
+    "phone": "5521997441468",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santa Cruz - RJ | Especialidade: Manutenção e Freios | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.324Z",
+    "id": "lea_1793643190324_o0w0",
+    "updatedAt": "2026-11-02T18:13:10.324Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Center João XXIII",
+    "company": "Auto Center João XXIII",
+    "role": "Balcão",
+    "phone": "5521980886139",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Rápida | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.329Z",
+    "id": "lea_1793643190329_d0ek",
+    "updatedAt": "2026-11-02T18:13:10.329Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "ND CAR Mecânica em Geral",
+    "company": "ND CAR Mecânica em Geral",
+    "role": "Atendimento Oficina",
+    "phone": "5521986920024",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.334Z",
+    "id": "lea_1793643190334_om37",
+    "updatedAt": "2026-11-02T18:13:10.334Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Centro Automotivo OPS",
+    "company": "Centro Automotivo OPS",
+    "role": "Orçamentos",
+    "phone": "5521966906985",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Bangu - RJ | Especialidade: Diagnóstico e Motor | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.339Z",
+    "id": "lea_1793643190339_fsru",
+    "updatedAt": "2026-11-02T18:13:10.339Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Mecânica do Gordinho",
+    "company": "Mecânica do Gordinho",
+    "role": "Dono / Oficina",
+    "phone": "5521964551203",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Revisão de Cabeçote e Motor | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.344Z",
+    "id": "lea_1793643190344_kgr1",
+    "updatedAt": "2026-11-02T18:13:10.344Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Mecânica Silva & Filhos",
+    "company": "Auto Mecânica Silva & Filhos",
+    "role": "Balcão de Serviços",
+    "phone": "5521971239841",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Realengo - RJ | Especialidade: Suspensão e Embreagem | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.349Z",
+    "id": "lea_1793643190349_9j6j",
+    "updatedAt": "2026-11-02T18:13:10.349Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Ponto Certo Auto Center",
+    "company": "Oficina Ponto Certo Auto Center",
+    "role": "Atendimento",
+    "phone": "5521982147732",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santa Cruz - RJ | Especialidade: Troca de Correia e Óleo | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.357Z",
+    "id": "lea_1793643190357_tdnd",
+    "updatedAt": "2026-11-02T18:13:10.357Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Mecânica São Jorge",
+    "company": "Oficina Mecânica São Jorge",
+    "role": "Jorge (Mecânico)",
+    "phone": "5521965410988",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Bangu - RJ | Especialidade: Mecânica Geral e Freios | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.361Z",
+    "id": "lea_1793643190361_x4gk",
+    "updatedAt": "2026-11-02T18:13:10.361Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Injeção & Cia Auto Elétrica",
+    "company": "Injeção & Cia Auto Elétrica",
+    "role": "Marcos / Elétrica",
+    "phone": "5521987654312",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Injeção Eletrônica | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.365Z",
+    "id": "lea_1793643190365_kznu",
+    "updatedAt": "2026-11-02T18:13:10.365Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Stop Car Centro Automotivo",
+    "company": "Stop Car Centro Automotivo",
+    "role": "Balcão",
+    "phone": "5521974128563",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santíssimo - RJ | Especialidade: Amortecedores e Molas | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.370Z",
+    "id": "lea_1793643190370_jh0l",
+    "updatedAt": "2026-11-02T18:13:10.370Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Mecânica Dois Irmãos Bangu",
+    "company": "Mecânica Dois Irmãos Bangu",
+    "role": "Recepção",
+    "phone": "5521969854120",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Bangu - RJ | Especialidade: Motores e Caixa de Marcha | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.386Z",
+    "id": "lea_1793643190386_xqhd",
+    "updatedAt": "2026-11-02T18:13:10.386Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Elétrica do Beto",
+    "company": "Auto Elétrica do Beto",
+    "role": "Roberto (Beto)",
+    "phone": "5521981249673",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Realengo - RJ | Especialidade: Motor de Partida e Alternador | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.389Z",
+    "id": "lea_1793643190389_qasd",
+    "updatedAt": "2026-11-02T18:13:10.389Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Garagem da Zona Oeste Mecânica",
+    "company": "Garagem da Zona Oeste Mecânica",
+    "role": "Atendimento",
+    "phone": "5521993214587",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Paciência - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.393Z",
+    "id": "lea_1793643190393_mnog",
+    "updatedAt": "2026-11-02T18:13:10.393Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Rota Oeste Auto Reparos",
+    "company": "Oficina Rota Oeste Auto Reparos",
+    "role": "Responsável",
+    "phone": "5521970145298",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.399Z",
+    "id": "lea_1793643190399_fryb",
+    "updatedAt": "2026-11-02T18:13:10.399Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Box 01 Centro Mecânico",
+    "company": "Box 01 Centro Mecânico",
+    "role": "Balcão Técnico",
+    "phone": "5521964893215",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Diagnóstico e Scanner | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.403Z",
+    "id": "lea_1793643190403_td3t",
+    "updatedAt": "2026-11-02T18:13:10.403Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Mecânica Aliança Automotiva",
+    "company": "Mecânica Aliança Automotiva",
+    "role": "Dono / Mecânico",
+    "phone": "5521983561247",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santa Cruz - RJ | Especialidade: Embreagens e Câmbio | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.409Z",
+    "id": "lea_1793643190409_33r3",
+    "updatedAt": "2026-11-02T18:13:10.409Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Central de Bangu",
+    "company": "Oficina Central de Bangu",
+    "role": "Balcão",
+    "phone": "5521994512398",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Bangu - RJ | Especialidade: Freios e Suspensão | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.414Z",
+    "id": "lea_1793643190414_kgxb",
+    "updatedAt": "2026-11-02T18:13:10.414Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Rei da Injeção Auto Center",
+    "company": "Rei da Injeção Auto Center",
+    "role": "Atendimento",
+    "phone": "5521972584136",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Realengo - RJ | Especialidade: Limpeza de Bicos e Injeção | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.418Z",
+    "id": "lea_1793643190418_1sq4",
+    "updatedAt": "2026-11-02T18:13:10.418Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Car Service West",
+    "company": "Oficina Car Service West",
+    "role": "Recepção",
+    "phone": "5521968741253",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Revisão Periódica | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.422Z",
+    "id": "lea_1793643190422_fxxi",
+    "updatedAt": "2026-11-02T18:13:10.422Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Elétrica & Mecânica União",
+    "company": "Auto Elétrica & Mecânica União",
+    "role": "Carlos Alberto",
+    "phone": "5521985471239",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Padre Miguel - RJ | Especialidade: Elétrica e Ar-Condicionado | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.427Z",
+    "id": "lea_1793643190427_07uh",
+    "updatedAt": "2026-11-02T18:13:10.427Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Mecânica e Retífica Progresso",
+    "company": "Mecânica e Retífica Progresso",
+    "role": "Oficina Balcão",
+    "phone": "5521973652148",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Bangu - RJ | Especialidade: Retífica Leve e Motores | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.432Z",
+    "id": "lea_1793643190432_zz78",
+    "updatedAt": "2026-11-02T18:13:10.432Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "JR Car Mecânica Rápida",
+    "company": "JR Car Mecânica Rápida",
+    "role": "José Roberto (JR)",
+    "phone": "5521964147852",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Troca de Pastilhas e Óleo | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.437Z",
+    "id": "lea_1793643190437_vrwe",
+    "updatedAt": "2026-11-02T18:13:10.437Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Mecânica Pioneira",
+    "company": "Oficina Mecânica Pioneira",
+    "role": "Atendimento",
+    "phone": "5521981478523",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.448Z",
+    "id": "lea_1793643190448_19d6",
+    "updatedAt": "2026-11-02T18:13:10.448Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Oficina Mecânica São Cristóvão Z.O.",
+    "company": "Oficina Mecânica São Cristóvão Z.O.",
+    "role": "Dono",
+    "phone": "5521992587413",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Santíssimo - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.454Z",
+    "id": "lea_1793643190454_wo0w",
+    "updatedAt": "2026-11-02T18:13:10.454Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "name": "Auto Mecânica Imperial",
+    "company": "Auto Mecânica Imperial",
+    "role": "Setor de Serviços",
+    "phone": "5521970258147",
+    "email": "",
+    "estimatedBudget": 3500,
+    "tags": [
+      "Oficinas",
+      "Zona Oeste RJ",
+      "WhatsApp Lead"
+    ],
+    "notes": "Local: Campo Grande - RJ | Especialidade: Motor e Manutenção Geral | Origem: Google Maps",
+    "source": "Google Maps Oficinas",
+    "createdAt": "2026-11-02T18:13:10.460Z",
+    "id": "lea_1793643190460_px13",
+    "updatedAt": "2026-11-02T18:13:10.460Z"
   },
   {
     "id": "lead_autoprime_01",
@@ -1179,83 +1950,6 @@
     "updatedAt": "2026-09-12T21:14:42.946Z"
   },
   {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789738395530_ace7",
-    "createdAt": "2026-09-18T13:33:15.530Z",
-    "updatedAt": "2026-09-18T13:33:15.530Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789740252589_1vpv",
-    "createdAt": "2026-09-18T14:04:12.589Z",
-    "updatedAt": "2026-09-18T14:04:12.589Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789740642279_9h4q",
-    "createdAt": "2026-09-18T14:10:42.279Z",
-    "updatedAt": "2026-09-18T14:10:42.279Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789741349727_pu1c",
-    "createdAt": "2026-09-18T14:22:29.727Z",
-    "updatedAt": "2026-09-18T14:22:29.727Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789741615124_uv3i",
-    "createdAt": "2026-09-18T14:26:55.124Z",
-    "updatedAt": "2026-09-18T14:26:55.124Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789741990225_zo8h",
-    "createdAt": "2026-09-18T14:33:10.225Z",
-    "updatedAt": "2026-09-18T14:33:10.225Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789742367048_rhj5",
-    "createdAt": "2026-09-18T14:39:27.048Z",
-    "updatedAt": "2026-09-18T14:39:27.048Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789742380945_9why",
-    "createdAt": "2026-09-18T14:39:40.945Z",
-    "updatedAt": "2026-09-18T14:39:40.945Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789742746494_x0tg",
-    "createdAt": "2026-09-18T14:45:46.495Z",
-    "updatedAt": "2026-09-18T14:45:46.495Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789743241156_sks2",
-    "createdAt": "2026-09-18T14:54:01.156Z",
-    "updatedAt": "2026-09-18T14:54:01.156Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789746468835_1uks",
-    "createdAt": "2026-09-18T15:47:48.835Z",
-    "updatedAt": "2026-09-18T15:47:48.835Z"
-  },
-  {
     "name": "João da Silva",
     "phone": "11988887777",
     "email": "joao@silva.com",
@@ -1324,13 +2018,6 @@
     "id": "lea_1789747155236_s5i4",
     "createdAt": "2026-09-18T15:59:15.236Z",
     "updatedAt": "2026-09-18T15:59:15.236Z"
-  },
-  {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789747163434_tafu",
-    "createdAt": "2026-09-18T15:59:23.434Z",
-    "updatedAt": "2026-09-18T15:59:23.434Z"
   },
   {
     "name": "João da Silva",
@@ -1531,13 +2218,6 @@
     "updatedAt": "2026-09-18T19:19:45.963Z"
   },
   {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1789759192893_cui6",
-    "createdAt": "2026-09-18T19:19:52.893Z",
-    "updatedAt": "2026-09-18T19:19:52.893Z"
-  },
-  {
     "tenantId": "ten_1789759369008_bja6",
     "name": "Lead Beta Confidencial",
     "email": "lead.beta@empresa.com",
@@ -1736,13 +2416,6 @@
     "updatedAt": "2026-09-29T22:35:34.304Z"
   },
   {
-    "tenantId": "tenant_A_seguro",
-    "name": "Lead Confidencial A",
-    "id": "lea_1790722295421_159d",
-    "createdAt": "2026-09-29T22:51:35.421Z",
-    "updatedAt": "2026-09-29T22:51:35.421Z"
-  },
-  {
     "name": "Doutor Roberto Consultoria",
     "email": "roberto_1790722317668@consultoria.com.br",
     "phone": "11988887777",
@@ -1919,466 +2592,6 @@
     "updatedAt": "2026-10-12T13:56:26.886Z"
   },
   {
-    "name": "Lucas Ferreira",
-    "company": "Ferreira Tech",
-    "role": "CEO",
-    "email": "lucas@ferreira.tech",
-    "phone": "11999990001",
-    "estimatedBudget": 45000,
-    "tags": [
-      "SaaS",
-      "B2B",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793635981518_acrm",
-    "createdAt": "2026-11-02T16:13:01.518Z",
-    "updatedAt": "2026-11-02T16:13:01.518Z"
-  },
-  {
-    "name": "Beatriz Lima",
-    "company": "Lima Cosméticos",
-    "role": "Gerente",
-    "email": "beatriz@lima.com.br",
-    "phone": "21988880002",
-    "estimatedBudget": 12000,
-    "tags": [
-      "Varejo",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793635981521_s7jw",
-    "createdAt": "2026-11-02T16:13:01.521Z",
-    "updatedAt": "2026-11-02T16:13:01.521Z"
-  },
-  {
-    "name": "Roberto Santos",
-    "company": "Santos Log",
-    "role": "Diretor",
-    "email": "",
-    "phone": "11977770003",
-    "estimatedBudget": 35000,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793635981532_v404",
-    "createdAt": "2026-11-02T16:13:01.532Z",
-    "updatedAt": "2026-11-02T16:13:01.532Z"
-  },
-  {
-    "name": "Hacker Spoofing",
-    "company": "Invasor Inc",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793635981546_vh5h",
-    "createdAt": "2026-11-02T16:13:01.546Z",
-    "updatedAt": "2026-11-02T16:13:01.546Z"
-  },
-  {
-    "name": "Lucas Ferreira",
-    "company": "Ferreira Tech",
-    "role": "CEO",
-    "email": "lucas@ferreira.tech",
-    "phone": "11999990001",
-    "estimatedBudget": 45000,
-    "tags": [
-      "SaaS",
-      "B2B",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637239637_a5dw",
-    "createdAt": "2026-11-02T16:33:59.637Z",
-    "updatedAt": "2026-11-02T16:33:59.637Z"
-  },
-  {
-    "name": "Beatriz Lima",
-    "company": "Lima Cosméticos",
-    "role": "Gerente",
-    "email": "beatriz@lima.com.br",
-    "phone": "21988880002",
-    "estimatedBudget": 12000,
-    "tags": [
-      "Varejo",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637239639_y9cq",
-    "createdAt": "2026-11-02T16:33:59.639Z",
-    "updatedAt": "2026-11-02T16:33:59.639Z"
-  },
-  {
-    "name": "Roberto Santos",
-    "company": "Santos Log",
-    "role": "Diretor",
-    "email": "",
-    "phone": "11977770003",
-    "estimatedBudget": 35000,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637239650_m6f8",
-    "createdAt": "2026-11-02T16:33:59.650Z",
-    "updatedAt": "2026-11-02T16:33:59.650Z"
-  },
-  {
-    "name": "Hacker Spoofing",
-    "company": "Invasor Inc",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637239662_ku0z",
-    "createdAt": "2026-11-02T16:33:59.662Z",
-    "updatedAt": "2026-11-02T16:33:59.662Z"
-  },
-  {
-    "name": "Lucas Ferreira",
-    "company": "Ferreira Tech",
-    "role": "CEO",
-    "email": "lucas@ferreira.tech",
-    "phone": "11999990001",
-    "estimatedBudget": 45000,
-    "tags": [
-      "SaaS",
-      "B2B",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637405588_e6dq",
-    "createdAt": "2026-11-02T16:36:45.588Z",
-    "updatedAt": "2026-11-02T16:36:45.588Z"
-  },
-  {
-    "name": "Beatriz Lima",
-    "company": "Lima Cosméticos",
-    "role": "Gerente",
-    "email": "beatriz@lima.com.br",
-    "phone": "21988880002",
-    "estimatedBudget": 12000,
-    "tags": [
-      "Varejo",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637405590_df2e",
-    "createdAt": "2026-11-02T16:36:45.590Z",
-    "updatedAt": "2026-11-02T16:36:45.590Z"
-  },
-  {
-    "name": "Roberto Santos",
-    "company": "Santos Log",
-    "role": "Diretor",
-    "email": "",
-    "phone": "11977770003",
-    "estimatedBudget": 35000,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637405601_izaz",
-    "createdAt": "2026-11-02T16:36:45.601Z",
-    "updatedAt": "2026-11-02T16:36:45.601Z"
-  },
-  {
-    "name": "Hacker Spoofing",
-    "company": "Invasor Inc",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793637405614_vu6o",
-    "createdAt": "2026-11-02T16:36:45.614Z",
-    "updatedAt": "2026-11-02T16:36:45.614Z"
-  },
-  {
-    "name": "Lucas Ferreira",
-    "company": "Ferreira Tech",
-    "role": "CEO",
-    "email": "lucas@ferreira.tech",
-    "phone": "11999990001",
-    "estimatedBudget": 45000,
-    "tags": [
-      "SaaS",
-      "B2B",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638392570_ohmi",
-    "createdAt": "2026-11-02T16:53:12.584Z",
-    "updatedAt": "2026-11-02T16:53:12.584Z"
-  },
-  {
-    "name": "Beatriz Lima",
-    "company": "Lima Cosméticos",
-    "role": "Gerente",
-    "email": "beatriz@lima.com.br",
-    "phone": "21988880002",
-    "estimatedBudget": 12000,
-    "tags": [
-      "Varejo",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638392589_80je",
-    "createdAt": "2026-11-02T16:53:12.589Z",
-    "updatedAt": "2026-11-02T16:53:12.589Z"
-  },
-  {
-    "name": "Roberto Santos",
-    "company": "Santos Log",
-    "role": "Diretor",
-    "email": "",
-    "phone": "11977770003",
-    "estimatedBudget": 35000,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638392619_4lzw",
-    "createdAt": "2026-11-02T16:53:12.619Z",
-    "updatedAt": "2026-11-02T16:53:12.619Z"
-  },
-  {
-    "name": "Hacker Spoofing",
-    "company": "Invasor Inc",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638392652_7ukh",
-    "createdAt": "2026-11-02T16:53:12.652Z",
-    "updatedAt": "2026-11-02T16:53:12.652Z"
-  },
-  {
-    "name": "Lucas Ferreira",
-    "company": "Ferreira Tech",
-    "role": "CEO",
-    "email": "lucas@ferreira.tech",
-    "phone": "11999990001",
-    "estimatedBudget": 45000,
-    "tags": [
-      "SaaS",
-      "B2B",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638496034_z3bk",
-    "createdAt": "2026-11-02T16:54:56.034Z",
-    "updatedAt": "2026-11-02T16:54:56.034Z"
-  },
-  {
-    "name": "Beatriz Lima",
-    "company": "Lima Cosméticos",
-    "role": "Gerente",
-    "email": "beatriz@lima.com.br",
-    "phone": "21988880002",
-    "estimatedBudget": 12000,
-    "tags": [
-      "Varejo",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638496036_4saz",
-    "createdAt": "2026-11-02T16:54:56.036Z",
-    "updatedAt": "2026-11-02T16:54:56.036Z"
-  },
-  {
-    "name": "Roberto Santos",
-    "company": "Santos Log",
-    "role": "Diretor",
-    "email": "",
-    "phone": "11977770003",
-    "estimatedBudget": 35000,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638496048_yqg5",
-    "createdAt": "2026-11-02T16:54:56.048Z",
-    "updatedAt": "2026-11-02T16:54:56.048Z"
-  },
-  {
-    "name": "Marcos Paulo",
-    "company": "São Paulo - Jardins",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "11988887777",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638496064_x9kd",
-    "createdAt": "2026-11-02T16:54:56.064Z",
-    "updatedAt": "2026-11-02T16:54:56.064Z"
-  },
-  {
-    "name": "Hacker Spoofing",
-    "company": "Invasor Inc",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793638496117_0but",
-    "createdAt": "2026-11-02T16:54:56.117Z",
-    "updatedAt": "2026-11-02T16:54:56.117Z"
-  },
-  {
-    "name": "Lucas Ferreira",
-    "company": "Ferreira Tech",
-    "role": "CEO",
-    "email": "lucas@ferreira.tech",
-    "phone": "11999990001",
-    "estimatedBudget": 45000,
-    "tags": [
-      "SaaS",
-      "B2B",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793641900196_c11c",
-    "createdAt": "2026-11-02T17:51:40.211Z",
-    "updatedAt": "2026-11-02T17:51:40.211Z"
-  },
-  {
-    "name": "Beatriz Lima",
-    "company": "Lima Cosméticos",
-    "role": "Gerente",
-    "email": "beatriz@lima.com.br",
-    "phone": "21988880002",
-    "estimatedBudget": 12000,
-    "tags": [
-      "Varejo",
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793641900216_u897",
-    "createdAt": "2026-11-02T17:51:40.216Z",
-    "updatedAt": "2026-11-02T17:51:40.216Z"
-  },
-  {
-    "name": "Roberto Santos",
-    "company": "Santos Log",
-    "role": "Diretor",
-    "email": "",
-    "phone": "11977770003",
-    "estimatedBudget": 35000,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793641900240_h6qy",
-    "createdAt": "2026-11-02T17:51:40.240Z",
-    "updatedAt": "2026-11-02T17:51:40.240Z"
-  },
-  {
-    "name": "Marcos Paulo",
-    "company": "São Paulo - Jardins",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "11988887777",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793641900251_6g2g",
-    "createdAt": "2026-11-02T17:51:40.251Z",
-    "updatedAt": "2026-11-02T17:51:40.251Z"
-  },
-  {
-    "name": "Hacker Spoofing",
-    "company": "Invasor Inc",
-    "role": "Contato Comercial",
-    "email": "",
-    "phone": "",
-    "estimatedBudget": 0,
-    "tags": [
-      "Importado CSV"
-    ],
-    "notes": "Importado via planilha CSV",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793641900288_y5rm",
-    "createdAt": "2026-11-02T17:51:40.288Z",
-    "updatedAt": "2026-11-02T17:51:40.288Z"
-  },
-  {
     "id": "lead_autoprime_51_villasboas",
     "tenantId": "ten_autoprime_veiculos",
     "name": "Dr. André Villas-Bôas",
@@ -2396,1979 +2609,7 @@
       "WhatsApp"
     ],
     "notes": "Cliente demonstrou interesse imediato na BMW 320i M Sport 2024 0km preta. Deseja realizar test-drive e proposta com entrada e PIX.\n[Qualificação BANT Aprovada]: Budget R$ 340k confirmado, Decisor direto, Necessidade de veículo premium para viagens executivas, Compra para esta semana.",
-    "createdAt": "2026-11-02T17:52:00.504Z",
-    "updatedAt": "2026-11-02T17:52:00.514Z"
-  },
-  {
-    "name": "Carlos Eduardo Silveira",
-    "company": "Silveira Logística",
-    "role": "Diretor",
-    "email": "carlos@silveiralog.com.br",
-    "phone": "11987654321",
-    "estimatedBudget": 28000,
-    "tags": [
-      "Logística",
-      "B2B"
-    ],
-    "notes": "Interessado em automação",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793642381438_p4uk",
-    "createdAt": "2026-11-02T17:59:41.438Z",
-    "updatedAt": "2026-11-02T17:59:41.438Z"
-  },
-  {
-    "name": "Dra. Marina Albuquerque",
-    "company": "Albuquerque Clínicas",
-    "role": "Proprietária",
-    "email": "marina@clinica.com.br",
-    "phone": "21976543210",
-    "estimatedBudget": 15500,
-    "tags": [
-      "Saúde",
-      "High-Ticket"
-    ],
-    "notes": "Contato via WhatsApp",
-    "source": "Importação CSV",
-    "tenantId": "ten_demo_agentise",
-    "id": "lea_1793642381441_sgff",
-    "createdAt": "2026-11-02T17:59:41.441Z",
-    "updatedAt": "2026-11-02T17:59:41.441Z"
-  },
-  {
-    "name": "Carlos Eduardo Silveira",
-    "company": "Silveira Logística",
-    "role": "Diretor",
-    "email": "carlos@silveiralog.com.br",
-    "phone": "11987654321",
-    "estimatedBudget": 28000,
-    "tags": [
-      "Logística",
-      "B2B"
-    ],
-    "notes": "Interessado em automação",
-    "source": "Importação CSV",
-    "tenantId": "ten_autoprime_veiculos",
-    "id": "lea_1793642381443_nfn7",
-    "createdAt": "2026-11-02T17:59:41.443Z",
-    "updatedAt": "2026-11-02T17:59:41.443Z"
-  },
-  {
-    "name": "Dra. Marina Albuquerque",
-    "company": "Albuquerque Clínicas",
-    "role": "Proprietária",
-    "email": "marina@clinica.com.br",
-    "phone": "21976543210",
-    "estimatedBudget": 15500,
-    "tags": [
-      "Saúde",
-      "High-Ticket"
-    ],
-    "notes": "Contato via WhatsApp",
-    "source": "Importação CSV",
-    "tenantId": "ten_autoprime_veiculos",
-    "id": "lea_1793642381445_si43",
-    "createdAt": "2026-11-02T17:59:41.445Z",
-    "updatedAt": "2026-11-02T17:59:41.445Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Viegas",
-    "company": "Oficina Viegas",
-    "role": "Recepção / Dono",
-    "phone": "5521986182829",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Mecânica Geral e Revisão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.210Z",
-    "id": "lea_1793643190215_14uz",
-    "updatedAt": "2026-11-02T18:13:10.215Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Mecânica Mecaneves",
-    "company": "Oficina Mecânica Mecaneves",
-    "role": "Balcão / Responsável",
-    "phone": "5521964718132",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Injeção Eletrônica e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.222Z",
-    "id": "lea_1793643190222_qm1q",
-    "updatedAt": "2026-11-02T18:13:10.222Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "JJ Motors",
-    "company": "JJ Motors",
-    "role": "Responsável Técnico",
-    "phone": "5521997208759",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Câmbio e Mecânica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.227Z",
-    "id": "lea_1793643190227_79yr",
-    "updatedAt": "2026-11-02T18:13:10.227Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "AUTO ELETRICA BY MIRANDA",
-    "company": "AUTO ELETRICA BY MIRANDA",
-    "role": "Miranda (Proprietário)",
-    "phone": "5521966596922",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Auto Elétrica e Arranque | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.230Z",
-    "id": "lea_1793643190230_zv4m",
-    "updatedAt": "2026-11-02T18:13:10.230Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "RJ auto eletrica",
-    "company": "RJ auto eletrica",
-    "role": "Atendimento Direto",
-    "phone": "5521989598323",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Auto Elétrica e Baterias | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.234Z",
-    "id": "lea_1793643190234_4v77",
-    "updatedAt": "2026-11-02T18:13:10.234Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Padrao Auto Eletrica e Mecanica",
-    "company": "Padrao Auto Eletrica e Mecanica",
-    "role": "Balcão",
-    "phone": "5521964175874",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santíssimo - RJ | Especialidade: Auto Elétrica e Mecânica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.246Z",
-    "id": "lea_1793643190246_yemj",
-    "updatedAt": "2026-11-02T18:13:10.246Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "JReparos auto eletrica",
-    "company": "JReparos auto eletrica",
-    "role": "Responsável Técnico",
-    "phone": "5521975278662",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Injeção e Elétrica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.251Z",
-    "id": "lea_1793643190251_259p",
-    "updatedAt": "2026-11-02T18:13:10.251Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Vasques Auto Center",
-    "company": "Vasques Auto Center",
-    "role": "Atendimento Oficina",
-    "phone": "5521964779051",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.255Z",
-    "id": "lea_1793643190255_8337",
-    "updatedAt": "2026-11-02T18:13:10.255Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Center Parada 999",
-    "company": "Auto Center Parada 999",
-    "role": "Recepção Comercial",
-    "phone": "5521995102114",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Freios e Manutenção Rápida | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.259Z",
-    "id": "lea_1793643190259_8ft5",
-    "updatedAt": "2026-11-02T18:13:10.259Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "CMN Auto Center",
-    "company": "CMN Auto Center",
-    "role": "Recepção Mecânica",
-    "phone": "5521998920999",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.263Z",
-    "id": "lea_1793643190263_s418",
-    "updatedAt": "2026-11-02T18:13:10.263Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Luiz Auto Elétrica e Mecânica",
-    "company": "Oficina Luiz Auto Elétrica e Mecânica",
-    "role": "Atendimento",
-    "phone": "5521995291719",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Mecânica e Elétrica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.266Z",
-    "id": "lea_1793643190266_odcj",
-    "updatedAt": "2026-11-02T18:13:10.266Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Rodrigo Auto Elétrica",
-    "company": "Rodrigo Auto Elétrica",
-    "role": "Rodrigo (Proprietário)",
-    "phone": "5521964493177",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Auto Elétrica e Alternador | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.270Z",
-    "id": "lea_1793643190270_6kuy",
-    "updatedAt": "2026-11-02T18:13:10.270Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "AUTO ELETRICA ADRIANO",
-    "company": "AUTO ELETRICA ADRIANO",
-    "role": "Adriano (Oficina)",
-    "phone": "5521964825902",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Auto Elétrica e Socorro | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.274Z",
-    "id": "lea_1793643190274_bms3",
-    "updatedAt": "2026-11-02T18:13:10.274Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Dadal Auto Mecânica",
-    "company": "Dadal Auto Mecânica",
-    "role": "Dadal (Mecânico)",
-    "phone": "5521981180655",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Paciência - RJ | Especialidade: Mecânica Geral e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.277Z",
-    "id": "lea_1793643190277_unv8",
-    "updatedAt": "2026-11-02T18:13:10.277Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Center MCAR",
-    "company": "Auto Center MCAR",
-    "role": "Atendimento",
-    "phone": "5521996843126",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Suspensão e Troca de Óleo | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.280Z",
-    "id": "lea_1793643190280_locz",
-    "updatedAt": "2026-11-02T18:13:10.280Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Mecânica Limão Car",
-    "company": "Oficina Mecânica Limão Car",
-    "role": "Diogo (Responsável)",
-    "phone": "5521979561518",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Mecânica Geral e Revisão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.284Z",
-    "id": "lea_1793643190284_zxjg",
-    "updatedAt": "2026-11-02T18:13:10.284Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "J & J Auto Técnica",
-    "company": "J & J Auto Técnica",
-    "role": "Responsável Oficina",
-    "phone": "5521964712041",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Diagnóstico e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.290Z",
-    "id": "lea_1793643190290_f1ho",
-    "updatedAt": "2026-11-02T18:13:10.290Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Mecânica Irmãos Unidos",
-    "company": "Oficina Mecânica Irmãos Unidos",
-    "role": "Balcão / Dono",
-    "phone": "5521971243389",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Mecânica Geral e Suspensão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.294Z",
-    "id": "lea_1793643190294_2xr6",
-    "updatedAt": "2026-11-02T18:13:10.294Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Center Campo Grande",
-    "company": "Auto Center Campo Grande",
-    "role": "Recepção de Serviços",
-    "phone": "5521982451102",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Freios e Alinhamento | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.297Z",
-    "id": "lea_1793643190297_n0pl",
-    "updatedAt": "2026-11-02T18:13:10.297Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Mecânica West Car",
-    "company": "Mecânica West Car",
-    "role": "Carlos / Oficina",
-    "phone": "5521964128874",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Injeção Eletrônica e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.301Z",
-    "id": "lea_1793643190301_muvn",
-    "updatedAt": "2026-11-02T18:13:10.301Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Centro Automotivo D'Avila",
-    "company": "Centro Automotivo D'Avila",
-    "role": "Setor de Orçamentos",
-    "phone": "5521993417750",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Câmbio e Diagnóstico | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.304Z",
-    "id": "lea_1793643190304_koht",
-    "updatedAt": "2026-11-02T18:13:10.304Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Garagem 21 Centro Automotivo",
-    "company": "Garagem 21 Centro Automotivo",
-    "role": "Atendimento",
-    "phone": "5521988924419",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Ar-Condicionado e Elétrica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.307Z",
-    "id": "lea_1793643190307_uje6",
-    "updatedAt": "2026-11-02T18:13:10.307Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Especializada Zona Oeste",
-    "company": "Oficina Especializada Zona Oeste",
-    "role": "Marcelo (Oficina)",
-    "phone": "5521970335561",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.311Z",
-    "id": "lea_1793643190311_wqtt",
-    "updatedAt": "2026-11-02T18:13:10.311Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Pronto Mecânica Automotiva",
-    "company": "Pronto Mecânica Automotiva",
-    "role": "Balcão de Peças",
-    "phone": "5521965802213",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Diagnóstico Eletrônico | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.314Z",
-    "id": "lea_1793643190314_igfo",
-    "updatedAt": "2026-11-02T18:13:10.314Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Master Car Oficina & Auto Center",
-    "company": "Master Car Oficina & Auto Center",
-    "role": "Recepção",
-    "phone": "5521991846627",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.319Z",
-    "id": "lea_1793643190319_ec6e",
-    "updatedAt": "2026-11-02T18:13:10.319Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "HB AUTO CENTER",
-    "company": "HB AUTO CENTER",
-    "role": "Agendamento",
-    "phone": "5521997441468",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Manutenção e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.324Z",
-    "id": "lea_1793643190324_o0w0",
-    "updatedAt": "2026-11-02T18:13:10.324Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Center João XXIII",
-    "company": "Auto Center João XXIII",
-    "role": "Balcão",
-    "phone": "5521980886139",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Rápida | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.329Z",
-    "id": "lea_1793643190329_d0ek",
-    "updatedAt": "2026-11-02T18:13:10.329Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "ND CAR Mecânica em Geral",
-    "company": "ND CAR Mecânica em Geral",
-    "role": "Atendimento Oficina",
-    "phone": "5521986920024",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.334Z",
-    "id": "lea_1793643190334_om37",
-    "updatedAt": "2026-11-02T18:13:10.334Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Centro Automotivo OPS",
-    "company": "Centro Automotivo OPS",
-    "role": "Orçamentos",
-    "phone": "5521966906985",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Diagnóstico e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.339Z",
-    "id": "lea_1793643190339_fsru",
-    "updatedAt": "2026-11-02T18:13:10.339Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Mecânica do Gordinho",
-    "company": "Mecânica do Gordinho",
-    "role": "Dono / Oficina",
-    "phone": "5521964551203",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Revisão de Cabeçote e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.344Z",
-    "id": "lea_1793643190344_kgr1",
-    "updatedAt": "2026-11-02T18:13:10.344Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Mecânica Silva & Filhos",
-    "company": "Auto Mecânica Silva & Filhos",
-    "role": "Balcão de Serviços",
-    "phone": "5521971239841",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Suspensão e Embreagem | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.349Z",
-    "id": "lea_1793643190349_9j6j",
-    "updatedAt": "2026-11-02T18:13:10.349Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Ponto Certo Auto Center",
-    "company": "Oficina Ponto Certo Auto Center",
-    "role": "Atendimento",
-    "phone": "5521982147732",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Troca de Correia e Óleo | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.357Z",
-    "id": "lea_1793643190357_tdnd",
-    "updatedAt": "2026-11-02T18:13:10.357Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Mecânica São Jorge",
-    "company": "Oficina Mecânica São Jorge",
-    "role": "Jorge (Mecânico)",
-    "phone": "5521965410988",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Mecânica Geral e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.361Z",
-    "id": "lea_1793643190361_x4gk",
-    "updatedAt": "2026-11-02T18:13:10.361Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Injeção & Cia Auto Elétrica",
-    "company": "Injeção & Cia Auto Elétrica",
-    "role": "Marcos / Elétrica",
-    "phone": "5521987654312",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Injeção Eletrônica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.365Z",
-    "id": "lea_1793643190365_kznu",
-    "updatedAt": "2026-11-02T18:13:10.365Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Stop Car Centro Automotivo",
-    "company": "Stop Car Centro Automotivo",
-    "role": "Balcão",
-    "phone": "5521974128563",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santíssimo - RJ | Especialidade: Amortecedores e Molas | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.370Z",
-    "id": "lea_1793643190370_jh0l",
-    "updatedAt": "2026-11-02T18:13:10.370Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Mecânica Dois Irmãos Bangu",
-    "company": "Mecânica Dois Irmãos Bangu",
-    "role": "Recepção",
-    "phone": "5521969854120",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Motores e Caixa de Marcha | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.386Z",
-    "id": "lea_1793643190386_xqhd",
-    "updatedAt": "2026-11-02T18:13:10.386Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Elétrica do Beto",
-    "company": "Auto Elétrica do Beto",
-    "role": "Roberto (Beto)",
-    "phone": "5521981249673",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Motor de Partida e Alternador | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.389Z",
-    "id": "lea_1793643190389_qasd",
-    "updatedAt": "2026-11-02T18:13:10.389Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Garagem da Zona Oeste Mecânica",
-    "company": "Garagem da Zona Oeste Mecânica",
-    "role": "Atendimento",
-    "phone": "5521993214587",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Paciência - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.393Z",
-    "id": "lea_1793643190393_mnog",
-    "updatedAt": "2026-11-02T18:13:10.393Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Rota Oeste Auto Reparos",
-    "company": "Oficina Rota Oeste Auto Reparos",
-    "role": "Responsável",
-    "phone": "5521970145298",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.399Z",
-    "id": "lea_1793643190399_fryb",
-    "updatedAt": "2026-11-02T18:13:10.399Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Box 01 Centro Mecânico",
-    "company": "Box 01 Centro Mecânico",
-    "role": "Balcão Técnico",
-    "phone": "5521964893215",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Diagnóstico e Scanner | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.403Z",
-    "id": "lea_1793643190403_td3t",
-    "updatedAt": "2026-11-02T18:13:10.403Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Mecânica Aliança Automotiva",
-    "company": "Mecânica Aliança Automotiva",
-    "role": "Dono / Mecânico",
-    "phone": "5521983561247",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Embreagens e Câmbio | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.409Z",
-    "id": "lea_1793643190409_33r3",
-    "updatedAt": "2026-11-02T18:13:10.409Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Central de Bangu",
-    "company": "Oficina Central de Bangu",
-    "role": "Balcão",
-    "phone": "5521994512398",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Freios e Suspensão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.414Z",
-    "id": "lea_1793643190414_kgxb",
-    "updatedAt": "2026-11-02T18:13:10.414Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Rei da Injeção Auto Center",
-    "company": "Rei da Injeção Auto Center",
-    "role": "Atendimento",
-    "phone": "5521972584136",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Limpeza de Bicos e Injeção | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.418Z",
-    "id": "lea_1793643190418_1sq4",
-    "updatedAt": "2026-11-02T18:13:10.418Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Car Service West",
-    "company": "Oficina Car Service West",
-    "role": "Recepção",
-    "phone": "5521968741253",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Revisão Periódica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.422Z",
-    "id": "lea_1793643190422_fxxi",
-    "updatedAt": "2026-11-02T18:13:10.422Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Elétrica & Mecânica União",
-    "company": "Auto Elétrica & Mecânica União",
-    "role": "Carlos Alberto",
-    "phone": "5521985471239",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Elétrica e Ar-Condicionado | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.427Z",
-    "id": "lea_1793643190427_07uh",
-    "updatedAt": "2026-11-02T18:13:10.427Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Mecânica e Retífica Progresso",
-    "company": "Mecânica e Retífica Progresso",
-    "role": "Oficina Balcão",
-    "phone": "5521973652148",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Retífica Leve e Motores | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.432Z",
-    "id": "lea_1793643190432_zz78",
-    "updatedAt": "2026-11-02T18:13:10.432Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "JR Car Mecânica Rápida",
-    "company": "JR Car Mecânica Rápida",
-    "role": "José Roberto (JR)",
-    "phone": "5521964147852",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Troca de Pastilhas e Óleo | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.437Z",
-    "id": "lea_1793643190437_vrwe",
-    "updatedAt": "2026-11-02T18:13:10.437Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Mecânica Pioneira",
-    "company": "Oficina Mecânica Pioneira",
-    "role": "Atendimento",
-    "phone": "5521981478523",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.448Z",
-    "id": "lea_1793643190448_19d6",
-    "updatedAt": "2026-11-02T18:13:10.448Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Oficina Mecânica São Cristóvão Z.O.",
-    "company": "Oficina Mecânica São Cristóvão Z.O.",
-    "role": "Dono",
-    "phone": "5521992587413",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santíssimo - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.454Z",
-    "id": "lea_1793643190454_wo0w",
-    "updatedAt": "2026-11-02T18:13:10.454Z"
-  },
-  {
-    "tenantId": "ten_demo_agentise",
-    "name": "Auto Mecânica Imperial",
-    "company": "Auto Mecânica Imperial",
-    "role": "Setor de Serviços",
-    "phone": "5521970258147",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Motor e Manutenção Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.460Z",
-    "id": "lea_1793643190460_px13",
-    "updatedAt": "2026-11-02T18:13:10.460Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Viegas",
-    "company": "Oficina Viegas",
-    "role": "Recepção / Dono",
-    "phone": "5521986182829",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Mecânica Geral e Revisão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.465Z",
-    "id": "lea_1793643190465_ozch",
-    "updatedAt": "2026-11-02T18:13:10.465Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Mecânica Mecaneves",
-    "company": "Oficina Mecânica Mecaneves",
-    "role": "Balcão / Responsável",
-    "phone": "5521964718132",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Injeção Eletrônica e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.470Z",
-    "id": "lea_1793643190470_vwd9",
-    "updatedAt": "2026-11-02T18:13:10.470Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "JJ Motors",
-    "company": "JJ Motors",
-    "role": "Responsável Técnico",
-    "phone": "5521997208759",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Câmbio e Mecânica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.477Z",
-    "id": "lea_1793643190477_jd4d",
-    "updatedAt": "2026-11-02T18:13:10.477Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "AUTO ELETRICA BY MIRANDA",
-    "company": "AUTO ELETRICA BY MIRANDA",
-    "role": "Miranda (Proprietário)",
-    "phone": "5521966596922",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Auto Elétrica e Arranque | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.484Z",
-    "id": "lea_1793643190484_1xmc",
-    "updatedAt": "2026-11-02T18:13:10.484Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "RJ auto eletrica",
-    "company": "RJ auto eletrica",
-    "role": "Atendimento Direto",
-    "phone": "5521989598323",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Auto Elétrica e Baterias | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.492Z",
-    "id": "lea_1793643190492_sr16",
-    "updatedAt": "2026-11-02T18:13:10.492Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Padrao Auto Eletrica e Mecanica",
-    "company": "Padrao Auto Eletrica e Mecanica",
-    "role": "Balcão",
-    "phone": "5521964175874",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santíssimo - RJ | Especialidade: Auto Elétrica e Mecânica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.498Z",
-    "id": "lea_1793643190498_mffp",
-    "updatedAt": "2026-11-02T18:13:10.498Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "JReparos auto eletrica",
-    "company": "JReparos auto eletrica",
-    "role": "Responsável Técnico",
-    "phone": "5521975278662",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Injeção e Elétrica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.504Z",
-    "id": "lea_1793643190504_hpmr",
-    "updatedAt": "2026-11-02T18:13:10.504Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Vasques Auto Center",
-    "company": "Vasques Auto Center",
-    "role": "Atendimento Oficina",
-    "phone": "5521964779051",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.509Z",
-    "id": "lea_1793643190509_i4hq",
-    "updatedAt": "2026-11-02T18:13:10.509Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Center Parada 999",
-    "company": "Auto Center Parada 999",
-    "role": "Recepção Comercial",
-    "phone": "5521995102114",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Freios e Manutenção Rápida | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.513Z",
-    "id": "lea_1793643190513_p5cd",
-    "updatedAt": "2026-11-02T18:13:10.513Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "CMN Auto Center",
-    "company": "CMN Auto Center",
-    "role": "Recepção Mecânica",
-    "phone": "5521998920999",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.519Z",
-    "id": "lea_1793643190519_8urm",
-    "updatedAt": "2026-11-02T18:13:10.519Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Luiz Auto Elétrica e Mecânica",
-    "company": "Oficina Luiz Auto Elétrica e Mecânica",
-    "role": "Atendimento",
-    "phone": "5521995291719",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Mecânica e Elétrica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.525Z",
-    "id": "lea_1793643190525_22n1",
-    "updatedAt": "2026-11-02T18:13:10.525Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Rodrigo Auto Elétrica",
-    "company": "Rodrigo Auto Elétrica",
-    "role": "Rodrigo (Proprietário)",
-    "phone": "5521964493177",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Auto Elétrica e Alternador | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.532Z",
-    "id": "lea_1793643190532_xxrt",
-    "updatedAt": "2026-11-02T18:13:10.532Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "AUTO ELETRICA ADRIANO",
-    "company": "AUTO ELETRICA ADRIANO",
-    "role": "Adriano (Oficina)",
-    "phone": "5521964825902",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Auto Elétrica e Socorro | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.537Z",
-    "id": "lea_1793643190537_t04s",
-    "updatedAt": "2026-11-02T18:13:10.537Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Dadal Auto Mecânica",
-    "company": "Dadal Auto Mecânica",
-    "role": "Dadal (Mecânico)",
-    "phone": "5521981180655",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Paciência - RJ | Especialidade: Mecânica Geral e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.542Z",
-    "id": "lea_1793643190542_xknp",
-    "updatedAt": "2026-11-02T18:13:10.542Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Center MCAR",
-    "company": "Auto Center MCAR",
-    "role": "Atendimento",
-    "phone": "5521996843126",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Suspensão e Troca de Óleo | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.547Z",
-    "id": "lea_1793643190547_c8ql",
-    "updatedAt": "2026-11-02T18:13:10.547Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Mecânica Limão Car",
-    "company": "Oficina Mecânica Limão Car",
-    "role": "Diogo (Responsável)",
-    "phone": "5521979561518",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Mecânica Geral e Revisão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.553Z",
-    "id": "lea_1793643190553_bdvq",
-    "updatedAt": "2026-11-02T18:13:10.553Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "J & J Auto Técnica",
-    "company": "J & J Auto Técnica",
-    "role": "Responsável Oficina",
-    "phone": "5521964712041",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Diagnóstico e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.558Z",
-    "id": "lea_1793643190558_yiw9",
-    "updatedAt": "2026-11-02T18:13:10.558Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Mecânica Irmãos Unidos",
-    "company": "Oficina Mecânica Irmãos Unidos",
-    "role": "Balcão / Dono",
-    "phone": "5521971243389",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Mecânica Geral e Suspensão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.565Z",
-    "id": "lea_1793643190565_c6i5",
-    "updatedAt": "2026-11-02T18:13:10.565Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Center Campo Grande",
-    "company": "Auto Center Campo Grande",
-    "role": "Recepção de Serviços",
-    "phone": "5521982451102",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Freios e Alinhamento | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.572Z",
-    "id": "lea_1793643190572_hr8t",
-    "updatedAt": "2026-11-02T18:13:10.572Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Mecânica West Car",
-    "company": "Mecânica West Car",
-    "role": "Carlos / Oficina",
-    "phone": "5521964128874",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Injeção Eletrônica e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.577Z",
-    "id": "lea_1793643190577_6zbp",
-    "updatedAt": "2026-11-02T18:13:10.577Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Centro Automotivo D'Avila",
-    "company": "Centro Automotivo D'Avila",
-    "role": "Setor de Orçamentos",
-    "phone": "5521993417750",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Câmbio e Diagnóstico | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.582Z",
-    "id": "lea_1793643190582_jkme",
-    "updatedAt": "2026-11-02T18:13:10.582Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Garagem 21 Centro Automotivo",
-    "company": "Garagem 21 Centro Automotivo",
-    "role": "Atendimento",
-    "phone": "5521988924419",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Ar-Condicionado e Elétrica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.586Z",
-    "id": "lea_1793643190586_swgf",
-    "updatedAt": "2026-11-02T18:13:10.586Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Especializada Zona Oeste",
-    "company": "Oficina Especializada Zona Oeste",
-    "role": "Marcelo (Oficina)",
-    "phone": "5521970335561",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.591Z",
-    "id": "lea_1793643190591_sylp",
-    "updatedAt": "2026-11-02T18:13:10.591Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Pronto Mecânica Automotiva",
-    "company": "Pronto Mecânica Automotiva",
-    "role": "Balcão de Peças",
-    "phone": "5521965802213",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Diagnóstico Eletrônico | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.595Z",
-    "id": "lea_1793643190595_7x8b",
-    "updatedAt": "2026-11-02T18:13:10.595Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Master Car Oficina & Auto Center",
-    "company": "Master Car Oficina & Auto Center",
-    "role": "Recepção",
-    "phone": "5521991846627",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.598Z",
-    "id": "lea_1793643190598_wdm5",
-    "updatedAt": "2026-11-02T18:13:10.598Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "HB AUTO CENTER",
-    "company": "HB AUTO CENTER",
-    "role": "Agendamento",
-    "phone": "5521997441468",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Manutenção e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.602Z",
-    "id": "lea_1793643190602_v6ht",
-    "updatedAt": "2026-11-02T18:13:10.602Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Center João XXIII",
-    "company": "Auto Center João XXIII",
-    "role": "Balcão",
-    "phone": "5521980886139",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Rápida | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.606Z",
-    "id": "lea_1793643190606_lh8x",
-    "updatedAt": "2026-11-02T18:13:10.606Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "ND CAR Mecânica em Geral",
-    "company": "ND CAR Mecânica em Geral",
-    "role": "Atendimento Oficina",
-    "phone": "5521986920024",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.610Z",
-    "id": "lea_1793643190610_qcvy",
-    "updatedAt": "2026-11-02T18:13:10.610Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Centro Automotivo OPS",
-    "company": "Centro Automotivo OPS",
-    "role": "Orçamentos",
-    "phone": "5521966906985",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Diagnóstico e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.614Z",
-    "id": "lea_1793643190614_ewi6",
-    "updatedAt": "2026-11-02T18:13:10.614Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Mecânica do Gordinho",
-    "company": "Mecânica do Gordinho",
-    "role": "Dono / Oficina",
-    "phone": "5521964551203",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Revisão de Cabeçote e Motor | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.620Z",
-    "id": "lea_1793643190620_eo4o",
-    "updatedAt": "2026-11-02T18:13:10.620Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Mecânica Silva & Filhos",
-    "company": "Auto Mecânica Silva & Filhos",
-    "role": "Balcão de Serviços",
-    "phone": "5521971239841",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Suspensão e Embreagem | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.624Z",
-    "id": "lea_1793643190624_i93m",
-    "updatedAt": "2026-11-02T18:13:10.624Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Ponto Certo Auto Center",
-    "company": "Oficina Ponto Certo Auto Center",
-    "role": "Atendimento",
-    "phone": "5521982147732",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Troca de Correia e Óleo | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.627Z",
-    "id": "lea_1793643190627_s270",
-    "updatedAt": "2026-11-02T18:13:10.627Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Mecânica São Jorge",
-    "company": "Oficina Mecânica São Jorge",
-    "role": "Jorge (Mecânico)",
-    "phone": "5521965410988",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Mecânica Geral e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.632Z",
-    "id": "lea_1793643190632_l7rq",
-    "updatedAt": "2026-11-02T18:13:10.632Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Injeção & Cia Auto Elétrica",
-    "company": "Injeção & Cia Auto Elétrica",
-    "role": "Marcos / Elétrica",
-    "phone": "5521987654312",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Injeção Eletrônica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.635Z",
-    "id": "lea_1793643190635_p1d8",
-    "updatedAt": "2026-11-02T18:13:10.635Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Stop Car Centro Automotivo",
-    "company": "Stop Car Centro Automotivo",
-    "role": "Balcão",
-    "phone": "5521974128563",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santíssimo - RJ | Especialidade: Amortecedores e Molas | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.639Z",
-    "id": "lea_1793643190639_8e9o",
-    "updatedAt": "2026-11-02T18:13:10.639Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Mecânica Dois Irmãos Bangu",
-    "company": "Mecânica Dois Irmãos Bangu",
-    "role": "Recepção",
-    "phone": "5521969854120",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Motores e Caixa de Marcha | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.643Z",
-    "id": "lea_1793643190643_68g7",
-    "updatedAt": "2026-11-02T18:13:10.643Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Elétrica do Beto",
-    "company": "Auto Elétrica do Beto",
-    "role": "Roberto (Beto)",
-    "phone": "5521981249673",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Motor de Partida e Alternador | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.648Z",
-    "id": "lea_1793643190648_bsy7",
-    "updatedAt": "2026-11-02T18:13:10.648Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Garagem da Zona Oeste Mecânica",
-    "company": "Garagem da Zona Oeste Mecânica",
-    "role": "Atendimento",
-    "phone": "5521993214587",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Paciência - RJ | Especialidade: Manutenção Preventiva | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.653Z",
-    "id": "lea_1793643190653_7cyk",
-    "updatedAt": "2026-11-02T18:13:10.653Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Rota Oeste Auto Reparos",
-    "company": "Oficina Rota Oeste Auto Reparos",
-    "role": "Responsável",
-    "phone": "5521970145298",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.658Z",
-    "id": "lea_1793643190658_qm8x",
-    "updatedAt": "2026-11-02T18:13:10.658Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Box 01 Centro Mecânico",
-    "company": "Box 01 Centro Mecânico",
-    "role": "Balcão Técnico",
-    "phone": "5521964893215",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Diagnóstico e Scanner | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.663Z",
-    "id": "lea_1793643190663_gaez",
-    "updatedAt": "2026-11-02T18:13:10.663Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Mecânica Aliança Automotiva",
-    "company": "Mecânica Aliança Automotiva",
-    "role": "Dono / Mecânico",
-    "phone": "5521983561247",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Embreagens e Câmbio | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.671Z",
-    "id": "lea_1793643190671_k9my",
-    "updatedAt": "2026-11-02T18:13:10.671Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Central de Bangu",
-    "company": "Oficina Central de Bangu",
-    "role": "Balcão",
-    "phone": "5521994512398",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Freios e Suspensão | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.677Z",
-    "id": "lea_1793643190677_kjff",
-    "updatedAt": "2026-11-02T18:13:10.677Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Rei da Injeção Auto Center",
-    "company": "Rei da Injeção Auto Center",
-    "role": "Atendimento",
-    "phone": "5521972584136",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Realengo - RJ | Especialidade: Limpeza de Bicos e Injeção | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.684Z",
-    "id": "lea_1793643190684_78fw",
-    "updatedAt": "2026-11-02T18:13:10.684Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Car Service West",
-    "company": "Oficina Car Service West",
-    "role": "Recepção",
-    "phone": "5521968741253",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Revisão Periódica | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.691Z",
-    "id": "lea_1793643190691_me1h",
-    "updatedAt": "2026-11-02T18:13:10.691Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Elétrica & Mecânica União",
-    "company": "Auto Elétrica & Mecânica União",
-    "role": "Carlos Alberto",
-    "phone": "5521985471239",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Padre Miguel - RJ | Especialidade: Elétrica e Ar-Condicionado | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.701Z",
-    "id": "lea_1793643190701_4i2d",
-    "updatedAt": "2026-11-02T18:13:10.701Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Mecânica e Retífica Progresso",
-    "company": "Mecânica e Retífica Progresso",
-    "role": "Oficina Balcão",
-    "phone": "5521973652148",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Bangu - RJ | Especialidade: Retífica Leve e Motores | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.711Z",
-    "id": "lea_1793643190711_l5fk",
-    "updatedAt": "2026-11-02T18:13:10.711Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "JR Car Mecânica Rápida",
-    "company": "JR Car Mecânica Rápida",
-    "role": "José Roberto (JR)",
-    "phone": "5521964147852",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Senador Vasconcelos - RJ | Especialidade: Troca de Pastilhas e Óleo | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.720Z",
-    "id": "lea_1793643190720_1v00",
-    "updatedAt": "2026-11-02T18:13:10.720Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Mecânica Pioneira",
-    "company": "Oficina Mecânica Pioneira",
-    "role": "Atendimento",
-    "phone": "5521981478523",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santa Cruz - RJ | Especialidade: Mecânica Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.732Z",
-    "id": "lea_1793643190732_1yao",
-    "updatedAt": "2026-11-02T18:13:10.732Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Oficina Mecânica São Cristóvão Z.O.",
-    "company": "Oficina Mecânica São Cristóvão Z.O.",
-    "role": "Dono",
-    "phone": "5521992587413",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Santíssimo - RJ | Especialidade: Suspensão e Freios | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.743Z",
-    "id": "lea_1793643190743_k9km",
-    "updatedAt": "2026-11-02T18:13:10.743Z"
-  },
-  {
-    "tenantId": "ten_autoprime_veiculos",
-    "name": "Auto Mecânica Imperial",
-    "company": "Auto Mecânica Imperial",
-    "role": "Setor de Serviços",
-    "phone": "5521970258147",
-    "email": "",
-    "estimatedBudget": 3500,
-    "tags": [
-      "Oficinas",
-      "Zona Oeste RJ",
-      "WhatsApp Lead"
-    ],
-    "notes": "Local: Campo Grande - RJ | Especialidade: Motor e Manutenção Geral | Origem: Google Maps",
-    "source": "Google Maps Oficinas",
-    "createdAt": "2026-11-02T18:13:10.751Z",
-    "id": "lea_1793643190751_jmww",
-    "updatedAt": "2026-11-02T18:13:10.751Z"
+    "createdAt": "2026-11-02T18:57:10.080Z",
+    "updatedAt": "2026-11-02T18:57:10.098Z"
   }
 ]

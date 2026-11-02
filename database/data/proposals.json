@@ -2496,20 +2496,6 @@
     "paidAt": "2026-10-12T13:45:13.854Z"
   },
   {
-    "id": "prop_autoprime_bmw_11",
-    "tenantId": "ten_autoprime_veiculos",
-    "dealId": "deal_autoprime_bmw_villasboas",
-    "leadId": "lead_autoprime_51_villasboas",
-    "amount": 340000,
-    "pixKey": "financeiro@autoprime.com.br",
-    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
-    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
-    "status": "enviada",
-    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
-    "createdAt": "2026-10-12T13:56:02.357Z",
-    "updatedAt": "2026-10-12T13:56:02.357Z"
-  },
-  {
     "tenantId": "ten_demo_agentise",
     "dealId": null,
     "leadId": null,
@@ -2626,5 +2612,193 @@
     "createdAt": "2026-10-12T13:56:27.105Z",
     "updatedAt": "2026-10-12T13:56:27.112Z",
     "paidAt": "2026-10-12T13:56:27.112Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-11-09T16:12:51.173Z",
+    "publicToken": "eaf508a93f0372c6917d05bab0419476",
+    "checkoutUrl": "/p/eaf508a93f0372c6917d05bab0419476",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM97117363042788",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM97117363042788",
+    "status": "paga",
+    "txId": "CRM971173",
+    "id": "pro_1793635971173_nvb2",
+    "createdAt": "2026-11-02T16:12:51.173Z",
+    "updatedAt": "2026-11-02T16:12:51.187Z",
+    "paidAt": "2026-11-02T16:12:51.187Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-11-09T16:33:49.011Z",
+    "publicToken": "92c9ae3979a26f11b57b60cc0262af02",
+    "checkoutUrl": "/p/92c9ae3979a26f11b57b60cc0262af02",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM2290116304C419",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM2290116304C419",
+    "status": "paga",
+    "txId": "CRM229011",
+    "id": "pro_1793637229011_f1dh",
+    "createdAt": "2026-11-02T16:33:49.011Z",
+    "updatedAt": "2026-11-02T16:33:49.025Z",
+    "paidAt": "2026-11-02T16:33:49.025Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-11-09T17:52:00.965Z",
+    "publicToken": "38eb7b218344c99e2731d54340df6760",
+    "checkoutUrl": "/p/38eb7b218344c99e2731d54340df6760",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM92096563040C1F",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM92096563040C1F",
+    "status": "paga",
+    "txId": "CRM920965",
+    "id": "pro_1793641920965_glli",
+    "createdAt": "2026-11-02T17:52:00.965Z",
+    "updatedAt": "2026-11-02T17:52:00.982Z",
+    "paidAt": "2026-11-02T17:52:00.982Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-11-09T18:48:07.656Z",
+    "publicToken": "c10946b2940b22b7270e90fd88f434b7",
+    "checkoutUrl": "/p/c10946b2940b22b7270e90fd88f434b7",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM28765563049B12",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM28765563049B12",
+    "status": "paga",
+    "txId": "CRM287655",
+    "id": "pro_1793645287656_o6xv",
+    "createdAt": "2026-11-02T18:48:07.656Z",
+    "updatedAt": "2026-11-02T18:48:07.688Z",
+    "paidAt": "2026-11-02T18:48:07.688Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-11-09T18:48:35.913Z",
+    "publicToken": "cafd5fbe676f0c73f837afb2c6e0ef27",
+    "checkoutUrl": "/p/cafd5fbe676f0c73f837afb2c6e0ef27",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM315912630452B1",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM315912630452B1",
+    "status": "paga",
+    "txId": "CRM315912",
+    "id": "pro_1793645315913_b935",
+    "createdAt": "2026-11-02T18:48:35.913Z",
+    "updatedAt": "2026-11-02T18:48:35.941Z",
+    "paidAt": "2026-11-02T18:48:35.941Z"
+  },
+  {
+    "id": "prop_autoprime_bmw_11",
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "amount": 340000,
+    "pixKey": "financeiro@autoprime.com.br",
+    "pixPayload": "00020126490014br.gov.bcb.pix0127financeiro@autoprime.com.br5204000053039865409340000.005802BR5924AUTO PRIME VEICULOS LTDA6009SAO PAULO62170513BMW320IVILLAS6304005D",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126490014br.gov.bcb.pix0127financeiro%40autoprime.com.br5204000053039865409340000.005802BR5924AUTO%20PRIME%20VEICULOS%20LTDA6009SAO%20PAULO62170513BMW320IVILLAS6304005D",
+    "status": "enviada",
+    "notes": "Proposta formal para Dr. André Villas-Bôas com código Copia-e-Cola PIX do Banco Central e QR Code gerados.",
+    "createdAt": "2026-11-02T18:57:10.114Z",
+    "updatedAt": "2026-11-02T18:57:10.114Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "leadId": null,
+    "items": [
+      {
+        "description": "Serviços Comerciais de Alta Performance",
+        "quantity": 1,
+        "unitPrice": 15000,
+        "discount": 0
+      }
+    ],
+    "subtotal": 15000,
+    "discount": 0,
+    "amount": 15000,
+    "notes": "",
+    "validUntil": "2026-11-09T18:57:10.905Z",
+    "publicToken": "295e434774509220e7155fc55b8d1664",
+    "checkoutUrl": "/p/295e434774509220e7155fc55b8d1664",
+    "pixKey": "luklen2@gmail.com",
+    "pixPayload": "00020126390014br.gov.bcb.pix0117luklen2@gmail.com520400005303986540815000.005802BR5917LUCIANO SANT ANNA6009SAO PAULO62130509CRM83090563040598",
+    "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=00020126390014br.gov.bcb.pix0117luklen2%40gmail.com520400005303986540815000.005802BR5917LUCIANO%20SANT%20ANNA6009SAO%20PAULO62130509CRM83090563040598",
+    "status": "paga",
+    "txId": "CRM830905",
+    "id": "pro_1793645830905_pcxa",
+    "createdAt": "2026-11-02T18:57:10.905Z",
+    "updatedAt": "2026-11-02T18:57:10.943Z",
+    "paidAt": "2026-11-02T18:57:10.943Z"
   }
 ]

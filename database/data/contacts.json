@@ -438,5 +438,71 @@
     "id": "con_1791813362965_f0kn",
     "createdAt": "2026-10-12T13:56:02.966Z",
     "updatedAt": "2026-10-12T13:56:02.966Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1793635971226_cgkz",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1793635971237_w3ge",
+    "createdAt": "2026-11-02T16:12:51.237Z",
+    "updatedAt": "2026-11-02T16:12:51.237Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1793637229071_e8z9",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1793637229083_5l63",
+    "createdAt": "2026-11-02T16:33:49.083Z",
+    "updatedAt": "2026-11-02T16:33:49.083Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1793641921194_4oa5",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1793641921207_0p1j",
+    "createdAt": "2026-11-02T17:52:01.207Z",
+    "updatedAt": "2026-11-02T17:52:01.207Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1793645287772_9qjf",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1793645287794_ae1h",
+    "createdAt": "2026-11-02T18:48:07.794Z",
+    "updatedAt": "2026-11-02T18:48:07.794Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1793645316019_ksk3",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1793645316049_poag",
+    "createdAt": "2026-11-02T18:48:36.049Z",
+    "updatedAt": "2026-11-02T18:48:36.049Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1793645831030_2sqn",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1793645831053_alpu",
+    "createdAt": "2026-11-02T18:57:11.053Z",
+    "updatedAt": "2026-11-02T18:57:11.053Z"
   }
 ]

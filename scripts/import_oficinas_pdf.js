@@ -108,3 +108,4 @@ targetTenants.forEach(tenantId => {
 });
 
 console.log(`🎉 Sucesso: ${insertedCount} novos leads inseridos diretamente no banco do CRM!`);
+

@@ -2040,5 +2040,99 @@
     "id": "con_1791813379277_i5by",
     "createdAt": "2026-10-12T13:56:19.277Z",
     "updatedAt": "2026-10-12T13:56:19.277Z"
+  },
+  {
+    "tenantId": "ten_1793635970691_tdg3",
+    "userId": "use_1793635970701_ktd4",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T16:12:50.737Z",
+    "id": "con_1793635970737_m6na",
+    "createdAt": "2026-11-02T16:12:50.737Z",
+    "updatedAt": "2026-11-02T16:12:50.737Z"
+  },
+  {
+    "tenantId": "ten_1793637228564_gi14",
+    "userId": "use_1793637228573_zijy",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T16:33:48.607Z",
+    "id": "con_1793637228607_4pvb",
+    "createdAt": "2026-11-02T16:33:48.607Z",
+    "updatedAt": "2026-11-02T16:33:48.607Z"
+  },
+  {
+    "tenantId": "ten_1793641920323_8g2p",
+    "userId": "use_1793641920332_5vo7",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T17:52:00.370Z",
+    "id": "con_1793641920370_xc2x",
+    "createdAt": "2026-11-02T17:52:00.370Z",
+    "updatedAt": "2026-11-02T17:52:00.370Z"
+  },
+  {
+    "tenantId": "ten_1793644747815_4jmn",
+    "userId": "use_1793644747886_3rew",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T18:39:08.130Z",
+    "id": "con_1793644748130_fcdi",
+    "createdAt": "2026-11-02T18:39:08.130Z",
+    "updatedAt": "2026-11-02T18:39:08.130Z"
+  },
+  {
+    "tenantId": "ten_1793645286598_tc7i",
+    "userId": "use_1793645286619_aynu",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T18:48:06.684Z",
+    "id": "con_1793645286684_znsq",
+    "createdAt": "2026-11-02T18:48:06.684Z",
+    "updatedAt": "2026-11-02T18:48:06.684Z"
+  },
+  {
+    "tenantId": "ten_1793645314904_ztj7",
+    "userId": "use_1793645314925_ukmk",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T18:48:34.991Z",
+    "id": "con_1793645314991_gngg",
+    "createdAt": "2026-11-02T18:48:34.991Z",
+    "updatedAt": "2026-11-02T18:48:34.991Z"
+  },
+  {
+    "tenantId": "ten_test_csv_isolated_1",
+    "userId": "usr_test_tenant1",
+    "event": "FIRST_LEAD",
+    "leadId": "lea_1793645577115_cjnd",
+    "timestamp": "2026-11-02T18:52:57.123Z",
+    "id": "con_1793645577123_l7kx",
+    "createdAt": "2026-11-02T18:52:57.123Z",
+    "updatedAt": "2026-11-02T18:52:57.123Z"
+  },
+  {
+    "tenantId": "ten_1793645829922_vd7g",
+    "userId": "use_1793645829942_3ht3",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T18:57:10.009Z",
+    "id": "con_1793645830009_gpsu",
+    "createdAt": "2026-11-02T18:57:10.009Z",
+    "updatedAt": "2026-11-02T18:57:10.009Z"
   }
 ]

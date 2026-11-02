@@ -2,24 +2,28 @@ const http = require('http');
 const assert = require('assert');
 const server = require('../server');
 const { generateToken } = require('../services/authService');
+const { leadsDB } = require('../database/db');
 const TEST_PORT = 3098;
 
 console.log('🧪 ========================================================');
 console.log('🧪 Teste Automatizado: Importação de Leads em CSV & Multi-Tenant');
 console.log('🧪 ========================================================\n');
 
+const TEST_TENANT_1 = 'ten_test_csv_isolated_1';
+const TEST_TENANT_2 = 'ten_test_csv_isolated_2';
+
 const tokenTenant1 = generateToken({
   userId: 'usr_test_tenant1',
-  name: 'Gestor Tenant 1',
+  name: 'Gestor Tenant Teste 1',
   role: 'ADMINISTRADOR',
-  tenantId: 'ten_demo_agentise'
+  tenantId: TEST_TENANT_1
 });
 
 const tokenTenant2 = generateToken({
   userId: 'usr_test_tenant2',
-  name: 'Gestor Tenant 2',
+  name: 'Gestor Tenant Teste 2',
   role: 'ADMINISTRADOR',
-  tenantId: 'ten_autoprime_veiculos'
+  tenantId: TEST_TENANT_2
 });
 
 function makeRequest(path, method, body, token) {
@@ -54,6 +58,9 @@ function makeRequest(path, method, body, token) {
 
 async function runTests() {
   try {
+    // Limpeza preventiva antes de iniciar os testes
+    leadsDB.deleteWhere(l => l.tenantId === TEST_TENANT_1 || l.tenantId === TEST_TENANT_2);
+
     await new Promise((resolve) => {
       server.listen(TEST_PORT, '127.0.0.1', resolve);
     });
@@ -74,7 +81,7 @@ async function runTests() {
     assert.strictEqual(resComma.status, 201, 'Deveria retornar 201 Created');
     assert.strictEqual(resComma.body.count, 2, 'Deveria importar 2 leads');
     assert.strictEqual(resComma.body.imported[0].name, 'Lucas Ferreira');
-    assert.strictEqual(resComma.body.imported[0].tenantId, 'ten_demo_agentise', 'Tenant deve ser travado no token da sessão');
+    assert.strictEqual(resComma.body.imported[0].tenantId, TEST_TENANT_1, 'Tenant deve ser travado no token da sessão');
     console.log('  ✅ 2 leads importados com sucesso via CSV');
 
     // 3. Importação via csvText (delimitador ponto-e-vírgula padrão Excel BR)
@@ -116,14 +123,17 @@ async function runTests() {
         {
           name: 'Hacker Spoofing',
           company: 'Invasor Inc',
-          tenantId: 'ten_autoprime_veiculos' // Tentando injetar em outro tenant
+          tenantId: TEST_TENANT_2 // Tentando injetar em outro tenant
         }
       ]
     };
     const resSpoof = await makeRequest('/api/leads/import-csv', 'POST', spoofedLead, tokenTenant1);
     assert.strictEqual(resSpoof.status, 201);
-    assert.strictEqual(resSpoof.body.imported[0].tenantId, 'ten_demo_agentise', 'tenantId forjado deve ser ignorado e travado na sessão autenticada');
+    assert.strictEqual(resSpoof.body.imported[0].tenantId, TEST_TENANT_1, 'tenantId forjado deve ser ignorado e travado na sessão autenticada');
     console.log('  🛡️ Anti-Spoofing Ativo: Injeção de tenantId malicioso foi neutralizada');
+
+    // Limpeza pós-teste para garantir ambiente 100% limpo
+    leadsDB.deleteWhere(l => l.tenantId === TEST_TENANT_1 || l.tenantId === TEST_TENANT_2);
 
     console.log('\n=============================================================');
     console.log('🎉 TODOS OS 5 TESTES DE IMPORTAÇÃO CSV & MULTI-TENANT APROVADOS (100%)!');
@@ -132,7 +142,10 @@ async function runTests() {
     process.exit(0);
   } catch (err) {
     console.error('❌ Falha nos testes:', err);
-    try { server.close(); } catch (e) {}
+    try { 
+      leadsDB.deleteWhere(l => l.tenantId === TEST_TENANT_1 || l.tenantId === TEST_TENANT_2);
+      server.close(); 
+    } catch (e) { }
     process.exit(1);
   }
 }

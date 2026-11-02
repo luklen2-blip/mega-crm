@@ -325,3 +325,4 @@ if (!indexContent.includes('csv-paste-input')) {
 
 fs.writeFileSync(indexPath, indexContent, 'utf8');
 console.log('🎉 Todas as atualizações de resiliência foram aplicadas com sucesso!');
+

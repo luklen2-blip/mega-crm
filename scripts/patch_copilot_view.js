@@ -652,3 +652,4 @@ if (!appContent.includes('function loadCopilotView()')) {
 } else {
   console.log('ℹ️ public/app.js already has loadCopilotView');
 }
+

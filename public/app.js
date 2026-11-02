@@ -72,6 +72,21 @@ function formatBRL(val) {
   return Number(val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+function normalizeWhatsAppPhone(phone) {
+  if (!phone) return '';
+  const digits = String(phone).replace(/\D/g, '');
+  if (!digits) return '';
+  return digits.startsWith('55') && digits.length >= 12 ? digits : ('55' + digits);
+}
+
+function getWhatsAppUrl(phone, leadName) {
+  const waNumber = normalizeWhatsAppPhone(phone);
+  if (!waNumber) return '#';
+  const name = leadName || 'Amigo';
+  const text = `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.`;
+  return `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+}
+
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
   return String(str)
@@ -611,7 +626,7 @@ function renderLeadsTable() {
           Visão 360°
         </button>
         ${lead.phone ? `
-          <a href="https://wa.me/55${lead.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Olá ' + lead.name + ', tudo bem? Aqui é da equipe comercial.')}" target="_blank" class="px-2 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-300 font-semibold transition inline-flex items-center gap-1">
+          <a href="${getWhatsAppUrl(lead.phone, lead.name)}" target="_blank" class="px-2 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-300 font-semibold transition inline-flex items-center gap-1">
             <i data-lucide="message-circle" class="h-3 w-3"></i> WhatsApp
           </a>
         ` : ''}
@@ -720,7 +735,7 @@ async function openLead360(leadId) {
     const waLink = document.getElementById('modal-360-whatsapp-link');
     if (waLink) {
       if (lead.phone) {
-        waLink.href = `https://wa.me/55${lead.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Olá ' + lead.name + ', tudo bem? Aqui é da equipe comercial.')}`;
+        waLink.href = getWhatsAppUrl(lead.phone, lead.name);
         waLink.classList.remove('hidden');
         waLink.classList.add('inline-flex');
       } else {
@@ -1903,7 +1918,7 @@ function sendPitchWhatsApp() {
   const lead = globalLeads.find(l => l.id === leadId);
   const text = document.getElementById('copilot-output').value;
   if (!lead || !lead.phone) return showToast('Lead sem WhatsApp cadastrado.', 'warning');
-  const url = `https://wa.me/55${lead.phone.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
+  const url = `https://wa.me/${normalizeWhatsAppPhone(lead.phone)}?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
 }
 
@@ -2579,7 +2594,7 @@ function sendPixWhatsApp() {
   
   if (!phone) return showToast('Informe o WhatsApp do cliente.', 'warning');
   const msg = `Olá! Segue sua proposta de ${desc} no valor de ${formatBRL(amount)}.\n\nCódigo PIX Copia-e-Cola:\n${payload}`;
-  const url = `https://wa.me/55${phone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
+  const url = `https://wa.me/${normalizeWhatsAppPhone(phone)}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
 }
 
