@@ -526,5 +526,16 @@
     "id": "con_1793648196359_eetc",
     "createdAt": "2026-11-02T19:36:36.359Z",
     "updatedAt": "2026-11-02T19:36:36.359Z"
+  },
+  {
+    "name": "Mariana Lima",
+    "role": "Diretora de Operações",
+    "email": "mariana.lima@acmecorp.com.br",
+    "phone": "11988887777",
+    "companyId": "com_1793648701448_rawq",
+    "tenantId": "ten_demo_agentise",
+    "id": "con_1793648701477_p0ta",
+    "createdAt": "2026-11-02T19:45:01.477Z",
+    "updatedAt": "2026-11-02T19:45:01.477Z"
   }
 ]

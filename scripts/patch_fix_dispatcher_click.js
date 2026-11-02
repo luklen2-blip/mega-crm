@@ -123,3 +123,4 @@ appJs = appJs.replace(oldTableBtn, newTableBtn);
 
 fs.writeFileSync(appPath, appJs, 'utf8');
 console.log('✅ public/app.js atualizado com sucesso!');
+

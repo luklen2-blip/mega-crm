@@ -180,7 +180,7 @@ async function executeBatch(batchLeads, batchNum, status) {
     const lead = batchLeads[i];
     const itemNum = i + 1;
     const phone = normalizePhone(lead.phone);
-    const msg = getMessageText(lead.name);
+    const msg = getMessageText(lead);
 
     console.log(`----------------------------------------------------------------`);
     console.log(`📍 [${itemNum}/${batchLeads.length}] Oficina: ${lead.name}`);

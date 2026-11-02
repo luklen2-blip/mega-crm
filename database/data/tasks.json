@@ -4831,5 +4831,107 @@
     "createdAt": "2026-11-02T19:36:39.653Z",
     "id": "tas_1793648199653_xdvq",
     "updatedAt": "2026-11-02T19:36:39.653Z"
+  },
+  {
+    "title": "Tarefa de Teste Automatizado",
+    "priority": "alta",
+    "completed": false,
+    "tenantId": "ten_demo_agentise",
+    "id": "tas_1793648700193_lozc",
+    "createdAt": "2026-11-02T19:45:00.193Z",
+    "updatedAt": "2026-11-02T19:45:00.193Z"
+  },
+  {
+    "id": "tsk_autoprime_testdrive_1793648700420",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "title": "Realizar Test-Drive Presencial da BMW 320i no Showroom Auto Prime",
+    "deadline": "2026-11-02T19:45:00.420Z",
+    "priority": "alta",
+    "completed": true,
+    "createdAt": "2026-11-02T19:45:00.420Z",
+    "updatedAt": "2026-11-02T19:45:00.454Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1793648701185_phk7",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-11-03T19:45:01.195Z",
+    "completed": false,
+    "id": "tas_1793648701195_owgi",
+    "createdAt": "2026-11-02T19:45:01.195Z",
+    "updatedAt": "2026-11-02T19:45:01.195Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-11-03T19:45:01.327Z",
+    "completed": false,
+    "id": "tas_1793648701327_hm7o",
+    "createdAt": "2026-11-02T19:45:01.327Z",
+    "updatedAt": "2026-11-02T19:45:01.327Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793648700389_usj3",
+    "dealId": null,
+    "title": "🚨 TRANSBORDO HUMANO: Lead Confidencial A",
+    "description": "Motivo: Cliente solicitou transbordo humano explícito (termo identificado: \"humano\"). Última mensagem: \"Quero falar com um atendente humano urgente, não quero falar com robô.\"",
+    "priority": "urgente",
+    "completed": false,
+    "assignedTo": "Equipe Comercial",
+    "createdAt": "2026-11-02T19:45:01.679Z",
+    "id": "tas_1793648701679_ygyo",
+    "updatedAt": "2026-11-02T19:45:01.679Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793648700389_usj3",
+    "dealId": "dea_1793648701698_cfcp",
+    "title": "🚨 TRANSBORDO HUMANO: Lead Confidencial A",
+    "description": "Motivo: Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000). Última mensagem: \"Podemos fechar o contrato no valor total?\"",
+    "priority": "urgente",
+    "completed": false,
+    "assignedTo": "Equipe Comercial",
+    "createdAt": "2026-11-02T19:45:01.704Z",
+    "id": "tas_1793648701704_ypy0",
+    "updatedAt": "2026-11-02T19:45:01.704Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793648700389_usj3",
+    "title": "⚠️ [Alerta Gestão] Alerta Deal VIP Score Alto: Expansão Enterprise Corp",
+    "priority": "urgente",
+    "deadline": "2026-11-02T23:45:01.809Z",
+    "completed": false,
+    "id": "tas_1793648701809_sj0g",
+    "createdAt": "2026-11-02T19:45:01.809Z",
+    "updatedAt": "2026-11-02T19:45:01.809Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793648700389_usj3",
+    "dealId": "dea_1793648701844_j07l",
+    "title": "Verificar recebimento da proposta e tirar dúvidas pelo WhatsApp",
+    "priority": "alta",
+    "deadline": "2026-11-03T19:45:01.856Z",
+    "completed": false,
+    "id": "tas_1793648701856_g7yn",
+    "createdAt": "2026-11-02T19:45:01.856Z",
+    "updatedAt": "2026-11-02T19:45:01.856Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": null,
+    "title": "🚨 TRANSBORDO HUMANO: Cliente",
+    "description": "Motivo: Cliente solicitou transbordo humano explícito (termo identificado: \"humano\"). Última mensagem: \"Quero falar com um humano agora\"",
+    "priority": "urgente",
+    "completed": false,
+    "assignedTo": "Equipe Comercial",
+    "createdAt": "2026-11-02T19:45:04.779Z",
+    "id": "tas_1793648704779_5w27",
+    "updatedAt": "2026-11-02T19:45:04.779Z"
   }
 ]

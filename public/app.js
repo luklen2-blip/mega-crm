@@ -3402,6 +3402,47 @@ function playNotificationChime() {
   }
 }
 
+
+function extractLeadBairro(lead) {
+  if (!lead || !lead.notes) return 'Zona Oeste';
+  const match = lead.notes.match(/Local:\s*([^|\-]+)/i);
+  return match && match[1] ? match[1].trim() : 'Zona Oeste';
+}
+
+function formatMessageTemplate(tpl, lead) {
+  const nome = (lead && lead.name) ? lead.name : 'sua oficina';
+  const bairro = extractLeadBairro(lead);
+  return tpl
+    .replace(/{nome}/gi, nome)
+    .replace(/{empresa}/gi, nome)
+    .replace(/{oficina}/gi, nome)
+    .replace(/{bairro}/gi, bairro)
+    .replace(/{local}/gi, bairro)
+    .replace(/{cidade}/gi, 'Rio de Janeiro');
+}
+
+function insertDispatcherTag(tag) {
+  const el = document.getElementById('dispatcher-message-text');
+  if (!el) return;
+  const start = el.selectionStart || el.value.length;
+  const end = el.selectionEnd || el.value.length;
+  el.value = el.value.substring(0, start) + ' ' + tag + ' ' + el.value.substring(end);
+  el.focus();
+  updateDispatcherPreview();
+}
+
+function updateDispatcherPreview() {
+  const previewBox = document.getElementById('dispatcher-preview-box');
+  const tpl = document.getElementById('dispatcher-message-text')?.value || '';
+  if (!previewBox) return;
+
+  const sampleLead = (globalLeads && globalLeads.length > 0) 
+    ? globalLeads.find(l => l.source === 'Google Maps Oficinas') || globalLeads[0]
+    : { name: 'Oficina Viegas', notes: 'Local: Bangu - RJ' };
+
+  previewBox.textContent = formatMessageTemplate(tpl, sampleLead);
+}
+
 function openWhatsAppDispatcherModal() {
   // Reset de visual
   const configView = document.getElementById('dispatcher-config-view');
@@ -3466,7 +3507,7 @@ function processNextDispatcherItem() {
     'Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.';
 
   const cleanPhone = normalizeWhatsAppPhone(lead.phone);
-  const msgText = tpl.replace(/{nome}/g, lead.name);
+  const msgText = formatMessageTemplate(tpl, lead);
 
   // Atualiza painel visual
   const labelEl = document.getElementById('dispatcher-progress-label');
@@ -3603,3 +3644,6 @@ window.togglePauseWhatsAppBatch = togglePauseWhatsAppBatch;
 window.skipWhatsAppBatchItem = skipWhatsAppBatchItem;
 window.stopWhatsAppBatch = stopWhatsAppBatch;
 window.getWhatsAppUrl = getWhatsAppUrl;
+
+window.insertDispatcherTag = insertDispatcherTag;
+window.updateDispatcherPreview = updateDispatcherPreview;
