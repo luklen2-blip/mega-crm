@@ -1408,7 +1408,7 @@ const server = http.createServer(async (req, res) => {
 function parseLeadsCsv(csvText) {
   if (!csvText || typeof csvText !== 'string') return [];
   const lines = csvText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-  if (lines.length < 2) return [];
+  if (lines.length === 0) return [];
 
   const headerLine = lines[0];
   const commaCount = (headerLine.match(/,/g) || []).length;
@@ -1449,35 +1449,55 @@ function parseLeadsCsv(csvText) {
      .replace(/[^a-z0-9_]/g, '')
   );
 
+  const knownHeaderKeywords = [
+    'nome', 'nomes', 'name', 'names', 'cliente', 'clientes', 'contato', 'contatos',
+    'empresa', 'empresas', 'lugar', 'lugares', 'local', 'cidade', 'cidades', 'telefone',
+    'telefones', 'celular', 'whatsapp', 'email', 'orcamento', 'valor', 'cargo'
+  ];
+
+  const hasHeaderRow = rawHeaders.some(h => knownHeaderKeywords.some(kw => h.includes(kw)));
+  const startIndex = hasHeaderRow ? 1 : 0;
+
   const results = [];
-  for (let i = 1; i < lines.length; i++) {
+  for (let i = startIndex; i < lines.length; i++) {
     const rowValues = splitCsvLine(lines[i], delimiter);
     if (rowValues.every(v => !v)) continue;
 
     const rowObj = {};
-    for (let h = 0; h < rawHeaders.length; h++) {
-      const key = rawHeaders[h];
-      const val = rowValues[h] || '';
-      if (!key) continue;
+    if (hasHeaderRow) {
+      for (let h = 0; h < rawHeaders.length; h++) {
+        const key = rawHeaders[h];
+        const val = rowValues[h] || '';
+        if (!key) continue;
 
-      if (['nome', 'name', 'nomecompleto', 'contato', 'cliente', 'lead', 'pessoa'].includes(key)) {
-        rowObj.name = val;
-      } else if (['empresa', 'company', 'organizacao', 'razaosocial', 'lugar', 'lugares', 'local', 'localizacao', 'cidade', 'regiao', 'bairro', 'endereco'].includes(key)) {
-        rowObj.company = val;
-      } else if (['cargo', 'role', 'funcao', 'posicao'].includes(key)) {
-        rowObj.role = val;
-      } else if (['email', 'mail', 'correio'].includes(key)) {
-        rowObj.email = val;
-      } else if (['telefone', 'phone', 'whatsapp', 'celular', 'tel', 'fone', 'numero', 'cel', 'zap'].includes(key)) {
-        rowObj.phone = val;
-      } else if (['orcamento', 'orcamentoestimado', 'budget', 'estimatedbudget', 'valor', 'valorestimado'].includes(key)) {
-        rowObj.estimatedBudget = val;
-      } else if (['tags', 'tag', 'segmento', 'categoria', 'categorias'].includes(key)) {
-        rowObj.tags = val;
-      } else if (['notas', 'notes', 'observacoes', 'obs', 'detalhes'].includes(key)) {
-        rowObj.notes = val;
+        if (['nome', 'nomes', 'name', 'names', 'nomecompleto', 'contato', 'contatos', 'cliente', 'clientes', 'lead', 'leads', 'pessoa', 'pessoas', 'razaosocial', 'titular'].some(k => key === k || key.includes(k))) {
+          rowObj.name = val;
+        } else if (['empresa', 'empresas', 'company', 'organizacao', 'razaosocial', 'lugar', 'lugares', 'local', 'locais', 'localizacao', 'cidade', 'cidades', 'municipio', 'municipios', 'bairro', 'endereco', 'regiao', 'uf', 'estado'].some(k => key === k || key.includes(k))) {
+          if (!rowObj.company) rowObj.company = val;
+          else rowObj.notes = (rowObj.notes ? rowObj.notes + ' | ' : '') + `Lugar: ${val}`;
+        } else if (['cargo', 'role', 'funcao', 'posicao'].some(k => key === k || key.includes(k))) {
+          rowObj.role = val;
+        } else if (['email', 'mail', 'correio', 'emails'].some(k => key === k || key.includes(k))) {
+          rowObj.email = val;
+        } else if (['telefone', 'telefones', 'phone', 'phones', 'whatsapp', 'whatsapps', 'celular', 'celulares', 'tel', 'fone', 'fones', 'numero', 'numeros', 'cel', 'zap'].some(k => key === k || key.includes(k))) {
+          rowObj.phone = val;
+        } else if (['orcamento', 'orcamentoestimado', 'budget', 'estimatedbudget', 'valor', 'valorestimado', 'preco'].some(k => key === k || key.includes(k))) {
+          rowObj.estimatedBudget = val;
+        } else if (['tags', 'tag', 'segmento', 'categoria', 'categorias'].some(k => key === k || key.includes(k))) {
+          rowObj.tags = val;
+        } else if (['notas', 'notes', 'observacoes', 'obs', 'detalhes'].some(k => key === k || key.includes(k))) {
+          rowObj.notes = (rowObj.notes ? rowObj.notes + ' | ' : '') + val;
+        }
       }
     }
+
+    // Fallback posicional se a coluna Nome não foi mapeada por cabeçalho
+    if (!rowObj.name && rowValues[0]) {
+      rowObj.name = rowValues[0];
+      if (!rowObj.company && rowValues[1]) rowObj.company = rowValues[1];
+      if (!rowObj.phone && rowValues[2]) rowObj.phone = rowValues[2];
+    }
+
     if (rowObj.name) {
       results.push(rowObj);
     }

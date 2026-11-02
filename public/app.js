@@ -273,6 +273,8 @@ function switchView(viewName) {
   if (viewName === 'billing') loadBilling();
   if (viewName === 'pix') loadProposals();
   if (viewName === 'copilot') loadCopilotView();
+  if (viewName === 'leads') loadLeads();
+  if (viewName === 'pipeline') { loadPipelines(); loadDeals(); }
 
   if (window.lucide) lucide.createIcons();
 }
@@ -567,6 +569,21 @@ function renderLeadsTable() {
   const tbody = document.getElementById('leads-table-body');
   if (!tbody) return;
   tbody.innerHTML = '';
+  if (globalLeads.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="p-8 text-center text-slate-400">
+          <div class="flex flex-col items-center justify-center space-y-2">
+            <i data-lucide="users" class="h-8 w-8 text-slate-600"></i>
+            <p class="text-xs font-semibold text-slate-300">Nenhum lead encontrado nesta base.</p>
+            <p class="text-[11px] text-slate-500">Clique em "Importar CSV" ou "Cadastrar Lead" para adicionar contatos.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+    if (window.lucide) lucide.createIcons();
+    return;
+  }
 
   globalLeads.forEach(lead => {
     const tr = document.createElement('tr');
@@ -2880,7 +2897,7 @@ function handleLeadsCsvSelect(event) {
 function parseClientCsvLeads(csvText) {
   if (!csvText || typeof csvText !== 'string') return [];
   const lines = csvText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-  if (lines.length < 2) return [];
+  if (lines.length === 0) return [];
 
   const headerLine = lines[0];
   const commaCount = (headerLine.match(/,/g) || []).length;
@@ -2921,26 +2938,55 @@ function parseClientCsvLeads(csvText) {
      .replace(/[^a-z0-9_]/g, '')
   );
 
+  const knownHeaderKeywords = [
+    'nome', 'nomes', 'name', 'names', 'cliente', 'clientes', 'contato', 'contatos',
+    'empresa', 'empresas', 'lugar', 'lugares', 'local', 'cidade', 'cidades', 'telefone',
+    'telefones', 'celular', 'whatsapp', 'email', 'orcamento', 'valor', 'cargo'
+  ];
+
+  const hasHeaderRow = rawHeaders.some(h => knownHeaderKeywords.some(kw => h.includes(kw)));
+  const startIndex = hasHeaderRow ? 1 : 0;
+
   const leads = [];
-  for (let i = 1; i < lines.length; i++) {
+  for (let i = startIndex; i < lines.length; i++) {
     const rowValues = splitLine(lines[i]);
     if (rowValues.every(v => !v)) continue;
 
     const rowObj = {};
-    for (let h = 0; h < rawHeaders.length; h++) {
-      const key = rawHeaders[h];
-      const val = rowValues[h] || '';
-      if (!key) continue;
+    if (hasHeaderRow) {
+      for (let h = 0; h < rawHeaders.length; h++) {
+        const key = rawHeaders[h];
+        const val = rowValues[h] || '';
+        if (!key) continue;
 
-      if (['nome', 'name', 'nomecompleto', 'contato', 'cliente'].includes(key)) rowObj.name = val;
-      else if (['empresa', 'company', 'organizacao', 'razaosocial'].includes(key)) rowObj.company = val;
-      else if (['cargo', 'role', 'funcao', 'posicao'].includes(key)) rowObj.role = val;
-      else if (['email', 'mail', 'correio'].includes(key)) rowObj.email = val;
-      else if (['telefone', 'phone', 'whatsapp', 'celular', 'tel', 'fone'].includes(key)) rowObj.phone = val;
-      else if (['orcamento', 'orcamentoestimado', 'budget', 'estimatedbudget', 'valor', 'valorestimado'].includes(key)) rowObj.estimatedBudget = val;
-      else if (['tags', 'tag', 'segmento', 'categoria', 'categorias'].includes(key)) rowObj.tags = val;
-      else if (['notas', 'notes', 'observacoes', 'obs', 'detalhes'].includes(key)) rowObj.notes = val;
+        if (['nome', 'nomes', 'name', 'names', 'nomecompleto', 'contato', 'contatos', 'cliente', 'clientes', 'lead', 'leads', 'pessoa', 'pessoas', 'razaosocial', 'titular'].some(k => key === k || key.includes(k))) {
+          rowObj.name = val;
+        } else if (['empresa', 'empresas', 'company', 'organizacao', 'razaosocial', 'lugar', 'lugares', 'local', 'locais', 'localizacao', 'cidade', 'cidades', 'municipio', 'bairro', 'endereco', 'regiao', 'uf', 'estado'].some(k => key === k || key.includes(k))) {
+          if (!rowObj.company) rowObj.company = val;
+          else rowObj.notes = (rowObj.notes ? rowObj.notes + ' | ' : '') + `Lugar: ${val}`;
+        } else if (['cargo', 'role', 'funcao', 'posicao'].some(k => key === k || key.includes(k))) {
+          rowObj.role = val;
+        } else if (['email', 'mail', 'correio', 'emails'].some(k => key === k || key.includes(k))) {
+          rowObj.email = val;
+        } else if (['telefone', 'telefones', 'phone', 'phones', 'whatsapp', 'whatsapps', 'celular', 'celulares', 'tel', 'fone', 'fones', 'numero', 'numeros', 'cel', 'zap'].some(k => key === k || key.includes(k))) {
+          rowObj.phone = val;
+        } else if (['orcamento', 'orcamentoestimado', 'budget', 'estimatedbudget', 'valor', 'valorestimado', 'preco'].some(k => key === k || key.includes(k))) {
+          rowObj.estimatedBudget = val;
+        } else if (['tags', 'tag', 'segmento', 'categoria', 'categorias'].some(k => key === k || key.includes(k))) {
+          rowObj.tags = val;
+        } else if (['notas', 'notes', 'observacoes', 'obs', 'detalhes'].some(k => key === k || key.includes(k))) {
+          rowObj.notes = (rowObj.notes ? rowObj.notes + ' | ' : '') + val;
+        }
+      }
     }
+
+    // Fallback posicional se a coluna Nome não foi mapeada por cabeçalho
+    if (!rowObj.name && rowValues[0]) {
+      rowObj.name = rowValues[0];
+      if (!rowObj.company && rowValues[1]) rowObj.company = rowValues[1];
+      if (!rowObj.phone && rowValues[2]) rowObj.phone = rowValues[2];
+    }
+
     if (rowObj.name) {
       leads.push(rowObj);
     }
@@ -3293,4 +3339,19 @@ function copyCopilotText() {
   }).catch(() => {
     showToast('Não foi possível copiar o texto.', 'error');
   });
+}
+
+
+function handleLeadsCsvPaste(event) {
+  const text = event.target.value.trim();
+  if (!text) {
+    const previewContainer = document.getElementById('csv-preview-container');
+    if (previewContainer) previewContainer.classList.add('hidden');
+    const btnConfirm = document.getElementById('btn-confirm-import-csv');
+    if (btnConfirm) btnConfirm.disabled = true;
+    parsedCsvLeads = [];
+    return;
+  }
+  parsedCsvLeads = parseClientCsvLeads(text);
+  renderCsvPreview('Texto Colado', parsedCsvLeads);
 }

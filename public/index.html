@@ -639,6 +639,10 @@
           </div>
           <div class="flex items-center gap-2 self-start sm:self-auto">
             <input type="text" id="leads-search" oninput="filterLeads()" placeholder="Buscar por nome, empresa ou telefone..." class="px-3 py-1.5 text-xs rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 w-48 sm:w-64">
+            <button onclick="loadLeads()" class="px-2.5 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1" title="Atualizar Lista de Leads">
+              <i data-lucide="refresh-cw" class="h-3.5 w-3.5"></i>
+              <span class="hidden sm:inline">Atualizar</span>
+            </button>
             <button onclick="openImportLeadsModal()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 hover:border-emerald-500/40 transition shadow-sm" title="Importar Leads via Planilha CSV">
               <i data-lucide="file-spreadsheet" class="h-4 w-4"></i>
               <span>Importar CSV</span>
@@ -1743,6 +1747,16 @@
             <span class="text-slate-200 font-bold block" id="csv-upload-label">Clique para selecionar seu arquivo .CSV</span>
             <span class="text-[11px] text-slate-400 block mt-0.5">Compatível com Excel, Google Sheets e outros CRMs (delimitador vírgula ou ponto-e-vírgula)</span>
           </div>
+        </div>
+
+        
+        <!-- Alternativa: Colar Texto Diretamente -->
+        <div class="space-y-1.5 pt-1">
+          <div class="flex items-center justify-between">
+            <label class="block text-slate-300 font-semibold text-xs">Ou Cole o Texto da sua Planilha / Bloco de Notas:</label>
+            <span class="text-[10px] text-slate-500">Ex: Nome, Lugar, Telefone</span>
+          </div>
+          <textarea id="csv-paste-input" oninput="handleLeadsCsvPaste(event)" rows="3" placeholder="Carlos Silveira, São Paulo, 11987654321&#10;Marina Albuquerque, Rio de Janeiro, 21976543210" class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-emerald-500 placeholder-slate-600"></textarea>
         </div>
 
         <!-- Preview da Tabela -->
