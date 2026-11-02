@@ -272,6 +272,7 @@ function switchView(viewName) {
   if (viewName === 'sellers') loadAnalytics();
   if (viewName === 'billing') loadBilling();
   if (viewName === 'pix') loadProposals();
+  if (viewName === 'copilot') loadCopilotView();
 
   if (window.lucide) lucide.createIcons();
 }
@@ -3026,4 +3027,270 @@ async function submitImportCsv() {
       if (window.lucide) lucide.createIcons();
     }
   }
+}
+
+
+
+// ==============================================================================
+// 13. AGENTE COMERCIAL IA - GESTÃO, SIMULADOR AO VIVO & COPILOTO
+// ==============================================================================
+let globalAiAgents = [];
+let activeCopilotSubtab = 'agents';
+
+async function loadCopilotView() {
+  populateLeadSelects();
+  await loadAiAgents();
+  if (window.lucide) lucide.createIcons();
+}
+
+function switchCopilotTab(tab) {
+  activeCopilotSubtab = tab;
+  const tabs = ['agents', 'simulator', 'bant'];
+  tabs.forEach(t => {
+    const el = document.getElementById(`copilot-subtab-${t}`);
+    const btn = document.getElementById(`tab-btn-ai-${t}`);
+    if (el) el.classList.toggle('hidden', t !== tab);
+    if (btn) {
+      if (t === tab) {
+        btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white transition flex items-center gap-1.5 shadow-sm';
+      } else {
+        btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5';
+      }
+    }
+  });
+  if (window.lucide) lucide.createIcons();
+}
+
+async function loadAiAgents() {
+  try {
+    const res = await fetch('/api/ai/agents', { headers: authHeaders() });
+    const json = await res.json();
+    globalAiAgents = json.data || [];
+    renderAiAgentsCards();
+    populateSimulatorAgentSelect();
+  } catch (err) {
+    console.error('Erro ao carregar agentes de IA:', err);
+  }
+}
+
+function renderAiAgentsCards() {
+  const container = document.getElementById('ai-agents-cards-container');
+  if (!container) return;
+
+  if (globalAiAgents.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full glass-card p-6 rounded-2xl border border-slate-800 text-center text-slate-400 text-xs">
+        Nenhum agente comercial configurado no momento. Clique em "+ Novo Agente IA" para cadastrar.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = globalAiAgents.map(agt => {
+    const isCloser = agt.role === 'CLOSER';
+    const roleBadge = isCloser 
+      ? '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">CLOSER CONSULTIVO</span>'
+      : '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">SDR HUNTER</span>';
+    
+    const roleIcon = isCloser ? 'briefcase' : 'target';
+    const maxAutonomyFormatted = formatBRL ? formatBRL(agt.maxDealAutonomy || 30000) : `R$ ${Number(agt.maxDealAutonomy || 30000).toLocaleString('pt-BR')}`;
+
+    return `
+      <div class="glass-card p-5 rounded-2xl border border-blue-500/20 flex flex-col justify-between space-y-4 hover:border-blue-500/40 transition shadow-lg">
+        <div>
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <div class="flex items-center gap-2.5">
+              <div class="h-9 w-9 rounded-xl ${isCloser ? 'bg-purple-600/20 border-purple-500/30 text-purple-300' : 'bg-emerald-600/20 border-emerald-500/30 text-emerald-300'} border flex items-center justify-center font-black text-sm">
+                <i data-lucide="${roleIcon}" class="h-4 w-4"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">${escapeHtml(agt.name)}</h4>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  ${roleBadge}
+                </div>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-bold">
+              <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Ativo
+            </span>
+          </div>
+
+          <div class="space-y-2 pt-3 text-xs">
+            <div class="flex items-center justify-between text-slate-400 text-[11px]">
+              <span>Autonomia:</span>
+              <strong class="text-white capitalize">${agt.autonomyLevel || 'Copiloto'}</strong>
+            </div>
+            <div class="flex items-center justify-between text-slate-400 text-[11px]">
+              <span>Teto de Negociação:</span>
+              <strong class="text-emerald-400">${maxAutonomyFormatted}</strong>
+            </div>
+            <div class="flex items-center justify-between text-slate-400 text-[11px]">
+              <span>Tom de Voz:</span>
+              <strong class="text-slate-300 capitalize">${(agt.tone || 'Consultivo').replace(/_/g, ' ')}</strong>
+            </div>
+
+            <p class="text-[11px] text-slate-400 pt-2 line-clamp-2 leading-relaxed italic border-t border-slate-800/80">
+              "${escapeHtml(agt.systemPrompt || '')}"
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800 flex items-center gap-2">
+          <button onclick="openSimulatorForAgent('${agt.id}')" class="flex-1 py-2 rounded-xl text-xs font-bold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 transition flex items-center justify-center gap-1.5">
+            <i data-lucide="play" class="h-3.5 w-3.5"></i>
+            <span>Testar no Simulador</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (window.lucide) lucide.createIcons();
+}
+
+function populateSimulatorAgentSelect() {
+  const sel = document.getElementById('simulator-agent-select');
+  if (!sel) return;
+  sel.innerHTML = globalAiAgents.map(a => `<option value="${a.id}">${escapeHtml(a.name)} (${a.role})</option>`).join('');
+}
+
+function openSimulatorForAgent(agentId) {
+  switchCopilotTab('simulator');
+  const sel = document.getElementById('simulator-agent-select');
+  if (sel && agentId) sel.value = agentId;
+  const input = document.getElementById('simulator-message-input');
+  if (input) input.focus();
+}
+
+function openNewAiAgentModal() {
+  const m = document.getElementById('modal-new-ai-agent');
+  if (m) m.classList.remove('hidden');
+}
+
+function closeNewAiAgentModal() {
+  const m = document.getElementById('modal-new-ai-agent');
+  if (m) m.classList.add('hidden');
+}
+
+async function submitNewAiAgent() {
+  const name = document.getElementById('ai-agent-name')?.value?.trim();
+  const role = document.getElementById('ai-agent-role')?.value || 'CLOSER';
+  const autonomyLevel = document.getElementById('ai-agent-autonomy')?.value || 'copiloto';
+  const maxDealAutonomy = Number(document.getElementById('ai-agent-max-autonomy')?.value || 25000);
+  const tone = document.getElementById('ai-agent-tone')?.value || 'consultivo_estrategico';
+  const handoverStr = document.getElementById('ai-agent-handover')?.value || '';
+  const handoverKeywords = handoverStr.split(',').map(s => s.trim()).filter(Boolean);
+  const systemPrompt = document.getElementById('ai-agent-prompt')?.value?.trim() || '';
+
+  if (!name) return showToast('Nome do agente é obrigatório.', 'warning');
+
+  try {
+    const res = await fetch('/api/ai/agents', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({
+        name,
+        role,
+        autonomyLevel,
+        maxDealAutonomy,
+        tone,
+        handoverKeywords,
+        systemPrompt,
+        active: true
+      })
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast(`Agente "${name}" cadastrado com sucesso!`, 'success');
+      closeNewAiAgentModal();
+      await loadAiAgents();
+    } else {
+      showToast(json.error || 'Erro ao salvar agente.', 'error');
+    }
+  } catch (err) {
+    showToast('Falha na comunicação com o servidor.', 'error');
+  }
+}
+
+async function sendSimulatorMessage() {
+  const input = document.getElementById('simulator-message-input');
+  const text = input?.value?.trim();
+  if (!text) return;
+
+  const agentId = document.getElementById('simulator-agent-select')?.value;
+  if (!agentId) return showToast('Selecione um agente de IA para o teste.', 'warning');
+
+  const chatBox = document.getElementById('simulator-chat-box');
+  const btn = document.getElementById('btn-send-simulator');
+  const handoverAlert = document.getElementById('simulator-handover-alert');
+
+  // Adiciona balão do cliente
+  const userBubble = document.createElement('div');
+  userBubble.className = 'flex gap-2.5 items-start justify-end';
+  userBubble.innerHTML = `
+    <div class="p-3 rounded-2xl bg-blue-600 text-xs text-white max-w-lg leading-relaxed shadow-sm">
+      ${escapeHtml(text)}
+    </div>
+    <div class="h-7 w-7 rounded-full bg-slate-800 border border-slate-700 text-slate-300 flex items-center justify-center font-bold text-xs shrink-0">VC</div>
+  `;
+  chatBox.appendChild(userBubble);
+  input.value = '';
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  if (btn) btn.disabled = true;
+
+  try {
+    const res = await fetch(`/api/ai/agents/${agentId}/interact`, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ message: text, channel: 'whatsapp' })
+    });
+    const json = await res.json();
+
+    const reply = json.reply || json.response || 'Sem resposta do agente.';
+    const isHandover = Boolean(json.handover || json.handoverRequired);
+
+    if (isHandover && handoverAlert) {
+      handoverAlert.classList.remove('hidden');
+      const rEl = document.getElementById('simulator-handover-reason');
+      if (rEl) rEl.textContent = json.reason || 'Critério de transbordo humano atingido.';
+    }
+
+    const aiBubble = document.createElement('div');
+    aiBubble.className = 'flex gap-2.5 items-start';
+    aiBubble.innerHTML = `
+      <div class="h-7 w-7 rounded-full ${isHandover ? 'bg-amber-600/30 border-amber-500/40 text-amber-300' : 'bg-blue-600/30 border-blue-500/40 text-blue-300'} border flex items-center justify-center font-bold text-xs shrink-0">
+        ${isHandover ? '⚠️' : 'IA'}
+      </div>
+      <div class="p-3 rounded-2xl ${isHandover ? 'bg-amber-950/40 border border-amber-500/40 text-amber-100' : 'bg-slate-900 border border-slate-800 text-slate-200'} text-xs max-w-lg leading-relaxed shadow-sm space-y-1">
+        <div>${escapeHtml(reply)}</div>
+        ${isHandover ? `<div class="text-[10px] text-amber-300 font-bold pt-1 border-t border-amber-500/30">🚨 Transbordo Humano: ${escapeHtml(json.reason || 'Acionado')}</div>` : ''}
+      </div>
+    `;
+    chatBox.appendChild(aiBubble);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  } catch (err) {
+    showToast('Erro ao simular interação com o Agente de IA.', 'error');
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function testQuickSimulatorPrompt(text) {
+  const input = document.getElementById('simulator-message-input');
+  if (input) {
+    input.value = text;
+    sendSimulatorMessage();
+  }
+}
+
+function copyCopilotText() {
+  const text = document.getElementById('copilot-output')?.value;
+  if (!text) return showToast('Nenhum texto para copiar.', 'warning');
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Mensagem copiada para a área de transferência!', 'success');
+  }).catch(() => {
+    showToast('Não foi possível copiar o texto.', 'error');
+  });
 }
