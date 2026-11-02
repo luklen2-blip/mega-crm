@@ -425,3 +425,4 @@ if (!appJs.includes('function openWhatsAppDispatcherModal')) {
 } else {
   console.log('ℹ️ Controlador do Disparador já presente no app.js');
 }
+

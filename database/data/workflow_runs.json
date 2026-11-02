@@ -2914,5 +2914,77 @@
     "id": "wor_1793646942234_q466",
     "createdAt": "2026-11-02T19:15:42.234Z",
     "updatedAt": "2026-11-02T19:15:42.234Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1793648196072_fuf0",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1793648196082_5fb8"
+      }
+    ],
+    "executedAt": "2026-11-02T19:36:36.095Z",
+    "id": "wor_1793648196095_h3rt",
+    "createdAt": "2026-11-02T19:36:36.095Z",
+    "updatedAt": "2026-11-02T19:36:36.095Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": null,
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1793648196214_up3t"
+      }
+    ],
+    "executedAt": "2026-11-02T19:36:36.228Z",
+    "id": "wor_1793648196228_n26h",
+    "createdAt": "2026-11-02T19:36:36.228Z",
+    "updatedAt": "2026-11-02T19:36:36.228Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1793648196691_lh1i",
+    "automationName": "Alerta Deal VIP Score Alto",
+    "triggerType": "deal_score_alto",
+    "contextId": "lea_1793648195339_vht9",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "alert_created",
+        "taskId": "tas_1793648196697_ltwu"
+      }
+    ],
+    "executedAt": "2026-11-02T19:36:36.712Z",
+    "id": "wor_1793648196712_tc0a",
+    "createdAt": "2026-11-02T19:36:36.712Z",
+    "updatedAt": "2026-11-02T19:36:36.712Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "automationId": "aut_1789245789601_tm3t",
+    "automationName": "Aceleração de Proposta PIX Aberta",
+    "triggerType": "proposta_criada",
+    "contextId": "dea_1793648196732_ug4x",
+    "status": "success",
+    "actionsExecuted": [
+      {
+        "type": "task_created",
+        "taskId": "tas_1793648196743_vkwd"
+      }
+    ],
+    "executedAt": "2026-11-02T19:36:36.757Z",
+    "id": "wor_1793648196757_f2az",
+    "createdAt": "2026-11-02T19:36:36.757Z",
+    "updatedAt": "2026-11-02T19:36:36.757Z"
   }
 ]

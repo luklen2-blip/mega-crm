@@ -626,7 +626,7 @@ function renderLeadsTable() {
           Visão 360°
         </button>
         ${lead.phone ? `
-          <a href="${getWhatsAppUrl(lead.phone, lead.name)}" target="_blank" class="px-2 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-300 font-semibold transition inline-flex items-center gap-1">
+          <a href="${getWhatsAppUrl(lead.phone, lead.name)}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold transition inline-flex items-center gap-1 shadow-sm cursor-pointer" title="Abrir conversa no WhatsApp">
             <i data-lucide="message-circle" class="h-3 w-3"></i> WhatsApp
           </a>
         ` : ''}
@@ -3595,3 +3595,11 @@ function finishWhatsAppBatch() {
   openWhatsAppDispatcherModal();
   loadLeads();
 }
+
+// Exposição global das funções do disparador para o escopo window
+window.openWhatsAppDispatcherModal = openWhatsAppDispatcherModal;
+window.startWhatsAppBatch = startWhatsAppBatch;
+window.togglePauseWhatsAppBatch = togglePauseWhatsAppBatch;
+window.skipWhatsAppBatchItem = skipWhatsAppBatchItem;
+window.stopWhatsAppBatch = stopWhatsAppBatch;
+window.getWhatsAppUrl = getWhatsAppUrl;

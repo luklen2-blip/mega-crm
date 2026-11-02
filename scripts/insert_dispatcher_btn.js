@@ -20,3 +20,4 @@ if (html.includes('openWhatsAppDispatcherModal()')) {
 } else {
   console.log('Target not found');
 }
+

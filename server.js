@@ -282,7 +282,7 @@ function serveStatic(req, res, targetFile) {
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
     
     // Configura headers anti-cache para sw.js, manifest.json e páginas HTML para garantir atualização imediata no celular
-    const isAntiCache = baseName === 'sw.js' || ext === '.html' || baseName === 'manifest.json';
+    const isAntiCache = baseName === 'sw.js' || ext === '.html' || baseName === 'manifest.json' || ext === '.js' || ext === '.css';
     const cacheControlHeader = isAntiCache 
       ? 'no-cache, no-store, must-revalidate, max-age=0' 
       : 'public, max-age=3600';

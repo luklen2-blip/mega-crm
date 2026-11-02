@@ -643,7 +643,7 @@
               <i data-lucide="refresh-cw" class="h-3.5 w-3.5"></i>
               <span class="hidden sm:inline">Atualizar</span>
             </button>
-                        <button onclick="openWhatsAppDispatcherModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-lg shadow-emerald-600/20" title="Disparador Inteligente em Lotes (25 oficinas com 60s de intervalo)">
+                        <button onclick="openWhatsAppDispatcherModal();" id="btn-open-dispatcher" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-black rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition shadow-lg shadow-emerald-600/30 cursor-pointer" title="Disparador Inteligente em Lotes (25 oficinas com 60s de intervalo)">
               <i data-lucide="send" class="h-4 w-4"></i>
               <span>Disparador em Lote (25/dia)</span>
             </button>
@@ -1911,6 +1911,18 @@
             <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
               <div id="dispatcher-progress-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
             </div>
+          </div>
+        </div>
+
+        <!-- BOTÃO DE AÇÃO DIRETA 100% GARANTIDO (IMUNE A BLOQUEADOR DE POP-UP) -->
+        <div class="space-y-2">
+          <a id="dispatcher-current-walink" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-black text-center text-sm shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 transition cursor-pointer">
+            <i data-lucide="message-circle" class="h-5 w-5"></i>
+            <span id="dispatcher-walink-text">👉 ABRIR WHATSAPP DESTA OFICINA AGORA</span>
+          </a>
+          <div id="dispatcher-popup-warning" class="hidden p-2.5 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-200 text-[11px] flex items-center gap-2">
+            <i data-lucide="info" class="h-4 w-4 shrink-0 text-amber-400"></i>
+            <span>Se a aba não abriu automaticamente, clique no botão verde acima para iniciar a conversa!</span>
           </div>
         </div>
 
@@ -3214,7 +3226,7 @@
   </footer>
 
   <!-- Scripts do App e Registro de Service Worker PWA com Atualização Ativa -->
-  <script src="/app.js?v=2.3.0"></script>
+  <script src="/app.js?v=2.6.0"></script>
   <script>
     if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
