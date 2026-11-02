@@ -101,12 +101,14 @@ async function runCountdown(seconds) {
   try { process.stdout.write('\x07'); } catch (e) {} // beep sonoro
 }
 
-const rl = readline.createInterface({
+// rl initialized in main
+let rl;({
   input: process.stdin,
   output: process.stdout
 });
 
 async function main() {
+  rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   console.clear();
   console.log('================================================================');
   console.log('🚗 AGENTISE MEGA CRM - DISPARADOR WHATSAPP EM LOTES (50 OFICINAS)');
