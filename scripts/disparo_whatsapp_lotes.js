@@ -72,9 +72,22 @@ function normalizePhone(phone) {
   return digits.startsWith('55') && digits.length >= 12 ? digits : ('55' + digits);
 }
 
-function getMessageText(leadName) {
-  const name = leadName || 'Amigo';
-  return `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.`;
+function extractBairro(lead) {
+  const notes = (typeof lead === 'object' && lead) ? (lead.notes || '') : '';
+  const match = notes.match(/Local:\s*([^|\-]+)/i);
+  return match && match[1] ? match[1].trim() : 'Zona Oeste';
+}
+
+function getMessageText(leadOrName) {
+  let name = 'Amigo';
+  let bairro = 'Zona Oeste';
+  if (typeof leadOrName === 'string') {
+    name = leadOrName;
+  } else if (typeof leadOrName === 'object' && leadOrName) {
+    name = leadOrName.name || 'Amigo';
+    bairro = extractBairro(leadOrName);
+  }
+  return `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em ${bairro} e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.`;
 }
 
 function openWhatsApp(phone, text) {
