@@ -88,6 +88,17 @@ async function runTests() {
     assert.strictEqual(resSemi.body.imported[0].estimatedBudget, 35000, 'Orçamento R$ 35.000,00 deve ser convertido para float 35000');
     console.log('  ✅ Suporte a delimitador ponto-e-vírgula e conversão de moeda R$ aprovado');
 
+    // 3.1 Importação com colunas Nome, Lugar e Telefone
+    console.log('▶ [Teste 3.1] Importação com colunas Nome, Lugar e Telefone...');
+    const csvLugar = `Nome,Lugar,Telefone\n` +
+      `Marcos Paulo,São Paulo - Jardins,11988887777`;
+    const resLugar = await makeRequest('/api/leads/import-csv', 'POST', { csvText: csvLugar }, tokenTenant1);
+    assert.strictEqual(resLugar.status, 201);
+    assert.strictEqual(resLugar.body.imported[0].name, 'Marcos Paulo');
+    assert.strictEqual(resLugar.body.imported[0].company, 'São Paulo - Jardins');
+    assert.strictEqual(resLugar.body.imported[0].phone, '11988887777');
+    console.log('  ✅ Colunas Nome, Lugar e Telefone mapeadas com sucesso');
+
     // 4. Isolamento Multi-Tenant Estrito (Tenant 2 NÃO pode ver leads do Tenant 1)
     console.log('▶ [Teste 4] Isolamento Multi-Tenant: Tenant 2 buscando leads em /api/leads...');
     const resTenant2Leads = await makeRequest('/api/leads', 'GET', null, tokenTenant2);

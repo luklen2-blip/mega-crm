@@ -1460,15 +1460,15 @@ function parseLeadsCsv(csvText) {
       const val = rowValues[h] || '';
       if (!key) continue;
 
-      if (['nome', 'name', 'nomecompleto', 'contato', 'cliente'].includes(key)) {
+      if (['nome', 'name', 'nomecompleto', 'contato', 'cliente', 'lead', 'pessoa'].includes(key)) {
         rowObj.name = val;
-      } else if (['empresa', 'company', 'organizacao', 'razaosocial'].includes(key)) {
+      } else if (['empresa', 'company', 'organizacao', 'razaosocial', 'lugar', 'lugares', 'local', 'localizacao', 'cidade', 'regiao', 'bairro', 'endereco'].includes(key)) {
         rowObj.company = val;
       } else if (['cargo', 'role', 'funcao', 'posicao'].includes(key)) {
         rowObj.role = val;
       } else if (['email', 'mail', 'correio'].includes(key)) {
         rowObj.email = val;
-      } else if (['telefone', 'phone', 'whatsapp', 'celular', 'tel', 'fone'].includes(key)) {
+      } else if (['telefone', 'phone', 'whatsapp', 'celular', 'tel', 'fone', 'numero', 'cel', 'zap'].includes(key)) {
         rowObj.phone = val;
       } else if (['orcamento', 'orcamentoestimado', 'budget', 'estimatedbudget', 'valor', 'valorestimado'].includes(key)) {
         rowObj.estimatedBudget = val;
