@@ -1404,6 +1404,87 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 201, { success: true, data: contact });
   }
 
+  // Parser robusto para importação de leads via CSV (suporta vírgula, ponto-e-vírgula e aspas)
+function parseLeadsCsv(csvText) {
+  if (!csvText || typeof csvText !== 'string') return [];
+  const lines = csvText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (lines.length < 2) return [];
+
+  const headerLine = lines[0];
+  const commaCount = (headerLine.match(/,/g) || []).length;
+  const semicolonCount = (headerLine.match(/;/g) || []).length;
+  const tabCount = (headerLine.match(/\t/g) || []).length;
+
+  let delimiter = ',';
+  if (semicolonCount > commaCount && semicolonCount > tabCount) delimiter = ';';
+  else if (tabCount > commaCount && tabCount > semicolonCount) delimiter = '\t';
+
+  function splitCsvLine(line, delim) {
+    const values = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          current += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === delim && !inQuotes) {
+        values.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    values.push(current.trim());
+    return values;
+  }
+
+  const rawHeaders = splitCsvLine(lines[0], delimiter).map(h => 
+    h.toLowerCase()
+     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+     .replace(/[^a-z0-9_]/g, '')
+  );
+
+  const results = [];
+  for (let i = 1; i < lines.length; i++) {
+    const rowValues = splitCsvLine(lines[i], delimiter);
+    if (rowValues.every(v => !v)) continue;
+
+    const rowObj = {};
+    for (let h = 0; h < rawHeaders.length; h++) {
+      const key = rawHeaders[h];
+      const val = rowValues[h] || '';
+      if (!key) continue;
+
+      if (['nome', 'name', 'nomecompleto', 'contato', 'cliente'].includes(key)) {
+        rowObj.name = val;
+      } else if (['empresa', 'company', 'organizacao', 'razaosocial'].includes(key)) {
+        rowObj.company = val;
+      } else if (['cargo', 'role', 'funcao', 'posicao'].includes(key)) {
+        rowObj.role = val;
+      } else if (['email', 'mail', 'correio'].includes(key)) {
+        rowObj.email = val;
+      } else if (['telefone', 'phone', 'whatsapp', 'celular', 'tel', 'fone'].includes(key)) {
+        rowObj.phone = val;
+      } else if (['orcamento', 'orcamentoestimado', 'budget', 'estimatedbudget', 'valor', 'valorestimado'].includes(key)) {
+        rowObj.estimatedBudget = val;
+      } else if (['tags', 'tag', 'segmento', 'categoria', 'categorias'].includes(key)) {
+        rowObj.tags = val;
+      } else if (['notas', 'notes', 'observacoes', 'obs', 'detalhes'].includes(key)) {
+        rowObj.notes = val;
+      }
+    }
+    if (rowObj.name) {
+      results.push(rowObj);
+    }
+  }
+  return results;
+}
+
   // 4. LEADS & CRM 360° (COM ISOLAMENTO MULTI-TENANT)
   if (pathname === '/api/leads' && method === 'GET') {
     const leads = leadsDB.findByTenant(tenantId);
@@ -1436,6 +1517,110 @@ const server = http.createServer(async (req, res) => {
     }
     await triggerWorkflows('novo_lead', { leadId: lead.id, name: lead.name, phone: lead.phone }, tenantId);
     return sendJson(res, 201, { success: true, data: lead });
+  }
+
+  // 4.1 IMPORTAÇÃO DE LEADS EM MASSA VIA CSV (COM ISOLAMENTO MULTI-TENANT E AUDITORIA)
+  if (pathname === '/api/leads/import-csv' && method === 'POST') {
+    if (!hasPermission(ctx.role, 'LEADS_CREATE')) {
+      return sendJson(res, 403, { error: 'Acesso negado: permissão LEADS_CREATE necessária.' });
+    }
+    const body = await parseRequestBody(req);
+    let leadsToImport = [];
+
+    if (Array.isArray(body.leads)) {
+      leadsToImport = body.leads;
+    } else if (body.csvText && typeof body.csvText === 'string') {
+      leadsToImport = parseLeadsCsv(body.csvText);
+    } else {
+      return sendJson(res, 400, { error: 'Dados inválidos. Envie "leads" (array) ou "csvText" (string).' });
+    }
+
+    if (!leadsToImport || leadsToImport.length === 0) {
+      return sendJson(res, 400, { error: 'Nenhum lead com nome válido foi identificado no arquivo CSV.' });
+    }
+
+    if (leadsToImport.length > 500) {
+      return sendJson(res, 400, { error: 'Limite por remessa excedido: máximo de 500 leads por arquivo CSV.' });
+    }
+
+    const limitCheck = checkResourceLimit(tenantId, 'leads');
+    if (!limitCheck.allowed) return sendJson(res, 403, { error: limitCheck.error });
+
+    const imported = [];
+    const errors = [];
+    const isFirstLeadInitial = leadsDB.countByTenant(tenantId) === 0;
+
+    for (let i = 0; i < leadsToImport.length; i++) {
+      const raw = leadsToImport[i];
+      const name = (raw.name || raw.nome || raw.contato || '').trim();
+      if (!name) {
+        errors.push({ row: i + 1, error: 'Nome do lead é obrigatório' });
+        continue;
+      }
+
+      let budget = 0;
+      const rawBudget = raw.estimatedBudget !== undefined ? raw.estimatedBudget : (raw.orcamento ?? raw.budget ?? raw.valor);
+      if (typeof rawBudget === 'number') {
+        budget = rawBudget;
+      } else if (typeof rawBudget === 'string') {
+        const cleaned = rawBudget.replace(/[^0-9.,]/g, '').replace(/\./g, '').replace(',', '.');
+        budget = parseFloat(cleaned) || 0;
+      }
+
+      let tags = ['Importado CSV'];
+      const rawTags = raw.tags || raw.tag || raw.segmento;
+      if (Array.isArray(rawTags)) {
+        tags = rawTags.map(t => String(t).trim()).filter(Boolean);
+      } else if (typeof rawTags === 'string' && rawTags.trim()) {
+        tags = rawTags.split(/[,;|]/).map(t => t.trim()).filter(Boolean);
+      }
+      if (!tags.includes('Importado CSV')) tags.push('Importado CSV');
+
+      const leadRecord = {
+        name,
+        company: (raw.company || raw.empresa || '').trim(),
+        role: (raw.role || raw.cargo || 'Contato Comercial').trim(),
+        email: (raw.email || raw.mail || '').trim(),
+        phone: (raw.phone || raw.telefone || raw.whatsapp || raw.celular || '').trim(),
+        estimatedBudget: budget,
+        tags,
+        notes: (raw.notes || raw.notas || raw.observacoes || 'Importado via planilha CSV').trim(),
+        source: 'Importação CSV',
+        tenantId
+      };
+
+      delete leadRecord.id;
+
+      const created = leadsDB.insert(leadRecord);
+      imported.push(created);
+    }
+
+    if (isFirstLeadInitial && imported.length > 0) {
+      conversionEventsDB.insert({
+        tenantId,
+        userId: ctx.userId,
+        event: 'FIRST_LEAD',
+        leadId: imported[0].id,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    logAudit({
+      tenantId,
+      userId: ctx.userId,
+      userName: ctx.name,
+      action: 'LEADS_CSV_IMPORTED',
+      resource: 'leads',
+      ip: clientIp,
+      description: ctx.name + ' importou ' + imported.length + ' lead(s) via planilha CSV.'
+    });
+
+    return sendJson(res, 201, {
+      success: true,
+      message: imported.length + ' lead(s) importado(s) com sucesso!',
+      count: imported.length,
+      imported,      errors
+    });
   }
 
   // ANONIMIZAÇÃO LGPD (ART. 18 DA LEI 13.709/2018 - FASE 12)

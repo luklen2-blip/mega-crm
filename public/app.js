@@ -2822,3 +2822,208 @@ function finishInteractiveTour() {
   showToast('Parabéns! Tour concluído com sucesso. Aproveite o Mega CRM!', 'success');
 }
 
+
+
+// =========================================================================
+// IMPORTAÇÃO DE LEADS EM MASSA (CSV)
+// =========================================================================
+let parsedCsvLeads = [];
+
+function openImportLeadsModal() {
+  parsedCsvLeads = [];
+  const fileInput = document.getElementById('leads-csv-input');
+  if (fileInput) fileInput.value = '';
+  const uploadLabel = document.getElementById('csv-upload-label');
+  if (uploadLabel) uploadLabel.innerText = 'Clique para selecionar seu arquivo .CSV';
+  const preview = document.getElementById('csv-preview-container');
+  if (preview) preview.classList.add('hidden');
+  const btn = document.getElementById('btn-confirm-import-csv');
+  if (btn) btn.disabled = true;
+  openModal('modal-import-leads');
+  if (window.lucide) lucide.createIcons();
+}
+
+function downloadCsvTemplate() {
+  const headers = 'Nome,Empresa,Cargo,E-mail,Telefone,Orçamento,Tags,Observações';
+  const row1 = 'Carlos Eduardo Silveira,Silveira Logística,Diretor,carlos@silveiralog.com.br,11987654321,28000,"Logística, B2B",Interessado em automação';
+  const row2 = 'Dra. Marina Albuquerque,Albuquerque Clínicas,Proprietária,marina@clinica.com.br,21976543210,15500,"Saúde, High-Ticket",Contato via WhatsApp';
+  const csvContent = '\uFEFF' + [headers, row1, row2].join('\r\n');
+  
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.setAttribute('download', 'modelo_importacao_leads.csv');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function handleLeadsCsvSelect(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const uploadLabel = document.getElementById('csv-upload-label');
+  if (uploadLabel) uploadLabel.innerText = '📄 ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const text = e.target.result;
+    parsedCsvLeads = parseClientCsvLeads(text);
+    renderCsvPreview(file.name, parsedCsvLeads);
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+function parseClientCsvLeads(csvText) {
+  if (!csvText || typeof csvText !== 'string') return [];
+  const lines = csvText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (lines.length < 2) return [];
+
+  const headerLine = lines[0];
+  const commaCount = (headerLine.match(/,/g) || []).length;
+  const semicolonCount = (headerLine.match(/;/g) || []).length;
+  const tabCount = (headerLine.match(/\t/g) || []).length;
+
+  let delimiter = ',';
+  if (semicolonCount > commaCount && semicolonCount > tabCount) delimiter = ';';
+  else if (tabCount > commaCount && tabCount > semicolonCount) delimiter = '\t';
+
+  function splitLine(line) {
+    const values = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          current += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === delimiter && !inQuotes) {
+        values.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    values.push(current.trim());
+    return values;
+  }
+
+  const rawHeaders = splitLine(lines[0]).map(h => 
+    h.toLowerCase()
+     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+     .replace(/[^a-z0-9_]/g, '')
+  );
+
+  const leads = [];
+  for (let i = 1; i < lines.length; i++) {
+    const rowValues = splitLine(lines[i]);
+    if (rowValues.every(v => !v)) continue;
+
+    const rowObj = {};
+    for (let h = 0; h < rawHeaders.length; h++) {
+      const key = rawHeaders[h];
+      const val = rowValues[h] || '';
+      if (!key) continue;
+
+      if (['nome', 'name', 'nomecompleto', 'contato', 'cliente'].includes(key)) rowObj.name = val;
+      else if (['empresa', 'company', 'organizacao', 'razaosocial'].includes(key)) rowObj.company = val;
+      else if (['cargo', 'role', 'funcao', 'posicao'].includes(key)) rowObj.role = val;
+      else if (['email', 'mail', 'correio'].includes(key)) rowObj.email = val;
+      else if (['telefone', 'phone', 'whatsapp', 'celular', 'tel', 'fone'].includes(key)) rowObj.phone = val;
+      else if (['orcamento', 'orcamentoestimado', 'budget', 'estimatedbudget', 'valor', 'valorestimado'].includes(key)) rowObj.estimatedBudget = val;
+      else if (['tags', 'tag', 'segmento', 'categoria', 'categorias'].includes(key)) rowObj.tags = val;
+      else if (['notas', 'notes', 'observacoes', 'obs', 'detalhes'].includes(key)) rowObj.notes = val;
+    }
+    if (rowObj.name) {
+      leads.push(rowObj);
+    }
+  }
+  return leads;
+}
+
+function renderCsvPreview(fileName, leads) {
+  const previewContainer = document.getElementById('csv-preview-container');
+  const fileInfo = document.getElementById('csv-file-info');
+  const badge = document.getElementById('csv-leads-count-badge');
+  const tbody = document.getElementById('csv-preview-tbody');
+  const btnConfirm = document.getElementById('btn-confirm-import-csv');
+
+  if (!previewContainer || !tbody) return;
+
+  if (leads.length === 0) {
+    showToast('Nenhum lead com nome válido foi encontrado no arquivo.', 'error');
+    previewContainer.classList.add('hidden');
+    if (btnConfirm) btnConfirm.disabled = true;
+    return;
+  }
+
+  previewContainer.classList.remove('hidden');
+  if (fileInfo) fileInfo.innerText = 'Arquivo: ' + fileName;
+  if (badge) badge.innerText = leads.length + ' lead(s) pronto(s) para importação';
+  if (btnConfirm) btnConfirm.disabled = false;
+
+  const displayRows = leads.slice(0, 5);
+  tbody.innerHTML = displayRows.map(l => `
+    <tr class="hover:bg-slate-900/80">
+      <td class="p-2 font-semibold text-white">${escapeHtml(l.name)}</td>
+      <td class="p-2 text-slate-300">${escapeHtml(l.company || '-')}</td>
+      <td class="p-2 text-slate-400">${escapeHtml(l.phone || l.email || '-')}</td>
+      <td class="p-2 text-right font-semibold text-emerald-400">${escapeHtml(String(l.estimatedBudget || '0'))}</td>
+    </tr>
+  `).join('');
+
+  if (leads.length > 5) {
+    tbody.innerHTML += `
+      <tr>
+        <td colspan="4" class="p-2 text-center text-[10px] text-slate-500 italic">
+          ... e mais ${leads.length - 5} lead(s) que serão importados
+        </td>
+      </tr>
+    `;
+  }
+}
+
+async function submitImportCsv() {
+  if (!parsedCsvLeads || parsedCsvLeads.length === 0) {
+    showToast('Nenhum lead pronto para importação.', 'error');
+    return;
+  }
+
+  const btnConfirm = document.getElementById('btn-confirm-import-csv');
+  if (btnConfirm) {
+    btnConfirm.disabled = true;
+    btnConfirm.innerHTML = '<i data-lucide="loader" class="h-4 w-4 animate-spin"></i><span>Importando...</span>';
+    if (window.lucide) lucide.createIcons();
+  }
+
+  try {
+    const res = await fetch('/api/leads/import-csv', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ leads: parsedCsvLeads })
+    });
+    const json = await res.json();
+
+    if (res.ok && json.success) {
+      showToast(json.message || ('🎉 ' + json.count + ' lead(s) importado(s) com sucesso!'), 'success');
+      closeModal('modal-import-leads');
+      await loadLeads();
+    } else {
+      showToast(json.error || 'Erro ao importar leads do CSV.', 'error');
+    }
+  } catch (err) {
+    showToast('Falha na comunicação ao importar leads.', 'error');
+  } finally {
+    if (btnConfirm) {
+      btnConfirm.disabled = false;
+      btnConfirm.innerHTML = '<i data-lucide="check" class="h-4 w-4"></i><span>Confirmar e Importar</span>';
+      if (window.lucide) lucide.createIcons();
+    }
+  }
+}

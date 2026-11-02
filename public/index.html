@@ -639,6 +639,10 @@
           </div>
           <div class="flex items-center gap-2 self-start sm:self-auto">
             <input type="text" id="leads-search" oninput="filterLeads()" placeholder="Buscar por nome, empresa ou telefone..." class="px-3 py-1.5 text-xs rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 w-48 sm:w-64">
+            <button onclick="openImportLeadsModal()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 hover:border-emerald-500/40 transition shadow-sm" title="Importar Leads via Planilha CSV">
+              <i data-lucide="file-spreadsheet" class="h-4 w-4"></i>
+              <span>Importar CSV</span>
+            </button>
             <button onclick="openNewLeadModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition">
               <i data-lucide="user-plus" class="h-4 w-4"></i>
               <span>Cadastrar Lead</span>
@@ -1557,6 +1561,82 @@
         <button onclick="closeModal('modal-saas-admin')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold">
           Fechar
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: IMPORTAR LEADS EM MASSA (CSV) -->
+  <div id="modal-import-leads" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-panel p-5 sm:p-6 rounded-3xl max-w-xl w-full border border-emerald-500/30 space-y-4 bg-slate-950 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="h-9 w-9 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+            <i data-lucide="file-spreadsheet" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-black text-white">Importar Leads via Planilha CSV</h3>
+            <p class="text-[11px] text-slate-400">Adicione contatos em massa com mapeamento automático de colunas</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-import-leads')" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-900 transition">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <!-- Banner e Baixar Modelo -->
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="space-y-1">
+            <span class="font-bold text-slate-200 block text-xs">Formato Suportado (.csv):</span>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Colunas aceitas: <strong>Nome, Empresa, Cargo, E-mail, Telefone, Orçamento, Tags</strong>.</p>
+          </div>
+          <button type="button" onclick="downloadCsvTemplate()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-semibold flex items-center gap-1.5 shrink-0 border border-slate-700 transition">
+            <i data-lucide="download" class="h-3.5 w-3.5"></i>
+            <span>Baixar Modelo CSV</span>
+          </button>
+        </div>
+
+        <!-- Área de Upload / Drag & Drop -->
+        <div id="csv-dropzone" onclick="document.getElementById('leads-csv-input').click()" class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 bg-slate-900/40 hover:bg-slate-900/80 rounded-2xl p-6 text-center cursor-pointer transition space-y-2">
+          <input type="file" id="leads-csv-input" accept=".csv,text/csv" onchange="handleLeadsCsvSelect(event)" class="hidden">
+          <div class="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/20">
+            <i data-lucide="upload-cloud" class="h-6 w-6"></i>
+          </div>
+          <div>
+            <span class="text-slate-200 font-bold block" id="csv-upload-label">Clique para selecionar seu arquivo .CSV</span>
+            <span class="text-[11px] text-slate-400 block mt-0.5">Compatível com Excel, Google Sheets e outros CRMs (delimitador vírgula ou ponto-e-vírgula)</span>
+          </div>
+        </div>
+
+        <!-- Preview da Tabela -->
+        <div id="csv-preview-container" class="hidden space-y-2">
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="text-slate-300 font-semibold" id="csv-file-info">Arquivo carregado</span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold" id="csv-leads-count-badge">0 leads identificados</span>
+          </div>
+          <div class="max-h-40 overflow-y-auto rounded-xl border border-slate-800 bg-slate-900/60">
+            <table class="w-full text-[11px] text-left text-slate-300">
+              <thead class="bg-slate-950 text-slate-400 font-semibold sticky top-0 border-b border-slate-800">
+                <tr>
+                  <th class="p-2">Nome</th>
+                  <th class="p-2">Empresa</th>
+                  <th class="p-2">Contato</th>
+                  <th class="p-2 text-right">Orçamento</th>
+                </tr>
+              </thead>
+              <tbody id="csv-preview-tbody" class="divide-y divide-slate-800/60"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-import-leads')" class="px-4 py-2 rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900 transition">Cancelar</button>
+          <button type="button" id="btn-confirm-import-csv" onclick="submitImportCsv()" disabled class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold transition flex items-center gap-1.5 shadow-lg shadow-emerald-600/20">
+            <i data-lucide="check" class="h-4 w-4"></i>
+            <span>Confirmar e Importar</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
