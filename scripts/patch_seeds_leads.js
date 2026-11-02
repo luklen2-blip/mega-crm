@@ -45,3 +45,4 @@ $2
 } else {
   console.log('⚠️ Pattern not matched in database/seeds.js');
 }
+

@@ -45,3 +45,4 @@ content = content.replace(oldPixWa, `const url = \`https://wa.me/\${normalizeWha
 
 fs.writeFileSync(appPath, content, 'utf8');
 console.log('✅ public/app.js patched with robust WhatsApp helpers!');
+

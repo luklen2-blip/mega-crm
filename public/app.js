@@ -3370,3 +3370,228 @@ function handleLeadsCsvPaste(event) {
   parsedCsvLeads = parseClientCsvLeads(text);
   renderCsvPreview('Texto Colado', parsedCsvLeads);
 }
+
+
+// ========================================================
+// DISPARADOR CADENCIADO WHATSAPP EM LOTES (ANTI-BAN 60S)
+// ========================================================
+let dispatcherActive = false;
+let dispatcherPaused = false;
+let dispatcherTimer = null;
+let dispatcherSecondsRemaining = 60;
+let dispatcherBatchIndex = 0;
+let dispatcherCurrentBatch = [];
+let dispatcherBatchNumber = 1;
+
+function playNotificationChime() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1); // A5
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.35);
+  } catch (e) {
+    // Silencioso se bloqueado pelo navegador
+  }
+}
+
+function openWhatsAppDispatcherModal() {
+  // Reset de visual
+  const configView = document.getElementById('dispatcher-config-view');
+  const runningView = document.getElementById('dispatcher-running-view');
+  if (configView) configView.classList.remove('hidden');
+  if (runningView) runningView.classList.add('hidden');
+  openModal('modal-whatsapp-dispatcher');
+  if (window.lucide) lucide.createIcons();
+}
+
+function startWhatsAppBatch() {
+  // Carrega leads da base ordenados
+  const realOficinas = globalLeads.filter(l => 
+    l.source === 'Google Maps Oficinas' || (Array.isArray(l.tags) && l.tags.includes('Zona Oeste RJ'))
+  );
+
+  const leadsPool = realOficinas.length > 0 ? realOficinas : globalLeads;
+  if (leadsPool.length === 0) {
+    return showToast('Nenhum lead encontrado para disparo.', 'warning');
+  }
+
+  // Verifica o lote selecionado
+  const batchRadios = document.getElementsByName('dispatcher-batch');
+  let selectedBatch = '1';
+  for (const r of batchRadios) {
+    if (r.checked) { selectedBatch = r.value; break; }
+  }
+
+  dispatcherBatchNumber = parseInt(selectedBatch, 10);
+  if (dispatcherBatchNumber === 1) {
+    dispatcherCurrentBatch = leadsPool.slice(0, 25);
+  } else {
+    dispatcherCurrentBatch = leadsPool.slice(25, 50);
+  }
+
+  if (dispatcherCurrentBatch.length === 0) {
+    return showToast('Nenhum lead disponível no lote selecionado.', 'warning');
+  }
+
+  dispatcherActive = true;
+  dispatcherPaused = false;
+  dispatcherBatchIndex = 0;
+
+  const configView = document.getElementById('dispatcher-config-view');
+  const runningView = document.getElementById('dispatcher-running-view');
+  if (configView) configView.classList.add('hidden');
+  if (runningView) runningView.classList.remove('hidden');
+
+  processNextDispatcherItem();
+}
+
+function processNextDispatcherItem() {
+  if (!dispatcherActive) return;
+
+  if (dispatcherBatchIndex >= dispatcherCurrentBatch.length) {
+    finishWhatsAppBatch();
+    return;
+  }
+
+  const lead = dispatcherCurrentBatch[dispatcherBatchIndex];
+  const tpl = document.getElementById('dispatcher-message-text')?.value || 
+    'Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.';
+
+  const cleanPhone = normalizeWhatsAppPhone(lead.phone);
+  const msgText = tpl.replace(/{nome}/g, lead.name);
+
+  // Atualiza painel visual
+  const labelEl = document.getElementById('dispatcher-progress-label');
+  const nameEl = document.getElementById('dispatcher-current-name');
+  const infoEl = document.getElementById('dispatcher-current-info');
+  const pctEl = document.getElementById('dispatcher-progress-pct');
+  const barEl = document.getElementById('dispatcher-progress-bar');
+
+  const currentNum = dispatcherBatchIndex + 1;
+  const total = dispatcherCurrentBatch.length;
+  const pct = Math.round((currentNum / total) * 100);
+
+  if (labelEl) labelEl.textContent = `Oficina ${currentNum} de ${total} (Lote ${dispatcherBatchNumber})`;
+  if (nameEl) nameEl.textContent = lead.name;
+  if (infoEl) infoEl.textContent = `WhatsApp: ${cleanPhone} · ${lead.notes ? lead.notes.split('|')[0].trim() : 'Zona Oeste RJ'}`;
+  if (pctEl) pctEl.textContent = `${pct}%`;
+  if (barEl) barEl.style.width = `${pct}%`;
+
+  // Toca som de notificação
+  playNotificationChime();
+
+  // Abre conversa no WhatsApp
+  if (cleanPhone) {
+    const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msgText)}`;
+    window.open(waUrl, '_blank');
+  }
+
+  // Registra atividade no CRM
+  fetch(`/api/leads/${lead.id}/activities`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify({
+      type: 'WHATSAPP',
+      title: `Disparo WhatsApp (Lote ${dispatcherBatchNumber})`,
+      description: `Mensagem comercial enviada para ${lead.name} com intervalo de 60s.`
+    })
+  }).catch(() => {});
+
+  // Se for a última, finaliza após breve intervalo
+  if (dispatcherBatchIndex === dispatcherCurrentBatch.length - 1) {
+    setTimeout(() => {
+      finishWhatsAppBatch();
+    }, 3000);
+    return;
+  }
+
+  // Inicia o timer de 60 segundos
+  startDispatcherTimer();
+}
+
+function startDispatcherTimer() {
+  if (dispatcherTimer) clearInterval(dispatcherTimer);
+  dispatcherSecondsRemaining = 60;
+  updateTimerDisplay();
+
+  dispatcherTimer = setInterval(() => {
+    if (!dispatcherActive) {
+      clearInterval(dispatcherTimer);
+      return;
+    }
+    if (dispatcherPaused) return;
+
+    dispatcherSecondsRemaining--;
+    updateTimerDisplay();
+
+    if (dispatcherSecondsRemaining <= 0) {
+      clearInterval(dispatcherTimer);
+      dispatcherBatchIndex++;
+      processNextDispatcherItem();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const display = document.getElementById('dispatcher-timer-display');
+  if (display) {
+    const mins = Math.floor(dispatcherSecondsRemaining / 60).toString().padStart(2, '0');
+    const secs = (dispatcherSecondsRemaining % 60).toString().padStart(2, '0');
+    display.textContent = `${mins}:${secs}`;
+  }
+}
+
+function togglePauseWhatsAppBatch() {
+  dispatcherPaused = !dispatcherPaused;
+  const btnText = document.getElementById('btn-dispatcher-pause-text');
+  const badge = document.getElementById('dispatcher-status-badge');
+  if (dispatcherPaused) {
+    if (btnText) btnText.textContent = 'Retomar';
+    if (badge) {
+      badge.textContent = 'Disparo Pausado';
+      badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300';
+    }
+  } else {
+    if (btnText) btnText.textContent = 'Pausar';
+    if (badge) {
+      badge.textContent = 'Disparo em Andamento';
+      badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 animate-pulse';
+    }
+  }
+}
+
+function skipWhatsAppBatchItem() {
+  if (!dispatcherActive) return;
+  if (dispatcherTimer) clearInterval(dispatcherTimer);
+  dispatcherBatchIndex++;
+  processNextDispatcherItem();
+}
+
+function stopWhatsAppBatch() {
+  dispatcherActive = false;
+  if (dispatcherTimer) clearInterval(dispatcherTimer);
+  showToast('Fila de disparos interrompida.', 'info');
+  openWhatsAppDispatcherModal();
+}
+
+function finishWhatsAppBatch() {
+  dispatcherActive = false;
+  if (dispatcherTimer) clearInterval(dispatcherTimer);
+  playNotificationChime();
+  
+  const msg = dispatcherBatchNumber === 1 
+    ? '🎉 Parabéns! As 25 oficinas do Lote 1 de hoje foram disparadas com sucesso. Amanhã inicie o Lote 2!'
+    : '🏆 Parabéns! As 25 oficinas restantes do Lote 2 foram concluídas com sucesso. Todas as 50 oficinas foram contatadas!';
+  
+  showToast(msg, 'success');
+  openWhatsAppDispatcherModal();
+  loadLeads();
+}

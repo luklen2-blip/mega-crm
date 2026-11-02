@@ -2134,5 +2134,27 @@
     "id": "con_1793645830009_gpsu",
     "createdAt": "2026-11-02T18:57:10.009Z",
     "updatedAt": "2026-11-02T18:57:10.009Z"
+  },
+  {
+    "tenantId": "ten_1793646940517_tj9x",
+    "userId": "use_1793646940537_l8hl",
+    "event": "ONBOARDING_COMPLETED",
+    "segment": "Automotivo",
+    "teamSize": "6-15",
+    "primaryGoal": "Aumentar vendas e recuperar clientes",
+    "timestamp": "2026-11-02T19:15:40.603Z",
+    "id": "con_1793646940603_lk0p",
+    "createdAt": "2026-11-02T19:15:40.603Z",
+    "updatedAt": "2026-11-02T19:15:40.603Z"
+  },
+  {
+    "tenantId": "ten_test_csv_isolated_1",
+    "userId": "usr_test_tenant1",
+    "event": "FIRST_LEAD",
+    "leadId": "lea_1793646943994_l47m",
+    "timestamp": "2026-11-02T19:15:44.003Z",
+    "id": "con_1793646944003_knhb",
+    "createdAt": "2026-11-02T19:15:44.003Z",
+    "updatedAt": "2026-11-02T19:15:44.003Z"
   }
 ]
