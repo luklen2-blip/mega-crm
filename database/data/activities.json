@@ -9875,5 +9875,41 @@
     "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
     "description": "Mensagem enviada pelo Robô para o síndico de Vila Residencial Santa Cruz II (5521984512299). Envio com sucesso",
     "createdAt": "2026-11-03T19:59:53.321Z"
+  },
+  {
+    "id": "act_wa_1793736069985_rtml",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_16",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Morada dos Nobres (5521979201154). Envio com sucesso",
+    "createdAt": "2026-11-03T20:01:09.985Z"
+  },
+  {
+    "id": "act_wa_1793736144701_op00",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_17",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila Boa Esperança Vasconcelos (5521964721980). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T20:02:24.701Z"
+  },
+  {
+    "id": "act_wa_1793736221399_a91l",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_18",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Residencial Santíssimo I (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T20:03:41.399Z"
+  },
+  {
+    "id": "act_wa_1793736293456_ucgf",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_19",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Vila Santíssimo (5521964721980). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T20:04:53.456Z"
   }
 ]

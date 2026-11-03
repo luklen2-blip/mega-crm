@@ -53,6 +53,18 @@
       "phone": "5521984512299",
       "sentAt": "2026-11-03T19:59:53.309Z",
       "batch": 1
+    },
+    "lea_condo_1793733567510_16": {
+      "name": "Condomínio Morada dos Nobres",
+      "phone": "5521979201154",
+      "sentAt": "2026-11-03T20:01:09.603Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567510_18": {
+      "name": "Condomínio Residencial Santíssimo I",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T20:03:41.386Z",
+      "batch": 1
     }
   },
   "lastBatch": 1,
@@ -118,6 +130,20 @@
       "name": "Vila Residencial Santa Cruz II",
       "phone": "5521984512299",
       "sentAt": "2026-11-03T19:59:53.309Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567510_16",
+      "name": "Condomínio Morada dos Nobres",
+      "phone": "5521979201154",
+      "sentAt": "2026-11-03T20:01:09.603Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567510_18",
+      "name": "Condomínio Residencial Santíssimo I",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T20:03:41.386Z",
       "batch": 1
     }
   ]
