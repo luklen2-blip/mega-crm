@@ -82,3 +82,4 @@ if (oldCliMsgFn.test(scriptJs)) {
   fs.writeFileSync(scriptPath, scriptJs, 'utf8');
   console.log('✅ scripts/disparo_whatsapp_lotes.js atualizado com o link!');
 }
+

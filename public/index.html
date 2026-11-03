@@ -1878,12 +1878,7 @@
             </span>
           </div>
           
-          <textarea id="dispatcher-message-text" oninput="updateDispatcherPreview()" rows="5" class="w-full p-3 text-xs rounded-xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-sans leading-relaxed resize-none">Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em {bairro}.
-
-Criamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos pelo WhatsApp e controlar ordens de serviço:
-👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf
-
-Se quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.</textarea>
+          <textarea id="dispatcher-message-text" oninput="updateDispatcherPreview()" rows="5" class="w-full p-3 text-xs rounded-xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-sans leading-relaxed resize-none">Olá! Tudo bem? Mensagem para o síndico ou administração do {nome}. Meu nome é Luciano, sou da região da Zona Oeste e criei o ConciliaZap (https://conciliazap.onrender.com/). É um assistente no WhatsApp que resolve a sobrecarga da comunicação com condôminos: organiza reservas de áreas comuns sem conflito, avisa entregas/encomendas e registra ocorrências 24h sem bagunçar seu WhatsApp particular. Liberamos para o {nome} 30 dias de uso 100% gratuito, sem fidelidade e sem cartão. Se quiser ver na prática aí essa semana, só me responder 'QUERO TESTAR' que ativo agora para vocês!</textarea>
 
           <!-- Badges de variáveis -->
           <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
@@ -1901,12 +1896,7 @@ Se quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.
             <div class="text-[10px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
               <i data-lucide="eye" class="h-3 w-3"></i> Exemplo Real de como a oficina receberá:
             </div>
-            <div id="dispatcher-preview-box" class="text-xs text-slate-300 italic bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/40 whitespace-pre-line">Olá, tudo bem? Falo com o responsável pela Oficina Viegas? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em Bangu.
-
-Criamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos pelo WhatsApp e controlar ordens de serviço:
-👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf
-
-Se quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.</div>
+            <div id="dispatcher-preview-box" class="text-xs text-slate-300 italic bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/40 whitespace-pre-line">Olá! Tudo bem? Mensagem para o síndico ou administração do Vila Residencial Santa Cruz. Meu nome é Luciano, sou da região da Zona Oeste e criei o ConciliaZap (https://conciliazap.onrender.com/). É um assistente no WhatsApp que resolve a sobrecarga da comunicação com condôminos: organiza reservas de áreas comuns sem conflito, avisa entregas/encomendas e registra ocorrências 24h sem bagunçar seu WhatsApp particular. Liberamos para o Vila Residencial Santa Cruz 30 dias de uso 100% gratuito, sem fidelidade e sem cartão. Se quiser ver na prática aí essa semana, só me responder 'QUERO TESTAR' que ativo agora para vocês!</div>
           </div>
         </div>
 
@@ -3258,7 +3248,7 @@ Se quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.
   </footer>
 
   <!-- Scripts do App e Registro de Service Worker PWA com Atualização Ativa -->
-  <script src="/app.js?v=2.8.0"></script>
+  <script src="/app.js?v=2.9.0"></script>
   <script>
     if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {

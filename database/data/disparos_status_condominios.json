@@ -1,0 +1,124 @@
+{
+  "sent": {
+    "lea_condo_1793733567506_1": {
+      "name": "Vila Residencial Santa Cruz",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:41:34.359Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567509_3": {
+      "name": "Vila Residencial Maria Teresa",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:44:43.019Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567509_4": {
+      "name": "Condomínio Residencial das Flores",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:45:59.661Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567509_6": {
+      "name": "Condomínio Residencial Morada do Sol",
+      "phone": "5521979201154",
+      "sentAt": "2026-11-03T19:48:34.196Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567510_10": {
+      "name": "Edifício Residencial Guanabara",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:53:32.124Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567510_11": {
+      "name": "Condomínio Residencial Itacolomi",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:54:48.735Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567510_12": {
+      "name": "Condomínio Residencial Campo Belo",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:56:06.158Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567510_14": {
+      "name": "Condomínio Portal das Flores",
+      "phone": "5521981147720",
+      "sentAt": "2026-11-03T19:58:36.402Z",
+      "batch": 1
+    },
+    "lea_condo_1793733567510_15": {
+      "name": "Vila Residencial Santa Cruz II",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:59:53.309Z",
+      "batch": 1
+    }
+  },
+  "lastBatch": 1,
+  "history": [
+    {
+      "leadId": "lea_condo_1793733567506_1",
+      "name": "Vila Residencial Santa Cruz",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:41:34.361Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567509_3",
+      "name": "Vila Residencial Maria Teresa",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:44:43.020Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567509_4",
+      "name": "Condomínio Residencial das Flores",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:45:59.661Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567509_6",
+      "name": "Condomínio Residencial Morada do Sol",
+      "phone": "5521979201154",
+      "sentAt": "2026-11-03T19:48:34.196Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567510_10",
+      "name": "Edifício Residencial Guanabara",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:53:32.124Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567510_11",
+      "name": "Condomínio Residencial Itacolomi",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:54:48.735Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567510_12",
+      "name": "Condomínio Residencial Campo Belo",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:56:06.158Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567510_14",
+      "name": "Condomínio Portal das Flores",
+      "phone": "5521981147720",
+      "sentAt": "2026-11-03T19:58:36.402Z",
+      "batch": 1
+    },
+    {
+      "leadId": "lea_condo_1793733567510_15",
+      "name": "Vila Residencial Santa Cruz II",
+      "phone": "5521984512299",
+      "sentAt": "2026-11-03T19:59:53.309Z",
+      "batch": 1
+    }
+  ]
+}

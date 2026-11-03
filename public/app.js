@@ -83,7 +83,7 @@ function getWhatsAppUrl(phone, leadName) {
   const waNumber = normalizeWhatsAppPhone(phone);
   if (!waNumber) return '#';
   const name = leadName || 'Amigo';
-  const text = `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste.\n\nCriamos o Oficina Organizada, sistema simples para acabar com papel, enviar orçamentos pelo WhatsApp e gerenciar a oficina:\n👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf\n\nSe quiser liberar seu teste grátis de 24 horas, me avise por aqui!`;
+  const text = `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos rápidos pelo WhatsApp e controlar ordens de serviço da sua oficina.\n\n👉 Acesse pelo link abaixo para usar por 24 horas grátis (você usa tudo primeiro e só depois decide se vai pagar ou não):\nhttps://oficina-organizada-1.onrender.com/\n\nSe tiver qualquer dúvida ou quiser ajuda para liberar o acesso, me avise por aqui! Um abraço.`;
   return `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
 }
 
@@ -3434,7 +3434,7 @@ function insertDispatcherTag(tag) {
 function updateDispatcherPreview() {
   const previewBox = document.getElementById('dispatcher-preview-box');
   const tpl = document.getElementById('dispatcher-message-text')?.value || 
-    `Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em {bairro}.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos pelo WhatsApp e controlar ordens de serviço:\n👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf\n\nSe quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.`;
+    `Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em {bairro}.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos rápidos pelo WhatsApp e controlar ordens de serviço da sua oficina.\n\n👉 Acesse pelo link abaixo para usar por 24 horas grátis (você usa tudo primeiro e só depois decide se vai pagar ou não):\nhttps://oficina-organizada-1.onrender.com/\n\nSe tiver qualquer dúvida ou quiser ajuda para liberar o acesso, me avise por aqui! Um abraço.`;
   if (!previewBox) return;
 
   const sampleLead = (globalLeads && globalLeads.length > 0) 
@@ -3455,17 +3455,28 @@ function openWhatsAppDispatcherModal() {
 }
 
 function startWhatsAppBatch() {
-  // Carrega leads da base ordenados
-  const realOficinas = globalLeads.filter(l => 
-    l.source === 'Google Maps Oficinas' || (Array.isArray(l.tags) && l.tags.includes('Zona Oeste RJ'))
-  );
+  const campaignSelect = document.getElementById('dispatcher-campaign-select');
+  const campaign = campaignSelect ? campaignSelect.value : 'condominios';
 
-  const leadsPool = realOficinas.length > 0 ? realOficinas : globalLeads;
+  let leadsPool = [];
+  if (campaign === 'condominios') {
+    leadsPool = globalLeads.filter(l => 
+      l.source === 'Prospecção ConciliaZap' || (Array.isArray(l.tags) && l.tags.includes('ConciliaZap'))
+    );
+  } else {
+    leadsPool = globalLeads.filter(l => 
+      l.source === 'Google Maps Oficinas' || (Array.isArray(l.tags) && l.tags.includes('Zona Oeste RJ'))
+    );
+  }
+
+  if (leadsPool.length === 0) {
+    leadsPool = globalLeads;
+  }
+
   if (leadsPool.length === 0) {
     return showToast('Nenhum lead encontrado para disparo.', 'warning');
   }
 
-  // Verifica o lote selecionado
   const batchRadios = document.getElementsByName('dispatcher-batch');
   let selectedBatch = '1';
   for (const r of batchRadios) {
@@ -3473,10 +3484,19 @@ function startWhatsAppBatch() {
   }
 
   dispatcherBatchNumber = parseInt(selectedBatch, 10);
-  if (dispatcherBatchNumber === 1) {
-    dispatcherCurrentBatch = leadsPool.slice(0, 25);
+  if (campaign === 'condominios') {
+    const half = Math.ceil(leadsPool.length / 2);
+    if (dispatcherBatchNumber === 1) {
+      dispatcherCurrentBatch = leadsPool.slice(0, half);
+    } else {
+      dispatcherCurrentBatch = leadsPool.slice(half);
+    }
   } else {
-    dispatcherCurrentBatch = leadsPool.slice(25, 50);
+    if (dispatcherBatchNumber === 1) {
+      dispatcherCurrentBatch = leadsPool.slice(0, 25);
+    } else {
+      dispatcherCurrentBatch = leadsPool.slice(25, 50);
+    }
   }
 
   if (dispatcherCurrentBatch.length === 0) {
@@ -3508,7 +3528,7 @@ function processNextDispatcherItem() {
     'Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos na Zona Oeste e gostaria de apresentar nossa solução para acelerar o atendimento e orçamentos via WhatsApp.';
 
   const cleanPhone = normalizeWhatsAppPhone(lead.phone);
-  const msgText = formatMessageTemplate(tpl, lead);
+  const msgText = (lead.customMessage && (!tpl || tpl.includes('{nome}'))) ? lead.customMessage : formatMessageTemplate(tpl, lead);
 
   // Atualiza painel visual
   const labelEl = document.getElementById('dispatcher-progress-label');
@@ -3648,3 +3668,32 @@ window.getWhatsAppUrl = getWhatsAppUrl;
 
 window.insertDispatcherTag = insertDispatcherTag;
 window.updateDispatcherPreview = updateDispatcherPreview;
+
+
+function changeDispatcherCampaign(campaign) {
+  const msgEl = document.getElementById('dispatcher-message-text');
+  const previewEl = document.getElementById('dispatcher-preview-box');
+  const lote1Desc = document.querySelector('input[name="dispatcher-batch"][value="1"]')?.closest('label')?.querySelector('p');
+  const lote2Desc = document.querySelector('input[name="dispatcher-batch"][value="2"]')?.closest('label')?.querySelector('p');
+  const lote1Title = document.querySelector('input[name="dispatcher-batch"][value="1"]')?.closest('label')?.querySelector('.text-sm');
+  const lote2Title = document.querySelector('input[name="dispatcher-batch"][value="2"]')?.closest('label')?.querySelector('.text-sm');
+
+  if (campaign === 'condominios') {
+    const condoMsg = "Olá! Tudo bem? Mensagem para o síndico ou administração do {nome}. Meu nome é Luciano, sou da região da Zona Oeste e criei o ConciliaZap (https://conciliazap.onrender.com/). É um assistente no WhatsApp que resolve a sobrecarga da comunicação com condôminos: organiza reservas de áreas comuns sem conflito, avisa entregas/encomendas e registra ocorrências 24h sem bagunçar seu WhatsApp particular. Liberamos para o {nome} 30 dias de uso 100% gratuito, sem fidelidade e sem cartão. Se quiser ver na prática aí essa semana, só me responder 'QUERO TESTAR' que ativo agora para vocês!";
+    if (msgEl) msgEl.value = condoMsg;
+    if (previewEl) previewEl.textContent = condoMsg.replace(/{nome}/g, 'Vila Residencial Santa Cruz').replace(/{bairro}/g, 'Campo Grande');
+    if (lote1Title) lote1Title.textContent = '19 Primeiros Condomínios';
+    if (lote2Title) lote2Title.textContent = '19 Condomínios Restantes';
+    if (lote1Desc) lote1Desc.textContent = 'Condomínios 1 a 19: Campo Grande, Senador Vasconcelos e Santíssimo.';
+    if (lote2Desc) lote2Desc.textContent = 'Condomínios 20 a 38: Cosmos, Inhoaíba e Paciência.';
+  } else {
+    const oficinaMsg = "Olá, tudo bem? Falo com o responsável pela {nome}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em {bairro}.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos pelo WhatsApp e controlar ordens de serviço:\n👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf\n\nSe quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.";
+    if (msgEl) msgEl.value = oficinaMsg;
+    if (previewEl) previewEl.textContent = oficinaMsg.replace(/{nome}/g, 'Oficina Viegas').replace(/{bairro}/g, 'Bangu');
+    if (lote1Title) lote1Title.textContent = '25 Primeiras Oficinas';
+    if (lote2Title) lote2Title.textContent = '25 Oficinas Restantes';
+    if (lote1Desc) lote1Desc.textContent = 'Oficinas 1 a 25: Bangu, Senador Vasconcelos, Santa Cruz, Santíssimo e Campo Grande.';
+    if (lote2Desc) lote2Desc.textContent = 'Oficinas 26 a 50: Santa Cruz, Realengo, Paciência, Bangu e Campo Grande.';
+  }
+}
+window.changeDispatcherCampaign = changeDispatcherCampaign;

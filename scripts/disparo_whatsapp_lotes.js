@@ -87,7 +87,7 @@ function getMessageText(leadOrName) {
     name = leadOrName.name || 'Amigo';
     bairro = extractBairro(leadOrName);
   }
-  return `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em ${bairro}.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos pelo WhatsApp e controlar ordens de serviço:\n👉 Conheça e teste grátis: https://pay.kiwify.com.br/lh2MAxf\n\nSe quiser liberar seu teste gratuito de 24 horas, me avise por aqui! Um abraço.`;
+  return `Olá, tudo bem? Falo com o responsável pela ${name}? Me chamo Luciano da Silva. Vi que vocês são referência em serviços automotivos em ${bairro}.\n\nCriamos o Oficina Organizada, um sistema simples para acabar com fichas de papel, enviar orçamentos rápidos pelo WhatsApp e controlar ordens de serviço da sua oficina.\n\n👉 Acesse pelo link abaixo para usar por 24 horas grátis (você usa tudo primeiro e só depois decide se vai pagar ou não):\nhttps://oficina-organizada-1.onrender.com/\n\nSe tiver qualquer dúvida ou quiser ajuda para liberar o acesso, me avise por aqui! Um abraço.`;
 }
 
 function openWhatsApp(phone, text) {
@@ -111,11 +111,11 @@ async function runCountdown(seconds) {
     await sleep(1000);
   }
   process.stdout.write('\r                                                                    \r');
-  try { process.stdout.write('\x07'); } catch (e) {} // beep sonoro
+  try { process.stdout.write('\x07'); } catch (e) { } // beep sonoro
 }
 
 // rl initialized in main
-let rl;({
+let rl; ({
   input: process.stdin,
   output: process.stdout
 });

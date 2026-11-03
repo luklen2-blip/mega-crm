@@ -9014,5 +9014,866 @@
     "id": "act_1793649387908_ow43",
     "createdAt": "2026-11-02T19:56:27.908Z",
     "updatedAt": "2026-11-02T19:56:27.908Z"
+  },
+  {
+    "id": "act_wa_1793725392782_p6wa",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190215_14uz",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Oficina Viegas (5521986182829) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:03:12.804Z"
+  },
+  {
+    "id": "act_wa_1793725453313_g1ii",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190222_qm1q",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Oficina Mecânica Mecaneves (5521964718132) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:04:13.313Z"
+  },
+  {
+    "id": "act_wa_1793725513840_3j83",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190227_79yr",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para JJ Motors (5521997208759) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:05:13.841Z"
+  },
+  {
+    "id": "act_wa_1793725574443_g6oh",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190230_zv4m",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para AUTO ELETRICA BY MIRANDA (5521966596922) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:06:14.443Z"
+  },
+  {
+    "id": "act_wa_1793725635059_2d2b",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190234_4v77",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para RJ auto eletrica (5521989598323) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:07:15.059Z"
+  },
+  {
+    "id": "act_wa_1793725698909_q06e",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190246_yemj",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Padrao Auto Eletrica e Mecanica (5521964175874) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:08:18.909Z"
+  },
+  {
+    "id": "act_wa_1793725759656_3djv",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190251_259p",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para JReparos auto eletrica (5521975278662) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:09:19.656Z"
+  },
+  {
+    "id": "act_wa_1793725820276_9lc3",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190255_8337",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Vasques Auto Center (5521964779051) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:10:20.276Z"
+  },
+  {
+    "id": "act_wa_1793725880936_fx4b",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190259_8ft5",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Auto Center Parada 999 (5521995102114) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:11:20.936Z"
+  },
+  {
+    "id": "act_wa_1793725941587_heh0",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190263_s418",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para CMN Auto Center (5521998920999) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:12:21.587Z"
+  },
+  {
+    "id": "act_wa_1793726002163_61wo",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190266_odcj",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Oficina Luiz Auto Elétrica e Mecânica (5521995291719) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:13:22.163Z"
+  },
+  {
+    "id": "act_wa_1793726062729_innf",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190270_6kuy",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Rodrigo Auto Elétrica (5521964493177) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:14:22.729Z"
+  },
+  {
+    "id": "act_wa_1793726123232_szqc",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190274_bms3",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para AUTO ELETRICA ADRIANO (5521964825902) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:15:23.232Z"
+  },
+  {
+    "id": "act_wa_1793726183815_5wch",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190277_unv8",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Dadal Auto Mecânica (5521981180655) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:16:23.815Z"
+  },
+  {
+    "id": "act_wa_1793726244410_n2u5",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190280_locz",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Auto Center MCAR (5521996843126) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:17:24.410Z"
+  },
+  {
+    "id": "act_wa_1793726305122_hcex",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190284_zxjg",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para Oficina Mecânica Limão Car (5521979561518) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:18:25.122Z"
+  },
+  {
+    "id": "act_wa_1793726365608_6nej",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190290_f1ho",
+    "type": "WHATSAPP",
+    "title": "Disparo WhatsApp Comercial (Lote 1)",
+    "description": "Mensagem comercial enviada para J & J Auto Técnica (5521964712041) com intervalo de 60s.",
+    "createdAt": "2026-11-03T17:19:25.608Z"
+  },
+  {
+    "id": "act_wa_1793727573171_f87q",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190215_14uz",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Oficina Viegas (5521986182829). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:39:33.199Z"
+  },
+  {
+    "id": "act_wa_1793727662664_awzn",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190222_qm1q",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Oficina Mecânica Mecaneves (5521964718132). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:41:02.664Z"
+  },
+  {
+    "id": "act_wa_1793727738468_6tnl",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190227_79yr",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para JJ Motors (5521997208759). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:42:18.468Z"
+  },
+  {
+    "id": "act_wa_1793727815334_7oky",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190230_zv4m",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para AUTO ELETRICA BY MIRANDA (5521966596922). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:43:35.334Z"
+  },
+  {
+    "id": "act_wa_1793727893142_hlyl",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190234_4v77",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para RJ auto eletrica (5521989598323). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:44:53.142Z"
+  },
+  {
+    "id": "act_wa_1793727968861_vhbx",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190246_yemj",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Padrao Auto Eletrica e Mecanica (5521964175874). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:46:08.861Z"
+  },
+  {
+    "id": "act_wa_1793728044850_kc1t",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190251_259p",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para JReparos auto eletrica (5521975278662). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:47:24.850Z"
+  },
+  {
+    "id": "act_wa_1793728122726_bd5f",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190255_8337",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Vasques Auto Center (5521964779051). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:48:42.726Z"
+  },
+  {
+    "id": "act_wa_1793728198438_2opj",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190259_8ft5",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Auto Center Parada 999 (5521995102114). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:49:58.438Z"
+  },
+  {
+    "id": "act_wa_1793728274269_wymd",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190263_s418",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para CMN Auto Center (5521998920999). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:51:14.269Z"
+  },
+  {
+    "id": "act_wa_1793728350521_narq",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190266_odcj",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Oficina Luiz Auto Elétrica e Mecânica (5521995291719). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:52:30.521Z"
+  },
+  {
+    "id": "act_wa_1793728426675_ktir",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190270_6kuy",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Rodrigo Auto Elétrica (5521964493177). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:53:46.675Z"
+  },
+  {
+    "id": "act_wa_1793728502625_1a0l",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190274_bms3",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para AUTO ELETRICA ADRIANO (5521964825902). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:55:02.626Z"
+  },
+  {
+    "id": "act_wa_1793728578792_c9rs",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190277_unv8",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Dadal Auto Mecânica (5521981180655). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:56:18.792Z"
+  },
+  {
+    "id": "act_wa_1793728651710_87sh",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190280_locz",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Auto Center MCAR (5521996843126). Falha no envio automático: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T17:57:31.710Z"
+  },
+  {
+    "id": "act_wa_1793728731121_w1v6",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190284_zxjg",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Oficina Mecânica Limão Car (5521979561518). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T17:58:51.121Z"
+  },
+  {
+    "id": "act_wa_1793728807898_6f0g",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190290_f1ho",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para J & J Auto Técnica (5521964712041). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T18:00:07.898Z"
+  },
+  {
+    "id": "act_wa_1793728881124_2zj9",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190294_2xr6",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Oficina Mecânica Irmãos Unidos (5521971243389). Falha no envio automático: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T18:01:21.124Z"
+  },
+  {
+    "id": "act_wa_1793728956860_i41j",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190297_n0pl",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Auto Center Campo Grande (5521982451102). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T18:02:36.860Z"
+  },
+  {
+    "id": "act_wa_1793729033081_uhop",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190301_muvn",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Mecânica West Car (5521964128874). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T18:03:53.081Z"
+  },
+  {
+    "id": "act_wa_1793729108958_aq3u",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190304_koht",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Centro Automotivo D'Avila (5521993417750). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T18:05:08.958Z"
+  },
+  {
+    "id": "act_wa_1793729181264_pohd",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190307_uje6",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Garagem 21 Centro Automotivo (5521988924419). Falha no envio automático: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T18:06:21.264Z"
+  },
+  {
+    "id": "act_wa_1793729257705_48y7",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190311_wqtt",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Oficina Especializada Zona Oeste (5521970335561). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T18:07:37.705Z"
+  },
+  {
+    "id": "act_wa_1793729329672_e76b",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190314_igfo",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Pronto Mecânica Automotiva (5521965802213). Falha no envio automático: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T18:08:49.672Z"
+  },
+  {
+    "id": "act_wa_1793729406119_qcve",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793643190319_ec6e",
+    "type": "WHATSAPP",
+    "title": "Disparo Automático WhatsApp (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para Master Car Oficina & Auto Center (5521991846627). Enviado com sucesso pelo Robô Automático.",
+    "createdAt": "2026-11-03T18:10:06.119Z"
+  },
+  {
+    "id": "act_autoprime_1793734111379",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-11-03T19:28:31.379Z",
+    "updatedAt": "2026-11-03T19:28:31.379Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1793734111438_jton",
+    "createdAt": "2026-11-03T19:28:31.438Z",
+    "updatedAt": "2026-11-03T19:28:31.438Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1793734112154_lptu",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:28:32.172Z",
+    "id": "act_1793734112172_blfc",
+    "createdAt": "2026-11-03T19:28:32.172Z",
+    "updatedAt": "2026-11-03T19:28:32.172Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:28:32.305Z",
+    "id": "act_1793734112305_pe16",
+    "createdAt": "2026-11-03T19:28:32.305Z",
+    "updatedAt": "2026-11-03T19:28:32.305Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734112494_pxr8",
+    "dealId": null,
+    "type": "call",
+    "title": "Ligação de Alinhamento Técnico",
+    "description": "Cliente confirmou interesse na proposta e solicitou emissão do PIX comercial.",
+    "author": "Camila Mendes",
+    "timestamp": "2026-11-03T19:28:32.499Z",
+    "id": "act_1793734112499_i063",
+    "createdAt": "2026-11-03T19:28:32.499Z",
+    "updatedAt": "2026-11-03T19:28:32.499Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1793734112556_eleu",
+    "leadId": "lea_1793734111360_7diq",
+    "type": "deal_created",
+    "title": "Oportunidade criada: Contrato de Licenciamento Enterprise",
+    "description": "Valor inicial: R$ 48000.00 - Responsável: Camila Mendes | AI Score: 85/100",
+    "timestamp": "2026-11-03T19:28:32.560Z",
+    "id": "act_1793734112560_buls",
+    "createdAt": "2026-11-03T19:28:32.560Z",
+    "updatedAt": "2026-11-03T19:28:32.560Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "dealId": null,
+    "type": "ai_interaction",
+    "title": "Interação com Sofia - Closer Comercial IA",
+    "description": "Cliente: \"Quais são as condições de pagamento e faturamento no PIX?...\" | IA: \"Operamos com faturamento transparente via PIX oficial do Ban...\"",
+    "timestamp": "2026-11-03T19:28:32.697Z",
+    "id": "act_1793734112697_rao9",
+    "createdAt": "2026-11-03T19:28:32.697Z",
+    "updatedAt": "2026-11-03T19:28:32.697Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "dealId": null,
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Cliente solicitou transbordo humano explícito (termo identificado: \"humano\")",
+    "timestamp": "2026-11-03T19:28:32.721Z",
+    "id": "act_1793734112721_oiav",
+    "createdAt": "2026-11-03T19:28:32.721Z",
+    "updatedAt": "2026-11-03T19:28:32.721Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "dealId": "dea_1793734112750_2d9u",
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000)",
+    "timestamp": "2026-11-03T19:28:32.773Z",
+    "id": "act_1793734112773_yeav",
+    "createdAt": "2026-11-03T19:28:32.773Z",
+    "updatedAt": "2026-11-03T19:28:32.773Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "type": "message_sent",
+    "title": "Mensagem enviada por Luciano (Aprovado IA)",
+    "description": "Compreendo perfeitamente suas prioridades. O Agentise Mega CRM combina gestão de...",
+    "timestamp": "2026-11-03T19:28:32.882Z",
+    "id": "act_1793734112882_t4kk",
+    "createdAt": "2026-11-03T19:28:32.882Z",
+    "updatedAt": "2026-11-03T19:28:32.882Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "type": "mode_change",
+    "title": "Modo de atendimento alterado para HUMANO",
+    "description": "A conversa agora opera no modo humano.",
+    "timestamp": "2026-11-03T19:28:32.906Z",
+    "id": "act_1793734112906_qsmt",
+    "createdAt": "2026-11-03T19:28:32.906Z",
+    "updatedAt": "2026-11-03T19:28:32.906Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Alerta Deal VIP Score Alto",
+    "description": "Gatilho \"deal_score_alto\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:28:32.963Z",
+    "id": "act_1793734112963_ucpk",
+    "createdAt": "2026-11-03T19:28:32.963Z",
+    "updatedAt": "2026-11-03T19:28:32.963Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "dealId": "dea_1793734113007_0vvq",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:28:33.027Z",
+    "id": "act_1793734113027_glpo",
+    "createdAt": "2026-11-03T19:28:33.027Z",
+    "updatedAt": "2026-11-03T19:28:33.027Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "dealId": "dea_1793734113007_0vvq",
+    "type": "proposal_viewed",
+    "title": "👀 Proposta Comercial Visualizada",
+    "description": "O cliente abriu o link oficial da proposta no navegador.",
+    "timestamp": "2026-11-03T19:28:33.051Z",
+    "id": "act_1793734113051_s4zw",
+    "createdAt": "2026-11-03T19:28:33.051Z",
+    "updatedAt": "2026-11-03T19:28:33.051Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793734111360_7diq",
+    "dealId": "dea_1793734113007_0vvq",
+    "type": "payment_received",
+    "title": "💰 Pagamento PIX Confirmado via Webhook Bacen",
+    "description": "Valor recebido: R$ 10000.00. Baixa automática concluída.",
+    "timestamp": "2026-11-03T19:28:33.080Z",
+    "id": "act_1793734113080_02z4",
+    "createdAt": "2026-11-03T19:28:33.080Z",
+    "updatedAt": "2026-11-03T19:28:33.080Z"
+  },
+  {
+    "id": "act_wa_1793734894440_1oyd",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567506_1",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila Residencial Santa Cruz (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T19:41:34.527Z"
+  },
+  {
+    "id": "act_wa_1793735006634_3thz",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_2",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila São Jorge (5521964721980). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T19:43:26.634Z"
+  },
+  {
+    "id": "act_wa_1793735083036_vfto",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_3",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila Residencial Maria Teresa (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T19:44:43.036Z"
+  },
+  {
+    "id": "act_wa_1793735159672_lt2f",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_4",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Residencial das Flores (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T19:45:59.673Z"
+  },
+  {
+    "id": "act_wa_1793735233268_scn7",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_5",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila Esperança (5521964721980). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T19:47:13.268Z"
+  },
+  {
+    "id": "act_wa_1793735314208_h6fi",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_6",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Residencial Morada do Sol (5521979201154). Envio com sucesso",
+    "createdAt": "2026-11-03T19:48:34.208Z"
+  },
+  {
+    "id": "act_wa_1793735390193_2q3b",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_7",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila das Acácias (5521964721980). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T19:49:50.193Z"
+  },
+  {
+    "id": "act_wa_1793735464195_t34s",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_8",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Vila Bela Vista (5521964721980). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T19:51:04.195Z"
+  },
+  {
+    "id": "act_wa_1793735536386_kgy7",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567509_9",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila Primavera Campo Grande (5521964721980). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T19:52:16.386Z"
+  },
+  {
+    "id": "act_wa_1793735612135_f1rx",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_10",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Edifício Residencial Guanabara (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T19:53:32.136Z"
+  },
+  {
+    "id": "act_wa_1793735688747_b1ja",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_11",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Residencial Itacolomi (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T19:54:48.747Z"
+  },
+  {
+    "id": "act_wa_1793735766169_xcs5",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_12",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Residencial Campo Belo (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T19:56:06.170Z"
+  },
+  {
+    "id": "act_wa_1793735839923_6j33",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_13",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Parque Residencial Vitória (5521983194471). Falha: Número não possui WhatsApp ativo",
+    "createdAt": "2026-11-03T19:57:19.923Z"
+  },
+  {
+    "id": "act_wa_1793735916414_9w4l",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_14",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Condomínio Portal das Flores (5521981147720). Envio com sucesso",
+    "createdAt": "2026-11-03T19:58:36.414Z"
+  },
+  {
+    "id": "act_autoprime_1793735982429",
+    "tenantId": "ten_autoprime_veiculos",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "whatsapp_contact",
+    "title": "Atendimento Consultivo via WhatsApp Cloud API",
+    "description": "Vendedora Fernanda Lima realizou o primeiro contato consultivo em 3 minutos após a entrada do lead. Cliente confirmou interesse exclusivo na BMW 320i.",
+    "performedBy": "Fernanda Lima",
+    "createdAt": "2026-11-03T19:59:42.429Z",
+    "updatedAt": "2026-11-03T19:59:42.429Z"
+  },
+  {
+    "tenantId": "ten_autoprime_veiculos",
+    "dealId": "deal_autoprime_bmw_villasboas",
+    "leadId": "lead_autoprime_51_villasboas",
+    "type": "sale_won",
+    "title": "Venda Fechada: BMW 320i M Sport 2024",
+    "description": "Venda no valor de R$ 340.000,00 concluída por Fernanda Lima com pagamento PIX oficial.",
+    "performedBy": "Fernanda Lima",
+    "id": "act_1793735982499_kcq3",
+    "createdAt": "2026-11-03T19:59:42.499Z",
+    "updatedAt": "2026-11-03T19:59:42.499Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1793735983482_0326",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:59:43.507Z",
+    "id": "act_1793735983508_l6qk",
+    "createdAt": "2026-11-03T19:59:43.508Z",
+    "updatedAt": "2026-11-03T19:59:43.508Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:59:43.748Z",
+    "id": "act_1793735983748_300g",
+    "createdAt": "2026-11-03T19:59:43.748Z",
+    "updatedAt": "2026-11-03T19:59:43.748Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735984054_5o7s",
+    "dealId": null,
+    "type": "call",
+    "title": "Ligação de Alinhamento Técnico",
+    "description": "Cliente confirmou interesse na proposta e solicitou emissão do PIX comercial.",
+    "author": "Camila Mendes",
+    "timestamp": "2026-11-03T19:59:44.063Z",
+    "id": "act_1793735984063_dbwv",
+    "createdAt": "2026-11-03T19:59:44.063Z",
+    "updatedAt": "2026-11-03T19:59:44.063Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "dealId": "dea_1793735984164_hixc",
+    "leadId": "lea_1793735982408_5ulk",
+    "type": "deal_created",
+    "title": "Oportunidade criada: Contrato de Licenciamento Enterprise",
+    "description": "Valor inicial: R$ 48000.00 - Responsável: Camila Mendes | AI Score: 85/100",
+    "timestamp": "2026-11-03T19:59:44.171Z",
+    "id": "act_1793735984171_n2uw",
+    "createdAt": "2026-11-03T19:59:44.171Z",
+    "updatedAt": "2026-11-03T19:59:44.171Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "dealId": null,
+    "type": "ai_interaction",
+    "title": "Interação com Sofia - Closer Comercial IA",
+    "description": "Cliente: \"Quais são as condições de pagamento e faturamento no PIX?...\" | IA: \"Operamos com faturamento transparente via PIX oficial do Ban...\"",
+    "timestamp": "2026-11-03T19:59:44.324Z",
+    "id": "act_1793735984324_9opn",
+    "createdAt": "2026-11-03T19:59:44.324Z",
+    "updatedAt": "2026-11-03T19:59:44.324Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "dealId": null,
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Cliente solicitou transbordo humano explícito (termo identificado: \"humano\")",
+    "timestamp": "2026-11-03T19:59:44.357Z",
+    "id": "act_1793735984357_bkb2",
+    "createdAt": "2026-11-03T19:59:44.358Z",
+    "updatedAt": "2026-11-03T19:59:44.358Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "dealId": "dea_1793735984386_mbj9",
+    "type": "handover",
+    "title": "Transbordo Humano Acionado",
+    "description": "Valor da oportunidade (R$ 95.000) excede o teto de autonomia do agente (R$ 35.000)",
+    "timestamp": "2026-11-03T19:59:44.400Z",
+    "id": "act_1793735984400_hrab",
+    "createdAt": "2026-11-03T19:59:44.400Z",
+    "updatedAt": "2026-11-03T19:59:44.400Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "type": "message_sent",
+    "title": "Mensagem enviada por Luciano (Aprovado IA)",
+    "description": "Compreendo perfeitamente suas prioridades. O Agentise Mega CRM combina gestão de...",
+    "timestamp": "2026-11-03T19:59:44.471Z",
+    "id": "act_1793735984471_1qhi",
+    "createdAt": "2026-11-03T19:59:44.471Z",
+    "updatedAt": "2026-11-03T19:59:44.471Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "type": "mode_change",
+    "title": "Modo de atendimento alterado para HUMANO",
+    "description": "A conversa agora opera no modo humano.",
+    "timestamp": "2026-11-03T19:59:44.492Z",
+    "id": "act_1793735984492_kgyt",
+    "createdAt": "2026-11-03T19:59:44.492Z",
+    "updatedAt": "2026-11-03T19:59:44.492Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Alerta Deal VIP Score Alto",
+    "description": "Gatilho \"deal_score_alto\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:59:44.548Z",
+    "id": "act_1793735984548_nhtv",
+    "createdAt": "2026-11-03T19:59:44.548Z",
+    "updatedAt": "2026-11-03T19:59:44.548Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "dealId": "dea_1793735984735_c5ld",
+    "type": "automation_executed",
+    "title": "⚡ Automação Executada: Aceleração de Proposta PIX Aberta",
+    "description": "Gatilho \"proposta_criada\" disparou 1 ação(ões) com sucesso.",
+    "timestamp": "2026-11-03T19:59:44.777Z",
+    "id": "act_1793735984777_85li",
+    "createdAt": "2026-11-03T19:59:44.777Z",
+    "updatedAt": "2026-11-03T19:59:44.777Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "dealId": "dea_1793735984735_c5ld",
+    "type": "proposal_viewed",
+    "title": "👀 Proposta Comercial Visualizada",
+    "description": "O cliente abriu o link oficial da proposta no navegador.",
+    "timestamp": "2026-11-03T19:59:44.812Z",
+    "id": "act_1793735984812_9tnt",
+    "createdAt": "2026-11-03T19:59:44.812Z",
+    "updatedAt": "2026-11-03T19:59:44.812Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_1793735982408_5ulk",
+    "dealId": "dea_1793735984735_c5ld",
+    "type": "payment_received",
+    "title": "💰 Pagamento PIX Confirmado via Webhook Bacen",
+    "description": "Valor recebido: R$ 10000.00. Baixa automática concluída.",
+    "timestamp": "2026-11-03T19:59:44.854Z",
+    "id": "act_1793735984854_czhw",
+    "createdAt": "2026-11-03T19:59:44.854Z",
+    "updatedAt": "2026-11-03T19:59:44.854Z"
+  },
+  {
+    "id": "act_wa_1793735993321_36ch",
+    "tenantId": "ten_demo_agentise",
+    "leadId": "lea_condo_1793733567510_15",
+    "type": "WHATSAPP",
+    "title": "Disparo ConciliaZap 30 Dias (Lote 1)",
+    "description": "Mensagem enviada pelo Robô para o síndico de Vila Residencial Santa Cruz II (5521984512299). Envio com sucesso",
+    "createdAt": "2026-11-03T19:59:53.321Z"
   }
 ]

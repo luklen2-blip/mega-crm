@@ -778,5 +778,31 @@
     "id": "pip_1793649384704_yfmj",
     "createdAt": "2026-11-02T19:56:24.704Z",
     "updatedAt": "2026-11-02T19:56:24.704Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1793734112530_d8tg",
+    "key": "stg_1793734112550",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1793734112550_xypw",
+    "createdAt": "2026-11-03T19:28:32.550Z",
+    "updatedAt": "2026-11-03T19:28:32.550Z"
+  },
+  {
+    "tenantId": "ten_demo_agentise",
+    "pipelineId": "pip_1793735984105_lvpe",
+    "key": "stg_1793735984150",
+    "name": "Homologação Jurídica & Compliance",
+    "probability": 60,
+    "slaDays": 5,
+    "color": "#6366f1",
+    "order": 1,
+    "id": "pip_1793735984150_g721",
+    "createdAt": "2026-11-03T19:59:44.150Z",
+    "updatedAt": "2026-11-03T19:59:44.150Z"
   }
 ]

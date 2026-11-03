@@ -28,5 +28,8 @@
     "saas"
   ],
   "author": "Luciano",
-  "license": "Commercial / Perpetual (Self-Hosted)"
+  "license": "Commercial / Perpetual (Self-Hosted)",
+  "dependencies": {
+    "puppeteer-core": "^25.16.0"
+  }
 }
